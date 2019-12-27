@@ -1,8 +1,8 @@
 /*
  * @Author: song
  * @Date: 2019-11-15 13:50:40
- * @LastEditTime: 2019-11-25 17:00:48
- * @LastEditors: Json.Xu
+ * @LastEditTime : 2019-12-27 15:05:07
+ * @LastEditors  : Json.Xu
  * @Description: 
  * @FilePath: \moch-vue\src\store\mutations.js
  */
@@ -17,6 +17,7 @@ const mutations = {
       localStorage.setItem('user_token', payload.token)
       apiservices.defaults.headers.common['Authorization'] = payload.token
     },
+    
 }
 
 export default mutations;

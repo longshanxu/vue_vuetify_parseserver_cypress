@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2019-12-21 14:51:07
- * @LastEditTime : 2019-12-21 15:08:34
+ * @LastEditTime : 2019-12-21 15:09:51
  * @LastEditors  : Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\README.md
@@ -44,3 +44,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 备注:
 VUE + VUE_Cli 4.0 + Vuetify UI + ParserServer + Mongodb 
+快速搭建自己的开发框架.

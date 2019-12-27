@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-11-05 10:00:22
- * @LastEditTime: 2019-11-29 13:36:19
- * @LastEditors: Json.Xu
+ * @LastEditTime : 2019-12-27 15:01:40
+ * @LastEditors  : Json.Xu
  * @Description: In User Settings Edit
  * @FilePath: \moch-vue\src\plugins\vuetify.js
  */
@@ -14,6 +14,4 @@ import '@mdi/font/css/materialdesignicons.css'
 Vue.use(Vuetify);
 
 export default new Vuetify({
-
-     
 });
