@@ -45,3 +45,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 备注:
 VUE + VUE_Cli 4.0 + Vuetify UI + ParserServer + Mongodb 
 快速搭建自己的开发框架.
+
+### 启动服务
+npm run server  
+
+### 启动Dashboard
