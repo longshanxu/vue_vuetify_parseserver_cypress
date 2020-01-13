@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-29 15:50:37
- * @LastEditTime : 2020-01-06 14:58:39
+ * @LastEditTime : 2020-01-13 11:52:38
  * @LastEditors  : Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify\server.js
@@ -10,7 +10,8 @@ const express = require('express');
 const ParseServer = require('parse-server').ParseServer;
 const bodyParser = require('body-parser');
 const compression = require('compression');
-var ParseDashboard = require('parse-dashboard');
+const ParseDashboard = require('parse-dashboard');
+const history = require('connect-history-api-fallback');
 //const Parse = require('parse/node');
 
 const app = express();
@@ -64,6 +65,8 @@ app.use(bodyParser.urlencoded({
   limit: '2048mb'
 }))
 
+app.use(history());
+
 // app.use(bodyParser.json({ type: 'application/json' }));
 
 const api = new ParseServer(parseconfig);
@@ -73,6 +76,8 @@ app.use('/parse', api);
 app.use('/dashboard', dashboard);
 
 app.get('/get', (req, res) => res.send("Hello express!"));
+
+app.use(express.static('./dist'));
 
 app.use(function respondError(err, req, res, next) {
   console.log('500');
@@ -93,9 +98,9 @@ app.use(function respondError(err, req, res, next) {
   }
 });
 
-var httpServer = require('http').createServer(app);
+//var httpServer = require('http').createServer(app);
 
-httpServer.listen(8632, function (err, result) {
+app.listen(8632, function (err, result) {
 
   if (err) {
     console.log(err);

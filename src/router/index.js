@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-11-04 19:00:51
- * @LastEditTime: 2019-11-28 14:05:51
- * @LastEditors: Json.Xu
+ * @LastEditTime : 2020-01-13 11:29:15
+ * @LastEditors  : Json.Xu
  * @Description: In User Settings Edit
  * @FilePath: \moch-vue\src\router\index.js
  */
@@ -94,7 +94,7 @@ const routes = [{
 ]
 
 const router = new VueRouter({
-  //mode: 'history',
+  mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
