@@ -1,8 +1,8 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-12 17:51:18
- * @LastEditTime: 2019-11-29 14:13:09
- * @LastEditors: Json.Xu
+ * @LastEditTime : 2020-01-13 11:58:13
+ * @LastEditors  : Json.Xu
  * @Description: 
  * @FilePath: \moch-vue\vue.config.js
  */
@@ -10,7 +10,7 @@ const webpack = require("webpack");
 
 module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ?
-      '/kettyAPP/' :
+      '/' :
       '/'
   ,
   "transpileDependencies": [
@@ -18,6 +18,7 @@ module.exports = {
   ],
   devServer: {
     port: 80, // 端口
+    proxy: 'http://localhost:8632',
   },
   configureWebpack: {
     plugins: [

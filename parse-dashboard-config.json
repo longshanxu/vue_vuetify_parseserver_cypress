@@ -2,7 +2,7 @@
     "apps": [{
         "serverURL": "http://localhost:8632/parse",
         "appId": "jsonapp",
-        "masterKey": "jsonmasterkeynpm ",
+        "masterKey": "jsonmasterkey",
         "appName": "JsonAPP",
         "host":"127.0.0.1",
         "port":"4444"
