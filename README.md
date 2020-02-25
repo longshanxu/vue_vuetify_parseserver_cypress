@@ -10,7 +10,7 @@
 
 ## Project setup
 ```
-npm install
+npm install 
 ```
 
 ### Compiles and hot-reloads for development
@@ -42,11 +42,23 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
-备注:
-VUE + VUE_Cli 4.0 + Vuetify UI + ParserServer + Mongodb 
-快速搭建自己的开发框架.
+PS Technology stack:
+VUE + VUE_Cli 4.0 + Vuetify UI + ParseServer + Mongodb 
 
-### 启动服务
+### Getting Started
+1. need install Mongodb or mongodb address (example: mongodb://localhost:27017/datacenter )
+2. install Node (laster version) npm (laster version)
+3. npm install -g @vue/cli 
+4. npm install ( Open Project Folder)
+
+### 启动服务 run Parse Server 
 npm run server  
+Parse Server Address: http://localhost:8632 (config in server.js)
 
-### 启动Dashboard
+### Dashboard Address
+http://localhost:8632/dashboard
+user: admin
+pwd : admin
+
+### Dev Demo with Postman 
+http://localost:8632/parse/functions/hello (need headers with Authentication and application)

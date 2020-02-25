@@ -10,7 +10,7 @@ const express = require('express');
 const ParseServer = require('parse-server').ParseServer;
 const bodyParser = require('body-parser');
 const compression = require('compression');
-var ParseDashboard = require('parse-dashboard');
+const ParseDashboard = require('parse-dashboard');
 //const Parse = require('parse/node');
 
 const app = express();
@@ -26,8 +26,8 @@ const parseconfig = {
   verbose: false,
   logLevel: "ERROR",
   logsFolder: 'C:/logs',
-  appId: 'JsonApp',
-  javascriptKey: 'JsonKey',
+  appId: 'JsonApp',          //X-Parse-Application-Id headers key  
+  javascriptKey: 'JsonKey',  //X-Parse-JavaScript-Key headers key
   restAPIKey: 'JsonRestKey',
   masterKey: 'JsonMasterKey', // Keep this key secret!
   serverURL: serverUrl, // Don't forget to change to https if needed
