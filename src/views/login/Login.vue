@@ -1,8 +1,8 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2019-11-15 11:15:24
- * @LastEditTime: 2019-11-27 10:03:02
- * @LastEditors: Json.Xu
+ * @LastEditTime : 2020-01-13 13:07:53
+ * @LastEditors  : Json.Xu
  * @Description: 
  * @FilePath: \moch-vue\src\views\Login.vue
  -->
@@ -45,7 +45,7 @@
         </v-card-text>
         <v-card-actions class="pt-0">
           <v-card-text>
-            <v-btn block color="primary" to="/join">登录</v-btn>
+            <v-btn block color="primary" @click="login">登录</v-btn>
             <br />
             <v-btn block outlined color="primary" to="/signup">注册</v-btn>
           </v-card-text>
@@ -55,7 +55,7 @@
   </v-container>
 </template>
 <script>
-//import api from "../api/AxiosService";
+import api from "../../api/AxiosService";
 
 export default {
   props: {
@@ -63,20 +63,10 @@ export default {
   },
   methods: {
     login() {
-      // var aa = "777";
-      // this.$store.dispatch({ type: "UPDATEMESSAGE", aa });
-      // api
-      //   .setUserToken()
-      //   .then(res => {
-      //     var token = res.data.data.token;
-      //     this.$store.dispatch({
-      //       type: "SET_USERINFO_TOKEN",
-      //       token
-      //     })
-      //   })
-      //   .catch(err => {
-      //     console.error(err);
-      //   });
+      api.helloworld().then(res => {
+        console.log(res);
+        
+      }).catch();
     },
 
     getuserrole() {

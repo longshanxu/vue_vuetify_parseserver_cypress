@@ -1,10 +1,10 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-29 15:50:37
- * @LastEditTime : 2020-01-13 11:52:38
- * @LastEditors  : Json.Xu
+ * @LastEditTime: 2020-02-25 16:43:25
+ * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify\server.js
+ * @FilePath: \vue_vuetify_parseserver\server.js
  */
 const express = require('express');
 const ParseServer = require('parse-server').ParseServer;
