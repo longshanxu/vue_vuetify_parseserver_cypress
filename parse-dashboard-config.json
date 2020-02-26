@@ -1,6 +1,6 @@
 {
     "apps": [{
-        "serverURL": "http://localhost:8632/parse",
+        "serverURL": "http://localhost/parse",
         "appId": "jsonapp",
         "masterKey": "jsonmasterkey",
         "appName": "JsonAPP",

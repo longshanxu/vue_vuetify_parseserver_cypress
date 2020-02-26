@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-29 15:50:37
- * @LastEditTime: 2020-02-25 16:43:25
+ * @LastEditTime: 2020-02-26 10:27:17
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server.js
@@ -11,11 +11,12 @@ const ParseServer = require('parse-server').ParseServer;
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const ParseDashboard = require('parse-dashboard');
+// const history = require('connect-history-api-fallback');
 //const Parse = require('parse/node');
 
 const app = express();
 
-let serverUrl = 'http://localhost:8632/parse';
+const serverUrl = 'http://localhost/parse';
 
 // console.log(__dirname);
 
@@ -33,18 +34,16 @@ const parseconfig = {
   serverURL: serverUrl, // Don't forget to change to https if needed
   cacheTimeout: 60 * 600 * 1000,
   cluster: 2,
-  enableExpressErrorHandler: true,
-  port: 8632,
-  mountPath: "/parse",
+  enableExpressErrorHandler: true
 }
 
-var options = {
+const options = {
   allowInsecureHTTP: false
 };
 
-var dashboardconfig = {
+const dashboardconfig = {
   "apps": [{
-    "serverURL": "http://localhost:8632/parse",
+    "serverURL": serverUrl,
     "appId": "JsonApp",
     "masterKey": "JsonMasterKey",
     "appName": "APP",
@@ -55,7 +54,7 @@ var dashboardconfig = {
   }]
 }
 
-var dashboard = new ParseDashboard(dashboardconfig, options);
+
 
 app.use(compression()); //use compression 
 
@@ -64,17 +63,18 @@ app.use(bodyParser.urlencoded({
   limit: '2048mb'
 }))
 
-app.use(history());
+//app.use(history());
 
 // app.use(bodyParser.json({ type: 'application/json' }));
 
 const api = new ParseServer(parseconfig);
+const dashboard = new ParseDashboard(dashboardconfig, options);
+
+app.get('/gettest', (req, res) => res.send("Hello express!"));
 
 app.use('/parse', api);
 
 app.use('/dashboard', dashboard);
-
-app.get('/get', (req, res) => res.send("Hello express!"));
 
 app.use(express.static('./dist'));
 
@@ -99,10 +99,10 @@ app.use(function respondError(err, req, res, next) {
 
 //var httpServer = require('http').createServer(app);
 
-app.listen(8632, function (err, result) {
+app.listen(80, function (err, result) {
 
   if (err) {
     console.log(err);
   }
-  console.log('Server running on http://localhost:8632');
+  console.log('Server running on http://localhost');
 });
