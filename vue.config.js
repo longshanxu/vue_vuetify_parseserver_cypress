@@ -1,10 +1,10 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-12 17:51:18
- * @LastEditTime : 2020-01-13 11:58:13
- * @LastEditors  : Json.Xu
+ * @LastEditTime: 2020-02-27 17:15:55
+ * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \moch-vue\vue.config.js
+ * @FilePath: \vue_vuetify_parseserver\vue.config.js
  */
 const webpack = require("webpack");
 
@@ -18,7 +18,6 @@ module.exports = {
   ],
   devServer: {
     port: 80, // 端口
-    proxy: 'http://localhost:8632',
   },
   configureWebpack: {
     plugins: [

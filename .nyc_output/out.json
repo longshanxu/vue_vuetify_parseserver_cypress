@@ -1,6 +1,6 @@
 {
-  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\App.vue": {
-    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\App.vue",
+  "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\App.vue": {
+    "path": "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\App.vue",
     "statementMap": {
       "0": {
         "start": {
@@ -75,7 +75,7 @@
     "inputSourceMap": {
       "version": 3,
       "sources": [
-        "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\App.vue"
+        "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\App.vue"
       ],
       "names": [],
       "mappings": ";;;;;;;;;;;;;;;;;;;;;AAqBA;AACA;AACA;AACA;AACA;;AAEA;AACA;AACA;AACA",
@@ -86,10 +86,392 @@
       ]
     },
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "2684aa4f2d3250b576f38406991dcafecdaf95ee"
+    "hash": "d9461fed1bc06903fb732c9fee40813b39caa06c"
   },
-  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\api\\AxiosService.js": {
-    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\api\\AxiosService.js",
+  "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\Login.vue": {
+    "path": "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\Login.vue",
+    "statementMap": {},
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": {
+          "start": {
+            "line": 63,
+            "column": 4
+          },
+          "end": {
+            "line": 63,
+            "column": 5
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 63,
+            "column": 12
+          },
+          "end": {
+            "line": 78,
+            "column": 5
+          }
+        },
+        "line": 63
+      },
+      "1": {
+        "name": "(anonymous_1)",
+        "decl": {
+          "start": {
+            "line": 80,
+            "column": 4
+          },
+          "end": {
+            "line": 80,
+            "column": 5
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 80,
+            "column": 18
+          },
+          "end": {
+            "line": 90,
+            "column": 5
+          }
+        },
+        "line": 80
+      }
+    },
+    "branchMap": {},
+    "s": {},
+    "f": {
+      "0": 0,
+      "1": 0
+    },
+    "b": {},
+    "inputSourceMap": {
+      "version": 3,
+      "sources": [
+        "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\Login.vue"
+      ],
+      "names": [],
+      "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAuDA;;AAEA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;;AAEA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA",
+      "file": "Login.vue",
+      "sourceRoot": "",
+      "sourcesContent": [
+        "<!--\r\n * @Author: Json.Xu\r\n * @Date: 2019-11-15 11:15:24\r\n * @LastEditTime: 2019-11-29 13:11:29\r\n * @LastEditors: Json.Xu\r\n * @Description: \r\n * @FilePath: \\moch-vue\\src\\views\\Login.vue\r\n -->\r\n <template>\r\n  <v-container class=\"pa-0\">\r\n      <v-img\r\n        class=\"white--text align-center\"\r\n        src=\"https://cdn.vuetifyjs.com/images/cards/docks.jpg\"\r\n        style=\"margin-top:0px\"\r\n      >\r\n        <v-card-title>您好!</v-card-title>\r\n      </v-img>\r\n    <v-card class=\"ma-5\" >\r\n      <v-card class=\"mx-auto\" style=\"margin-top:-80px\">\r\n        <v-card-text  class=\"pb-0\">\r\n          <v-form>\r\n            <v-text-field\r\n              outlined\r\n              single-line\r\n              label=\"请输入手机号码\"\r\n              name=\"用户名\"\r\n              prepend-inner-icon=\"mdi-account\"\r\n              type=\"text\"\r\n            />\r\n            <v-text-field\r\n              outlined\r\n              single-line\r\n              label=\"请输入密码\"\r\n              name=\"密码\"\r\n              prepend-inner-icon=\"mdi-lock\"\r\n              type=\"password\"\r\n            />\r\n            <v-row>\r\n              <v-spacer />\r\n              <v-btn text color=\"primary\">忘记密码?</v-btn>\r\n            </v-row>\r\n          </v-form>\r\n        </v-card-text>\r\n        <v-card-actions class=\"pt-0\">\r\n          <v-card-text>\r\n            <v-btn block color=\"primary\">登录</v-btn>\r\n            <br />\r\n            <v-btn block outlined color=\"primary\" to=\"/signup\">注册</v-btn>\r\n          </v-card-text>\r\n        </v-card-actions>\r\n      </v-card>\r\n    </v-card>\r\n  </v-container>\r\n</template>\r\n<script>\r\n//import api from \"../api/AxiosService\";\r\n\r\nexport default {\r\n  props: {\r\n    source: String\r\n  },\r\n  methods: {\r\n    login() {\r\n      // var aa = \"777\";\r\n      // this.$store.dispatch({ type: \"UPDATEMESSAGE\", aa });\r\n      // api\r\n      //   .setUserToken()\r\n      //   .then(res => {\r\n      //     var token = res.data.data.token;\r\n      //     this.$store.dispatch({\r\n      //       type: \"SET_USERINFO_TOKEN\",\r\n      //       token\r\n      //     })\r\n      //   })\r\n      //   .catch(err => {\r\n      //     console.error(err);\r\n      //   });\r\n    },\r\n\r\n    getuserrole() {\r\n      //console.log(this.$store.state.message);\r\n      // api\r\n      //   .getUserRole()\r\n      //   .then(res => {\r\n      //     console.log(res);\r\n      //   })\r\n      //   .catch(err => {\r\n      //     console.error(err);\r\n      //   });\r\n    }\r\n  }\r\n};\r\n</script>\r\n      \r\n<style scoped>\r\n</style>"
+      ]
+    },
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "392dd85038a4fae189022515320af6d9ecc966fc"
+  },
+  "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\router\\index.js": {
+    "path": "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\router\\index.js",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 14,
+          "column": 0
+        },
+        "end": {
+          "line": 14,
+          "column": 18
+        }
+      },
+      "1": {
+        "start": {
+          "line": 16,
+          "column": 15
+        },
+        "end": {
+          "line": 29,
+          "column": 1
+        }
+      },
+      "2": {
+        "start": {
+          "line": 27,
+          "column": 21
+        },
+        "end": {
+          "line": 27,
+          "column": 89
+        }
+      },
+      "3": {
+        "start": {
+          "line": 31,
+          "column": 15
+        },
+        "end": {
+          "line": 35,
+          "column": 2
+        }
+      },
+      "4": {
+        "start": {
+          "line": 37,
+          "column": 0
+        },
+        "end": {
+          "line": 44,
+          "column": 2
+        }
+      },
+      "5": {
+        "start": {
+          "line": 38,
+          "column": 19
+        },
+        "end": {
+          "line": 38,
+          "column": 53
+        }
+      },
+      "6": {
+        "start": {
+          "line": 40,
+          "column": 2
+        },
+        "end": {
+          "line": 42,
+          "column": 3
+        }
+      },
+      "7": {
+        "start": {
+          "line": 40,
+          "column": 32
+        },
+        "end": {
+          "line": 40,
+          "column": 56
+        }
+      },
+      "8": {
+        "start": {
+          "line": 41,
+          "column": 4
+        },
+        "end": {
+          "line": 41,
+          "column": 13
+        }
+      },
+      "9": {
+        "start": {
+          "line": 43,
+          "column": 2
+        },
+        "end": {
+          "line": 43,
+          "column": 8
+        }
+      }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": {
+          "start": {
+            "line": 27,
+            "column": 15
+          },
+          "end": {
+            "line": 27,
+            "column": 16
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 27,
+            "column": 21
+          },
+          "end": {
+            "line": 27,
+            "column": 89
+          }
+        },
+        "line": 27
+      },
+      "1": {
+        "name": "(anonymous_1)",
+        "decl": {
+          "start": {
+            "line": 37,
+            "column": 18
+          },
+          "end": {
+            "line": 37,
+            "column": 19
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 37,
+            "column": 38
+          },
+          "end": {
+            "line": 44,
+            "column": 1
+          }
+        },
+        "line": 37
+      },
+      "2": {
+        "name": "(anonymous_2)",
+        "decl": {
+          "start": {
+            "line": 40,
+            "column": 22
+          },
+          "end": {
+            "line": 40,
+            "column": 23
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 40,
+            "column": 32
+          },
+          "end": {
+            "line": 40,
+            "column": 56
+          }
+        },
+        "line": 40
+      }
+    },
+    "branchMap": {
+      "0": {
+        "loc": {
+          "start": {
+            "line": 40,
+            "column": 2
+          },
+          "end": {
+            "line": 42,
+            "column": 3
+          }
+        },
+        "type": "if",
+        "locations": [
+          {
+            "start": {
+              "line": 40,
+              "column": 2
+            },
+            "end": {
+              "line": 42,
+              "column": 3
+            }
+          },
+          {
+            "start": {
+              "line": 40,
+              "column": 2
+            },
+            "end": {
+              "line": 42,
+              "column": 3
+            }
+          }
+        ],
+        "line": 40
+      },
+      "1": {
+        "loc": {
+          "start": {
+            "line": 40,
+            "column": 6
+          },
+          "end": {
+            "line": 40,
+            "column": 70
+          }
+        },
+        "type": "binary-expr",
+        "locations": [
+          {
+            "start": {
+              "line": 40,
+              "column": 6
+            },
+            "end": {
+              "line": 40,
+              "column": 57
+            }
+          },
+          {
+            "start": {
+              "line": 40,
+              "column": 61
+            },
+            "end": {
+              "line": 40,
+              "column": 70
+            }
+          }
+        ],
+        "line": 40
+      }
+    },
+    "s": {
+      "0": 1,
+      "1": 1,
+      "2": 1,
+      "3": 1,
+      "4": 1,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 0,
+      "9": 2
+    },
+    "f": {
+      "0": 1,
+      "1": 2,
+      "2": 2
+    },
+    "b": {
+      "0": [
+        0,
+        2
+      ],
+      "1": [
+        2,
+        0
+      ]
+    },
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "29cba284343de684e9d107e1e214ae5624f98f8c"
+  },
+  "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\mutation_types.js": {
+    "path": "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\mutation_types.js",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 10,
+          "column": 21
+        },
+        "end": {
+          "line": 12,
+          "column": 1
+        }
+      }
+    },
+    "fnMap": {},
+    "branchMap": {},
+    "s": {
+      "0": 1
+    },
+    "f": {},
+    "b": {},
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "0f8cf8bfad8892a6f7925a925efa4e3438b1bff5"
+  },
+  "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\api\\AxiosService.js": {
+    "path": "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\api\\AxiosService.js",
     "statementMap": {
       "0": {
         "start": {
@@ -148,765 +530,10 @@
     },
     "b": {},
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "4f5b53f2ec6e0002b0ed0dcba903a70ac262789e"
+    "hash": "f3ea64a71296a82f06b0f1eb961fa24c28e12a46"
   },
-  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\Login.vue": {
-    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\Login.vue",
-    "statementMap": {
-      "0": {
-        "start": {
-          "line": 66,
-          "column": 6
-        },
-        "end": {
-          "line": 69,
-          "column": 17
-        }
-      },
-      "1": {
-        "start": {
-          "line": 67,
-          "column": 8
-        },
-        "end": {
-          "line": 67,
-          "column": 25
-        }
-      }
-    },
-    "fnMap": {
-      "0": {
-        "name": "(anonymous_0)",
-        "decl": {
-          "start": {
-            "line": 65,
-            "column": 4
-          },
-          "end": {
-            "line": 65,
-            "column": 5
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 65,
-            "column": 12
-          },
-          "end": {
-            "line": 70,
-            "column": 5
-          }
-        },
-        "line": 65
-      },
-      "1": {
-        "name": "(anonymous_1)",
-        "decl": {
-          "start": {
-            "line": 66,
-            "column": 28
-          },
-          "end": {
-            "line": 66,
-            "column": 29
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 66,
-            "column": 35
-          },
-          "end": {
-            "line": 69,
-            "column": 7
-          }
-        },
-        "line": 66
-      },
-      "2": {
-        "name": "(anonymous_2)",
-        "decl": {
-          "start": {
-            "line": 72,
-            "column": 4
-          },
-          "end": {
-            "line": 72,
-            "column": 5
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 72,
-            "column": 18
-          },
-          "end": {
-            "line": 82,
-            "column": 5
-          }
-        },
-        "line": 72
-      }
-    },
-    "branchMap": {},
-    "s": {
-      "0": 0,
-      "1": 0
-    },
-    "f": {
-      "0": 0,
-      "1": 0,
-      "2": 0
-    },
-    "b": {},
-    "inputSourceMap": {
-      "version": 3,
-      "sources": [
-        "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\Login.vue"
-      ],
-      "names": [],
-      "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAyDA;;AAEA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;;AAEA;AACA;;AAEA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA",
-      "file": "Login.vue",
-      "sourceRoot": "",
-      "sourcesContent": [
-        "<!--\r\n * @Author: Json.Xu\r\n * @Date: 2019-11-15 11:15:24\r\n * @LastEditTime : 2020-01-13 13:07:53\r\n * @LastEditors  : Json.Xu\r\n * @Description: \r\n * @FilePath: \\moch-vue\\src\\views\\Login.vue\r\n -->\r\n <template>\r\n  <v-container class=\"pa-0\">\r\n      <v-img\r\n        class=\"white--text align-center\"\r\n        src=\"https://cdn.vuetifyjs.com/images/cards/docks.jpg\"\r\n        style=\"margin-top:0px\"\r\n      >\r\n        <v-card-title>您好!</v-card-title>\r\n      </v-img>\r\n    <v-card class=\"ma-5\" >\r\n    \r\n\r\n      <v-card class=\"mx-auto\" style=\"margin-top:-80px\">\r\n        <v-card-text  class=\"pb-0\">\r\n          <v-form>\r\n            <v-text-field\r\n              outlined\r\n              single-line\r\n              label=\"请输入手机号码\"\r\n              name=\"用户名\"\r\n              prepend-inner-icon=\"mdi-account\"\r\n              type=\"text\"\r\n            />\r\n            <v-text-field\r\n              outlined\r\n              single-line\r\n              label=\"请输入密码\"\r\n              name=\"密码\"\r\n              prepend-inner-icon=\"mdi-lock\"\r\n              type=\"password\"\r\n            />\r\n            <v-row>\r\n              <v-spacer />\r\n              <v-btn text color=\"primary\" to=\"/forget\">忘记密码?</v-btn>\r\n            </v-row>\r\n          </v-form>\r\n        </v-card-text>\r\n        <v-card-actions class=\"pt-0\">\r\n          <v-card-text>\r\n            <v-btn block color=\"primary\" @click=\"login\">登录</v-btn>\r\n            <br />\r\n            <v-btn block outlined color=\"primary\" to=\"/signup\">注册</v-btn>\r\n          </v-card-text>\r\n        </v-card-actions>\r\n      </v-card>\r\n    </v-card>\r\n  </v-container>\r\n</template>\r\n<script>\r\nimport api from \"../../api/AxiosService\";\r\n\r\nexport default {\r\n  props: {\r\n    source: String\r\n  },\r\n  methods: {\r\n    login() {\r\n      api.helloworld().then(res => {\r\n        console.log(res);\r\n        \r\n      }).catch();\r\n    },\r\n\r\n    getuserrole() {\r\n      //console.log(this.$store.state.message);\r\n      // api\r\n      //   .getUserRole()\r\n      //   .then(res => {\r\n      //     console.log(res);\r\n      //   })\r\n      //   .catch(err => {\r\n      //     console.error(err);\r\n      //   });\r\n    }\r\n  }\r\n};\r\n</script>\r\n      \r\n<style scoped>\r\n</style>"
-      ]
-    },
-    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "b5f09707acf23109d1ddc4a54e2f77c701874a6b"
-  },
-  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\router\\index.js": {
-    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\router\\index.js",
-    "statementMap": {
-      "0": {
-        "start": {
-          "line": 14,
-          "column": 0
-        },
-        "end": {
-          "line": 14,
-          "column": 18
-        }
-      },
-      "1": {
-        "start": {
-          "line": 16,
-          "column": 15
-        },
-        "end": {
-          "line": 94,
-          "column": 1
-        }
-      },
-      "2": {
-        "start": {
-          "line": 27,
-          "column": 21
-        },
-        "end": {
-          "line": 27,
-          "column": 88
-        }
-      },
-      "3": {
-        "start": {
-          "line": 35,
-          "column": 21
-        },
-        "end": {
-          "line": 35,
-          "column": 89
-        }
-      },
-      "4": {
-        "start": {
-          "line": 43,
-          "column": 21
-        },
-        "end": {
-          "line": 43,
-          "column": 89
-        }
-      },
-      "5": {
-        "start": {
-          "line": 51,
-          "column": 21
-        },
-        "end": {
-          "line": 51,
-          "column": 89
-        }
-      },
-      "6": {
-        "start": {
-          "line": 59,
-          "column": 21
-        },
-        "end": {
-          "line": 59,
-          "column": 91
-        }
-      },
-      "7": {
-        "start": {
-          "line": 67,
-          "column": 21
-        },
-        "end": {
-          "line": 67,
-          "column": 83
-        }
-      },
-      "8": {
-        "start": {
-          "line": 75,
-          "column": 21
-        },
-        "end": {
-          "line": 75,
-          "column": 100
-        }
-      },
-      "9": {
-        "start": {
-          "line": 83,
-          "column": 21
-        },
-        "end": {
-          "line": 83,
-          "column": 98
-        }
-      },
-      "10": {
-        "start": {
-          "line": 86,
-          "column": 25
-        },
-        "end": {
-          "line": 86,
-          "column": 107
-        }
-      },
-      "11": {
-        "start": {
-          "line": 90,
-          "column": 25
-        },
-        "end": {
-          "line": 90,
-          "column": 107
-        }
-      },
-      "12": {
-        "start": {
-          "line": 96,
-          "column": 15
-        },
-        "end": {
-          "line": 100,
-          "column": 2
-        }
-      },
-      "13": {
-        "start": {
-          "line": 102,
-          "column": 0
-        },
-        "end": {
-          "line": 109,
-          "column": 2
-        }
-      },
-      "14": {
-        "start": {
-          "line": 103,
-          "column": 19
-        },
-        "end": {
-          "line": 103,
-          "column": 53
-        }
-      },
-      "15": {
-        "start": {
-          "line": 105,
-          "column": 2
-        },
-        "end": {
-          "line": 107,
-          "column": 3
-        }
-      },
-      "16": {
-        "start": {
-          "line": 105,
-          "column": 32
-        },
-        "end": {
-          "line": 105,
-          "column": 56
-        }
-      },
-      "17": {
-        "start": {
-          "line": 106,
-          "column": 4
-        },
-        "end": {
-          "line": 106,
-          "column": 13
-        }
-      },
-      "18": {
-        "start": {
-          "line": 108,
-          "column": 2
-        },
-        "end": {
-          "line": 108,
-          "column": 8
-        }
-      }
-    },
-    "fnMap": {
-      "0": {
-        "name": "(anonymous_0)",
-        "decl": {
-          "start": {
-            "line": 27,
-            "column": 15
-          },
-          "end": {
-            "line": 27,
-            "column": 16
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 27,
-            "column": 21
-          },
-          "end": {
-            "line": 27,
-            "column": 88
-          }
-        },
-        "line": 27
-      },
-      "1": {
-        "name": "(anonymous_1)",
-        "decl": {
-          "start": {
-            "line": 35,
-            "column": 15
-          },
-          "end": {
-            "line": 35,
-            "column": 16
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 35,
-            "column": 21
-          },
-          "end": {
-            "line": 35,
-            "column": 89
-          }
-        },
-        "line": 35
-      },
-      "2": {
-        "name": "(anonymous_2)",
-        "decl": {
-          "start": {
-            "line": 43,
-            "column": 15
-          },
-          "end": {
-            "line": 43,
-            "column": 16
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 43,
-            "column": 21
-          },
-          "end": {
-            "line": 43,
-            "column": 89
-          }
-        },
-        "line": 43
-      },
-      "3": {
-        "name": "(anonymous_3)",
-        "decl": {
-          "start": {
-            "line": 51,
-            "column": 15
-          },
-          "end": {
-            "line": 51,
-            "column": 16
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 51,
-            "column": 21
-          },
-          "end": {
-            "line": 51,
-            "column": 89
-          }
-        },
-        "line": 51
-      },
-      "4": {
-        "name": "(anonymous_4)",
-        "decl": {
-          "start": {
-            "line": 59,
-            "column": 15
-          },
-          "end": {
-            "line": 59,
-            "column": 16
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 59,
-            "column": 21
-          },
-          "end": {
-            "line": 59,
-            "column": 91
-          }
-        },
-        "line": 59
-      },
-      "5": {
-        "name": "(anonymous_5)",
-        "decl": {
-          "start": {
-            "line": 67,
-            "column": 15
-          },
-          "end": {
-            "line": 67,
-            "column": 16
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 67,
-            "column": 21
-          },
-          "end": {
-            "line": 67,
-            "column": 83
-          }
-        },
-        "line": 67
-      },
-      "6": {
-        "name": "(anonymous_6)",
-        "decl": {
-          "start": {
-            "line": 75,
-            "column": 15
-          },
-          "end": {
-            "line": 75,
-            "column": 16
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 75,
-            "column": 21
-          },
-          "end": {
-            "line": 75,
-            "column": 100
-          }
-        },
-        "line": 75
-      },
-      "7": {
-        "name": "(anonymous_7)",
-        "decl": {
-          "start": {
-            "line": 83,
-            "column": 15
-          },
-          "end": {
-            "line": 83,
-            "column": 16
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 83,
-            "column": 21
-          },
-          "end": {
-            "line": 83,
-            "column": 98
-          }
-        },
-        "line": 83
-      },
-      "8": {
-        "name": "(anonymous_8)",
-        "decl": {
-          "start": {
-            "line": 86,
-            "column": 19
-          },
-          "end": {
-            "line": 86,
-            "column": 20
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 86,
-            "column": 25
-          },
-          "end": {
-            "line": 86,
-            "column": 107
-          }
-        },
-        "line": 86
-      },
-      "9": {
-        "name": "(anonymous_9)",
-        "decl": {
-          "start": {
-            "line": 90,
-            "column": 19
-          },
-          "end": {
-            "line": 90,
-            "column": 20
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 90,
-            "column": 25
-          },
-          "end": {
-            "line": 90,
-            "column": 107
-          }
-        },
-        "line": 90
-      },
-      "10": {
-        "name": "(anonymous_10)",
-        "decl": {
-          "start": {
-            "line": 102,
-            "column": 18
-          },
-          "end": {
-            "line": 102,
-            "column": 19
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 102,
-            "column": 38
-          },
-          "end": {
-            "line": 109,
-            "column": 1
-          }
-        },
-        "line": 102
-      },
-      "11": {
-        "name": "(anonymous_11)",
-        "decl": {
-          "start": {
-            "line": 105,
-            "column": 22
-          },
-          "end": {
-            "line": 105,
-            "column": 23
-          }
-        },
-        "loc": {
-          "start": {
-            "line": 105,
-            "column": 32
-          },
-          "end": {
-            "line": 105,
-            "column": 56
-          }
-        },
-        "line": 105
-      }
-    },
-    "branchMap": {
-      "0": {
-        "loc": {
-          "start": {
-            "line": 105,
-            "column": 2
-          },
-          "end": {
-            "line": 107,
-            "column": 3
-          }
-        },
-        "type": "if",
-        "locations": [
-          {
-            "start": {
-              "line": 105,
-              "column": 2
-            },
-            "end": {
-              "line": 107,
-              "column": 3
-            }
-          },
-          {
-            "start": {
-              "line": 105,
-              "column": 2
-            },
-            "end": {
-              "line": 107,
-              "column": 3
-            }
-          }
-        ],
-        "line": 105
-      },
-      "1": {
-        "loc": {
-          "start": {
-            "line": 105,
-            "column": 6
-          },
-          "end": {
-            "line": 105,
-            "column": 70
-          }
-        },
-        "type": "binary-expr",
-        "locations": [
-          {
-            "start": {
-              "line": 105,
-              "column": 6
-            },
-            "end": {
-              "line": 105,
-              "column": 57
-            }
-          },
-          {
-            "start": {
-              "line": 105,
-              "column": 61
-            },
-            "end": {
-              "line": 105,
-              "column": 70
-            }
-          }
-        ],
-        "line": 105
-      }
-    },
-    "s": {
-      "0": 1,
-      "1": 1,
-      "2": 0,
-      "3": 1,
-      "4": 0,
-      "5": 0,
-      "6": 0,
-      "7": 0,
-      "8": 0,
-      "9": 0,
-      "10": 0,
-      "11": 0,
-      "12": 1,
-      "13": 1,
-      "14": 2,
-      "15": 2,
-      "16": 2,
-      "17": 0,
-      "18": 2
-    },
-    "f": {
-      "0": 0,
-      "1": 1,
-      "2": 0,
-      "3": 0,
-      "4": 0,
-      "5": 0,
-      "6": 0,
-      "7": 0,
-      "8": 0,
-      "9": 0,
-      "10": 2,
-      "11": 2
-    },
-    "b": {
-      "0": [
-        0,
-        2
-      ],
-      "1": [
-        2,
-        0
-      ]
-    },
-    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "d60ff84f17a649ec46841e603ae4e232da7b9fa5"
-  },
-  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\mutation_types.js": {
-    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\mutation_types.js",
-    "statementMap": {
-      "0": {
-        "start": {
-          "line": 10,
-          "column": 21
-        },
-        "end": {
-          "line": 12,
-          "column": 1
-        }
-      }
-    },
-    "fnMap": {},
-    "branchMap": {},
-    "s": {
-      "0": 1
-    },
-    "f": {},
-    "b": {},
-    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "a39f253e7a7eb8a06913cdc8c25c4fe36ea9a509"
-  },
-  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\mutations.js": {
-    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\mutations.js",
+  "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\mutations.js": {
+    "path": "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\mutations.js",
     "statementMap": {
       "0": {
         "start": {
@@ -987,10 +614,10 @@
     },
     "b": {},
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "9ff682ed0a1d039fb63fdea31f8a2890ba3552ae"
+    "hash": "6cad1b527168d2029f564b4100713161ea43d753"
   },
-  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\actions.js": {
-    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\actions.js",
+  "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\actions.js": {
+    "path": "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\actions.js",
     "statementMap": {
       "0": {
         "start": {
@@ -1049,10 +676,10 @@
     },
     "b": {},
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "22fe6ef1ec14f71aeeaab433134828832d504aa9"
+    "hash": "38ee793f78b5fe0b954ca087e7b77f0fe1e46465"
   },
-  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\index.js": {
-    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\index.js",
+  "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\index.js": {
+    "path": "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\index.js",
     "statementMap": {
       "0": {
         "start": {
@@ -1095,10 +722,10 @@
     "f": {},
     "b": {},
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "33b7f526b16d153316c111240531c38446f3b930"
+    "hash": "32bd3451e3ff9df73fa117c3bd2a3ec3784611c7"
   },
-  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\plugins\\vuetify.js": {
-    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\plugins\\vuetify.js",
+  "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\plugins\\vuetify.js": {
+    "path": "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\plugins\\vuetify.js",
     "statementMap": {
       "0": {
         "start": {
@@ -1119,10 +746,10 @@
     "f": {},
     "b": {},
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "aec38be2ec78cee6a3f29c8257e380e1088d2993"
+    "hash": "35a7257ee5289928d8326193a236a0e1d88ed7ae"
   },
-  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\main.js": {
-    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\main.js",
+  "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\main.js": {
+    "path": "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\main.js",
     "statementMap": {
       "0": {
         "start": {
@@ -1181,10 +808,10 @@
     },
     "b": {},
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "15b32b1c0d9a46caad5139a7d99c61840f23f2bc"
+    "hash": "4874c9a8bf420fd5c453177937c1e93996345071"
   },
-  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\SignUp.vue": {
-    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\SignUp.vue",
+  "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\SignUp.vue": {
+    "path": "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\SignUp.vue",
     "statementMap": {
       "0": {
         "start": {
@@ -1350,7 +977,7 @@
     "inputSourceMap": {
       "version": 3,
       "sources": [
-        "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\SignUp.vue"
+        "C:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\SignUp.vue"
       ],
       "names": [],
       "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AA6HA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;;AAEA;AACA;AACA",
@@ -1361,6 +988,6 @@
       ]
     },
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "2e2f44c5b18beb771ec002084082b463285766f1"
+    "hash": "7b1a2565c76a73e5df22f751125db9f91f8c5bd1"
   }
 }
