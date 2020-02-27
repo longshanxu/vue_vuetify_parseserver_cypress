@@ -1,0 +1,10 @@
+{
+  "extension": [".js", ".vue"],
+  "all": true,
+  "include": [
+    "src/**/*.js",
+    "src/**/*.vue"
+  ],
+  "sourceMap": false,
+  "instrument": false
+}

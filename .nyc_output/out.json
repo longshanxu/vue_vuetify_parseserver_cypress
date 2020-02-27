@@ -1,0 +1,1366 @@
+{
+  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\App.vue": {
+    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\App.vue",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 25,
+          "column": 15
+        },
+        "end": {
+          "line": 25,
+          "column": 17
+        }
+      }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": {
+          "start": {
+            "line": 25,
+            "column": 8
+          },
+          "end": {
+            "line": 25,
+            "column": 9
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 25,
+            "column": 15
+          },
+          "end": {
+            "line": 25,
+            "column": 17
+          }
+        },
+        "line": 25
+      },
+      "1": {
+        "name": "(anonymous_1)",
+        "decl": {
+          "start": {
+            "line": 26,
+            "column": 2
+          },
+          "end": {
+            "line": 26,
+            "column": 3
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 26,
+            "column": 12
+          },
+          "end": {
+            "line": 28,
+            "column": 3
+          }
+        },
+        "line": 26
+      }
+    },
+    "branchMap": {},
+    "s": {
+      "0": 1
+    },
+    "f": {
+      "0": 1,
+      "1": 1
+    },
+    "b": {},
+    "inputSourceMap": {
+      "version": 3,
+      "sources": [
+        "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\App.vue"
+      ],
+      "names": [],
+      "mappings": ";;;;;;;;;;;;;;;;;;;;;AAqBA;AACA;AACA;AACA;AACA;;AAEA;AACA;AACA;AACA",
+      "file": "App.vue",
+      "sourceRoot": "",
+      "sourcesContent": [
+        "<!--\n * @Author: your name\n * @Date: 2019-11-04 19:00:51\n * @LastEditTime: 2019-11-26 20:22:46\n * @LastEditors: Json.Xu\n * @Description: In User Settings Edit\n * @FilePath: \\moch-vue\\src\\App.vue\n -->\n<template>\n  <v-app id=\"app\">\n    <v-content fluid fill-height>\n      <!-- <div id=\"nav\">\n        <router-link :to=\"{name:'user',params:{username:'333'}}\">Go To User</router-link>\n      </div>-->\n      <router-view />\n    </v-content>\n  </v-app>\n</template>\n\n\n<script>\nexport default {\n  name: \"App\",\n  components: {},\n  data: () => ({}),\n  mounted() {\n    \n  },\n  methods: {\n  }\n};\n</script>\n<style scoped>\n</style>\n\n"
+      ]
+    },
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "2684aa4f2d3250b576f38406991dcafecdaf95ee"
+  },
+  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\api\\AxiosService.js": {
+    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\api\\AxiosService.js",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 11,
+          "column": 19
+        },
+        "end": {
+          "line": 22,
+          "column": 2
+        }
+      },
+      "1": {
+        "start": {
+          "line": 29,
+          "column": 4
+        },
+        "end": {
+          "line": 29,
+          "column": 47
+        }
+      }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": {
+          "start": {
+            "line": 28,
+            "column": 2
+          },
+          "end": {
+            "line": 28,
+            "column": 3
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 28,
+            "column": 15
+          },
+          "end": {
+            "line": 30,
+            "column": 3
+          }
+        },
+        "line": 28
+      }
+    },
+    "branchMap": {},
+    "s": {
+      "0": 1,
+      "1": 0
+    },
+    "f": {
+      "0": 0
+    },
+    "b": {},
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "4f5b53f2ec6e0002b0ed0dcba903a70ac262789e"
+  },
+  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\Login.vue": {
+    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\Login.vue",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 66,
+          "column": 6
+        },
+        "end": {
+          "line": 69,
+          "column": 17
+        }
+      },
+      "1": {
+        "start": {
+          "line": 67,
+          "column": 8
+        },
+        "end": {
+          "line": 67,
+          "column": 25
+        }
+      }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": {
+          "start": {
+            "line": 65,
+            "column": 4
+          },
+          "end": {
+            "line": 65,
+            "column": 5
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 65,
+            "column": 12
+          },
+          "end": {
+            "line": 70,
+            "column": 5
+          }
+        },
+        "line": 65
+      },
+      "1": {
+        "name": "(anonymous_1)",
+        "decl": {
+          "start": {
+            "line": 66,
+            "column": 28
+          },
+          "end": {
+            "line": 66,
+            "column": 29
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 66,
+            "column": 35
+          },
+          "end": {
+            "line": 69,
+            "column": 7
+          }
+        },
+        "line": 66
+      },
+      "2": {
+        "name": "(anonymous_2)",
+        "decl": {
+          "start": {
+            "line": 72,
+            "column": 4
+          },
+          "end": {
+            "line": 72,
+            "column": 5
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 72,
+            "column": 18
+          },
+          "end": {
+            "line": 82,
+            "column": 5
+          }
+        },
+        "line": 72
+      }
+    },
+    "branchMap": {},
+    "s": {
+      "0": 0,
+      "1": 0
+    },
+    "f": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "b": {},
+    "inputSourceMap": {
+      "version": 3,
+      "sources": [
+        "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\Login.vue"
+      ],
+      "names": [],
+      "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAyDA;;AAEA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;;AAEA;AACA;;AAEA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA",
+      "file": "Login.vue",
+      "sourceRoot": "",
+      "sourcesContent": [
+        "<!--\r\n * @Author: Json.Xu\r\n * @Date: 2019-11-15 11:15:24\r\n * @LastEditTime : 2020-01-13 13:07:53\r\n * @LastEditors  : Json.Xu\r\n * @Description: \r\n * @FilePath: \\moch-vue\\src\\views\\Login.vue\r\n -->\r\n <template>\r\n  <v-container class=\"pa-0\">\r\n      <v-img\r\n        class=\"white--text align-center\"\r\n        src=\"https://cdn.vuetifyjs.com/images/cards/docks.jpg\"\r\n        style=\"margin-top:0px\"\r\n      >\r\n        <v-card-title>您好!</v-card-title>\r\n      </v-img>\r\n    <v-card class=\"ma-5\" >\r\n    \r\n\r\n      <v-card class=\"mx-auto\" style=\"margin-top:-80px\">\r\n        <v-card-text  class=\"pb-0\">\r\n          <v-form>\r\n            <v-text-field\r\n              outlined\r\n              single-line\r\n              label=\"请输入手机号码\"\r\n              name=\"用户名\"\r\n              prepend-inner-icon=\"mdi-account\"\r\n              type=\"text\"\r\n            />\r\n            <v-text-field\r\n              outlined\r\n              single-line\r\n              label=\"请输入密码\"\r\n              name=\"密码\"\r\n              prepend-inner-icon=\"mdi-lock\"\r\n              type=\"password\"\r\n            />\r\n            <v-row>\r\n              <v-spacer />\r\n              <v-btn text color=\"primary\" to=\"/forget\">忘记密码?</v-btn>\r\n            </v-row>\r\n          </v-form>\r\n        </v-card-text>\r\n        <v-card-actions class=\"pt-0\">\r\n          <v-card-text>\r\n            <v-btn block color=\"primary\" @click=\"login\">登录</v-btn>\r\n            <br />\r\n            <v-btn block outlined color=\"primary\" to=\"/signup\">注册</v-btn>\r\n          </v-card-text>\r\n        </v-card-actions>\r\n      </v-card>\r\n    </v-card>\r\n  </v-container>\r\n</template>\r\n<script>\r\nimport api from \"../../api/AxiosService\";\r\n\r\nexport default {\r\n  props: {\r\n    source: String\r\n  },\r\n  methods: {\r\n    login() {\r\n      api.helloworld().then(res => {\r\n        console.log(res);\r\n        \r\n      }).catch();\r\n    },\r\n\r\n    getuserrole() {\r\n      //console.log(this.$store.state.message);\r\n      // api\r\n      //   .getUserRole()\r\n      //   .then(res => {\r\n      //     console.log(res);\r\n      //   })\r\n      //   .catch(err => {\r\n      //     console.error(err);\r\n      //   });\r\n    }\r\n  }\r\n};\r\n</script>\r\n      \r\n<style scoped>\r\n</style>"
+      ]
+    },
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "b5f09707acf23109d1ddc4a54e2f77c701874a6b"
+  },
+  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\router\\index.js": {
+    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\router\\index.js",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 14,
+          "column": 0
+        },
+        "end": {
+          "line": 14,
+          "column": 18
+        }
+      },
+      "1": {
+        "start": {
+          "line": 16,
+          "column": 15
+        },
+        "end": {
+          "line": 94,
+          "column": 1
+        }
+      },
+      "2": {
+        "start": {
+          "line": 27,
+          "column": 21
+        },
+        "end": {
+          "line": 27,
+          "column": 88
+        }
+      },
+      "3": {
+        "start": {
+          "line": 35,
+          "column": 21
+        },
+        "end": {
+          "line": 35,
+          "column": 89
+        }
+      },
+      "4": {
+        "start": {
+          "line": 43,
+          "column": 21
+        },
+        "end": {
+          "line": 43,
+          "column": 89
+        }
+      },
+      "5": {
+        "start": {
+          "line": 51,
+          "column": 21
+        },
+        "end": {
+          "line": 51,
+          "column": 89
+        }
+      },
+      "6": {
+        "start": {
+          "line": 59,
+          "column": 21
+        },
+        "end": {
+          "line": 59,
+          "column": 91
+        }
+      },
+      "7": {
+        "start": {
+          "line": 67,
+          "column": 21
+        },
+        "end": {
+          "line": 67,
+          "column": 83
+        }
+      },
+      "8": {
+        "start": {
+          "line": 75,
+          "column": 21
+        },
+        "end": {
+          "line": 75,
+          "column": 100
+        }
+      },
+      "9": {
+        "start": {
+          "line": 83,
+          "column": 21
+        },
+        "end": {
+          "line": 83,
+          "column": 98
+        }
+      },
+      "10": {
+        "start": {
+          "line": 86,
+          "column": 25
+        },
+        "end": {
+          "line": 86,
+          "column": 107
+        }
+      },
+      "11": {
+        "start": {
+          "line": 90,
+          "column": 25
+        },
+        "end": {
+          "line": 90,
+          "column": 107
+        }
+      },
+      "12": {
+        "start": {
+          "line": 96,
+          "column": 15
+        },
+        "end": {
+          "line": 100,
+          "column": 2
+        }
+      },
+      "13": {
+        "start": {
+          "line": 102,
+          "column": 0
+        },
+        "end": {
+          "line": 109,
+          "column": 2
+        }
+      },
+      "14": {
+        "start": {
+          "line": 103,
+          "column": 19
+        },
+        "end": {
+          "line": 103,
+          "column": 53
+        }
+      },
+      "15": {
+        "start": {
+          "line": 105,
+          "column": 2
+        },
+        "end": {
+          "line": 107,
+          "column": 3
+        }
+      },
+      "16": {
+        "start": {
+          "line": 105,
+          "column": 32
+        },
+        "end": {
+          "line": 105,
+          "column": 56
+        }
+      },
+      "17": {
+        "start": {
+          "line": 106,
+          "column": 4
+        },
+        "end": {
+          "line": 106,
+          "column": 13
+        }
+      },
+      "18": {
+        "start": {
+          "line": 108,
+          "column": 2
+        },
+        "end": {
+          "line": 108,
+          "column": 8
+        }
+      }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": {
+          "start": {
+            "line": 27,
+            "column": 15
+          },
+          "end": {
+            "line": 27,
+            "column": 16
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 27,
+            "column": 21
+          },
+          "end": {
+            "line": 27,
+            "column": 88
+          }
+        },
+        "line": 27
+      },
+      "1": {
+        "name": "(anonymous_1)",
+        "decl": {
+          "start": {
+            "line": 35,
+            "column": 15
+          },
+          "end": {
+            "line": 35,
+            "column": 16
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 35,
+            "column": 21
+          },
+          "end": {
+            "line": 35,
+            "column": 89
+          }
+        },
+        "line": 35
+      },
+      "2": {
+        "name": "(anonymous_2)",
+        "decl": {
+          "start": {
+            "line": 43,
+            "column": 15
+          },
+          "end": {
+            "line": 43,
+            "column": 16
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 43,
+            "column": 21
+          },
+          "end": {
+            "line": 43,
+            "column": 89
+          }
+        },
+        "line": 43
+      },
+      "3": {
+        "name": "(anonymous_3)",
+        "decl": {
+          "start": {
+            "line": 51,
+            "column": 15
+          },
+          "end": {
+            "line": 51,
+            "column": 16
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 51,
+            "column": 21
+          },
+          "end": {
+            "line": 51,
+            "column": 89
+          }
+        },
+        "line": 51
+      },
+      "4": {
+        "name": "(anonymous_4)",
+        "decl": {
+          "start": {
+            "line": 59,
+            "column": 15
+          },
+          "end": {
+            "line": 59,
+            "column": 16
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 59,
+            "column": 21
+          },
+          "end": {
+            "line": 59,
+            "column": 91
+          }
+        },
+        "line": 59
+      },
+      "5": {
+        "name": "(anonymous_5)",
+        "decl": {
+          "start": {
+            "line": 67,
+            "column": 15
+          },
+          "end": {
+            "line": 67,
+            "column": 16
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 67,
+            "column": 21
+          },
+          "end": {
+            "line": 67,
+            "column": 83
+          }
+        },
+        "line": 67
+      },
+      "6": {
+        "name": "(anonymous_6)",
+        "decl": {
+          "start": {
+            "line": 75,
+            "column": 15
+          },
+          "end": {
+            "line": 75,
+            "column": 16
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 75,
+            "column": 21
+          },
+          "end": {
+            "line": 75,
+            "column": 100
+          }
+        },
+        "line": 75
+      },
+      "7": {
+        "name": "(anonymous_7)",
+        "decl": {
+          "start": {
+            "line": 83,
+            "column": 15
+          },
+          "end": {
+            "line": 83,
+            "column": 16
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 83,
+            "column": 21
+          },
+          "end": {
+            "line": 83,
+            "column": 98
+          }
+        },
+        "line": 83
+      },
+      "8": {
+        "name": "(anonymous_8)",
+        "decl": {
+          "start": {
+            "line": 86,
+            "column": 19
+          },
+          "end": {
+            "line": 86,
+            "column": 20
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 86,
+            "column": 25
+          },
+          "end": {
+            "line": 86,
+            "column": 107
+          }
+        },
+        "line": 86
+      },
+      "9": {
+        "name": "(anonymous_9)",
+        "decl": {
+          "start": {
+            "line": 90,
+            "column": 19
+          },
+          "end": {
+            "line": 90,
+            "column": 20
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 90,
+            "column": 25
+          },
+          "end": {
+            "line": 90,
+            "column": 107
+          }
+        },
+        "line": 90
+      },
+      "10": {
+        "name": "(anonymous_10)",
+        "decl": {
+          "start": {
+            "line": 102,
+            "column": 18
+          },
+          "end": {
+            "line": 102,
+            "column": 19
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 102,
+            "column": 38
+          },
+          "end": {
+            "line": 109,
+            "column": 1
+          }
+        },
+        "line": 102
+      },
+      "11": {
+        "name": "(anonymous_11)",
+        "decl": {
+          "start": {
+            "line": 105,
+            "column": 22
+          },
+          "end": {
+            "line": 105,
+            "column": 23
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 105,
+            "column": 32
+          },
+          "end": {
+            "line": 105,
+            "column": 56
+          }
+        },
+        "line": 105
+      }
+    },
+    "branchMap": {
+      "0": {
+        "loc": {
+          "start": {
+            "line": 105,
+            "column": 2
+          },
+          "end": {
+            "line": 107,
+            "column": 3
+          }
+        },
+        "type": "if",
+        "locations": [
+          {
+            "start": {
+              "line": 105,
+              "column": 2
+            },
+            "end": {
+              "line": 107,
+              "column": 3
+            }
+          },
+          {
+            "start": {
+              "line": 105,
+              "column": 2
+            },
+            "end": {
+              "line": 107,
+              "column": 3
+            }
+          }
+        ],
+        "line": 105
+      },
+      "1": {
+        "loc": {
+          "start": {
+            "line": 105,
+            "column": 6
+          },
+          "end": {
+            "line": 105,
+            "column": 70
+          }
+        },
+        "type": "binary-expr",
+        "locations": [
+          {
+            "start": {
+              "line": 105,
+              "column": 6
+            },
+            "end": {
+              "line": 105,
+              "column": 57
+            }
+          },
+          {
+            "start": {
+              "line": 105,
+              "column": 61
+            },
+            "end": {
+              "line": 105,
+              "column": 70
+            }
+          }
+        ],
+        "line": 105
+      }
+    },
+    "s": {
+      "0": 1,
+      "1": 1,
+      "2": 0,
+      "3": 1,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 1,
+      "13": 1,
+      "14": 2,
+      "15": 2,
+      "16": 2,
+      "17": 0,
+      "18": 2
+    },
+    "f": {
+      "0": 0,
+      "1": 1,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 2,
+      "11": 2
+    },
+    "b": {
+      "0": [
+        0,
+        2
+      ],
+      "1": [
+        2,
+        0
+      ]
+    },
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "d60ff84f17a649ec46841e603ae4e232da7b9fa5"
+  },
+  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\mutation_types.js": {
+    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\mutation_types.js",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 10,
+          "column": 21
+        },
+        "end": {
+          "line": 12,
+          "column": 1
+        }
+      }
+    },
+    "fnMap": {},
+    "branchMap": {},
+    "s": {
+      "0": 1
+    },
+    "f": {},
+    "b": {},
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "a39f253e7a7eb8a06913cdc8c25c4fe36ea9a509"
+  },
+  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\mutations.js": {
+    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\mutations.js",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 13,
+          "column": 18
+        },
+        "end": {
+          "line": 21,
+          "column": 1
+        }
+      },
+      "1": {
+        "start": {
+          "line": 16,
+          "column": 6
+        },
+        "end": {
+          "line": 16,
+          "column": 36
+        }
+      },
+      "2": {
+        "start": {
+          "line": 17,
+          "column": 6
+        },
+        "end": {
+          "line": 17,
+          "column": 55
+        }
+      },
+      "3": {
+        "start": {
+          "line": 18,
+          "column": 6
+        },
+        "end": {
+          "line": 18,
+          "column": 74
+        }
+      }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": {
+          "start": {
+            "line": 15,
+            "column": 4
+          },
+          "end": {
+            "line": 15,
+            "column": 5
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 15,
+            "column": 48
+          },
+          "end": {
+            "line": 19,
+            "column": 5
+          }
+        },
+        "line": 15
+      }
+    },
+    "branchMap": {},
+    "s": {
+      "0": 1,
+      "1": 0,
+      "2": 0,
+      "3": 0
+    },
+    "f": {
+      "0": 0
+    },
+    "b": {},
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "9ff682ed0a1d039fb63fdea31f8a2890ba3552ae"
+  },
+  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\actions.js": {
+    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\actions.js",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 11,
+          "column": 16
+        },
+        "end": {
+          "line": 16,
+          "column": 1
+        }
+      },
+      "1": {
+        "start": {
+          "line": 14,
+          "column": 6
+        },
+        "end": {
+          "line": 14,
+          "column": 50
+        }
+      }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": {
+          "start": {
+            "line": 13,
+            "column": 4
+          },
+          "end": {
+            "line": 13,
+            "column": 5
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 13,
+            "column": 48
+          },
+          "end": {
+            "line": 15,
+            "column": 5
+          }
+        },
+        "line": 13
+      }
+    },
+    "branchMap": {},
+    "s": {
+      "0": 1,
+      "1": 0
+    },
+    "f": {
+      "0": 0
+    },
+    "b": {},
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "22fe6ef1ec14f71aeeaab433134828832d504aa9"
+  },
+  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\index.js": {
+    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\store\\index.js",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 15,
+          "column": 0
+        },
+        "end": {
+          "line": 15,
+          "column": 13
+        }
+      },
+      "1": {
+        "start": {
+          "line": 17,
+          "column": 14
+        },
+        "end": {
+          "line": 19,
+          "column": 1
+        }
+      },
+      "2": {
+        "start": {
+          "line": 20,
+          "column": 14
+        },
+        "end": {
+          "line": 26,
+          "column": 2
+        }
+      }
+    },
+    "fnMap": {},
+    "branchMap": {},
+    "s": {
+      "0": 1,
+      "1": 1,
+      "2": 1
+    },
+    "f": {},
+    "b": {},
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "33b7f526b16d153316c111240531c38446f3b930"
+  },
+  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\plugins\\vuetify.js": {
+    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\plugins\\vuetify.js",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 14,
+          "column": 0
+        },
+        "end": {
+          "line": 14,
+          "column": 17
+        }
+      }
+    },
+    "fnMap": {},
+    "branchMap": {},
+    "s": {
+      "0": 1
+    },
+    "f": {},
+    "b": {},
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "aec38be2ec78cee6a3f29c8257e380e1088d2993"
+  },
+  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\main.js": {
+    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\main.js",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 16,
+          "column": 0
+        },
+        "end": {
+          "line": 21,
+          "column": 17
+        }
+      },
+      "1": {
+        "start": {
+          "line": 20,
+          "column": 15
+        },
+        "end": {
+          "line": 20,
+          "column": 21
+        }
+      }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": {
+          "start": {
+            "line": 20,
+            "column": 10
+          },
+          "end": {
+            "line": 20,
+            "column": 11
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 20,
+            "column": 15
+          },
+          "end": {
+            "line": 20,
+            "column": 21
+          }
+        },
+        "line": 20
+      }
+    },
+    "branchMap": {},
+    "s": {
+      "0": 1,
+      "1": 1
+    },
+    "f": {
+      "0": 1
+    },
+    "b": {},
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "15b32b1c0d9a46caad5139a7d99c61840f23f2bc"
+  },
+  "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\SignUp.vue": {
+    "path": "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\SignUp.vue",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 128,
+          "column": 4
+        },
+        "end": {
+          "line": 132,
+          "column": 6
+        }
+      },
+      "1": {
+        "start": {
+          "line": 136,
+          "column": 6
+        },
+        "end": {
+          "line": 136,
+          "column": 26
+        }
+      },
+      "2": {
+        "start": {
+          "line": 137,
+          "column": 6
+        },
+        "end": {
+          "line": 137,
+          "column": 24
+        }
+      },
+      "3": {
+        "start": {
+          "line": 138,
+          "column": 6
+        },
+        "end": {
+          "line": 138,
+          "column": 26
+        }
+      },
+      "4": {
+        "start": {
+          "line": 141,
+          "column": 6
+        },
+        "end": {
+          "line": 141,
+          "column": 26
+        }
+      },
+      "5": {
+        "start": {
+          "line": 142,
+          "column": 6
+        },
+        "end": {
+          "line": 142,
+          "column": 25
+        }
+      },
+      "6": {
+        "start": {
+          "line": 143,
+          "column": 6
+        },
+        "end": {
+          "line": 143,
+          "column": 25
+        }
+      }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": {
+          "start": {
+            "line": 127,
+            "column": 2
+          },
+          "end": {
+            "line": 127,
+            "column": 3
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 127,
+            "column": 9
+          },
+          "end": {
+            "line": 133,
+            "column": 3
+          }
+        },
+        "line": 127
+      },
+      "1": {
+        "name": "(anonymous_1)",
+        "decl": {
+          "start": {
+            "line": 135,
+            "column": 4
+          },
+          "end": {
+            "line": 135,
+            "column": 5
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 135,
+            "column": 15
+          },
+          "end": {
+            "line": 139,
+            "column": 5
+          }
+        },
+        "line": 135
+      },
+      "2": {
+        "name": "(anonymous_2)",
+        "decl": {
+          "start": {
+            "line": 140,
+            "column": 4
+          },
+          "end": {
+            "line": 140,
+            "column": 5
+          }
+        },
+        "loc": {
+          "start": {
+            "line": 140,
+            "column": 14
+          },
+          "end": {
+            "line": 144,
+            "column": 5
+          }
+        },
+        "line": 140
+      }
+    },
+    "branchMap": {},
+    "s": {
+      "0": 1,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+    },
+    "f": {
+      "0": 1,
+      "1": 0,
+      "2": 0
+    },
+    "b": {},
+    "inputSourceMap": {
+      "version": 3,
+      "sources": [
+        "c:\\Users\\longs\\vue_vuetify_parseserver\\src\\views\\login\\SignUp.vue"
+      ],
+      "names": [],
+      "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AA6HA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;;AAEA;AACA;AACA",
+      "file": "SignUp.vue",
+      "sourceRoot": "",
+      "sourcesContent": [
+        "<!--\r\n * @Author: Json.Xu\r\n * @Date: 2019-11-26 10:13:57\r\n * @LastEditTime: 2019-11-27 18:40:46\r\n * @LastEditors: Json.Xu\r\n * @Description: \r\n * @FilePath: \\moch-vue-mobile\\src\\views\\SignUp.vue\r\n -->\r\n<template>\r\n  <v-container class=\"pa-0\">\r\n    <v-card class=\"overflow-hidden\" flat>\r\n      <v-app-bar fixed dark color=\"primary\" class=\"pa-0\" dense scroll-target=\"#scrolling-sheet\">\r\n        <v-row align=\"center\" justify=\"center\" dense>\r\n          <v-col cols=\"2\">\r\n            <router-link to=\"/login\">\r\n              <v-btn icon>\r\n                <v-icon>mdi-arrow-left</v-icon>\r\n              </v-btn>\r\n            </router-link>\r\n          </v-col>\r\n          <v-col cols=\"8\" style=\"text-align:center\">\r\n            <v-toolbar-title class=\"white--text\">注册</v-toolbar-title>\r\n          </v-col>\r\n          <v-col cols=\"2\">\r\n            <v-spacer></v-spacer>\r\n          </v-col>\r\n        </v-row>\r\n      </v-app-bar>\r\n      <v-sheet id=\"scrolling-sheet\" class=\"my-12\">\r\n        <v-container>\r\n          <v-card class=\"mx-auto\" flat v-show=\"sicode\">\r\n            <v-card-text>\r\n              <v-form>\r\n                <v-text-field\r\n                  outlined\r\n                  single-line\r\n                  placeholder=\"请输入手机号码\"\r\n                  name=\"tel\"\r\n                  prepend-inner-icon=\"mdi-account\"\r\n                  type=\"text\"\r\n                ></v-text-field>\r\n                <v-text-field\r\n                  outlined\r\n                  single-line\r\n                  placeholder=\"请输入验证码\"\r\n                  prepend-inner-icon=\"mdi-lock\"\r\n                  name=\"code\"\r\n                  type=\"password\"\r\n                >\r\n                  <template v-slot:append>\r\n                    <v-btn\r\n                      text\r\n                      color=\"primary\"\r\n                      height=\"24\"\r\n                      style=\"border-left:1px solid #ccc ;\"\r\n                    >获取验证码</v-btn>\r\n                  </template>\r\n                </v-text-field>\r\n              </v-form>\r\n            </v-card-text>\r\n            <v-card-actions class=\"pt-0\">\r\n              <v-card-text>\r\n                <v-btn block color=\"primary\" @click=\"signcode\">下一步</v-btn>\r\n              </v-card-text>\r\n            </v-card-actions>\r\n          </v-card>\r\n          <v-card class=\"mx-auto\" flat v-show=\"sipwd\">\r\n            <v-card-text>\r\n              <v-form>\r\n                <v-text-field\r\n                  outlined\r\n                  single-line\r\n                  placeholder=\"请输入密码（8-20位数字或字母）\"\r\n                  name=\"pwd\"\r\n                  prepend-inner-icon=\"mdi-lock\"\r\n                  type=\"password\"\r\n                ></v-text-field>\r\n                <v-text-field\r\n                  outlined\r\n                  single-line\r\n                  placeholder=\"请输入密码（8-20位数字或字母）\"\r\n                  prepend-inner-icon=\"mdi-lock\"\r\n                  name=\"pwdagain\"\r\n                  type=\"password\"\r\n                ></v-text-field>\r\n              </v-form>\r\n            </v-card-text>\r\n            <v-card-actions class=\"pt-0\">\r\n              <v-card-text>\r\n                <v-btn block color=\"primary\" @click=\"signpwd\">下一步</v-btn>\r\n              </v-card-text>\r\n            </v-card-actions>\r\n          </v-card>\r\n          <v-card class=\"mx-auto\" flat v-show=\"siname\">\r\n            <v-card-text>\r\n              <v-form>\r\n                <v-text-field\r\n                  outlined\r\n                  single-line\r\n                  placeholder=\"请输入真实姓名便于创建/加入公司\"\r\n                  name=\"company\"\r\n                  prepend-inner-icon=\"mdi-account\"\r\n                  type=\"text\"\r\n                ></v-text-field>\r\n              </v-form>\r\n            </v-card-text>\r\n            <v-card-actions class=\"pt-0\">\r\n              <v-card-text>\r\n                <v-btn block color=\"primary\" to=\"/elevator\">下一步</v-btn>\r\n              </v-card-text>\r\n            </v-card-actions>\r\n          </v-card>\r\n\r\n          <v-footer fixed>\r\n            <v-btn text color=\"primary\" class=\"mx-auto\">\r\n              <span style=\"color:grey\">注册代表您已阅读并同意</span>《佳格维保协议》\r\n            </v-btn>\r\n          </v-footer>\r\n        </v-container>\r\n      </v-sheet>\r\n    </v-card>\r\n  </v-container>\r\n</template>\r\n\r\n<script>\r\nexport default {\r\n  data() {\r\n    return {\r\n      sicode: true,\r\n      sipwd: false,\r\n      siname: false\r\n    };\r\n  },\r\n  methods: {\r\n    signcode() {\r\n      this.sicode = false;\r\n      this.sipwd = true;\r\n      this.siname = false;\r\n    },\r\n    signpwd() {\r\n      this.sicode = false;\r\n      this.sipwd = false;\r\n      this.siname = true;\r\n    }\r\n    // signname() {\r\n\r\n    // }\r\n  }\r\n};\r\n</script>\r\n\r\n<style scoped>\r\n</style>"
+      ]
+    },
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "2e2f44c5b18beb771ec002084082b463285766f1"
+  }
+}

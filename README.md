@@ -1,13 +1,13 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2019-12-21 14:51:07
- * @LastEditTime: 2020-02-25 17:31:02
+ * @LastEditTime: 2020-02-27 16:57:28
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\README.md
  -->
 # VUE + VUE_Cli 4.0 + Vuetify UI + ParseServer + Mongodb 
-# VUE + VUECLI 4.0 + Cypress + e2e + CodeCoverage
+# VUE + VUECLI 4.0 + Cypress + e2e + CodeCoverage 
 
 ## Project setup
 ```
@@ -53,8 +53,8 @@ VUE + VUE_Cli 4.0 + Vuetify UI + ParseServer + Mongodb
 4. npm install ( Open Project Folder)
 
 ### 启动服务 run Parse Server 
-npm run server  
-Parse Server Address: http://localhost (config in server.js)
+npm run dev  
+Parse Server Address: http://localhost/parse (config in server.js)
 
 ### Dashboard Address
 http://localhost/dashboard
@@ -63,3 +63,6 @@ pwd : admin
 
 ### Dev Demo with Postman 
 http://localost/parse/functions/hello (need headers with Authentication and application)
+
+### documents 
+./documents ( mind map )
