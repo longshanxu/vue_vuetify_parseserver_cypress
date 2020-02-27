@@ -1,13 +1,13 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2019-12-21 14:51:07
- * @LastEditTime: 2020-02-27 16:57:28
+ * @LastEditTime: 2020-02-27 17:55:57
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\README.md
  -->
 # VUE + VUE_Cli 4.0 + Vuetify UI + ParseServer + Mongodb 
-# VUE + VUECLI 4.0 + Cypress + e2e + CodeCoverage 
+# Cypress + e2e + CodeCoverage 
 
 ## Project setup
 ```
@@ -24,20 +24,12 @@ npm run serve
 npm run build
 ```
 
-### Run your unit tests
-```
-npm run test:unit
-```
 
 ### Run your end-to-end tests
 ```
 npm run test:e2e
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
@@ -65,4 +57,4 @@ pwd : admin
 http://localost/parse/functions/hello (need headers with Authentication and application)
 
 ### documents 
-./documents ( mind map )
+./documents ( mind map and others )
