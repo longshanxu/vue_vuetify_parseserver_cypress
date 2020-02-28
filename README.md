@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2019-12-21 14:51:07
- * @LastEditTime: 2020-02-27 17:55:57
+ * @LastEditTime: 2020-02-28 10:04:55
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\README.md
@@ -58,3 +58,7 @@ http://localost/parse/functions/hello (need headers with Authentication and appl
 
 ### documents 
 ./documents ( mind map and others )
+
+
+### cypress e2e 
+npm run test:e2e 

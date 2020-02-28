@@ -1,22 +1,21 @@
 /*
  * @Author: your name
  * @Date: 2019-11-04 19:00:51
- * @LastEditTime: 2020-02-27 17:23:57
+ * @LastEditTime: 2020-02-28 11:31:33
  * @LastEditors: Json.Xu
  * @Description: In User Settings Edit
  * @FilePath: \vue_vuetify_parseserver\src\router\index.js
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-//import Index from '../views/Login.vue'
-import Index from '../views/Login'
+import Home from '../views/Home'
 
 Vue.use(VueRouter)
 
 const routes = [{
     path: '/',
-    name: 'index',
-    component: Index
+    name: 'home',
+    component: Home
   },
   {
     path: '/signup',
@@ -34,13 +33,13 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  const loggedIn = localStorage.getItem('user_token')
+// router.beforeEach((to, from, next) => {
+//   const loggedIn = localStorage.getItem('user_token')
 
-  if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
-    next('/')
-  }
-  next()
-})
+//   if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
+//     next('/')
+//   }
+//   next()
+// })
 
 export default router

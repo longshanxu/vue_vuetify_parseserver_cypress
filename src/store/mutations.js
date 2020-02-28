@@ -1,23 +1,33 @@
 /*
  * @Author: song
  * @Date: 2019-11-15 13:50:40
- * @LastEditTime : 2019-12-27 15:05:07
+ * @LastEditTime : 2020-01-02 13:32:14
  * @LastEditors  : Json.Xu
  * @Description: 
  * @FilePath: \moch-vue\src\store\mutations.js
  */
 import types from './mutation_types'
-//import axios from 'axios'
-import apiservices from '../api/AxiosService'
 
 const mutations = {
-    //登录
-    [types.SET_USERINFO_TOKEN] (state, payload) {
-      state.userInfo = payload.token
-      localStorage.setItem('user_token', payload.token)
-      apiservices.defaults.headers.common['Authorization'] = payload.token
-    },
-    
+  //登录
+
+  [types.SET_USER](state, payload) {
+
+    state.user.name = payload.user.userName
+    state.user.phone = payload.user.phone
+    state.user.role = payload.user.role
+    state.user.token = payload.user.token
+
+  },
+  [types.SET_LOADING](state, payload) {
+    state.overlay = payload
+  },
+  [types.SET_SNACKBAR](state, payload) {
+    state.snackbar = payload
+  },
+  [types.SET_SNACKBARMSG](state, payload) {
+    state.snackbarmsg = payload
+  }
 }
 
 export default mutations;

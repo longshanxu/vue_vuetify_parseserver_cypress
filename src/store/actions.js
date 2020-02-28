@@ -1,18 +1,29 @@
 /*
  * @Author: song
  * @Date: 2019-11-15 13:50:40
- * @LastEditTime: 2019-11-25 17:01:17
- * @LastEditors: Json.Xu
+ * @LastEditTime : 2019-12-30 18:00:47
+ * @LastEditors  : Json.Xu
  * @Description: 
  * @FilePath: \moch-vue\src\store\actions.js
  */
 import types from './mutation_types'
 
 const actions = {
-    //登录
-    [types.SET_USERINFO_TOKEN](context,payload) {
-      context.commit('SET_USERINFO_TOKEN',payload)
-    },
+  //设置用户名和密码
+  [types.SET_USER](context, payload) {
+    context.commit('SET_USER', payload)
+  },
+  //设置阴影
+  [types.SET_LOADING](context, payload) {
+    context.commit('SET_LOADING', payload)
+  },
+  //设置提示框
+  [types.SET_SNACKBAR](context, payload) {
+    context.commit('SET_SNACKBAR', payload)
+  },
+  [types.SET_SNACKBARMSG](context, payload) {
+    context.commit('SET_SNACKBARMSG', payload)
+  },
 }
 
 export default actions;

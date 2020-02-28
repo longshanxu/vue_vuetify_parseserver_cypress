@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-11-01 16:36:40
- * @LastEditTime: 2019-11-22 17:33:11
- * @LastEditors: Json.Xu
+ * @LastEditTime : 2019-12-30 17:43:30
+ * @LastEditors  : Json.Xu
  * @Description: In User Settings Edit
  * @FilePath: \MOCH-VUE\src\vuex\test_vuex.js
  */
@@ -15,8 +15,18 @@ import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex)
 
 const state = {
-  userInfo : "",
+  user: {
+    name: "",
+    phone: "",
+    token: "",
+    role: ""
+  },
+  overlay: false, //loading 阴影
+  snackbar: false, //提示框
+  snackbarmsg: "", //提示内容
 }
+
+
 const store = new Vuex.Store({
   actions,
   mutations,

@@ -1,33 +1,29 @@
 <!--
  * @Author: your name
  * @Date: 2019-11-04 19:00:51
- * @LastEditTime: 2019-11-26 20:22:46
+ * @LastEditTime: 2020-02-28 11:28:12
  * @LastEditors: Json.Xu
  * @Description: In User Settings Edit
- * @FilePath: \moch-vue\src\App.vue
+ * @FilePath: \vue_vuetify_parseserver\src\App.vue
  -->
 <template>
   <v-app id="app">
-    <v-content fluid fill-height>
-      <!-- <div id="nav">
-        <router-link :to="{name:'user',params:{username:'333'}}">Go To User</router-link>
-      </div>-->
-      <router-view />
-    </v-content>
+    <router-view />
+    <LoadingCard></LoadingCard>
   </v-app>
 </template>
 
 
 <script>
+import LoadingCard from "./components/LoadingCard";
 export default {
   name: "App",
-  components: {},
-  data: () => ({}),
-  mounted() {
-    
+  components: {
+    LoadingCard
   },
-  methods: {
-  }
+  data: () => ({}),
+  mounted() {},
+  methods: {}
 };
 </script>
 <style scoped>
