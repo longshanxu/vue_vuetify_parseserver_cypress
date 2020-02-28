@@ -1,13 +1,16 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2019-12-21 14:51:07
- * @LastEditTime: 2020-02-28 10:04:55
+ * @LastEditTime: 2020-02-28 14:23:00
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\README.md
  -->
-# VUE + VUE_Cli 4.0 + Vuetify UI + ParseServer + Mongodb 
+# VUE + VUE_Cli 4.0 + Vuetify UI + Express + ParseServer + Mongodb 
 # Cypress + e2e + CodeCoverage 
+> 基于vue-cli3 构建的 vue + express + Vuetify + ParseSever + Mongodb的集成开发的基础模板
+> 同时集成了(E2E)端到端的测试和代码覆盖率测试
+
 
 ## Project setup
 ```
@@ -62,3 +65,10 @@ http://localost/parse/functions/hello (need headers with Authentication and appl
 
 ### cypress e2e 
 npm run test:e2e 
+
+### dev UI Address 
+npm run serve 
+http://localhost:90
+为了和测试环境的server 不进行合并。开发环境的时候UI访问端口为90，支持热更新
+测试环境的server的端口为80,发布到生产环境的时候，只需要发布UI，然后运行生产server就可以了
+去掉了统一端口开发的配置文件。

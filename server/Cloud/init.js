@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-02-26 18:36:50
+ * @LastEditTime: 2020-02-28 13:47:03
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -135,3 +135,6 @@ Parse
         }
 
     });
+
+
+    

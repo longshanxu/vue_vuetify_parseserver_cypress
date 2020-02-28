@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-12 17:51:18
- * @LastEditTime: 2020-02-27 17:15:55
+ * @LastEditTime: 2020-02-28 14:19:18
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\vue.config.js
@@ -17,7 +17,7 @@ module.exports = {
     "vuetify"
   ],
   devServer: {
-    port: 80, // 端口
+    port: 90, // 端口
   },
   configureWebpack: {
     plugins: [

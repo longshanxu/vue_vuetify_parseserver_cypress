@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2020-02-28 11:49:47
+ * @LastEditTime: 2020-02-28 15:47:54
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -29,16 +29,25 @@
     <v-content class="fill-height grey lighten-3 align-start justify-start">
       <v-tabs-items v-model="tab" touchless>
         <v-tab-item value="tab-today" class="grey lighten-3">
-          <v-card class="ma-0 pa-0" flat slot>
+          <v-card class="ma-0 pa-0" flat slot v-for="(item,index) in datalist" :key="index">
             <v-row dense class="ma-0">
-              <v-col style="text-align:center" cols="4">主队</v-col>
-              <v-col style="text-align:center" cols="4">英超（19:30）</v-col>
-              <v-col style="text-align:center" cols="4">客队</v-col>
+              <v-col align-self="center" style="text-align:center;font-weight:700" cols="4">{{item.home}}</v-col>
+              <v-col align-self="center" style="text-align:center;" cols="4">({{item.league}})<br/>{{item.matchTime.substr(10,6)}}</v-col>
+              <v-col align-self="center" style="text-align:center;font-weight:700" cols="4">{{item.guest}}</v-col>
             </v-row>
-            <v-row dense class="ma-0" >
-              <v-col style="text-align:center" cols="4">胜平负：胜</v-col>
-              <v-col style="text-align:center" cols="4">大小球：大2</v-col>
-              <v-col style="text-align:center" cols="4">比分：2:1</v-col>
+            <v-row dense class="ma-0" v-show="showtuijian">
+              <v-col align-self="center" style="text-align:center;font-size:14px" cols="4">
+                胜平负：
+                <span style="font-size:16px">胜</span>
+              </v-col>
+              <v-col align-self="center" style="text-align:center;font-size:14px" cols="4">
+                大小球：
+                <span style="font-size:16px">大2</span>
+              </v-col>
+              <v-col align-self="center" style="text-align:center;font-size:14px" cols="4">
+                比分：
+                <span style="font-size:16px">2:1</span>
+              </v-col>
             </v-row>
             <v-divider></v-divider>
           </v-card>
@@ -49,16 +58,32 @@
 </template>
 
 <script>
-//import api from "../api/AxiosService";
+import api from "../api/AxiosService";
 export default {
   data() {
     return {
-      tab: null
+      tab: null,
+      showtuijian: true,
+      date: new Date().toISOString().substr(0, 10),
+      datalist: []
     };
   },
   computed: {},
   methods: {},
-  mounted() {}
+  mounted() {
+    const data = {
+      date: this.date
+    };
+    api
+      .GetToday(data)
+      .then(res => {
+         // debugger
+        if (res.data.result.code == "200") {
+          this.datalist = res.data.result.data
+        }
+      })
+      .catch();
+  }
 };
 </script>
 
