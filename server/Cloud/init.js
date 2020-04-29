@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-02-28 13:47:03
+ * @LastEditTime: 2020-03-09 14:05:49
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -136,5 +136,227 @@ Parse
 
     });
 
+//获取历史数据 两队数据 主队最近数据 客队最近数据
 
-    
+Parse
+    .Cloud
+    .define("GetHistoryByID", async (request) => {
+        try {
+
+            let matchId = "196814419";
+
+
+            var historyMoney = Parse.Object.extend("HistoryMoney");
+            var query = new Parse.Query(historyMoney);
+            query.equalTo("matchId", matchId);
+            query.limit(100);
+            const results = await query.find();
+            for (var i = 0; i < results.length; i++) {
+                var object = results[i];
+
+                await object.destroy();
+            }
+
+
+
+            const options = {
+                url: 'https://vipc.cn/i/match/football/' + matchId + '/history',
+                headers: {
+                    'User-Agent': 'request'
+                },
+                gzip: true
+            };
+
+
+            httprequest(options, async function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    let data = await JSON.parse(body);
+                    let money = new historyMoney();
+                    money.set("matchId", matchId); //全局唯一ID
+                    money.set("home", data.recent.home.summary); //主队历史记录
+                    money.set("guest", data.recent.guest.summary); //客队历史记录
+                    money.set("against", data.against.summary); //两队对比记录
+                    money.save();
+                }
+            });
+            return {
+                code: 200,
+                msg: "获取数据成功"
+            }
+
+        } catch (error) {
+            return {
+                code: 200,
+                msg: "获取数据失败"
+            }
+        }
+
+    });
+
+
+
+//获取赔率 平均赔率 威廉 bet365 bet10 体彩  常用的4个赔率 
+
+Parse
+    .Cloud
+    .define("GetOddsByID", async (request) => {
+        try {
+
+            let matchId = "196814419";
+
+
+            var historyMoney = Parse.Object.extend("OddsMoney");
+            var query = new Parse.Query(historyMoney);
+            query.equalTo("matchId", matchId);
+            query.limit(100);
+            const results = await query.find();
+            for (var i = 0; i < results.length; i++) {
+                var object = results[i];
+
+                await object.destroy();
+            }
+
+
+
+            const options = {
+                url: 'https://vipc.cn/i/match/football/' + matchId + '/odds/euro',
+                headers: {
+                    'User-Agent': 'request'
+                },
+                gzip: true
+            };
+
+
+            httprequest(options, async function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    let data = await JSON.parse(body);
+                    let money = new historyMoney();
+                    money.set("matchId", matchId);           //全局唯一ID
+                    for (let index = 0; index < data.odds.length; index++) {
+                        const element = data.odds[index];
+                        if (element.companyName == "平均欧赔" || element.companyName == "威廉希尔" || element.companyName == "Bet365" || element.companyName == "10BET") {
+
+
+
+                            if (element.companyId == "") {
+                                money.set("average", element);    //平均欧赔
+                            }
+                            if (element.companyId == "115") {
+                                money.set("weilian", element);    //威廉
+                            }
+                            if (element.companyId == "281") {
+                                money.set("bet365", element);    //bet365
+                            }
+                            if (element.companyId == "16") {
+                                money.set("bet10", element);     //bet10
+                            }
+                            // if(element.companyId ==""){
+                            //     money.set("ticai", element);    //体彩
+                            // }
+
+                        }
+
+                    }
+                    money.save();
+
+                }
+            });
+            return {
+                code: 200,
+                msg: "获取数据成功"
+            }
+
+        } catch (error) {
+            return {
+                code: 200,
+                msg: "获取数据失败"
+            }
+        }
+
+    });
+
+//获取盘口 亚盘 大小球 bet365 bet10 常用的2个赔率
+//https://vipc.cn/i/match/football/196814419/odds/pankou
+
+Parse
+    .Cloud
+    .define("GetPankouByID", async (request) => {
+        try {
+
+            let matchId = "196814419";
+
+
+            var historyMoney = Parse.Object.extend("PankouMoney");
+            var query = new Parse.Query(historyMoney);
+            query.equalTo("matchId", matchId);
+            query.limit(100);
+            const results = await query.find();
+            for (var i = 0; i < results.length; i++) {
+                var object = results[i];
+
+                await object.destroy();
+            }
+
+
+
+            const options = {
+                url: 'https://vipc.cn/i/match/football/'+matchId+'/odds/pankou',
+                headers: {
+                    'User-Agent': 'request'
+                },
+                gzip: true
+            };
+
+
+            httprequest(options, async function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    let data = await JSON.parse(body);
+                    let money = new historyMoney();
+                    money.set("matchId", matchId);           //全局唯一ID
+                    for (let index = 0; index < data.asia.length; index++) {
+                        const element = data.asia[index];
+                        if (element.companyName == "Bet365" || element.companyName == "10BET") {                        
+                            if (element.companyId == "8") {
+                                money.set("bet365pankou", element);    //bet365
+                            }
+                            if (element.companyId == "22") {
+                                money.set("bet10pankou", element);     //bet10
+                            }
+
+                        }
+
+                    }
+
+                    for (let index = 0; index < data.dxq.length; index++) {
+                        const element = data.dxq[index];
+                        if (element.companyName == "Bet365" || element.companyName == "10BET") {                        
+                            if (element.companyId == "8") {
+                                money.set("bet365qiu", element);    //bet365
+                            }
+                            if (element.companyId == "22") {
+                                money.set("bet10qiu", element);     //bet10
+                            }
+
+                        }
+
+                    }
+                    money.save();
+
+                }
+            });
+            return {
+                code: 200,
+                msg: "获取数据成功"
+            }
+
+        } catch (error) {
+            return {
+                code: 200,
+                msg: "获取数据失败"
+            }
+        }
+
+    });
+
+
+//获取竞彩热度

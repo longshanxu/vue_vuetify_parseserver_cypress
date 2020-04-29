@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2020-02-28 15:47:54
+ * @LastEditTime: 2020-04-23 14:51:56
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -27,6 +27,7 @@
       </template>
     </v-app-bar>
     <v-content class="fill-height grey lighten-3 align-start justify-start">
+      <a href="/admin">admin</a>
       <v-tabs-items v-model="tab" touchless>
         <v-tab-item value="tab-today" class="grey lighten-3">
           <v-card class="ma-0 pa-0" flat slot v-for="(item,index) in datalist" :key="index">

@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-29 15:50:37
- * @LastEditTime: 2020-02-26 10:27:17
+ * @LastEditTime: 2020-04-23 15:59:05
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server.js
@@ -78,7 +78,7 @@ app.use('/dashboard', dashboard);
 
 app.use(express.static('./dist'));
 
-app.use(function respondError(err, req, res, next) {
+app.use(function respondError(err, req, res) {
   console.log('500');
   var status,
     errmsg;
@@ -99,7 +99,7 @@ app.use(function respondError(err, req, res, next) {
 
 //var httpServer = require('http').createServer(app);
 
-app.listen(80, function (err, result) {
+app.listen(80, function (err) {
 
   if (err) {
     console.log(err);
