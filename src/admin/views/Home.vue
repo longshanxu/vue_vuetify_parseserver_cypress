@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2020-04-27 14:53:11
+ * @LastEditTime: 2020-05-12 09:22:17
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\admin\views\Home.vue
@@ -53,9 +53,9 @@ export default {
       items: [
         { icon: "mdi-file-excel", text: "CSS第一套", url: "/admin/css1" },
         { icon: "mdi-cannabis", text: "CSS第二套",url:"/admin/css2" },
-        { icon: "mdi-car-brake-retarder", text: "Create new label" },
-        { icon: "mdi-car-clutch", text: "Archive" },
-        { icon: "mdi-calendar-month", text: "Trash" },
+        { icon: "mdi-car-brake-retarder", text: "js7种设计模式",url:"/admin/js" },
+        { icon: "mdi-car-clutch",text: "typescript",url:"/admin/typescript"  },
+        { icon: "mdi-calendar-month",text: "jsmark",url:"/admin/jsmark"  },
         { icon: "mdi-led-on", text: "Settings" },
         { icon: "mdi-eye-outline", text: "Trash" },
         { icon: "mdi-wifi-strength-2-alert", text: "Help" },

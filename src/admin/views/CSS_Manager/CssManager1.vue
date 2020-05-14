@@ -1,10 +1,10 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-04-24 09:06:10
- * @LastEditTime: 2020-04-29 14:05:33
+ * @LastEditTime: 2020-04-30 13:46:39
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver\src\admin\views\CSS_Manager\CssManger1.vue
+ * @FilePath: \vue_vuetify_parseserver\src\admin\views\CSS_Manager\CssManager1.vue
  -->
 <template>
   <v-container class="pa-0" fluid>
@@ -59,3 +59,4 @@ export default {
 <style scoped>
 </style>
 
+ 

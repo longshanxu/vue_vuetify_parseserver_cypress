@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-04 19:00:51
- * @LastEditTime: 2020-04-27 16:10:11
+ * @LastEditTime: 2020-05-12 09:23:24
  * @LastEditors: Json.Xu
  * @Description: In User Settings Edit
  * @FilePath: \vue_vuetify_parseserver\src\admin\router\index.js
@@ -15,7 +15,6 @@ Vue.use(VueRouter)
 
 const routes = [{
   path: '/admin',
-  name: 'admin',
   component: Home,
   children: [
     { path: '', component: Index },
@@ -31,11 +30,26 @@ const routes = [{
       path:'css2',
       name:'css2',
       component: () => import( /* webpackChunkName: "about" */ '../views/CSS_Manager/CssManager2')
+    },
+    {
+      path:'js',
+      name:'js',
+      component: () => import( /* webpackChunkName: "about" */ '../views/CSS_Manager/JsManager')
+    },
+    {
+      path:'typescript',
+      name:'typescript',
+      component: () => import( /* webpackChunkName: "about" */ '../views/CSS_Manager/Typrescript')
+    },
+    {
+      path:'jsmark',
+      name:'jsmark',
+      component: () => import( /* webpackChunkName: "about" */ '../views/CSS_Manager/JsMark')
     }
   ]
 }
 ]
-console.log(process.env.BASE_URL);
+
 
 const router = new VueRouter({
   mode: 'history',

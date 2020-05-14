@@ -12,7 +12,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "cypress": "npx cypress open",
-    "dev": "nodemon ./server.js --config nodemon.config.json"
+    "dev": "set NODE_ENV=production && nodemon ./server.js --config nodemon.config.json"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -21,6 +21,7 @@
     "echarts": "^4.4.0",
     "express": "^4.17.1",
     "parse-server": "^3.9.0",
+    "serve-index": "^1.9.1",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
     "vuetify": "^2.2.23",

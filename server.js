@@ -1,12 +1,13 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-29 15:50:37
- * @LastEditTime: 2020-04-23 15:59:05
+ * @LastEditTime: 2020-05-10 12:58:43
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server.js
  */
 const express = require('express');
+const serveIndex = require('serve-index');
 const ParseServer = require('parse-server').ParseServer;
 const bodyParser = require('body-parser');
 const compression = require('compression');
@@ -41,6 +42,7 @@ const options = {
   allowInsecureHTTP: false
 };
 
+//console.log('process.env.NODE_ENV = ' + process.env.NODE_ENV);
 const dashboardconfig = {
   "apps": [{
     "serverURL": serverUrl,
@@ -76,7 +78,9 @@ app.use('/parse', api);
 
 app.use('/dashboard', dashboard);
 
-app.use(express.static('./dist'));
+//app.use(express.static('./dist'));
+
+//app.use('/ftp', express.static('public/footballimg'), serveIndex('public/footballimg', {'icons': true}))
 
 app.use(function respondError(err, req, res) {
   console.log('500');
