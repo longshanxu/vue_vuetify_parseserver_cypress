@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-29 15:50:37
- * @LastEditTime: 2020-05-10 12:58:43
+ * @LastEditTime: 2020-06-26 02:14:59
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server.js
@@ -12,6 +12,7 @@ const ParseServer = require('parse-server').ParseServer;
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const ParseDashboard = require('parse-dashboard');
+
 // const history = require('connect-history-api-fallback');
 //const Parse = require('parse/node');
 
@@ -77,29 +78,18 @@ app.get('/gettest', (req, res) => res.send("Hello express!"));
 app.use('/parse', api);
 
 app.use('/dashboard', dashboard);
-
 //app.use(express.static('./dist'));
 
 //app.use('/ftp', express.static('public/footballimg'), serveIndex('public/footballimg', {'icons': true}))
 
-app.use(function respondError(err, req, res) {
-  console.log('500');
-  var status,
-    errmsg;
-  status = err.status || 500;
-  res.status(status);
-  errmsg = err.message || 'oo there was a problem!';
-
-  if (req.method === 'GET') {
-    res
-      .status('500')
-      .send('服务器错误：' + errmsg)
-  } else {
-    res
-      .type('txt')
-      .send(errmsg + '\n');
+app.use(function (err, req, res, next) {
+  // logic
+  if (res.headersSent) {
+    return next(err)
   }
-});
+  res.status(500)
+  res.render('error', { error: err })
+})
 
 //var httpServer = require('http').createServer(app);
 

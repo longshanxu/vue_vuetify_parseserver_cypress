@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-03-09 14:05:49
+ * @LastEditTime: 2020-06-29 02:25:33
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -62,13 +62,16 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2020-02-27/next
-
+//https://vipc.cn/i/live/football/date/2020-06-29/prev
+//https://vipc.cn/i/live/football/date/2020-06-29/next
 
 Parse
     .Cloud
     .define("GetTodayMoney", async (request) => {
         try {
+
+            var datetemp = "2020-06-29";
+
             const options = {
                 url: 'https://vipc.cn/i/live/football/date/today/next',
                 headers: {
@@ -143,46 +146,67 @@ Parse
     .define("GetHistoryByID", async (request) => {
         try {
 
-            let matchId = "196814419";
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var datetemp = year + "-" + month + "-" + day;
+            if (month < 10) {
+                datetemp = year + "-0" + month + "-0" + day;
+            }
+
+            datetemp = "2020-06-29"
+
+            var tempMoney = Parse.Object.extend("Money");
+            var query = new Parse.Query(tempMoney);
+            query.equalTo("date", datetemp);
+            query.limit(500);
+            const items = await query.find();
 
 
             var historyMoney = Parse.Object.extend("HistoryMoney");
             var query = new Parse.Query(historyMoney);
-            query.equalTo("matchId", matchId);
-            query.limit(100);
-            const results = await query.find();
-            for (var i = 0; i < results.length; i++) {
-                var object = results[i];
+            query.equalTo("date", datetemp);
+            query.limit(300);
+            const finditems = await query.find();
 
-                await object.destroy();
+            for (let index = 0; index < finditems.length; index++) {
+                const element = finditems[index];
+                await element.destroy();
             }
 
+            for (let index = 0; index < items.length; index++) {
+                const element = items[index];
+                let matchId = element.get('matchId');
 
 
-            const options = {
-                url: 'https://vipc.cn/i/match/football/' + matchId + '/history',
-                headers: {
-                    'User-Agent': 'request'
-                },
-                gzip: true
-            };
+                const options = {
+                    url: 'https://vipc.cn/i/match/football/' + matchId + '/history',
+                    headers: {
+                        'User-Agent': 'request'
+                    },
+                    gzip: true
+                };
 
 
-            httprequest(options, async function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    let data = await JSON.parse(body);
-                    let money = new historyMoney();
-                    money.set("matchId", matchId); //全局唯一ID
-                    money.set("home", data.recent.home.summary); //主队历史记录
-                    money.set("guest", data.recent.guest.summary); //客队历史记录
-                    money.set("against", data.against.summary); //两队对比记录
-                    money.save();
-                }
-            });
-            return {
-                code: 200,
-                msg: "获取数据成功"
+                httprequest(options, async function (error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        let data = await JSON.parse(body);
+                        let money = new historyMoney();
+                        money.set("date", datetemp);
+                        money.set("matchId", matchId); //全局唯一ID
+                        money.set("home", data.recent.home.summary); //主队历史记录
+                        money.set("guest", data.recent.guest.summary); //客队历史记录
+                        money.set("against", data.against.summary); //两队对比记录
+                        money.set("againstlist", data.against.list); //两队对比记录
+                        money.set("homelist", data.recent.home.list); //两队对比记录
+                        money.set("guestlist", data.recent.guest.list); //两队对比记录
+                        money.save();
+                    }
+                });
+
             }
+
 
         } catch (error) {
             return {
@@ -202,68 +226,84 @@ Parse
     .define("GetOddsByID", async (request) => {
         try {
 
-            let matchId = "196814419";
 
-
-            var historyMoney = Parse.Object.extend("OddsMoney");
-            var query = new Parse.Query(historyMoney);
-            query.equalTo("matchId", matchId);
-            query.limit(100);
-            const results = await query.find();
-            for (var i = 0; i < results.length; i++) {
-                var object = results[i];
-
-                await object.destroy();
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var datetemp = year + "-" + month + "-" + day;
+            if (month < 10) {
+                datetemp = year + "-0" + month + "-0" + day;
             }
 
+            datetemp = "2020-06-29"
+
+            var tempMoney = Parse.Object.extend("Money");
+            var query = new Parse.Query(tempMoney);
+            query.equalTo("date", datetemp);
+            query.limit(500);
+            const items = await query.find();
+
+            //清楚当天数据
+            var OddsMoney = Parse.Object.extend("OddsMoney");
+            var query = new Parse.Query(OddsMoney);
+            query.equalTo("date", datetemp);
+            query.limit(300);
+            const finditems = await query.find();
+
+            for (let index = 0; index < finditems.length; index++) {
+                const element = finditems[index];
+                await element.destroy();
+            }
+
+            //重新获取当天数据
+            for (let index = 0; index < items.length; index++) {
+                const element = items[index];
+                let matchId = element.get('matchId');
+
+                const options = {
+                    url: 'https://vipc.cn/i/match/football/' + matchId + '/odds/euro',
+                    headers: {
+                        'User-Agent': 'request'
+                    },
+                    gzip: true
+                };
 
 
-            const options = {
-                url: 'https://vipc.cn/i/match/football/' + matchId + '/odds/euro',
-                headers: {
-                    'User-Agent': 'request'
-                },
-                gzip: true
-            };
+                httprequest(options, async function (error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        let data = await JSON.parse(body);
+                        let money = new OddsMoney();
+                        money.set("matchId", matchId);           //全局唯一ID
+                        money.set("date", datetemp);
+                        for (let index = 0; index < data.odds.length; index++) {
+                            const element = data.odds[index];
+                            if (element.companyName == "平均欧赔" || element.companyName == "竞彩" || element.companyName == "威廉希尔" || element.companyName == "Bet365" || element.companyName == "10BET") {
 
+                                if (element.companyId == "") {
+                                    money.set("average", element);    //平均欧赔
+                                }
+                                if (element.companyId == "115") {
+                                    money.set("weilian", element);    //威廉
+                                }
+                                if (element.companyId == "281") {
+                                    money.set("bet365", element);    //bet365
+                                }
+                                if (element.companyId == "16") {
+                                    money.set("bet10", element);     //bet10
+                                }
+                                if (element.companyId == "-1") {
+                                    money.set("ticai", element);    //体彩
+                                }
 
-            httprequest(options, async function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    let data = await JSON.parse(body);
-                    let money = new historyMoney();
-                    money.set("matchId", matchId);           //全局唯一ID
-                    for (let index = 0; index < data.odds.length; index++) {
-                        const element = data.odds[index];
-                        if (element.companyName == "平均欧赔" || element.companyName == "威廉希尔" || element.companyName == "Bet365" || element.companyName == "10BET") {
-
-
-
-                            if (element.companyId == "") {
-                                money.set("average", element);    //平均欧赔
                             }
-                            if (element.companyId == "115") {
-                                money.set("weilian", element);    //威廉
-                            }
-                            if (element.companyId == "281") {
-                                money.set("bet365", element);    //bet365
-                            }
-                            if (element.companyId == "16") {
-                                money.set("bet10", element);     //bet10
-                            }
-                            // if(element.companyId ==""){
-                            //     money.set("ticai", element);    //体彩
-                            // }
 
                         }
+                        money.save();
 
                     }
-                    money.save();
+                });
 
-                }
-            });
-            return {
-                code: 200,
-                msg: "获取数据成功"
             }
 
         } catch (error) {
@@ -283,7 +323,7 @@ Parse
     .define("GetPankouByID", async (request) => {
         try {
 
-            let matchId = "196814419";
+            let matchId = "211554676";
 
 
             var historyMoney = Parse.Object.extend("PankouMoney");
@@ -300,7 +340,7 @@ Parse
 
 
             const options = {
-                url: 'https://vipc.cn/i/match/football/'+matchId+'/odds/pankou',
+                url: 'https://vipc.cn/i/match/football/' + matchId + '/odds/pankou',
                 headers: {
                     'User-Agent': 'request'
                 },
@@ -315,7 +355,7 @@ Parse
                     money.set("matchId", matchId);           //全局唯一ID
                     for (let index = 0; index < data.asia.length; index++) {
                         const element = data.asia[index];
-                        if (element.companyName == "Bet365" || element.companyName == "10BET") {                        
+                        if (element.companyName == "Bet365" || element.companyName == "10BET") {
                             if (element.companyId == "8") {
                                 money.set("bet365pankou", element);    //bet365
                             }
@@ -329,7 +369,7 @@ Parse
 
                     for (let index = 0; index < data.dxq.length; index++) {
                         const element = data.dxq[index];
-                        if (element.companyName == "Bet365" || element.companyName == "10BET") {                        
+                        if (element.companyName == "Bet365" || element.companyName == "10BET") {
                             if (element.companyId == "8") {
                                 money.set("bet365qiu", element);    //bet365
                             }
@@ -360,3 +400,13 @@ Parse
 
 
 //获取竞彩热度
+
+
+/******************************
+ *
+ * GetTodayMoney
+ * GetHistoryByID
+ * GetOddsByID
+ * GetPankouByID
+ *
+ ******************************/
