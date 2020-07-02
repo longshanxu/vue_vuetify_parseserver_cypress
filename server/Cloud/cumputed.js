@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-06-30 19:48:55
+ * @LastEditTime: 2020-07-03 19:48:55
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -37,14 +37,15 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-06-30"
+        datetemp = "2020-07-03"
 
         var tempMoney = Parse
             .Object
             .extend("Money");
         var query = new Parse.Query(tempMoney);
         query.equalTo("date", datetemp);
-        query.ascending("matchTime") //matchTime
+        query.ascending("matchTime") //matchTime,league
+        // query.greaterThan("matchTime",new Date());
         query.limit(500);
         const items = await query.find();
 
@@ -53,7 +54,9 @@ Parse
             const element = items[index];
             let matchId = element.get('matchId');
 
-            //if (matchId != "201576984") {     continue; }
+            // if (matchId != "213605497") {
+            //     continue;
+            // }
 
             const OddsMoney = Parse
                 .Object
@@ -80,10 +83,7 @@ Parse
 
             let weilianitem = results.get('weilian');
 
-            // 过滤体彩
-            // if (results.get('ticai') == undefined) {
-            //     continue;
-            // }
+            // 过滤体彩 if (results.get('ticai') == undefined) {     continue; }
             if (weilianitem != undefined && weilianitem != null) {
                 //带入威廉的概率
                 finalitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
@@ -107,7 +107,6 @@ Parse
                 continue;
             }
 
-            console.log(element.get('league') + "----" + home + '  vs  ' + guest + "-----" + element.get('matchId') + "-----" + element.get('matchTime'));
             //进行第三轮bet10的5%的浮动
             let bet10item = results.get('bet10');
 
@@ -137,6 +136,11 @@ Parse
             //进行第四轮体彩的5%浮动，体彩是换一种方式进行对比，本身因为大抽水，导致赔率偏低，但是又要符合市场规律，很可能是要做出赔率。
             let ticaiitem = results.get('ticai');
 
+            // if (ticaiitem == undefined) {
+            //     continue;
+            // }
+
+            console.log(element.get('league') + "----" + home + '  vs  ' + guest + "-----" + element.get('matchId') + "-----" + element.get('matchTime'));
             if (ticaiitem != undefined && ticaiitem != null) {
                 //算出差距
                 let chaju0 = math.format(weilianitem.odds[0] - ticaiitem.odds[0], 3);
@@ -180,7 +184,7 @@ Parse
                 }
             }
 
-            console.log('结局:'.red + finalitem);
+            console.log('结局1:'.yellow + finalitem);
 
             //进行第5轮的5%的浮动，主要是针对平局进行处理。
             const HistoryMoney = Parse
@@ -194,6 +198,10 @@ Parse
             historyquery.limit(1);
 
             const historyitems = await historyquery.first();
+
+            if (historyitems == undefined) {
+                continue;
+            }
 
             let historylist = historyitems.get('againstlist')
 
@@ -238,28 +246,121 @@ Parse
 
             }
 
-            console.log('结局:'.red + finalitem);
+            console.log('结局2:'.green + finalitem);
+            //进行第6轮的5%的浮动，主要是针对最近状态进行处理。
+
+            let homelist = historyitems.get('homelist')
+            for (let index = 0; index < homelist.length; index++) {
+                const element = homelist[index];
+                if (index < 3) {
+                    if (home == element.home) {
+                        if (element.goal[0] > element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 5) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                        }
+                        if (element.goal[0] == element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 5) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                        }
+                        if (element.goal[0] < element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 5) + '%';
+                        }
+                    }
+                    if (home == element.guest) {
+                        if (element.goal[0] < element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 5) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                        }
+                        if (element.goal[0] == element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 5) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                        }
+                        if (element.goal[0] > element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 5) + '%';
+                        }
+                    }
+                } else {
+                    break;
+                }
+
+            }
+
+          
+            let guestlist = historyitems.get('guestlist')
+            for (let index = 0; index < guestlist.length; index++) {
+                const element = guestlist[index];
+                if (index < 3) {
+                    if (guest == element.home) {
+                        if (element.goal[0] > element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 5) + '%';
+                        }
+                        if (element.goal[0] == element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 5) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                        }
+                        if (element.goal[0] < element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 5) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                        }
+                    }
+                    if (guest == element.guest) {
+                        if (element.goal[0] < element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 5) + '%';
+                        }
+                        if (element.goal[0] == element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 5) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                        }
+                        if (element.goal[0] > element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 5) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                        }
+                    }
+
+                } else {
+                    break;
+                }
+
+            }
+
+            
+
+            console.log('结局3:'.red + finalitem);
             if (parseFloat(finalitem[1].replace('%', '')) >= 30 && parseFloat(finalitem[1].replace('%', '')) <= 40) {
-                console.log('结局:'.green + "平\n");
+                console.log('结局:' + "平\n");
             } else if (parseFloat(finalitem[0].replace('%', '')) <= parseFloat(-15) || parseFloat(finalitem[1].replace('%', '')) <= parseFloat(-15) || parseFloat(finalitem[2].replace('%', '')) <= parseFloat(-15)) {
                 if (parseFloat(finalitem[0].replace('%', '')) <= -15) 
-                    console.log("胜");
+                    console.log("胜\n");
                 if (parseFloat(finalitem[1].replace('%', '')) <= -15) 
-                    console.log("平");
+                    console.log("平\n");
                 if (parseFloat(finalitem[2].replace('%', '')) <= -15) 
-                    console.log("负");
+                    console.log("负\n");
                 }
             else {
                 if (parseFloat(finalitem[0].replace('%', '')) >= parseFloat(finalitem[2].replace('%', ''))) {
-                    console.log('结局:'.green + "胜\n");
+                    console.log('结局:' + "胜\n");
                 }
                 if (parseFloat(finalitem[0].replace('%', '')) < parseFloat(finalitem[2].replace('%', ''))) {
-                    console.log('结局:'.green + "负\n");
+                    console.log('结局:' + "负\n");
                 }
             }
 
         }
 
     });
-
-//console.log(math.format(1/3,2));
