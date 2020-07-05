@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-07-03 02:25:33
+ * @LastEditTime: 2020-07-05 01:50:10
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -62,15 +62,15 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2020-07-03/prev
-//https://vipc.cn/i/live/football/date/2020-07-03/next
+//https://vipc.cn/i/live/football/date/2020-07-05/prev
+//https://vipc.cn/i/live/football/date/2020-07-05/next
 
 Parse
     .Cloud
     .define("GetTodayMoney", async (request) => {
         try {
 
-            var datetemp = "2020-07-03";
+            var datetemp = "2020-07-05";
 
             const options = {
                 url: 'https://vipc.cn/i/live/football/date/today/next',
@@ -155,7 +155,7 @@ Parse
                 datetemp = year + "-0" + month + "-0" + day;
             }
 
-            datetemp = "2020-07-03"
+            datetemp = "2020-07-05"
 
             var tempMoney = Parse.Object.extend("Money");
             var query = new Parse.Query(tempMoney);
@@ -236,7 +236,7 @@ Parse
                 datetemp = year + "-0" + month + "-0" + day;
             }
 
-            datetemp = "2020-07-03"
+            datetemp = "2020-07-05"
 
             var tempMoney = Parse.Object.extend("Money");
             var query = new Parse.Query(tempMoney);
@@ -323,12 +323,24 @@ Parse
     .define("GetPankouByID", async (request) => {
         try {
 
-            let matchId = "211554676";
+            // let matchId = "211554676";
+
+            //清理当天数据
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var datetemp = year + "-" + month + "-" + day;
+            if (month < 10) {
+                datetemp = year + "-0" + month + "-0" + day;
+            }
+
+            datetemp = "2020-07-05"
 
 
-            var historyMoney = Parse.Object.extend("PankouMoney");
-            var query = new Parse.Query(historyMoney);
-            query.equalTo("matchId", matchId);
+            var PankouMoney = Parse.Object.extend("PankouMoney");
+            var query = new Parse.Query(PankouMoney);
+            query.equalTo("date", datetemp);
             query.limit(100);
             const results = await query.find();
             for (var i = 0; i < results.length; i++) {
@@ -337,56 +349,66 @@ Parse
                 await object.destroy();
             }
 
+            //重新获取当天数据
 
 
-            const options = {
-                url: 'https://vipc.cn/i/match/football/' + matchId + '/odds/pankou',
-                headers: {
-                    'User-Agent': 'request'
-                },
-                gzip: true
-            };
 
+            var tempMoney = Parse.Object.extend("Money");
+            var query = new Parse.Query(tempMoney);
+            query.equalTo("date", datetemp);
+            query.limit(500);
+            const items = await query.find();
 
-            httprequest(options, async function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    let data = await JSON.parse(body);
-                    let money = new historyMoney();
-                    money.set("matchId", matchId);           //全局唯一ID
-                    for (let index = 0; index < data.asia.length; index++) {
-                        const element = data.asia[index];
-                        if (element.companyName == "Bet365" || element.companyName == "10BET") {
-                            if (element.companyId == "8") {
-                                money.set("bet365pankou", element);    //bet365
-                            }
-                            if (element.companyId == "22") {
-                                money.set("bet10pankou", element);     //bet10
+            for (let index = 0; index < items.length; index++) {
+                const element = items[index];
+                let matchId = element.get('matchId');
+
+                const options = {
+                    url: 'https://vipc.cn/i/match/football/' + matchId + '/odds/pankou',
+                    headers: {
+                        'User-Agent': 'request'
+                    },
+                    gzip: true
+                };
+
+                httprequest(options, async function (error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        let data = await JSON.parse(body);
+                        let money = new PankouMoney();
+                        money.set("matchId", matchId);           //全局唯一ID
+                        money.set("date", datetemp);
+                        //firstOdds,odds,firstPankou,pankou,firstReturnRatio,returnRatio //大小球一样
+                        for (let index = 0; index < data.asia.length; index++) {
+                            const element = data.asia[index];
+                            if (element.companyName == "Bet365" || element.companyName == "10BET") {
+                                if (element.companyId == "8") {
+                                    money.set("bet365pankou", element);    //bet365
+                                }
+                                if (element.companyId == "22") {
+                                    money.set("bet10pankou", element);     //bet10
+                                }
+
                             }
 
                         }
 
-                    }
+                        for (let index = 0; index < data.dxq.length; index++) {
+                            const element = data.dxq[index];
+                            if (element.companyName == "Bet365" || element.companyName == "10BET") {
+                                if (element.companyId == "8") {
+                                    money.set("bet365qiu", element);    //bet365
+                                }
+                                if (element.companyId == "22") {
+                                    money.set("bet10qiu", element);     //bet10
+                                }
 
-                    for (let index = 0; index < data.dxq.length; index++) {
-                        const element = data.dxq[index];
-                        if (element.companyName == "Bet365" || element.companyName == "10BET") {
-                            if (element.companyId == "8") {
-                                money.set("bet365qiu", element);    //bet365
-                            }
-                            if (element.companyId == "22") {
-                                money.set("bet10qiu", element);     //bet10
                             }
 
                         }
+                        money.save();
 
                     }
-                    money.save();
-
-                }
-            });
-            return {
-                code: 200,
-                msg: "获取数据成功"
+                });
             }
 
         } catch (error) {
