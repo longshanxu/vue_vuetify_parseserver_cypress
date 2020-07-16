@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-07-05 17:40:47
+ * @LastEditTime: 2020-07-15 17:40:47
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -14,7 +14,7 @@
  *
  * 返还率   = 1/(1/胜赔+1/平赔+1/负赔)
  * 概率     = 1/赔率X返还率
- * 凯利指数 = 赔率X平均概率
+ * 凯利指数调整 = 赔率/平均赔率*平均返回率
  * 概率从某种意义上讲，就相当于投注的资金
  * 威廉和竞彩的三项数据差距 小的一面
  * 按5% 作为浮动机制
@@ -26,7 +26,7 @@ const math = require('mathjs');
 
 Parse
     .Cloud
-    .define("cpu", async (request) => {
+    .define("cpu", async(request) => {
 
         var date = new Date();
         var year = date.getFullYear();
@@ -37,7 +37,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-07-05"
+        datetemp = "2020-07-15"
 
         var tempMoney = Parse
             .Object
@@ -54,9 +54,7 @@ Parse
             const element = items[index];
             let matchId = element.get('matchId');
 
-            // if (matchId != "213610749") {
-            //     continue;
-            // }
+            // if (matchId != "213668520") {     continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -107,40 +105,48 @@ Parse
                 continue;
             }
 
+            console.log('开局====:'.red + finalitem);
             //进行第三轮bet10的5%的浮动
             let bet10item = results.get('bet10');
+            let averageitem = results.get('average');
 
             if (bet10item != undefined && bet10item != null) {
 
                 bet10item.returnRatio = math.format(bet10item.returnRatio.replace('%', '') / 100, 3);
 
-                if (parseFloat(bet10item.returnRatio) > parseFloat(bet10item.kelly[0])) {
-                    finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 5) + '%';
-                } else {
-                    finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                }
+                //计算凯利  赔率/平均赔率*平均返回率
+                const k1 = math.format(bet10item.odds[0] / averageitem.odds[0] * parseFloat(averageitem.returnRatio.replace('%', '')), 4) / 100;
+                const k2 = math.format(bet10item.odds[1] / averageitem.odds[1] * parseFloat(averageitem.returnRatio.replace('%', '')), 4) / 100;
+                const k3 = math.format(bet10item.odds[2] / averageitem.odds[2] * parseFloat(averageitem.returnRatio.replace('%', '')), 4) / 100;
 
-                if (parseFloat(bet10item.returnRatio) > parseFloat(bet10item.kelly[1])) {
-                    finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 5) + '%';
-                } else {
+                if (parseFloat(bet10item.returnRatio) > parseFloat(k1)) {
+                    finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
                     finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                    finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
                 }
 
-                if (parseFloat(bet10item.returnRatio) > parseFloat(bet10item.kelly[1])) {
-                    finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 5) + '%';
-                } else {
+                if (parseFloat(bet10item.returnRatio) > parseFloat(k2)) {
+                    finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
+                    finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
                     finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                }
+
+                if (parseFloat(bet10item.returnRatio) > parseFloat(k3)) {
+                    finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
+                    finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+                    finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
                 }
             }
 
             //进行第四轮体彩的5%浮动，体彩是换一种方式进行对比，本身因为大抽水，导致赔率偏低，但是又要符合市场规律，很可能是要做出赔率。
             let ticaiitem = results.get('ticai');
 
-            if (ticaiitem == undefined) {
-                continue;
-            }
+            // if (ticaiitem == undefined) {
+            //     continue;
+            // }
 
             console.log(element.get('league') + "----" + home + '  vs  ' + guest + "-----" + element.get('matchId') + "-----" + element.get('matchTime'));
+            console.log('结局0:'.red + finalitem);
             if (ticaiitem != undefined && ticaiitem != null) {
                 //算出差距
                 let chaju0 = math.format(weilianitem.odds[0] - ticaiitem.odds[0], 3);
@@ -163,22 +169,22 @@ Parse
                     finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 10) + '%';
                 }
 
-                if (chaju0 > 0 && chaju1 > 0 && chaju2 > 0) {
+                if (chaju0 >= 0 && chaju1 >= 0 && chaju2 >= 0) {
                     if (chaju0 <= chaju1 || chaju0 <= chaju2) {
-                        finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 5) + '%';
-                    } else {
-                        finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+                        finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
+                        finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                        finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
                     }
                     if (chaju1 <= chaju2 || chaju1 <= chaju0) {
-                        finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 5) + '%';
-                    } else {
-                        finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                        finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+                        finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
+                        finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
                     }
 
                     if (chaju2 <= chaju1 || chaju2 <= chaju0) {
-                        finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 5) + '%';
-                    } else {
-                        finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                        finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+                        finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                        finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
                     }
 
                 }
@@ -187,172 +193,159 @@ Parse
             console.log('结局1:'.yellow + finalitem);
 
             //进行第5轮的5%的浮动，主要是针对平局进行处理。
-            const HistoryMoney = Parse
-                .Object
-                .extend("HistoryMoney");
+            // const HistoryMoney = Parse
+            //     .Object
+            //     .extend("HistoryMoney");
 
-            const historyquery = new Parse.Query(HistoryMoney);
+            // const historyquery = new Parse.Query(HistoryMoney);
 
-            historyquery.equalTo("matchId", matchId);
+            // historyquery.equalTo("matchId", matchId);
 
-            historyquery.limit(1);
+            // historyquery.limit(1);
 
-            const historyitems = await historyquery.first();
+            // const historyitems = await historyquery.first();
 
-            if (historyitems == undefined) {
-                continue;
-            }
+            // if (historyitems == undefined) {
+            //     continue;
+            // }
 
-            let historylist = historyitems.get('againstlist')
+            // let historylist = historyitems.get('againstlist')
 
-            for (let index = 0; index < historylist.length; index++) {
-                const element = historylist[index];
-                if (index < 3) {
-                    if (home == element.home && guest == element.guest) {
-                        if (element.goal[0] > element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 5) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-                        }
-                        if (element.goal[0] == element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 5) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-                        }
-                        if (element.goal[0] < element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 5) + '%';
-                        }
-                    }
-                    if (home == element.guest && guest == element.home) {
-                        if (element.goal[0] < element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 5) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-                        }
-                        if (element.goal[0] == element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 5) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-                        }
-                        if (element.goal[0] > element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 5) + '%';
-                        }
-                    }
-                } else {
-                    break;
-                }
-
-            }
-
-            console.log('结局2:'.green + finalitem);
-
-            //进行第6轮的5%的浮动，主要是针对最近状态进行处理。
-
-            //             let homelist = historyitems.get('homelist')
-            //             for (let index = 0; index < homelist.length; index++) {
-            //                 const element = homelist[index];
-            //                 if (index < 3) {
-            //                     if (home == element.home) {
-            //                         if (element.goal[0] > element.goal[1]) {
-            //                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
-            //                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-            //                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-            //                         }
-            //                         if (element.goal[0] == element.goal[1]) {
-            //                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-            //                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
-            //                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-            //                         }
-            //                         if (element.goal[0] < element.goal[1]) {
-            //                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-            //                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-            //                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
-            //                         }
-            //                     }
-            //                     if (home == element.guest) {
-            //                         if (element.goal[0] < element.goal[1]) {
-            //                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
-            //                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-            //                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-            //                         }
-            //                         if (element.goal[0] == element.goal[1]) {
-            //                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-            //                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
-            //                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-            //                         }
-            //                         if (element.goal[0] > element.goal[1]) {
-            //                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-            //                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-            //                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
-            //                         }
-
-            //                     }
-            //                     // console.log( "----------"+  finalitem)
-            //                 } else {
-            //                     break;
-            //                 }
-            // ;
+            // for (let index = 0; index < historylist.length; index++) {
+            //     const element = historylist[index];
+            //     if (index < 3) {
+            //         if (home == element.home && guest == element.guest) {
+            //             if (element.goal[0] > element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
             //             }
-
-
-            //             let guestlist = historyitems.get('guestlist')
-            //             for (let index = 0; index < guestlist.length; index++) {
-            //                 const element = guestlist[index];
-            //                 if (index < 3) {
-            //                     if (guest == element.home) {
-            //                         if (element.goal[0] > element.goal[1]) {
-            //                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-            //                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-            //                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
-            //                         }
-            //                         if (element.goal[0] == element.goal[1]) {
-            //                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-            //                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
-            //                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-            //                         }
-            //                         if (element.goal[0] < element.goal[1]) {
-            //                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
-            //                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-            //                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-            //                         }
-            //                     }
-            //                     if (guest == element.guest) {
-            //                         if (element.goal[0] < element.goal[1]) {
-            //                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-            //                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-            //                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
-            //                         }
-            //                         if (element.goal[0] == element.goal[1]) {
-            //                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-            //                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
-            //                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-            //                         }
-            //                         if (element.goal[0] > element.goal[1]) {
-            //                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
-            //                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-            //                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-            //                         }
-            //                     }
-            //                     // console.log( "+++++++++"+  finalitem);
-            //                 } else {
-            //                     break;
-            //                 }
-
-
-
+            //             if (element.goal[0] == element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
             //             }
+            //             if (element.goal[0] < element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
+            //             }
+            //         }
+            //         if (home == element.guest && guest == element.home) {
+            //             if (element.goal[0] < element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+            //             }
+            //             if (element.goal[0] == element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+            //             }
+            //             if (element.goal[0] > element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
+            //             }
+            //         }
+            //     } else {
+            //         break;
+            //     }
 
+            // }
 
-            //             console.log('结局3:'.red + finalitem);
+            // console.log('结局2:'.green + finalitem);
 
-            //进行第7轮的50%的浮动，主要是针对让球进行处理。让球为55开的几率，赢或者不赢，也有可能是走盘，走盘还是要看大小球
-            const PankouMoney = Parse
-                .Object
-                .extend("PankouMoney");
+            // 进行第6轮的5 % 的浮动，主要是针对最近状态进行处理。
+            // let homelist = historyitems.get('homelist')
+            // for (let index = 0; index < homelist.length; index++) {
+            //     const element = homelist[index];
+            //     if (index < 3) {
+            //         if (home == element.home) {
+            //             if (element.goal[0] > element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+            //             }
+            //             if (element.goal[0] == element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+            //             }
+            //             if (element.goal[0] < element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
+            //             }
+            //         }
+            //         if (home == element.guest) {
+            //             if (element.goal[0] < element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+            //             }
+            //             if (element.goal[0] == element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+            //             }
+            //             if (element.goal[0] > element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
+            //             }
+            //         } // console.log( "----------"+
+            //         finalitem)
+            //     } else {
+            //         break;
+            //     };
+            // }
+            // let guestlist = historyitems.get('guestlist')
+            // for (let index = 0; index < guestlist.length; index++) {
+            //     const element = guestlist[index];
+            //     if (index < 3) {
+            //         if (guest == element.home) {
+            //             if (element.goal[0] > element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
+            //             }
+            //             if (element.goal[0] == element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+            //             }
+            //             if (element.goal[0] < element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+            //             }
+            //         }
+            //         if (guest == element.guest) {
+            //             if (element.goal[0] < element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
+            //             }
+            //             if (element.goal[0] == element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+            //             }
+            //             if (element.goal[0] > element.goal[1]) {
+            //                 finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
+            //                 finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+            //                 finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+            //             }
+            //         } // console.log( "+++++++++"+
+            //         finalitem);
+            //     } else {
+            //         break;
+            //     }
+            // }
+           // console.log('结局3:'.red + finalitem);
+            // 进行第7轮的50%的浮动，主要是针对让球进行处理。让球为55开的几率，赢或者不赢，也有可能是走盘，走盘还是要看大小球
+            const PankouMoney = Parse.Object.extend("PankouMoney");
 
             const pankoumoney = new Parse.Query(PankouMoney);
 
@@ -374,41 +367,40 @@ Parse
                     const pankou2 = parseFloat(changepankou(bet365pankou.pankou));
                     //第七轮，第一次不变盘处理数据
                     if (pankou1 == pankou2) {
-                        console.log("等于:"+ pankou1 + ")(" + pankou2)
+                        console.log("等于:" + pankou1 + ")(" + pankou2)
                     }
                     if (pankou1 > pankou2) {
-                        console.log("大于:"+pankou1 + ")(" + pankou2)
+                        console.log("大于:" + pankou1 + ")(" + pankou2)
                     }
                     if (pankou1 < pankou2) {
-                        console.log("小于:"+pankou1 + ")(" + pankou2)
+                        console.log("小于:" + pankou1 + ")(" + pankou2)
                     }
 
                 }
             }
 
-
             if (parseFloat(finalitem[1].replace('%', '')) >= 30 && parseFloat(finalitem[1].replace('%', '')) <= 40) {
-                console.log('结局:' + "平\n");
+                console.log('结局:平\n');
             } else if (parseFloat(finalitem[0].replace('%', '')) <= parseFloat(-15) || parseFloat(finalitem[1].replace('%', '')) <= parseFloat(-15) || parseFloat(finalitem[2].replace('%', '')) <= parseFloat(-15)) {
-                if (parseFloat(finalitem[0].replace('%', '')) <= -15)
+                if (parseFloat(finalitem[0].replace('%', '')) <= -15) 
                     console.log("胜\n");
-                if (parseFloat(finalitem[1].replace('%', '')) <= -15)
+                if (parseFloat(finalitem[1].replace('%', '')) <= -15) 
                     console.log("平\n");
-                if (parseFloat(finalitem[2].replace('%', '')) <= -15)
+                if (parseFloat(finalitem[2].replace('%', '')) <= -15) 
                     console.log("负\n");
-            }
+                }
             else {
                 if (parseFloat(finalitem[0].replace('%', '')) >= parseFloat(finalitem[2].replace('%', ''))) {
-                    console.log('结局:' + "胜\n");
+                    console.log('结局:胜\n');
                 }
                 if (parseFloat(finalitem[0].replace('%', '')) < parseFloat(finalitem[2].replace('%', ''))) {
-                    console.log('结局:' + "负\n");
+                    console.log('结局:负\n');
                 }
             }
 
         }
 
-    });
+});
 
 //转换
 function changepankou(temp) {
@@ -458,8 +450,7 @@ function changeqiu(temp) {
         return 1;
     } else if (temp == '一球半') {
         return 1.5;
-    }
-    else if (temp == '一球半/二球') {
+    } else if (temp == '一球半/二球') {
         return 1.75;
     } else if (temp == '二球') {
         return 2;
