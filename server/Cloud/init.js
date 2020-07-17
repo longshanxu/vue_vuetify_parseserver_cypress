@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-07-16 01:50:10
+ * @LastEditTime: 2020-07-17 01:50:10
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -62,15 +62,15 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2020-07-16/prev
-//https://vipc.cn/i/live/football/date/2020-07-16/next
+//https://vipc.cn/i/live/football/date/2020-07-17/prev
+//https://vipc.cn/i/live/football/date/2020-07-17/next
 
 Parse
     .Cloud
     .define("GetTodayMoney", async (request) => {
         try {
 
-            var datetemp = "2020-07-16";
+            var datetemp = "2020-07-17";
 
             const options = {
                 url: 'https://vipc.cn/i/live/football/date/today/next',
@@ -155,7 +155,7 @@ Parse
                 datetemp = year + "-0" + month + "-0" + day;
             }
 
-            datetemp = "2020-07-16"
+            datetemp = "2020-07-17"
 
             var tempMoney = Parse.Object.extend("Money");
             var query = new Parse.Query(tempMoney);
@@ -236,7 +236,7 @@ Parse
                 datetemp = year + "-0" + month + "-0" + day;
             }
 
-            datetemp = "2020-07-16"
+            datetemp = "2020-07-17"
 
             var tempMoney = Parse.Object.extend("Money");
             var query = new Parse.Query(tempMoney);
@@ -335,7 +335,7 @@ Parse
                 datetemp = year + "-0" + month + "-0" + day;
             }
 
-            datetemp = "2020-07-16"
+            datetemp = "2020-07-17"
 
 
             var PankouMoney = Parse.Object.extend("PankouMoney");
