@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-07-17 11:48:04
+ * @LastEditTime: 2020-07-17 17:17:40
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -54,7 +54,7 @@ Parse
             const element = items[index];
             let matchId = element.get('matchId');
 
-            // if (matchId != "213042756") {     continue; }
+            // if (matchId != "167794845") {     continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -78,6 +78,7 @@ Parse
             // 获取到赔率（odds），获取到概率(ratio),获取到返回率（returnRatio）,获取到凯利（kelly）
             // 以威廉的概率为基准线，进行第一轮的5%的浮动
             let finalitem = ['0%', '0%', '0%'];
+            let justitem = ['0%', '0%', '0%'];
 
             let weilianitem = results.get('weilian');
 
@@ -85,6 +86,7 @@ Parse
             if (weilianitem != undefined && weilianitem != null) {
                 //带入威廉的概率
                 finalitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
+                justitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
 
             } else {
                 console.log("缺少威廉数据");
@@ -99,6 +101,8 @@ Parse
                 if (weilianitem == undefined || weilianitem == null) {
                     //带入bet365的概率
                     finalitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
+                    justitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
+                    
                 }
             } else {
                 console.log("缺少bet365的数据");
@@ -120,21 +124,21 @@ Parse
                 const k3 = math.format(bet10item.odds[2] / averageitem.odds[2] * parseFloat(averageitem.returnRatio.replace('%', '')  / 100), 4);
 
                 if (parseFloat(bet10item.returnRatio) > parseFloat(k1)) {
-                    finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
-                    finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                    finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                    justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) + 10) + '%';
+                    justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) - 5) + '%';
+                    justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) - 5) + '%';
                 }
 
                 if (parseFloat(bet10item.returnRatio) > parseFloat(k2)) {
-                    finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
-                    finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                    finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                    justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) + 10) + '%';
+                    justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) - 5) + '%';
+                    justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) - 5) + '%';
                 }
 
                 if (parseFloat(bet10item.returnRatio) > parseFloat(k3)) {
-                    finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
-                    finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                    finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                    justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) + 10) + '%';
+                    justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) - 5) + '%';
+                    justitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
                 }
             }
 
@@ -144,7 +148,7 @@ Parse
             // if (ticaiitem == undefined) {     continue; }
 
             console.log(element.get('league') + "----" + home + '  vs  ' + guest + "-----" + element.get('matchId') + "-----" + element.get('matchTime'));
-            console.log('凯利:'.red + finalitem);
+            console.log('凯利:'.red + justitem);
 
 
             if (ticaiitem != undefined && ticaiitem != null) {
@@ -154,40 +158,43 @@ Parse
                 let chaju2 = math.format(weilianitem.odds[2] - ticaiitem.odds[2], 3);
 
                 if (chaju0 < 0) {
-                    finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 10) + '%';
-                    finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 5) + '%';
-                    finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 5) + '%';
+                    justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) - 10) + '%';
+                    justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) + 5) + '%';
+                    justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) + 5) + '%';
                 }
                 if (chaju1 < 0) {
-                    finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 5) + '%';
-                    finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 10) + '%';
-                    finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 5) + '%';
+                    justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) + 5) + '%';
+                    justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) - 10) + '%';
+                    justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) + 5) + '%';
                 }
                 if (chaju2 < 0) {
-                    finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 5) + '%';
-                    finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 5) + '%';
-                    finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 10) + '%';
+                    justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) + 5) + '%';
+                    justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) + 5) + '%';
+                    justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) - 10) + '%';
                 }
 
                 if (chaju0 >= 0 && chaju1 >= 0 && chaju2 >= 0) {
                     if (chaju0 <= chaju1 || chaju0 <= chaju2) {
-                        finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
-                        finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                        finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                        justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) + 10) + '%';
+                        justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) - 5) + '%';
+                        justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) - 5) + '%';
                     }
                     if (chaju1 <= chaju2 || chaju1 <= chaju0) {
-                        finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                        finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
-                        finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                        justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) - 5) + '%';
+                        justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) + 10) + '%';
+                        justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) - 5) + '%';
                     }
 
                     if (chaju2 <= chaju1 || chaju2 <= chaju0) {
-                        finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                        finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                        finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
+                        justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) - 5) + '%';
+                        justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) - 5) + '%';
+                        justitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
                     }
 
                 }
+
+                console.log('体彩:'.red + justitem);
+
             }
 
 
