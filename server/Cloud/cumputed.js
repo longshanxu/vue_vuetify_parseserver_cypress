@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-07-17 17:17:40
+ * @LastEditTime: 2020-07-20 17:17:40
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -37,7 +37,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-07-17"
+        datetemp = "2020-07-20"
 
         var tempMoney = Parse
             .Object
@@ -54,7 +54,7 @@ Parse
             const element = items[index];
             let matchId = element.get('matchId');
 
-            // if (matchId != "167794845") {     continue; }
+            // if (matchId != "157496834") {     continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -130,15 +130,16 @@ Parse
                 }
 
                 if (parseFloat(bet10item.returnRatio) > parseFloat(k2)) {
-                    justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) + 10) + '%';
                     justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) - 5) + '%';
+                    justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) + 10) + '%';
                     justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) - 5) + '%';
                 }
 
                 if (parseFloat(bet10item.returnRatio) > parseFloat(k3)) {
-                    justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) + 10) + '%';
+
                     justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) - 5) + '%';
-                    justitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
+                    justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) - 5) + '%';
+                    justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) + 10) + '%';
                 }
             }
 
@@ -188,7 +189,7 @@ Parse
                     if (chaju2 <= chaju1 || chaju2 <= chaju0) {
                         justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) - 5) + '%';
                         justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) - 5) + '%';
-                        justitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
+                        justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) + 10) + '%';
                     }
 
                 }
@@ -389,22 +390,22 @@ Parse
                 }
             }
 
-            if (parseFloat(finalitem[1].replace('%', '')) >= 30 && parseFloat(finalitem[1].replace('%', '')) <= 40) {
+            if (parseFloat(justitem[1].replace('%', '')) >= 30 && parseFloat(justitem[1].replace('%', '')) <= 40) {
                 console.log('结果：平\n');
             } 
-            else if (parseFloat(finalitem[0].replace('%', '')) <= parseFloat(-15) || parseFloat(finalitem[1].replace('%', '')) <= parseFloat(-15) || parseFloat(finalitem[2].replace('%', '')) <= parseFloat(-15)) {
-                if (parseFloat(finalitem[0].replace('%', '')) <= -15) 
+            else if (parseFloat(justitem[0].replace('%', '')) <= parseFloat(-15) || parseFloat(justitem[1].replace('%', '')) <= parseFloat(-15) || parseFloat(justitem[2].replace('%', '')) <= parseFloat(-15)) {
+                if (parseFloat(justitem[0].replace('%', '')) <= -15) 
                     console.log("结果：胜\n");
-                if (parseFloat(finalitem[1].replace('%', '')) <= -15) 
+                if (parseFloat(justitem[1].replace('%', '')) <= -15) 
                     console.log("结果：平\n");
-                if (parseFloat(finalitem[2].replace('%', '')) <= -15) 
+                if (parseFloat(justitem[2].replace('%', '')) <= -15) 
                     console.log("结果：负\n");
                 }
             else {
-                if (parseFloat(finalitem[0].replace('%', '')) >= parseFloat(finalitem[2].replace('%', ''))) {
+                if (parseFloat(justitem[0].replace('%', '')) >= parseFloat(justitem[2].replace('%', ''))) {
                     console.log('结果：胜\n');
                 }
-                if (parseFloat(finalitem[0].replace('%', '')) < parseFloat(finalitem[2].replace('%', ''))) {
+                if (parseFloat(justitem[0].replace('%', '')) < parseFloat(justitem[2].replace('%', ''))) {
                     console.log('结果：负\n');
                 }
             }
