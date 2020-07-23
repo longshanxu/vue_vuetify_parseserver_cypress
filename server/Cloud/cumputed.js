@@ -365,20 +365,41 @@ Parse
             pankoumoney.limit(1);
 
             const pankoumoneyitem = await pankoumoney.first();
-
+            let yapanitem = ['0%', '0%'];
             if (pankoumoneyitem != undefined && pankoumoneyitem != null) {
                 const bet365pankou = pankoumoneyitem.get('bet365pankou');
                 const bet10pankou = pankoumoneyitem.get('bet10pankou');
                 const bet365qiu = pankoumoneyitem.get('bet365qiu');
                 const bet10qiu = pankoumoneyitem.get('bet10qiu');
-                if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
+
+                if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined  ) {
 
                     //firstOdds,odds,firstPankou,pankou,firstReturnRatio,returnRatio //大小球一样
                     const pankou1 = parseFloat(changepankou(bet365pankou.firstPankou));
                     const pankou2 = parseFloat(changepankou(bet365pankou.pankou));
+
+                    bet365ratio =  math.format(bet365pankou.returnRatio.replace('%', '') / 100,3);
+
+                    bet365odds0 =  parseFloat( bet365pankou.odds[0]) + 1;
+                    bet365odds1 =  parseFloat( bet365pankou.odds[1] )+ 1;
+
+
+
+                    yapanitem = [
+                        math.format(bet365ratio / bet365odds0, 2) * 100 + "%",
+                        math.format(bet365ratio / bet365odds1, 2) * 100 + "%"
+                    ] 
+
+
+                    // 凯利指数调整 = 赔率/平均赔率*平均返回率
+                    // math.format(1 / bet365pankou.pankou * bet365pankou.odds[0] , 2)
+                    //     math.format(1 / bet365pankou.pankou * bet365pankou.odds[0] ,2)
                     //第七轮，第一次不变盘处理数据
                     if (pankou1 == pankou2) {
-                        console.log("等于:" + pankou1 + ")(" + pankou2)
+                        //不变盘，一致看好，一致不看好。
+                        //从看好到不看好。
+                        //从不看好到看好。
+                        //看好，但是细节不看好。
                     }
                     if (pankou1 > pankou2) {
                         console.log("大于:" + pankou1 + ")(" + pankou2)
@@ -386,6 +407,8 @@ Parse
                     if (pankou1 < pankou2) {
                         console.log("小于:" + pankou1 + ")(" + pankou2)
                     }
+
+                    console.log(yapanitem);
 
                 }
             }

@@ -380,12 +380,15 @@ Parse
                         //firstOdds,odds,firstPankou,pankou,firstReturnRatio,returnRatio //大小球一样
                         for (let index = 0; index < data.asia.length; index++) {
                             const element = data.asia[index];
-                            if (element.companyName == "Bet365" || element.companyName == "10BET") {
+                            if (element.companyName == "Bet365" || element.companyName == "10BET" || element.companyName == "平博") {
                                 if (element.companyId == "8") {
                                     money.set("bet365pankou", element);    //bet365
                                 }
                                 if (element.companyId == "22") {
                                     money.set("bet10pankou", element);     //bet10
+                                }
+                                if (element.companyId == "47") {
+                                    money.set("avgpankou", element);     //平博
                                 }
 
                             }
@@ -394,12 +397,15 @@ Parse
 
                         for (let index = 0; index < data.dxq.length; index++) {
                             const element = data.dxq[index];
-                            if (element.companyName == "Bet365" || element.companyName == "10BET") {
+                            if (element.companyName == "Bet365" || element.companyName == "10BET" || element.companyName == "平博") {
                                 if (element.companyId == "8") {
                                     money.set("bet365qiu", element);    //bet365
                                 }
                                 if (element.companyId == "22") {
                                     money.set("bet10qiu", element);     //bet10
+                                }
+                                if (element.companyId == "47") {
+                                    money.set("avgqiu", element);     //平博
                                 }
 
                             }
