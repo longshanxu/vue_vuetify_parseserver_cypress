@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-07-26 01:50:10
+ * @LastEditTime: 2020-08-03 01:50:10
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -62,18 +62,19 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2020-07-26/prev
-//https://vipc.cn/i/live/football/date/2020-07-26/next
+//https://vipc.cn/i/live/football/date/2020-08-03/prev
+//https://vipc.cn/i/live/football/date/2020-08-03/next
 
 Parse
     .Cloud
     .define("GetTodayMoney", async (request) => {
         try {
+    
 
-            var datetemp = "2020-07-26";
+            var datetemp = "2020-08-03";
 
             const options = {
-                url: 'https://vipc.cn/i/live/football/date/2020-07-26/prev',
+                url: 'https://vipc.cn/i/live/football/date/2020-08-03/prev',
                 headers: {
                     'User-Agent': 'request'
                 },
@@ -155,11 +156,12 @@ Parse
                 datetemp = year + "-0" + month + "-0" + day;
             }
 
-            datetemp = "2020-07-26"
+            datetemp = "2020-08-03"
 
             var tempMoney = Parse.Object.extend("Money");
             var query = new Parse.Query(tempMoney);
             query.equalTo("date", datetemp);
+            query.notEqualTo("displayState","完场")
             query.limit(500);
             const items = await query.find();
 
@@ -236,11 +238,12 @@ Parse
                 datetemp = year + "-0" + month + "-0" + day;
             }
 
-            datetemp = "2020-07-26"
+            datetemp = "2020-08-03"
 
             var tempMoney = Parse.Object.extend("Money");
             var query = new Parse.Query(tempMoney);
             query.equalTo("date", datetemp);
+            query.notEqualTo("displayState","完场")
             query.limit(500);
             const items = await query.find();
 
@@ -335,12 +338,13 @@ Parse
                 datetemp = year + "-0" + month + "-0" + day;
             }
 
-            datetemp = "2020-07-26"
+            datetemp = "2020-08-03"
 
 
             var PankouMoney = Parse.Object.extend("PankouMoney");
             var query = new Parse.Query(PankouMoney);
             query.equalTo("date", datetemp);
+            query.notEqualTo("displayState","完场")
             query.limit(100);
             const results = await query.find();
             for (var i = 0; i < results.length; i++) {

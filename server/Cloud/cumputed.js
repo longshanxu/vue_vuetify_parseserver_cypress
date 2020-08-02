@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-07-26 17:17:40
+ * @LastEditTime: 2020-08-03 17:17:40
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -28,6 +28,8 @@ Parse
     .Cloud
     .define("cpu", async(request) => {
 
+
+
         var date = new Date();
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
@@ -37,13 +39,14 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-07-26"
+        datetemp = "2020-08-03"
 
         var tempMoney = Parse
             .Object
             .extend("Money");
         var query = new Parse.Query(tempMoney);
         query.equalTo("date", datetemp);
+        query.notEqualTo("displayState","完场")
         query.ascending("matchTime") //matchTime,league
         // query.greaterThan("matchTime",new Date());
         query.limit(500);
@@ -146,7 +149,7 @@ Parse
             //进行第四轮体彩的5%浮动，体彩是换一种方式进行对比，本身因为大抽水，导致赔率偏低，但是又要符合市场规律，很可能是要做出赔率。
             let ticaiitem = results.get('ticai');
 
-            if (ticaiitem == undefined) {     continue; }
+            // if (ticaiitem == undefined) {     continue; }
 
             console.log(element.get('league') + "----" + home + '  vs  ' + guest + "-----" + element.get('matchId') + "-----" + element.get('matchTime'));
              console.log('凯利:'.red + justitem);
@@ -351,10 +354,10 @@ Parse
                     break;
                 }
             }
-             console.log('散户心理:'.red + finalitem);
+            console.log('散户心理:'.red + finalitem);
 
-             console.log('投注额:'+ math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3)+','+math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3)+','+math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3));
-             console.log('赔率:'+bet365item.odds[0]+","+bet365item.odds[1]+","+bet365item.odds[2]);
+            console.log('投注额:'+ math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3)+','+math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3)+','+math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3));
+            console.log('赔率:'+bet365item.odds[0]+","+bet365item.odds[1]+","+bet365item.odds[2]);
             // 进行第7轮的50%的浮动，主要是针对让球进行处理。让球为55开的几率，赢或者不赢，也有可能是走盘，走盘还是要看大小球
             const PankouMoney = Parse.Object.extend("PankouMoney");
 
@@ -547,6 +550,22 @@ Parse
 
 
                 }
+
+                // //两队历史来增加亚盘的让球性,三场比赛的球数
+                // for (let index = 0; index < historylist.length; index++) {
+                //     const element = historylist[index];
+                //     if (index < 3) {
+                //         if (home == element.home && guest == element.guest) {
+                           
+                //         }
+                //         if (home == element.guest && guest == element.home) {
+                           
+                //         }
+                //     } else {
+                //         break;
+                //     }
+    
+                // }
             }
 
             if (parseFloat(justitem[1].replace('%', '')) >= 30 && parseFloat(justitem[1].replace('%', '')) <= 40) {
