@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-08-03 17:17:40
+ * @LastEditTime: 2020-08-10 17:17:40
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -39,7 +39,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-08-03"
+        datetemp = "2020-08-10"
 
         var tempMoney = Parse
             .Object
@@ -108,8 +108,10 @@ Parse
                     
                 }
             } else {
+                if (weilianitem == undefined || weilianitem == null) {
                 console.log("缺少bet365的数据");
                 continue;
+                }
             }
 
             console.log('开局====:'.red + finalitem);
@@ -355,9 +357,14 @@ Parse
                 }
             }
             console.log('散户心理:'.red + finalitem);
-
-            console.log('投注额:'+ math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3)+','+math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3)+','+math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3));
-            console.log('赔率:'+bet365item.odds[0]+","+bet365item.odds[1]+","+bet365item.odds[2]);
+            
+            if(bet365item != null && bet365item != undefined){
+                console.log('投注额:'+ math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3)+','+math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3)+','+math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3));
+                console.log('赔率:'+bet365item.odds[0]+","+bet365item.odds[1]+","+bet365item.odds[2]);
+          
+            }
+            
+           
             // 进行第7轮的50%的浮动，主要是针对让球进行处理。让球为55开的几率，赢或者不赢，也有可能是走盘，走盘还是要看大小球
             const PankouMoney = Parse.Object.extend("PankouMoney");
 
@@ -554,7 +561,7 @@ Parse
                 // //两队历史来增加亚盘的让球性,三场比赛的球数
                 // for (let index = 0; index < historylist.length; index++) {
                 //     const element = historylist[index];
-                //     if (index < 3) {
+                //     if (index < 2) {
                 //         if (home == element.home && guest == element.guest) {
                            
                 //         }
