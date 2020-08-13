@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-08-10 17:17:40
+ * @LastEditTime: 2020-08-13 10:13:15
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -26,7 +26,7 @@ const math = require('mathjs');
 
 Parse
     .Cloud
-    .define("cpu", async(request) => {
+    .define("cpu", async (request) => {
 
 
 
@@ -39,14 +39,14 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-08-10"
+        datetemp = "2020-08-13"
 
         var tempMoney = Parse
             .Object
             .extend("Money");
         var query = new Parse.Query(tempMoney);
         query.equalTo("date", datetemp);
-        query.notEqualTo("displayState","完场")
+        query.notEqualTo("displayState", "完场")
         query.ascending("matchTime") //matchTime,league
         // query.greaterThan("matchTime",new Date());
         query.limit(500);
@@ -105,12 +105,12 @@ Parse
                     //带入bet365的概率
                     finalitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
                     justitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
-                    
+
                 }
             } else {
                 if (weilianitem == undefined || weilianitem == null) {
-                console.log("缺少bet365的数据");
-                continue;
+                    console.log("缺少bet365的数据");
+                    continue;
                 }
             }
 
@@ -124,9 +124,9 @@ Parse
                 bet10item.returnRatio = math.format(bet10item.returnRatio.replace('%', '') / 100, 3);
 
                 //计算凯利  赔率/平均赔率*平均返回率
-                const k1 = math.format(bet10item.odds[0] / averageitem.odds[0] * parseFloat(averageitem.returnRatio.replace('%', '')  / 100), 4);
-                const k2 = math.format(bet10item.odds[1] / averageitem.odds[1] * parseFloat(averageitem.returnRatio.replace('%', '')  / 100), 4) ;
-                const k3 = math.format(bet10item.odds[2] / averageitem.odds[2] * parseFloat(averageitem.returnRatio.replace('%', '')  / 100), 4);
+                const k1 = math.format(bet10item.odds[0] / averageitem.odds[0] * parseFloat(averageitem.returnRatio.replace('%', '') / 100), 4);
+                const k2 = math.format(bet10item.odds[1] / averageitem.odds[1] * parseFloat(averageitem.returnRatio.replace('%', '') / 100), 4);
+                const k3 = math.format(bet10item.odds[2] / averageitem.odds[2] * parseFloat(averageitem.returnRatio.replace('%', '') / 100), 4);
 
                 if (parseFloat(bet10item.returnRatio) > parseFloat(k1)) {
                     justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) + 10) + '%';
@@ -154,7 +154,7 @@ Parse
             // if (ticaiitem == undefined) {     continue; }
 
             console.log(element.get('league') + "----" + home + '  vs  ' + guest + "-----" + element.get('matchId') + "-----" + element.get('matchTime'));
-             console.log('凯利:'.red + justitem);
+            console.log('凯利:'.red + justitem);
 
 
             if (ticaiitem != undefined && ticaiitem != null) {
@@ -199,12 +199,12 @@ Parse
 
                 }
 
-                 console.log('体彩:'.red + justitem);
+                console.log('体彩:'.red + justitem);
 
             }
 
 
-           
+
             //进行第5轮的5%的浮动，主要是针对平局进行处理。
             const HistoryMoney = Parse
                 .Object
@@ -267,7 +267,7 @@ Parse
 
             }
 
-             console.log('两队历史:'.green + finalitem);
+            console.log('两队历史:'.green + finalitem);
 
             //进行第6轮的5 % 的浮动，主要是针对最近状态进行处理。
             let homelist = historyitems.get('homelist')
@@ -307,7 +307,7 @@ Parse
                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
                         }
-                    } 
+                    }
                     // console.log( "----------"+finalitem)
                 } else {
                     break;
@@ -350,21 +350,21 @@ Parse
                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
                         }
-                    } 
+                    }
                     // console.log( "+++++++++"+ finalitem);
                 } else {
                     break;
                 }
             }
             console.log('散户心理:'.red + finalitem);
-            
-            if(bet365item != null && bet365item != undefined){
-                console.log('投注额:'+ math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3)+','+math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3)+','+math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3));
-                console.log('赔率:'+bet365item.odds[0]+","+bet365item.odds[1]+","+bet365item.odds[2]);
-          
+
+            if (bet365item != null && bet365item != undefined) {
+                console.log('投注额:' + math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3) + ',' + math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3) + ',' + math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3));
+                console.log('赔率:' + bet365item.odds[0] + "," + bet365item.odds[1] + "," + bet365item.odds[2]);
+
             }
-            
-           
+
+
             // 进行第7轮的50%的浮动，主要是针对让球进行处理。让球为55开的几率，赢或者不赢，也有可能是走盘，走盘还是要看大小球
             const PankouMoney = Parse.Object.extend("PankouMoney");
 
@@ -377,63 +377,66 @@ Parse
             const pankoumoneyitem = await pankoumoney.first();
             let yapanitem = ['0%', '0%'];
             let qiuitem = ['0%', '0%'];
+            let homeqiushu = 0;   //主队进球数
+            let guestqiushu = 0;  //客队进球数
+
             if (pankoumoneyitem != undefined && pankoumoneyitem != null) {
                 const bet365pankou = pankoumoneyitem.get('bet365pankou');
                 const bet10pankou = pankoumoneyitem.get('bet10pankou');
                 const bet365qiu = pankoumoneyitem.get('bet365qiu');
                 const bet10qiu = pankoumoneyitem.get('bet10qiu');
-                
+
 
                 //亚盘
-                if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined  ) {
+                if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
 
                     //firstOdds,odds,firstPankou,pankou,firstReturnRatio,returnRatio //大小球一样
                     const pankou1 = parseFloat(changepankou(bet10pankou.firstPankou));
                     const pankou2 = parseFloat(changepankou(bet10pankou.pankou));
 
-                    bet365ratio =  math.format(bet365pankou.returnRatio.replace('%', '') / 100,3);
+                    bet365ratio = math.format(bet365pankou.returnRatio.replace('%', '') / 100, 3);
 
-                    bet365odds0 =  parseFloat( bet365pankou.odds[0] ) + 1;
-                    bet365odds1 =  parseFloat( bet365pankou.odds[1] ) + 1;
+                    bet365odds0 = parseFloat(bet365pankou.odds[0]) + 1;
+                    bet365odds1 = parseFloat(bet365pankou.odds[1]) + 1;
 
-                    bet10odds0 =  parseFloat( bet10pankou.odds[0] ) + 1;
-                    bet10odds1 =  parseFloat( bet10pankou.odds[1] ) + 1;
+                    bet10odds0 = parseFloat(bet10pankou.odds[0]) + 1;
+                    bet10odds1 = parseFloat(bet10pankou.odds[1]) + 1;
 
                     yapanitem = [
                         math.format(bet365ratio / bet365odds0, 2) * 100,
                         math.format(bet365ratio / bet365odds1, 2) * 100
-                    ] 
+                    ]
 
-                    console.log("亚盘初始概率:" + yapanitem[0] + "%-" + yapanitem[1] + "%" + "---盘口:"+pankou1+"--"+pankou2);
+                    console.log("亚盘初始概率:" + yapanitem[0] + "%-" + yapanitem[1] + "%" + "---盘口:" + pankou1 + "--" + pankou2);
 
 
-                    let x0 = math.abs( math.format(bet365odds0 - bet10odds0, 2));
-                    let x1 = math.abs( math.format(bet365odds1 - bet10odds1, 2));
+                    let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
+                    let x1 = math.abs(math.format(bet365odds1 - bet10odds1, 2));
 
-                   
 
-                    if ( parseFloat( x0 ) > parseFloat( x1 ) ) {
+
+                    if (parseFloat(x0) > parseFloat(x1)) {
                         //说明看好 右边
                         yapanitem = [
                             yapanitem[0] - 5,
                             yapanitem[1] + 5
                         ];
                     }
-                    
-                    if (parseFloat( x0 ) < parseFloat( x1 ) ) {
+
+                    if (parseFloat(x0) < parseFloat(x1)) {
                         //说明看好 左边
                         yapanitem = [
                             yapanitem[0] + 5,
                             yapanitem[1] - 5
                         ];
                     }
-                    if (parseFloat( x0 ) == parseFloat( x1 ) ) {
-                        if(bet365odds0 <= bet365odds1){
+                    if (parseFloat(x0) == parseFloat(x1)) {
+                        if (bet365odds0 <= bet365odds1) {
                             yapanitem = [
                                 yapanitem[0] + 5,
                                 yapanitem[1] - 5
                             ];
-                        }else{
+                        } else {
                             yapanitem = [
                                 yapanitem[0] - 5,
                                 yapanitem[1] + 5
@@ -444,12 +447,12 @@ Parse
                     //第七轮，第一次不变盘处理数据
                     if (pankou1 == pankou2) {
 
-                        if(bet365odds0 <= bet365odds1){
+                        if (bet365odds0 <= bet365odds1) {
                             yapanitem = [
                                 yapanitem[0] + 5,
                                 yapanitem[1] - 5
                             ];
-                        }else{
+                        } else {
                             yapanitem = [
                                 yapanitem[0] - 5,
                                 yapanitem[1] + 5
@@ -458,69 +461,69 @@ Parse
                     }
                     //降盘
                     if (pankou1 > pankou2) {
-                        yapanitem = [ yapanitem[0] - 5 , yapanitem[1] + 5];
-                        
+                        yapanitem = [yapanitem[0] - 5, yapanitem[1] + 5];
+
                     }
                     //升盘
                     if (pankou1 < pankou2) {
-                        yapanitem = [ yapanitem[0] + 5 , yapanitem[1] - 5];
+                        yapanitem = [yapanitem[0] + 5, yapanitem[1] - 5];
                     }
 
-                    console.log("亚盘变动后的概率:" + yapanitem[0] + "%-" + yapanitem[1] + "%"  + "---盘口:"+pankou1+"--"+pankou2);
+                    console.log("亚盘变动后的概率:" + yapanitem[0] + "%-" + yapanitem[1] + "%" + "---盘口:" + pankou1 + "--" + pankou2);
 
 
                 }
 
                 //球数
-                if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined  ) {
+                if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
 
                     //firstOdds,odds,firstPankou,pankou,firstReturnRatio,returnRatio //大小球一样
                     const pankou1 = parseFloat(changeqiu(bet10qiu.firstPankou));
                     const pankou2 = parseFloat(changeqiu(bet10qiu.pankou));
 
-                    bet365ratio =  math.format(bet365qiu.returnRatio.replace('%', '') / 100,3);
+                    bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
 
-                    bet365odds0 =  parseFloat( bet365qiu.odds[0] ) + 1;
-                    bet365odds1 =  parseFloat( bet365qiu.odds[1] ) + 1;
+                    bet365odds0 = parseFloat(bet365qiu.odds[0]) + 1;
+                    bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
 
-                    bet10odds0 =  parseFloat( bet10qiu.odds[0] ) + 1;
-                    bet10odds1 =  parseFloat( bet10qiu.odds[1] ) + 1;
+                    bet10odds0 = parseFloat(bet10qiu.odds[0]) + 1;
+                    bet10odds1 = parseFloat(bet10qiu.odds[1]) + 1;
 
                     qiuitem = [
                         math.format(bet365ratio / bet365odds0, 2) * 100,
                         math.format(bet365ratio / bet365odds1, 2) * 100
-                    ] 
+                    ]
 
-                    console.log("球数初始概率:" + qiuitem[0] + "%-" + qiuitem[1] + "%" + "---盘口:"+pankou1+"--"+pankou2);
+                    console.log("球数初始概率:" + qiuitem[0] + "%-" + qiuitem[1] + "%" + "---盘口:" + pankou1 + "--" + pankou2);
 
 
-                    let x0 = math.abs( math.format(bet365odds0 - bet10odds0, 2));
-                    let x1 = math.abs( math.format(bet365odds1 - bet10odds1, 2));
+                    let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
+                    let x1 = math.abs(math.format(bet365odds1 - bet10odds1, 2));
 
-                   
 
-                    if ( parseFloat( x0 ) > parseFloat( x1 ) ) {
+
+                    if (parseFloat(x0) > parseFloat(x1)) {
                         //说明看好 右边
                         qiuitem = [
                             qiuitem[0] - 5,
                             qiuitem[1] + 5
                         ];
                     }
-                    
-                    if (parseFloat( x0 ) < parseFloat( x1 ) ) {
+
+                    if (parseFloat(x0) < parseFloat(x1)) {
                         //说明看好 左边
                         qiuitem = [
                             qiuitem[0] + 5,
                             qiuitem[1] - 5
                         ];
                     }
-                    if (parseFloat( x0 ) == parseFloat( x1 ) ) {
-                        if(bet365odds0 <= bet365odds1){
+                    if (parseFloat(x0) == parseFloat(x1)) {
+                        if (bet365odds0 <= bet365odds1) {
                             qiuitem = [
                                 qiuitem[0] + 5,
                                 qiuitem[1] - 5
                             ];
-                        }else{
+                        } else {
                             qiuitem = [
                                 qiuitem[0] - 5,
                                 qiuitem[1] + 5
@@ -530,13 +533,13 @@ Parse
 
                     //第七轮，第一次不变盘处理数据
                     if (pankou1 == pankou2) {
-                        
-                        if(bet365odds0 <= bet365odds1){
+
+                        if (bet365odds0 <= bet365odds1) {
                             qiuitem = [
                                 qiuitem[0] + 5,
                                 qiuitem[1] - 5
                             ];
-                        }else{
+                        } else {
                             qiuitem = [
                                 qiuitem[0] - 5,
                                 qiuitem[1] + 5
@@ -545,47 +548,54 @@ Parse
                     }
                     //降盘
                     if (pankou1 > pankou2) {
-                        qiuitem = [ qiuitem[0] - 5 , qiuitem[1] + 5];
-                        
+                        qiuitem = [qiuitem[0] - 5, qiuitem[1] + 5];
+
                     }
                     //升盘
                     if (pankou1 < pankou2) {
-                        qiuitem = [ qiuitem[0] + 5 , qiuitem[1] - 5];
+                        qiuitem = [qiuitem[0] + 5, qiuitem[1] - 5];
                     }
 
-                    console.log("球数变动后的概率:" + qiuitem[0] + "%-" + qiuitem[1] + "%"  + "---盘口:"+pankou1+"--"+pankou2);
+                    console.log("球数变动后的概率:" + qiuitem[0] + "%-" + qiuitem[1] + "%" + "---盘口:" + pankou1 + "--" + pankou2);
 
 
                 }
 
-                // //两队历史来增加亚盘的让球性,三场比赛的球数
-                // for (let index = 0; index < historylist.length; index++) {
-                //     const element = historylist[index];
-                //     if (index < 2) {
-                //         if (home == element.home && guest == element.guest) {
-                           
-                //         }
-                //         if (home == element.guest && guest == element.home) {
-                           
-                //         }
-                //     } else {
-                //         break;
-                //     }
-    
-                // }
+                //两队历史来增加亚盘的让球性,二场比赛的球数，
+                //主队的总进球+客队的总进球。主队的丢球+客队的丢球。 
+                //两队历史球数对拼
+
+                for (let index = 0; index < historylist.length; index++) {
+                    const element = historylist[index];
+                    if (index < 2) {
+                        if (home == element.home && guest == element.guest) {
+                            homeqiushu += element.goal[0];
+                            guestqiushu += element.goal[1];
+                        }
+                        if (home == element.guest && guest == element.home) {
+                            homeqiushu += element.goal[1];
+                            guestqiushu += element.goal[0];
+                        }
+                    } else {
+                        break;
+                    }
+
+                }
+
+                console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu);
             }
 
             if (parseFloat(justitem[1].replace('%', '')) >= 30 && parseFloat(justitem[1].replace('%', '')) <= 40) {
                 console.log('结果：平\n');
-            } 
+            }
             else if (parseFloat(justitem[0].replace('%', '')) <= parseFloat(-15) || parseFloat(justitem[1].replace('%', '')) <= parseFloat(-15) || parseFloat(justitem[2].replace('%', '')) <= parseFloat(-15)) {
-                if (parseFloat(justitem[0].replace('%', '')) <= -15) 
+                if (parseFloat(justitem[0].replace('%', '')) <= -15)
                     console.log("结果：胜\n");
-                if (parseFloat(justitem[1].replace('%', '')) <= -15) 
+                if (parseFloat(justitem[1].replace('%', '')) <= -15)
                     console.log("结果：平\n");
-                if (parseFloat(justitem[2].replace('%', '')) <= -15) 
+                if (parseFloat(justitem[2].replace('%', '')) <= -15)
                     console.log("结果：负\n");
-                }
+            }
             else {
                 if (parseFloat(justitem[0].replace('%', '')) >= parseFloat(justitem[2].replace('%', ''))) {
                     console.log('结果：胜\n');
@@ -596,7 +606,7 @@ Parse
             }
         }
 
-});
+    });
 
 //转换
 function changepankou(temp) {
@@ -662,9 +672,9 @@ function changeqiu(temp) {
         return 2.75;
     } else if (temp == '三球') {
         return 3;
-    }else if (temp == '三球/三球半') {
+    } else if (temp == '三球/三球半') {
         return 3.25;
-    } 
+    }
     else if (temp == '三球半') {
         return 3.5;
     } else if (temp == '三球半/四球') {
