@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-08-13 10:13:15
+ * @LastEditTime: 2020-08-23 23:42:16
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -29,7 +29,7 @@ Parse
     .define("cpu", async (request) => {
 
 
-
+        console.clear();
         var date = new Date();
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
@@ -39,7 +39,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-08-13"
+        datetemp = "2020-08-24"
 
         var tempMoney = Parse
             .Object
@@ -57,7 +57,7 @@ Parse
             const element = items[index];
             let matchId = element.get('matchId');
 
-            // if (matchId != "155357453") {     continue; }
+            // if (matchId != "213668623") {     continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -583,6 +583,8 @@ Parse
                 }
 
                 console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu);
+
+                //降盘是为了能 更容易的买大球，升盘，为了更容易的买小球
             }
 
             if (parseFloat(justitem[1].replace('%', '')) >= 30 && parseFloat(justitem[1].replace('%', '')) <= 40) {
