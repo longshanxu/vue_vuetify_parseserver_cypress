@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-08-23 23:42:16
+ * @LastEditTime: 2020-08-31 00:00:26
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -39,7 +39,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-08-24"
+        datetemp = "2020-08-31"
 
         var tempMoney = Parse
             .Object
@@ -92,7 +92,9 @@ Parse
                 justitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
 
             } else {
+                
                 console.log("缺少威廉数据");
+                continue
             }
 
             // 进行第二轮bet365的5%的浮动
