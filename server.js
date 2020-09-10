@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-29 15:50:37
- * @LastEditTime: 2020-06-26 02:14:59
+ * @LastEditTime: 2020-09-10 16:37:48
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server.js
@@ -18,7 +18,7 @@ const ParseDashboard = require('parse-dashboard');
 
 const app = express();
 
-const serverUrl = 'http://localhost/parse';
+const serverUrl = 'http://localhost:90/parse';
 
 // console.log(__dirname);
 
@@ -93,7 +93,7 @@ app.use(function (err, req, res, next) {
 
 //var httpServer = require('http').createServer(app);
 
-app.listen(80, function (err) {
+app.listen(90, function (err) {
 
   if (err) {
     console.log(err);

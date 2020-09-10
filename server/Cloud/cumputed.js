@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-08-31 00:00:26
+ * @LastEditTime: 2020-09-10 09:59:40
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -39,7 +39,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-08-31"
+        datetemp = "2020-09-10"
 
         var tempMoney = Parse
             .Object
@@ -381,6 +381,8 @@ Parse
             let qiuitem = ['0%', '0%'];
             let homeqiushu = 0;   //主队进球数
             let guestqiushu = 0;  //客队进球数
+            let homezuijinqiushu = 0;  //主队最近进球数
+            let guestzuijinqiushu = 0; //客队最近进球数
 
             if (pankoumoneyitem != undefined && pankoumoneyitem != null) {
                 const bet365pankou = pankoumoneyitem.get('bet365pankou');
@@ -587,6 +589,39 @@ Parse
                 console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu);
 
                 //降盘是为了能 更容易的买大球，升盘，为了更容易的买小球
+
+                //主队最近进球数。
+                for (let index = 0; index < homelist.length; index++) {
+                    const element = homelist[index];
+                    if (index < 2) {
+                        if (home == element.home) {
+                            homezuijinqiushu += element.goal[0];
+                        }
+                        if (home == element.guest) {
+                            homezuijinqiushu += element.goal[1];
+                        }
+                    } else {
+                        break;
+                    };
+                }
+
+                //客队最近进球数。
+                for (let index = 0; index < guestlist.length; index++) {
+                    const element = guestlist[index];
+                    if (index < 2) {
+                        if (guest == element.home) {
+                            guestzuijinqiushu += element.goal[0];
+                        }
+                        if (guest == element.guest) {
+                            guestzuijinqiushu += element.goal[1];
+                        }
+                    } else {
+                        break;
+                    };
+                }
+
+                console.log("两队最近战绩球数：".green + homezuijinqiushu + '  ,  ' + guestzuijinqiushu);
+                
             }
 
             if (parseFloat(justitem[1].replace('%', '')) >= 30 && parseFloat(justitem[1].replace('%', '')) <= 40) {
