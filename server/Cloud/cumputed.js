@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-09-10 09:59:40
+ * @LastEditTime: 2020-09-20 09:59:40
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -18,6 +18,7 @@
  * 概率从某种意义上讲，就相当于投注的资金
  * 威廉和竞彩的三项数据差距 小的一面
  * 按5% 作为浮动机制
+ * 一场800，胜平负400，大小球300，，半场300，比分100
  *
  * **************/
 
@@ -39,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-09-10"
+        datetemp = "2020-09-20"
 
         var tempMoney = Parse
             .Object
