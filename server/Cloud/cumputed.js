@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-09-20 09:59:40
+ * @LastEditTime: 2020-09-28 09:59:40
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-09-20"
+        datetemp = "2020-09-28"
 
         var tempMoney = Parse
             .Object
@@ -93,7 +93,7 @@ Parse
                 justitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
 
             } else {
-                
+
                 console.log("缺少威廉数据");
                 continue
             }
@@ -412,7 +412,7 @@ Parse
                         math.format(bet365ratio / bet365odds1, 2) * 100
                     ]
 
-                    console.log("亚盘初始概率:" + yapanitem[0] + "%-" + yapanitem[1] + "%" + "---盘口:" + pankou1 + "--" + pankou2);
+                    console.log("亚盘初始概率:" + yapanitem[0] + "%-" + yapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
 
 
                     let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
@@ -474,7 +474,7 @@ Parse
                         yapanitem = [yapanitem[0] + 5, yapanitem[1] - 5];
                     }
 
-                    console.log("亚盘变动后的概率:" + yapanitem[0] + "%-" + yapanitem[1] + "%" + "---盘口:" + pankou1 + "--" + pankou2);
+                    console.log("亚盘变动后的概率:".white + yapanitem[0] + "%-" + yapanitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
 
 
                 }
@@ -499,7 +499,7 @@ Parse
                         math.format(bet365ratio / bet365odds1, 2) * 100
                     ]
 
-                    console.log("球数初始概率:" + qiuitem[0] + "%-" + qiuitem[1] + "%" + "---盘口:" + pankou1 + "--" + pankou2);
+                    console.log("球数初始概率:" + qiuitem[0] + "%-" + qiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
 
 
                     let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
@@ -561,7 +561,7 @@ Parse
                         qiuitem = [qiuitem[0] + 5, qiuitem[1] - 5];
                     }
 
-                    console.log("球数变动后的概率:" + qiuitem[0] + "%-" + qiuitem[1] + "%" + "---盘口:" + pankou1 + "--" + pankou2);
+                    console.log("球数变动后的概率:".white + qiuitem[0] + "%-" + qiuitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
 
 
                 }
@@ -587,7 +587,8 @@ Parse
 
                 }
 
-                console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu);
+
+
 
                 //降盘是为了能 更容易的买大球，升盘，为了更容易的买小球
 
@@ -621,8 +622,97 @@ Parse
                     };
                 }
 
-                console.log("两队最近战绩球数：".green + homezuijinqiushu + '  ,  ' + guestzuijinqiushu);
-                
+
+                // console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu);
+                // console.log("两队最近战绩球数：".red + homezuijinqiushu + '  ,  ' + guestzuijinqiushu);
+                // console.log("两队历史亚盘球数：".white + (homeqiushu + guestqiushu) / 2);
+                // console.log("两队最近亚盘球数：".white + (homezuijinqiushu + guestzuijinqiushu) / 2);
+
+                console.log("两队常规球数：".yellow + (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4);
+                console.log("两队常规让球：".yellow + (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4);
+                // console.log("两队历史亚盘让球：".white + (homeqiushu - guestqiushu) / 2);
+                if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
+                    //散户投注数据。
+                    let changguiqiushu = (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4
+                    let qiushupankou = parseFloat(changeqiu(bet10qiu.pankou));
+                    //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
+                    let chaibie = qiushupankou - changguiqiushu;
+                    let chaibieitem = [50, 50];
+
+                    if (chaibie > 0) {
+                        let temp = math.abs(chaibie) / 0.25;
+                        chaibieitem = [50 - temp, 50 + temp];
+                    }
+                    else if (chaibie < 0) {
+                        let temp = math.abs(chaibie) / 0.25;
+                        chaibieitem = [50 + temp, 50 - temp];
+                    }
+
+                    let chaibie2 = 0 - (homeqiushu + guestqiushu) / 2;
+
+                    if (chaibie2 > 0) {
+                        let temp = math.abs(chaibie2) / 0.25;
+                        chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
+                    }
+                    else if (chaibie < 0) {
+                        let temp = math.abs(chaibie) / 0.25;
+                        chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
+                    }
+                    let chaibie3 = qiushupankou - (homezuijinqiushu + guestzuijinqiushu) / 2;
+
+                    if (chaibie3 > 0) {
+                        let temp = math.abs(chaibie3) / 0.25;
+                        chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
+                    }
+                    else if (chaibie < 0) {
+                        let temp = math.abs(chaibie) / 0.25;
+                        chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
+                    }
+
+                    console.log("散户球数投注情况:" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+                }
+
+                if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
+                    //散户投注数据。
+                    let changguiqiushu = (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4
+                    let qiushupankou = parseFloat(changeqiu(bet10qiu.pankou));
+                    //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
+                    let chaibie = qiushupankou - changguiqiushu;
+                    let chaibieitem = [50, 50];
+
+                    if (chaibie > 0) {
+                        let temp = math.abs(chaibie) / 0.25;
+                        chaibieitem = [50 - temp, 50 + temp];
+                    }
+                    else if (chaibie < 0) {
+                        let temp = math.abs(chaibie) / 0.25;
+                        chaibieitem = [50 + temp, 50 - temp];
+                    }
+
+                    let chaibie2 = 0 - (homeqiushu + homezuijinqiushu) / 2;
+
+                    if (chaibie2 > 0) {
+                        let temp = math.abs(chaibie2) / 0.25;
+                        chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
+                    }
+                    else if (chaibie < 0) {
+                        let temp = math.abs(chaibie) / 0.25;
+                        chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
+                    }
+                    let chaibie3 = qiushupankou - (guestzuijinqiushu + guestqiushu) / 2;
+
+                    if (chaibie3 > 0) {
+                        let temp = math.abs(chaibie3) / 0.25;
+                        chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
+                    }
+                    else if (chaibie < 0) {
+                        let temp = math.abs(chaibie) / 0.25;
+                        chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
+                    }
+
+                    console.log("另一种散户球数投注情况:" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+                }
+
             }
 
             if (parseFloat(justitem[1].replace('%', '')) >= 30 && parseFloat(justitem[1].replace('%', '')) <= 40) {
