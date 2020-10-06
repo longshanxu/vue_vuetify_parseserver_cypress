@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-09-28 09:59:40
+ * @LastEditTime: 2020-10-06 09:59:40
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-09-28"
+        datetemp = "2020-10-06"
 
         var tempMoney = Parse
             .Object
@@ -623,8 +623,8 @@ Parse
                 }
 
 
-                // console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu);
-                // console.log("两队最近战绩球数：".red + homezuijinqiushu + '  ,  ' + guestzuijinqiushu);
+                console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu +" 约 :  ".green+ (homeqiushu+guestqiushu) / 2);
+                console.log("两队最近战绩球数：".red + homezuijinqiushu + '  ,  ' + guestzuijinqiushu+" 约 :  ".green+ (homezuijinqiushu+guestzuijinqiushu) / 2);
                 // console.log("两队历史亚盘球数：".white + (homeqiushu + guestqiushu) / 2);
                 // console.log("两队最近亚盘球数：".white + (homezuijinqiushu + guestzuijinqiushu) / 2);
 
@@ -633,22 +633,31 @@ Parse
                 // console.log("两队历史亚盘让球：".white + (homeqiushu - guestqiushu) / 2);
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
                     //散户投注数据。
+
+                    let  bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
+
+                    let bet365odds0 = parseFloat(bet365qiu.odds[0]) + 1;
+                    let  bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
+
                     let changguiqiushu = (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4
                     let qiushupankou = parseFloat(changeqiu(bet10qiu.pankou));
                     //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
                     let chaibie = qiushupankou - changguiqiushu;
-                    let chaibieitem = [50, 50];
+                    let chaibieitem =[
+                        math.format(bet365ratio / bet365odds0, 2) * 100,
+                        math.format(bet365ratio / bet365odds1, 2) * 100
+                    ]
 
                     if (chaibie > 0) {
                         let temp = math.abs(chaibie) / 0.25;
-                        chaibieitem = [50 - temp, 50 + temp];
+                        chaibieitem = [chaibieitem[0] - temp, chaibieitem[1]  + temp];
                     }
                     else if (chaibie < 0) {
                         let temp = math.abs(chaibie) / 0.25;
-                        chaibieitem = [50 + temp, 50 - temp];
+                        chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
                     }
 
-                    let chaibie2 = 0 - (homeqiushu + guestqiushu) / 2;
+                    let chaibie2 = qiushupankou - (homeqiushu + guestqiushu) / 2;
 
                     if (chaibie2 > 0) {
                         let temp = math.abs(chaibie2) / 0.25;
@@ -678,18 +687,27 @@ Parse
                     let qiushupankou = parseFloat(changeqiu(bet10qiu.pankou));
                     //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
                     let chaibie = qiushupankou - changguiqiushu;
-                    let chaibieitem = [50, 50];
+                    
+                    let  bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
+
+                    let bet365odds0 = parseFloat(bet365qiu.odds[0]) + 1;
+                    let  bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
+
+                    let chaibieitem =[
+                        math.format(bet365ratio / bet365odds0, 2) * 100,
+                        math.format(bet365ratio / bet365odds1, 2) * 100
+                    ]
 
                     if (chaibie > 0) {
                         let temp = math.abs(chaibie) / 0.25;
-                        chaibieitem = [50 - temp, 50 + temp];
+                        chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
                     }
                     else if (chaibie < 0) {
                         let temp = math.abs(chaibie) / 0.25;
-                        chaibieitem = [50 + temp, 50 - temp];
+                        chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
                     }
 
-                    let chaibie2 = 0 - (homeqiushu + homezuijinqiushu) / 2;
+                    let chaibie2 = qiushupankou - (homeqiushu + homezuijinqiushu) / 2;
 
                     if (chaibie2 > 0) {
                         let temp = math.abs(chaibie2) / 0.25;
