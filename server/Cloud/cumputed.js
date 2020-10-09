@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-10-06 09:59:40
+ * @LastEditTime: 2020-10-10 09:59:40
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-10-06"
+        datetemp = "2020-10-10"
 
         var tempMoney = Parse
             .Object
@@ -466,13 +466,21 @@ Parse
                     }
                     //降盘
                     if (pankou1 > pankou2) {
+                      
                         yapanitem = [yapanitem[0] - 5, yapanitem[1] + 5];
-
+                        let chaibie = pankou1 - pankou2;
+                        let temp = math.abs(chaibie) / 0.25;
+                        yapanitem = [yapanitem[0] - temp, yapanitem[1] + temp];
                     }
                     //升盘
                     if (pankou1 < pankou2) {
                         yapanitem = [yapanitem[0] + 5, yapanitem[1] - 5];
+                        let chaibie = pankou1 - pankou2;
+                        let temp = math.abs(chaibie) / 0.25;
+                        yapanitem = [yapanitem[0] + temp, yapanitem[1] - temp];
                     }
+
+
 
                     console.log("亚盘变动后的概率:".white + yapanitem[0] + "%-" + yapanitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
 
@@ -554,11 +562,17 @@ Parse
                     //降盘
                     if (pankou1 > pankou2) {
                         qiuitem = [qiuitem[0] - 5, qiuitem[1] + 5];
+                        let chaibie = pankou1 - pankou2;
+                        let temp = math.abs(chaibie) / 0.25;
+                        qiuitem = [qiuitem[0] - temp, qiuitem[1] + temp];
 
                     }
                     //升盘
                     if (pankou1 < pankou2) {
                         qiuitem = [qiuitem[0] + 5, qiuitem[1] - 5];
+                        let chaibie = pankou1 - pankou2;
+                        let temp = math.abs(chaibie) / 0.25;
+                        qiuitem = [qiuitem[0] + temp, qiuitem[1] - temp];
                     }
 
                     console.log("球数变动后的概率:".white + qiuitem[0] + "%-" + qiuitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
