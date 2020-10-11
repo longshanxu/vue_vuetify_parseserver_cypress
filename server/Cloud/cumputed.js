@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-10-10 09:59:40
+ * @LastEditTime: 2020-10-11 09:59:40
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-10-10"
+        datetemp = "2020-10-11"
 
         var tempMoney = Parse
             .Object
@@ -391,6 +391,61 @@ Parse
                 const bet365qiu = pankoumoneyitem.get('bet365qiu');
                 const bet10qiu = pankoumoneyitem.get('bet10qiu');
 
+                //两队历史来增加亚盘的让球性,二场比赛的球数，
+                //主队的总进球+客队的总进球。主队的丢球+客队的丢球。 
+                //两队历史球数对拼
+
+                for (let index = 0; index < historylist.length; index++) {
+                    const element = historylist[index];
+                    if (index < 2) {
+                        if (home == element.home && guest == element.guest) {
+                            homeqiushu += element.goal[0];
+                            guestqiushu += element.goal[1];
+                        }
+                        if (home == element.guest && guest == element.home) {
+                            homeqiushu += element.goal[1];
+                            guestqiushu += element.goal[0];
+                        }
+                    } else {
+                        break;
+                    }
+
+                }
+
+
+
+
+                //降盘是为了能 更容易的买大球，升盘，为了更容易的买小球
+
+                //主队最近进球数。
+                for (let index = 0; index < homelist.length; index++) {
+                    const element = homelist[index];
+                    if (index < 2) {
+                        if (home == element.home) {
+                            homezuijinqiushu += element.goal[0];
+                        }
+                        if (home == element.guest) {
+                            homezuijinqiushu += element.goal[1];
+                        }
+                    } else {
+                        break;
+                    };
+                }
+
+                //客队最近进球数。
+                for (let index = 0; index < guestlist.length; index++) {
+                    const element = guestlist[index];
+                    if (index < 2) {
+                        if (guest == element.home) {
+                            guestzuijinqiushu += element.goal[0];
+                        }
+                        if (guest == element.guest) {
+                            guestzuijinqiushu += element.goal[1];
+                        }
+                    } else {
+                        break;
+                    };
+                }
 
                 //亚盘
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
@@ -399,13 +454,13 @@ Parse
                     const pankou1 = parseFloat(changepankou(bet10pankou.firstPankou));
                     const pankou2 = parseFloat(changepankou(bet10pankou.pankou));
 
-                    bet365ratio = math.format(bet365pankou.returnRatio.replace('%', '') / 100, 3);
+                    let bet365ratio = math.format(bet365pankou.returnRatio.replace('%', '') / 100, 3);
 
-                    bet365odds0 = parseFloat(bet365pankou.odds[0]) + 1;
-                    bet365odds1 = parseFloat(bet365pankou.odds[1]) + 1;
+                    let bet365odds0 = parseFloat(bet365pankou.odds[0]) + 1;
+                    let bet365odds1 = parseFloat(bet365pankou.odds[1]) + 1;
 
-                    bet10odds0 = parseFloat(bet10pankou.odds[0]) + 1;
-                    bet10odds1 = parseFloat(bet10pankou.odds[1]) + 1;
+                    let bet10odds0 = parseFloat(bet10pankou.odds[0]) + 1;
+                    let bet10odds1 = parseFloat(bet10pankou.odds[1]) + 1;
 
                     yapanitem = [
                         math.format(bet365ratio / bet365odds0, 2) * 100,
@@ -466,7 +521,7 @@ Parse
                     }
                     //降盘
                     if (pankou1 > pankou2) {
-                      
+
                         yapanitem = [yapanitem[0] - 5, yapanitem[1] + 5];
                         let chaibie = pankou1 - pankou2;
                         let temp = math.abs(chaibie) / 0.25;
@@ -487,6 +542,61 @@ Parse
 
                 }
 
+                //亚盘投注情况
+
+                if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
+                    //散户投注数据。
+
+                    let bet365ratio = math.format(bet365pankou.returnRatio.replace('%', '') / 100, 3);
+
+                    let bet365odds0 = parseFloat(bet365pankou.odds[0]) + 1;
+                    let bet365odds1 = parseFloat(bet365pankou.odds[1]) + 1;
+
+                    let changguiqiushu = (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4
+                    let qiushupankou = parseFloat(changepankou(bet10pankou.pankou));
+                    //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
+                    let chaibie = (qiushupankou + changguiqiushu) / 2;
+
+                    let chaibieitem = [
+                        math.format(bet365ratio / bet365odds0, 2) * 100,
+                        math.format(bet365ratio / bet365odds1, 2) * 100
+                    ]
+
+                    if (chaibie > 0) {
+                        let temp = math.abs(chaibie) / 0.25;
+                        chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
+                    }
+                    else if (chaibie < 0) {
+                        let temp = math.abs(chaibie) / 0.25;
+                        chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
+                    }
+
+                    let chaibie2 = (qiushupankou + (homeqiushu - guestqiushu)) / 2;
+
+                    if (chaibie2 > 0) {
+                        let temp = math.abs(chaibie2) / 0.25;
+                        chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
+                    }
+                    else if (chaibie2 < 0) {
+                        let temp = math.abs(chaibie2) / 0.25;
+                        chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
+                    }
+                    let chaibie3 = (qiushupankou + (homezuijinqiushu - guestzuijinqiushu)) / 2;
+
+                    if (chaibie3 > 0) {
+                        let temp = math.abs(chaibie3) / 0.25;
+                        chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
+                    }
+                    else if (chaibie3 < 0) {
+                        let temp = math.abs(chaibie3) / 0.25;
+                        chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
+                    }
+
+                    console.log("亚盘投注情况-----:".yellow + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+                }
+
+
+
                 //球数
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
 
@@ -494,13 +604,13 @@ Parse
                     const pankou1 = parseFloat(changeqiu(bet10qiu.firstPankou));
                     const pankou2 = parseFloat(changeqiu(bet10qiu.pankou));
 
-                    bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
+                    let bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
 
-                    bet365odds0 = parseFloat(bet365qiu.odds[0]) + 1;
-                    bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
+                    let bet365odds0 = parseFloat(bet365qiu.odds[0]) + 1;
+                    let bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
 
-                    bet10odds0 = parseFloat(bet10qiu.odds[0]) + 1;
-                    bet10odds1 = parseFloat(bet10qiu.odds[1]) + 1;
+                    let bet10odds0 = parseFloat(bet10qiu.odds[0]) + 1;
+                    let bet10odds1 = parseFloat(bet10qiu.odds[1]) + 1;
 
                     qiuitem = [
                         math.format(bet365ratio / bet365odds0, 2) * 100,
@@ -580,65 +690,11 @@ Parse
 
                 }
 
-                //两队历史来增加亚盘的让球性,二场比赛的球数，
-                //主队的总进球+客队的总进球。主队的丢球+客队的丢球。 
-                //两队历史球数对拼
-
-                for (let index = 0; index < historylist.length; index++) {
-                    const element = historylist[index];
-                    if (index < 2) {
-                        if (home == element.home && guest == element.guest) {
-                            homeqiushu += element.goal[0];
-                            guestqiushu += element.goal[1];
-                        }
-                        if (home == element.guest && guest == element.home) {
-                            homeqiushu += element.goal[1];
-                            guestqiushu += element.goal[0];
-                        }
-                    } else {
-                        break;
-                    }
-
-                }
 
 
 
-
-                //降盘是为了能 更容易的买大球，升盘，为了更容易的买小球
-
-                //主队最近进球数。
-                for (let index = 0; index < homelist.length; index++) {
-                    const element = homelist[index];
-                    if (index < 2) {
-                        if (home == element.home) {
-                            homezuijinqiushu += element.goal[0];
-                        }
-                        if (home == element.guest) {
-                            homezuijinqiushu += element.goal[1];
-                        }
-                    } else {
-                        break;
-                    };
-                }
-
-                //客队最近进球数。
-                for (let index = 0; index < guestlist.length; index++) {
-                    const element = guestlist[index];
-                    if (index < 2) {
-                        if (guest == element.home) {
-                            guestzuijinqiushu += element.goal[0];
-                        }
-                        if (guest == element.guest) {
-                            guestzuijinqiushu += element.goal[1];
-                        }
-                    } else {
-                        break;
-                    };
-                }
-
-
-                console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu +" 约 :  ".green+ (homeqiushu+guestqiushu) / 2);
-                console.log("两队最近战绩球数：".red + homezuijinqiushu + '  ,  ' + guestzuijinqiushu+" 约 :  ".green+ (homezuijinqiushu+guestzuijinqiushu) / 2);
+                console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu + " 约 :  ".green + (homeqiushu + guestqiushu) / 2);
+                console.log("两队最近战绩球数：".red + homezuijinqiushu + '  ,  ' + guestzuijinqiushu + " 约 :  ".green + (homezuijinqiushu + guestzuijinqiushu) / 2);
                 // console.log("两队历史亚盘球数：".white + (homeqiushu + guestqiushu) / 2);
                 // console.log("两队最近亚盘球数：".white + (homezuijinqiushu + guestzuijinqiushu) / 2);
 
@@ -648,23 +704,23 @@ Parse
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
                     //散户投注数据。
 
-                    let  bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
+                    let bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
 
                     let bet365odds0 = parseFloat(bet365qiu.odds[0]) + 1;
-                    let  bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
+                    let bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
 
                     let changguiqiushu = (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4
                     let qiushupankou = parseFloat(changeqiu(bet10qiu.pankou));
                     //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
                     let chaibie = qiushupankou - changguiqiushu;
-                    let chaibieitem =[
+                    let chaibieitem = [
                         math.format(bet365ratio / bet365odds0, 2) * 100,
                         math.format(bet365ratio / bet365odds1, 2) * 100
                     ]
 
                     if (chaibie > 0) {
                         let temp = math.abs(chaibie) / 0.25;
-                        chaibieitem = [chaibieitem[0] - temp, chaibieitem[1]  + temp];
+                        chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
                     }
                     else if (chaibie < 0) {
                         let temp = math.abs(chaibie) / 0.25;
@@ -677,8 +733,8 @@ Parse
                         let temp = math.abs(chaibie2) / 0.25;
                         chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
                     }
-                    else if (chaibie < 0) {
-                        let temp = math.abs(chaibie) / 0.25;
+                    else if (chaibie2 < 0) {
+                        let temp = math.abs(chaibie2) / 0.25;
                         chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
                     }
                     let chaibie3 = qiushupankou - (homezuijinqiushu + guestzuijinqiushu) / 2;
@@ -687,8 +743,8 @@ Parse
                         let temp = math.abs(chaibie3) / 0.25;
                         chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
                     }
-                    else if (chaibie < 0) {
-                        let temp = math.abs(chaibie) / 0.25;
+                    else if (chaibie3 < 0) {
+                        let temp = math.abs(chaibie3) / 0.25;
                         chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
                     }
 
@@ -701,13 +757,13 @@ Parse
                     let qiushupankou = parseFloat(changeqiu(bet10qiu.pankou));
                     //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
                     let chaibie = qiushupankou - changguiqiushu;
-                    
-                    let  bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
+
+                    let bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
 
                     let bet365odds0 = parseFloat(bet365qiu.odds[0]) + 1;
-                    let  bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
+                    let bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
 
-                    let chaibieitem =[
+                    let chaibieitem = [
                         math.format(bet365ratio / bet365odds0, 2) * 100,
                         math.format(bet365ratio / bet365odds1, 2) * 100
                     ]
@@ -727,8 +783,8 @@ Parse
                         let temp = math.abs(chaibie2) / 0.25;
                         chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
                     }
-                    else if (chaibie < 0) {
-                        let temp = math.abs(chaibie) / 0.25;
+                    else if (chaibie2 < 0) {
+                        let temp = math.abs(chaibie2) / 0.25;
                         chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
                     }
                     let chaibie3 = qiushupankou - (guestzuijinqiushu + guestqiushu) / 2;
@@ -737,8 +793,8 @@ Parse
                         let temp = math.abs(chaibie3) / 0.25;
                         chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
                     }
-                    else if (chaibie < 0) {
-                        let temp = math.abs(chaibie) / 0.25;
+                    else if (chaibie3 < 0) {
+                        let temp = math.abs(chaibie3) / 0.25;
                         chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
                     }
 
