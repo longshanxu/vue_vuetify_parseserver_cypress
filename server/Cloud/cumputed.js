@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-10-11 09:59:40
+ * @LastEditTime: 2020-10-14 09:59:40
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-10-11"
+        datetemp = "2020-10-14"
 
         var tempMoney = Parse
             .Object
@@ -555,7 +555,7 @@ Parse
                     let changguiqiushu = (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4
                     let qiushupankou = parseFloat(changepankou(bet10pankou.pankou));
                     //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
-                    let chaibie = (qiushupankou + changguiqiushu) / 2;
+                    let chaibie = changguiqiushu - qiushupankou ;
 
                     let chaibieitem = [
                         math.format(bet365ratio / bet365odds0, 2) * 100,
@@ -571,7 +571,7 @@ Parse
                         chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
                     }
 
-                    let chaibie2 = (qiushupankou + (homeqiushu - guestqiushu)) / 2;
+                    let chaibie2 = (homeqiushu - guestqiushu) -qiushupankou ;
 
                     if (chaibie2 > 0) {
                         let temp = math.abs(chaibie2) / 0.25;
@@ -581,7 +581,7 @@ Parse
                         let temp = math.abs(chaibie2) / 0.25;
                         chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
                     }
-                    let chaibie3 = (qiushupankou + (homezuijinqiushu - guestzuijinqiushu)) / 2;
+                    let chaibie3 = (homezuijinqiushu - guestzuijinqiushu) - qiushupankou ;
 
                     if (chaibie3 > 0) {
                         let temp = math.abs(chaibie3) / 0.25;
