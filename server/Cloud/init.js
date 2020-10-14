@@ -3,7 +3,7 @@ const { clear } = require('console');
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-10-14 22:07:01
+ * @LastEditTime: 2020-10-14 16:41:16
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -216,7 +216,9 @@ async function GetHistoryByID(matchId, datetemp, proxiedRequest) {
                 money.set("guestlist", data.recent.guest.list); //两队对比记录
                 money.save();
             }else{
-                console.log(error);
+                console.log("+++++++++++++++++++++++="+matchId);
+                GetHistoryByID(matchId, datetemp, proxiedRequest)
+                // console.log(error);
             }
         })
 
@@ -275,7 +277,10 @@ async function GetOddsByID(matchId, datetemp, proxiedRequest) {
                 }
                 money.save();
             }else{
-                console.log(error);
+                
+                console.log("+++++++++++++++++++++++="+matchId);
+                GetOddsByID(matchId, datetemp, proxiedRequest)
+                // console.log(error);
             }
         });
 
@@ -347,7 +352,9 @@ async function GetPankouByID(matchId, datetemp, proxiedRequest) {
                 money.save();
 
             }else{
-                console.log(error);
+                console.log("+++++++++++++++++++++++="+matchId);
+                GetPankouByID(matchId, datetemp, proxiedRequest);
+                //console.log(error);
             }
         });
 
@@ -532,16 +539,16 @@ Parse
                                             console.log("获取盘口数据完毕");
                                         }
 
-                                    }, index * 1500);
+                                    }, index * 1100);
                                 }
                             }
 
-                        }, index * 1500);
+                        }, index * 1100);
 
                     }
                 }
 
-            }, index * 1500);
+            }, index * 1100);
         }
     })
 
