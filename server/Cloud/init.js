@@ -1,9 +1,9 @@
-const { clear } = require('console');
+
 
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-10-14 16:41:16
+ * @LastEditTime: 2020-10-15 17:52:01
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2020-10-14/prev
-//https://vipc.cn/i/live/football/date/2020-10-14/next
+//https://vipc.cn/i/live/football/date/2020-10-15/prev
+//https://vipc.cn/i/live/football/date/2020-10-15/next
 
 Parse
     .Cloud
@@ -107,7 +107,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2020-10-14";
+        var datetemp = "2020-10-15";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -120,7 +120,7 @@ async function GetTodayMoney() {
             await object.destroy();
         }
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/2020-10-14/prev',
+            url: 'https://vipc.cn/i/live/football/date/2020-10-15/prev',
             headers: {
                 'User-Agent': 'request'
             },
@@ -215,9 +215,12 @@ async function GetHistoryByID(matchId, datetemp, proxiedRequest) {
                 money.set("homelist", data.recent.home.list); //两队对比记录
                 money.set("guestlist", data.recent.guest.list); //两队对比记录
                 money.save();
-            }else{
-                console.log("+++++++++++++++++++++++="+matchId);
-                GetHistoryByID(matchId, datetemp, proxiedRequest)
+            } else {
+                if (matchId != null && matchId.length < 10) {
+                    console.log("+++++++++++++++++++++++=" + matchId);
+                    GetHistoryByID(matchId, datetemp, proxiedRequest)
+                }
+
                 // console.log(error);
             }
         })
@@ -276,10 +279,11 @@ async function GetOddsByID(matchId, datetemp, proxiedRequest) {
 
                 }
                 money.save();
-            }else{
-                
-                console.log("+++++++++++++++++++++++="+matchId);
-                GetOddsByID(matchId, datetemp, proxiedRequest)
+            } else {
+                if (matchId != null && matchId.length < 10) {
+                    console.log("+++++++++++++++++++++++=" + matchId);
+                    GetOddsByID(matchId, datetemp, proxiedRequest)
+                }
                 // console.log(error);
             }
         });
@@ -351,9 +355,11 @@ async function GetPankouByID(matchId, datetemp, proxiedRequest) {
                 }
                 money.save();
 
-            }else{
-                console.log("+++++++++++++++++++++++="+matchId);
-                GetPankouByID(matchId, datetemp, proxiedRequest);
+            } else {
+                if (matchId != null && matchId.length < 10) {
+                    console.log("+++++++++++++++++++++++=" + matchId);
+                    GetPankouByID(matchId, datetemp, proxiedRequest);
+                }
                 //console.log(error);
             }
         });
@@ -379,7 +385,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2020-10-14";
+    var datetemp = "2020-10-15";
 
 
     //清空其他信息
@@ -438,7 +444,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-10-14"
+        datetemp = "2020-10-15"
 
         var tempMoney = Parse
             .Object
@@ -531,7 +537,7 @@ Parse
 
                                         // GetHistoryByID(mamatchId, datetemp, proxiedRequest);
 
-                                        GetPankouByID(mamatchId,datetemp, proxiedRequest);  
+                                        GetPankouByID(mamatchId, datetemp, proxiedRequest);
 
                                         // GetOddsByID(mamatchId, datetemp, proxiedRequest);
 

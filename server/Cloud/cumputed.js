@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-10-14 09:59:40
+ * @LastEditTime: 2020-10-15 14:18:46
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-10-14"
+        datetemp = "2020-10-15"
 
         var tempMoney = Parse
             .Object
@@ -418,14 +418,20 @@ Parse
                 //降盘是为了能 更容易的买大球，升盘，为了更容易的买小球
 
                 //主队最近进球数。
+                //主队最近丢球，客队最近丢球。
+                let homediuqiu = 0;
+                let guestdiuqiu = 0;
+
                 for (let index = 0; index < homelist.length; index++) {
                     const element = homelist[index];
                     if (index < 2) {
                         if (home == element.home) {
                             homezuijinqiushu += element.goal[0];
+                            homediuqiu+=  element.goal[1];
                         }
                         if (home == element.guest) {
                             homezuijinqiushu += element.goal[1];
+                            homediuqiu+=  element.goal[0];
                         }
                     } else {
                         break;
@@ -438,9 +444,11 @@ Parse
                     if (index < 2) {
                         if (guest == element.home) {
                             guestzuijinqiushu += element.goal[0];
+                            guestdiuqiu +=  element.goal[1];
                         }
                         if (guest == element.guest) {
                             guestzuijinqiushu += element.goal[1];
+                            guestdiuqiu +=  element.goal[0];
                         }
                     } else {
                         break;
@@ -694,7 +702,7 @@ Parse
 
 
                 console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu + " 约 :  ".green + (homeqiushu + guestqiushu) / 2);
-                console.log("两队最近战绩球数：".red + homezuijinqiushu + '  ,  ' + guestzuijinqiushu + " 约 :  ".green + (homezuijinqiushu + guestzuijinqiushu) / 2);
+                console.log("两队最近战绩球数：".red + homezuijinqiushu+'（'+homediuqiu+'）' + '  ,  ' + guestzuijinqiushu+'（'+guestdiuqiu+'）' + " 约 :  ".green + (homezuijinqiushu + guestzuijinqiushu) / 2);
                 // console.log("两队历史亚盘球数：".white + (homeqiushu + guestqiushu) / 2);
                 // console.log("两队最近亚盘球数：".white + (homezuijinqiushu + guestzuijinqiushu) / 2);
 
