@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-10-15 14:18:46
+ * @LastEditTime: 2020-10-27 14:13:03
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,14 +40,14 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-10-15"
+        datetemp = "2020-10-27"
 
         var tempMoney = Parse
             .Object
             .extend("Money");
         var query = new Parse.Query(tempMoney);
         query.equalTo("date", datetemp);
-        query.notEqualTo("displayState", "完场")
+        // query.notEqualTo("displayState", "完场")
         query.ascending("matchTime") //matchTime,league
         // query.greaterThan("matchTime",new Date());
         query.limit(500);
@@ -58,7 +58,7 @@ Parse
             const element = items[index];
             let matchId = element.get('matchId');
 
-            // if (matchId != "213668623") {     continue; }
+            if (matchId != "205132799") {     continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -462,7 +462,20 @@ Parse
                     const pankou1 = parseFloat(changepankou(bet10pankou.firstPankou));
                     const pankou2 = parseFloat(changepankou(bet10pankou.pankou));
 
-                    let bet365ratio = math.format(bet365pankou.returnRatio.replace('%', '') / 100, 3);
+
+                    let bet365firstratio = math.format(bet365pankou.firstReturnRatio.replace('%', '') / 100, 3);
+
+                    let bet365firstodds0 = parseFloat(bet365pankou.firstOdds[0]) + 1;
+                    let bet365firstodds1 = parseFloat(bet365pankou.firstOdds[1]) + 1;
+
+                    firstyapanitem = [
+                        math.format(bet365firstratio / bet365firstodds0, 2) * 100,
+                        math.format(bet365firstratio / bet365firstodds1, 2) * 100
+                    ]
+
+                    // let bet365ratio = math.format(bet365pankou.returnRatio.replace('%', '') / 100, 3);
+                    
+                    let bet10ratio = math.format(bet10pankou.returnRatio.replace('%', '') / 100, 3);
 
                     let bet365odds0 = parseFloat(bet365pankou.odds[0]) + 1;
                     let bet365odds1 = parseFloat(bet365pankou.odds[1]) + 1;
@@ -471,11 +484,11 @@ Parse
                     let bet10odds1 = parseFloat(bet10pankou.odds[1]) + 1;
 
                     yapanitem = [
-                        math.format(bet365ratio / bet365odds0, 2) * 100,
-                        math.format(bet365ratio / bet365odds1, 2) * 100
+                        math.format(bet10ratio / bet10odds0, 2) * 100,
+                        math.format(bet10ratio / bet10odds1, 2) * 100
                     ]
 
-                    console.log("亚盘初始概率:" + yapanitem[0] + "%-" + yapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
+                    console.log("亚盘初始概率:" + firstyapanitem[0] + "%-" + firstyapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
 
 
                     let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
@@ -561,7 +574,7 @@ Parse
                     let bet365odds1 = parseFloat(bet365pankou.odds[1]) + 1;
 
                     let changguiqiushu = (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4
-                    let qiushupankou = parseFloat(changepankou(bet10pankou.pankou));
+                    let qiushupankou = parseFloat(changepankou(bet365pankou.pankou));
                     //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
                     let chaibie = changguiqiushu - qiushupankou ;
 
@@ -612,7 +625,14 @@ Parse
                     const pankou1 = parseFloat(changeqiu(bet10qiu.firstPankou));
                     const pankou2 = parseFloat(changeqiu(bet10qiu.pankou));
 
-                    let bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
+                    let bet365firstratio = math.format(bet365qiu.firstReturnRatio.replace('%', '') / 100, 3);
+
+                    let bet365firstodds0 = parseFloat(bet365qiu.firstOdds[0]) + 1;
+                    let bet365firstodds1 = parseFloat(bet365qiu.firstOdds[1]) + 1;
+
+                    // let bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
+
+                    let bet10ratio = math.format(bet10qiu.returnRatio.replace('%', '') / 100, 3);
 
                     let bet365odds0 = parseFloat(bet365qiu.odds[0]) + 1;
                     let bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
@@ -620,12 +640,18 @@ Parse
                     let bet10odds0 = parseFloat(bet10qiu.odds[0]) + 1;
                     let bet10odds1 = parseFloat(bet10qiu.odds[1]) + 1;
 
+
                     qiuitem = [
-                        math.format(bet365ratio / bet365odds0, 2) * 100,
-                        math.format(bet365ratio / bet365odds1, 2) * 100
+                        math.format(bet10ratio / bet10odds0, 2) * 100,
+                        math.format(bet10ratio / bet10odds1, 2) * 100
                     ]
 
-                    console.log("球数初始概率:" + qiuitem[0] + "%-" + qiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
+                    firstqiuitem = [
+                        math.format(bet365firstratio / bet365firstodds0, 2) * 100,
+                        math.format(bet365firstratio / bet365firstodds1, 2) * 100
+                    ]
+
+                    console.log("球数初始概率:" + firstqiuitem[0] + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
 
 
                     let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
@@ -762,7 +788,7 @@ Parse
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
                     //散户投注数据。
                     let changguiqiushu = (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4
-                    let qiushupankou = parseFloat(changeqiu(bet10qiu.pankou));
+                    let qiushupankou = parseFloat(changeqiu(bet365qiu.pankou));
                     //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
                     let chaibie = qiushupankou - changguiqiushu;
 

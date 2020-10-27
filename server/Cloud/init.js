@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-10-15 17:52:01
+ * @LastEditTime: 2020-10-27 13:53:01
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2020-10-15/prev
-//https://vipc.cn/i/live/football/date/2020-10-15/next
+//https://vipc.cn/i/live/football/date/2020-10-27/prev
+//https://vipc.cn/i/live/football/date/2020-10-27/next
 
 Parse
     .Cloud
@@ -107,7 +107,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2020-10-15";
+        var datetemp = "2020-10-27";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -120,7 +120,7 @@ async function GetTodayMoney() {
             await object.destroy();
         }
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/2020-10-15/prev',
+            url: 'https://vipc.cn/i/live/football/date/2020-10-27/prev',
             headers: {
                 'User-Agent': 'request'
             },
@@ -385,7 +385,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2020-10-15";
+    var datetemp = "2020-10-27";
 
 
     //清空其他信息
@@ -416,7 +416,7 @@ async function clearAllData() {
     var PankouMoney = Parse.Object.extend("PankouMoney");
     var query1 = new Parse.Query(PankouMoney);
     query1.equalTo("date", datetemp);
-    query1.notEqualTo("displayState", "完场")
+    // query1.notEqualTo("displayState", "完场")
     query1.limit(100);
     const results1 = await query1.find();
     for (var i = 0; i < results1.length; i++) {
@@ -444,14 +444,14 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-10-15"
+        datetemp = "2020-10-27"
 
         var tempMoney = Parse
             .Object
             .extend("Money");
         var query = new Parse.Query(tempMoney);
         query.equalTo("date", datetemp);
-        query.notEqualTo("displayState", "完场")
+        // query.notEqualTo("displayState", "完场")
         query.ascending("matchTime") //matchTime,league
         // query.greaterThan("matchTime",new Date());
         query.limit(500);
