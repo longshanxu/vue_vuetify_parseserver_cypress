@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-10-27 14:13:03
+ * @LastEditTime: 2020-11-03 19:19:54
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-10-27"
+        datetemp = "2020-11-03"
 
         var tempMoney = Parse
             .Object
@@ -58,7 +58,7 @@ Parse
             const element = items[index];
             let matchId = element.get('matchId');
 
-            if (matchId != "205132799") {     continue; }
+            // if (matchId != "205132799") {     continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -568,13 +568,13 @@ Parse
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
                     //散户投注数据。
 
-                    let bet365ratio = math.format(bet365pankou.returnRatio.replace('%', '') / 100, 3);
+                    let bet365ratio = math.format(bet365pankou.firstReturnRatio.replace('%', '') / 100, 3);
 
-                    let bet365odds0 = parseFloat(bet365pankou.odds[0]) + 1;
-                    let bet365odds1 = parseFloat(bet365pankou.odds[1]) + 1;
+                    let bet365odds0 = parseFloat(bet365pankou.firstOdds[0]) + 1;
+                    let bet365odds1 = parseFloat(bet365pankou.firstOdds[1]) + 1;
 
                     let changguiqiushu = (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4
-                    let qiushupankou = parseFloat(changepankou(bet365pankou.pankou));
+                    let qiushupankou = parseFloat(changepankou(bet365pankou.firstPankou));
                     //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
                     let chaibie = changguiqiushu - qiushupankou ;
 
@@ -725,26 +725,16 @@ Parse
                 }
 
 
-
-
-                console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu + " 约 :  ".green + (homeqiushu + guestqiushu) / 2);
-                console.log("两队最近战绩球数：".red + homezuijinqiushu+'（'+homediuqiu+'）' + '  ,  ' + guestzuijinqiushu+'（'+guestdiuqiu+'）' + " 约 :  ".green + (homezuijinqiushu + guestzuijinqiushu) / 2);
-                // console.log("两队历史亚盘球数：".white + (homeqiushu + guestqiushu) / 2);
-                // console.log("两队最近亚盘球数：".white + (homezuijinqiushu + guestzuijinqiushu) / 2);
-
-                console.log("两队常规球数：".yellow + (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4);
-                console.log("两队常规让球：".yellow + (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4);
-                // console.log("两队历史亚盘让球：".white + (homeqiushu - guestqiushu) / 2);
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
                     //散户投注数据。
 
-                    let bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
+                    let bet365ratio = math.format(bet365qiu.firstReturnRatio.replace('%', '') / 100, 3);
 
-                    let bet365odds0 = parseFloat(bet365qiu.odds[0]) + 1;
-                    let bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
+                    let bet365odds0 = parseFloat(bet365qiu.firstOdds[0]) + 1;
+                    let bet365odds1 = parseFloat(bet365qiu.firstOdds[1]) + 1;
 
                     let changguiqiushu = (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4
-                    let qiushupankou = parseFloat(changeqiu(bet10qiu.pankou));
+                    let qiushupankou = parseFloat(changeqiu(bet10qiu.firstPankou));
                     //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
                     let chaibie = qiushupankou - changguiqiushu;
                     let chaibieitem = [
@@ -782,20 +772,20 @@ Parse
                         chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
                     }
 
-                    console.log("散户球数投注情况:" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+                    console.log("散户球数投注情况:" +"-------".yellow+ chaibieitem[0] + "%," + chaibieitem[1] + "%");
                 }
 
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
                     //散户投注数据。
                     let changguiqiushu = (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4
-                    let qiushupankou = parseFloat(changeqiu(bet365qiu.pankou));
+                    let qiushupankou = parseFloat(changeqiu(bet365qiu.firstPankou));
                     //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
                     let chaibie = qiushupankou - changguiqiushu;
 
-                    let bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
+                    let bet365ratio = math.format(bet365qiu.firstReturnRatio.replace('%', '') / 100, 3);
 
-                    let bet365odds0 = parseFloat(bet365qiu.odds[0]) + 1;
-                    let bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
+                    let bet365odds0 = parseFloat(bet365qiu.firstOdds[0]) + 1;
+                    let bet365odds1 = parseFloat(bet365qiu.firstOdds[1]) + 1;
 
                     let chaibieitem = [
                         math.format(bet365ratio / bet365odds0, 2) * 100,
@@ -832,8 +822,18 @@ Parse
                         chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
                     }
 
-                    console.log("另一种散户球数投注情况:" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+                    console.log("另一种散户球数投注情况:" +"-------".yellow+ chaibieitem[0] + "%," + chaibieitem[1] + "%");
                 }
+
+                console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu + " 约 :  ".green + (homeqiushu + guestqiushu) / 2);
+                console.log("两队最近战绩球数：".red + homezuijinqiushu+'（'+homediuqiu+'）' + '  ,  ' + guestzuijinqiushu+'（'+guestdiuqiu+'）' + " 约 :  ".green + (homezuijinqiushu + guestzuijinqiushu) / 2);
+                // console.log("两队历史亚盘球数：".white + (homeqiushu + guestqiushu) / 2);
+                // console.log("两队最近亚盘球数：".white + (homezuijinqiushu + guestzuijinqiushu) / 2);
+
+                console.log("两队常规球数：".yellow + (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4);
+                console.log("两队常规让球：".yellow + (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4);
+                // console.log("两队历史亚盘让球：".white + (homeqiushu - guestqiushu) / 2);
+               
 
             }
 
