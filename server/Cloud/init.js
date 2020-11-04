@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-11-03 18:14:40
+ * @LastEditTime: 2020-11-04 18:14:40
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2020-11-03/prev
-//https://vipc.cn/i/live/football/date/2020-11-03/next
+//https://vipc.cn/i/live/football/date/2020-11-04/prev
+//https://vipc.cn/i/live/football/date/2020-11-04/next
 
 Parse
     .Cloud
@@ -103,11 +103,12 @@ Parse
 
     });
 
+    // https://vipc.cn/i/match/football/217731699
 async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2020-11-03";
+        var datetemp = "2020-11-04";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -120,7 +121,7 @@ async function GetTodayMoney() {
             await object.destroy();
         }
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/2020-11-03/prev',
+            url: 'https://vipc.cn/i/live/football/date/2020-11-04/prev',
             headers: {
                 'User-Agent': 'request'
             },
@@ -164,6 +165,8 @@ async function GetTodayMoney() {
                         money.set("homeLogo", temp.model.homeLogo); //主队logo
                         money.set("guestLogo", temp.model.guestLogo); //客队logo
                         money.set("displayState", temp.model.displayState); //当前状态
+                        money.set("homeRank", temp.model.homeRank); //主队排名
+                        money.set("guestRank", temp.model.guestRank); //客队排名
                         money.save();
                     }
 
@@ -385,7 +388,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2020-11-03";
+    var datetemp = "2020-11-04";
 
 
     //清空其他信息
@@ -444,7 +447,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-11-03"
+        datetemp = "2020-11-04"
 
         var tempMoney = Parse
             .Object

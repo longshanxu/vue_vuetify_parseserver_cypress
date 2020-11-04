@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-11-03 19:19:54
+ * @LastEditTime: 2020-11-04 19:19:54
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-11-03"
+        datetemp = "2020-11-04"
 
         var tempMoney = Parse
             .Object
@@ -156,7 +156,7 @@ Parse
 
             // if (ticaiitem == undefined) {     continue; }
 
-            console.log(element.get('league') + "----" + home + '  vs  ' + guest + "-----" + element.get('matchId') + "-----" + element.get('matchTime'));
+            console.log(element.get('league') + "----" + home + "(" + element.get('homeRank') + ")" + '  vs  ' + guest + "(" + element.get('guestRank') + ")" + "-----" + element.get('matchId') + "-----" + element.get('matchTime'));
             console.log('凯利:'.red + justitem);
 
 
@@ -427,11 +427,11 @@ Parse
                     if (index < 2) {
                         if (home == element.home) {
                             homezuijinqiushu += element.goal[0];
-                            homediuqiu+=  element.goal[1];
+                            homediuqiu += element.goal[1];
                         }
                         if (home == element.guest) {
                             homezuijinqiushu += element.goal[1];
-                            homediuqiu+=  element.goal[0];
+                            homediuqiu += element.goal[0];
                         }
                     } else {
                         break;
@@ -444,11 +444,11 @@ Parse
                     if (index < 2) {
                         if (guest == element.home) {
                             guestzuijinqiushu += element.goal[0];
-                            guestdiuqiu +=  element.goal[1];
+                            guestdiuqiu += element.goal[1];
                         }
                         if (guest == element.guest) {
                             guestzuijinqiushu += element.goal[1];
-                            guestdiuqiu +=  element.goal[0];
+                            guestdiuqiu += element.goal[0];
                         }
                     } else {
                         break;
@@ -474,7 +474,7 @@ Parse
                     ]
 
                     // let bet365ratio = math.format(bet365pankou.returnRatio.replace('%', '') / 100, 3);
-                    
+
                     let bet10ratio = math.format(bet10pankou.returnRatio.replace('%', '') / 100, 3);
 
                     let bet365odds0 = parseFloat(bet365pankou.odds[0]) + 1;
@@ -576,7 +576,7 @@ Parse
                     let changguiqiushu = (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4
                     let qiushupankou = parseFloat(changepankou(bet365pankou.firstPankou));
                     //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
-                    let chaibie = changguiqiushu - qiushupankou ;
+                    let chaibie = changguiqiushu - qiushupankou;
 
                     let chaibieitem = [
                         math.format(bet365ratio / bet365odds0, 2) * 100,
@@ -592,7 +592,7 @@ Parse
                         chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
                     }
 
-                    let chaibie2 = (homeqiushu - guestqiushu) -qiushupankou ;
+                    let chaibie2 = (homeqiushu - guestqiushu) - qiushupankou;
 
                     if (chaibie2 > 0) {
                         let temp = math.abs(chaibie2) / 0.25;
@@ -602,7 +602,7 @@ Parse
                         let temp = math.abs(chaibie2) / 0.25;
                         chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
                     }
-                    let chaibie3 = (homezuijinqiushu - guestzuijinqiushu) - qiushupankou ;
+                    let chaibie3 = (homezuijinqiushu - guestzuijinqiushu) - qiushupankou;
 
                     if (chaibie3 > 0) {
                         let temp = math.abs(chaibie3) / 0.25;
@@ -772,7 +772,7 @@ Parse
                         chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
                     }
 
-                    console.log("散户球数投注情况:" +"-------".yellow+ chaibieitem[0] + "%," + chaibieitem[1] + "%");
+                    console.log("散户球数投注情况:" + "-------".yellow + chaibieitem[0] + "%," + chaibieitem[1] + "%");
                 }
 
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
@@ -822,18 +822,18 @@ Parse
                         chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
                     }
 
-                    console.log("另一种散户球数投注情况:" +"-------".yellow+ chaibieitem[0] + "%," + chaibieitem[1] + "%");
+                    console.log("另一种散户球数投注情况:" + "-------".yellow + chaibieitem[0] + "%," + chaibieitem[1] + "%");
                 }
 
                 console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu + " 约 :  ".green + (homeqiushu + guestqiushu) / 2);
-                console.log("两队最近战绩球数：".red + homezuijinqiushu+'（'+homediuqiu+'）' + '  ,  ' + guestzuijinqiushu+'（'+guestdiuqiu+'）' + " 约 :  ".green + (homezuijinqiushu + guestzuijinqiushu) / 2);
+                console.log("两队最近战绩球数：".red + homezuijinqiushu + '（' + homediuqiu + '）' + '  ,  ' + guestzuijinqiushu + '（' + guestdiuqiu + '）' + " 约 :  ".green + (homezuijinqiushu + guestzuijinqiushu) / 2);
                 // console.log("两队历史亚盘球数：".white + (homeqiushu + guestqiushu) / 2);
                 // console.log("两队最近亚盘球数：".white + (homezuijinqiushu + guestzuijinqiushu) / 2);
 
                 console.log("两队常规球数：".yellow + (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4);
                 console.log("两队常规让球：".yellow + (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4);
                 // console.log("两队历史亚盘让球：".white + (homeqiushu - guestqiushu) / 2);
-               
+
 
             }
 
