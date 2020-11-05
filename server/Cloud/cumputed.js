@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-11-04 19:19:54
+ * @LastEditTime: 2020-11-05 19:19:54
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-11-04"
+        datetemp = "2020-11-05"
 
         var tempMoney = Parse
             .Object
@@ -83,6 +83,7 @@ Parse
             // 以威廉的概率为基准线，进行第一轮的5%的浮动
             let finalitem = ['0%', '0%', '0%'];
             let justitem = ['0%', '0%', '0%'];
+            let ouzhuanya = finalitem;
 
             let weilianitem = results.get('weilian');
 
@@ -90,6 +91,7 @@ Parse
             if (weilianitem != undefined && weilianitem != null) {
                 //带入威廉的概率
                 finalitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
+                ouzhuanya= [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
                 justitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
 
             } else {
@@ -107,6 +109,7 @@ Parse
                 if (weilianitem == undefined || weilianitem == null) {
                     //带入bet365的概率
                     finalitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
+                    ouzhuanya= [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
                     justitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
 
                 }
@@ -118,6 +121,10 @@ Parse
             }
 
             console.log('开局====:'.red + finalitem);
+
+            //新的方案。欧盘转亚盘
+
+           
             //进行第三轮bet10的5%的浮动
             let bet10item = results.get('bet10');
             let averageitem = results.get('average');
@@ -561,6 +568,39 @@ Parse
                     console.log("亚盘变动后的概率:".white + yapanitem[0] + "%-" + yapanitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
 
 
+                    //在这里转换欧盘概率。
+                    let temparray = [0, 0];
+                    if (pankou2 > 0) {
+                        temparray[0] = parseInt(ouzhuanya[0].replace('%', ''));
+                        temparray[1] = parseInt(ouzhuanya[1].replace('%', '')) + parseInt(ouzhuanya[2].replace('%', ''));
+
+                        let temp = (pankou2 / 0.25) * 5;
+
+
+                        //计算大于0，增加概率
+
+                        console.log("欧盘转亚盘后的概率:".green + (temparray[0] + temp) + "%," + (temparray[1] - temp) + "%");
+                    }
+
+                    if (pankou2 == 0) {
+                        temparray[0] = parseInt(ouzhuanya[0].replace('%', '')) + parseInt(ouzhuanya[1].replace('%', ''));
+                        temparray[1] = parseInt(ouzhuanya[2].replace('%', ''));
+
+
+                        console.log("欧盘转亚盘后的概率:".green + temparray[0] + "%," + temparray[1] + "%");
+                    }
+
+                    if (pankou2 < 0) {
+                        temparray[0] = parseInt(ouzhuanya[0].replace('%', '')) + parseInt(ouzhuanya[1].replace('%', ''));
+                        temparray[1] = parseInt(ouzhuanya[2].replace('%', ''));
+
+                        let temp = ( math.abs(pankou2) / 0.25) * 5;
+
+
+                        //计算大于0，增加概率
+
+                        console.log("欧盘转亚盘后的概率:".green + (temparray[0] - temp) + "%," + (temparray[1] + temp) + "%");
+                    }
                 }
 
                 //亚盘投注情况
