@@ -9,52 +9,122 @@
 <template>
   <v-container class="fill-height grey lighten-3 pa-0" fluid>
     <v-app-bar dark app fixed color="primary" dense>
-      <v-btn icon>
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="white--text">足球小伙</v-toolbar-title>
+      <v-toolbar-title class="white--text">我命由我不由天</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-plus-thick</v-icon>
-      </v-btn>
-      <template v-slot:extension>
-        <v-tabs v-model="tab" color="basil" grow light slider-color="primary">
-          <v-tab style="width:58px;min-width:58px" class="px-0" href="#tab-today">今天</v-tab>
-          <v-tab style="width:58px;min-width:58px" class="px-0" href="#tab-tomorrow">明天</v-tab>
-          <v-tab style="width:58px;min-width:58px" class="px-0" href="#tab-yesterday">昨天</v-tab>
-        </v-tabs>
-      </template>
     </v-app-bar>
-    <v-content class="fill-height grey lighten-3 align-start justify-start">
-      <a href="/admin">admin</a>
-      <v-tabs-items v-model="tab" touchless>
-        <v-tab-item value="tab-today" class="grey lighten-3">
-          <v-card class="ma-0 pa-0" flat slot v-for="(item,index) in datalist" :key="index">
-            <v-row dense class="ma-0">
-              <v-col align-self="center" style="text-align:center;font-weight:700" cols="4">{{item.home}}</v-col>
-              <v-col align-self="center" style="text-align:center;" cols="4">({{item.league}})<br/>{{item.matchTime.substr(10,6)}}</v-col>
-              <v-col align-self="center" style="text-align:center;font-weight:700" cols="4">{{item.guest}}</v-col>
-            </v-row>
-            <v-row dense class="ma-0" v-show="showtuijian">
-              <v-col align-self="center" style="text-align:center;font-size:14px" cols="4">
-                胜平负：
-                <span style="font-size:16px">胜</span>
-              </v-col>
-              <v-col align-self="center" style="text-align:center;font-size:14px" cols="4">
-                大小球：
-                <span style="font-size:16px">大2</span>
-              </v-col>
-              <v-col align-self="center" style="text-align:center;font-size:14px" cols="4">
-                比分：
-                <span style="font-size:16px">2:1</span>
-              </v-col>
-            </v-row>
-            <v-divider></v-divider>
-          </v-card>
-        </v-tab-item>
-      </v-tabs-items>
-    </v-content>
+    <v-main class="fill-height grey lighten-3 align-start justify-start">
+      <v-card
+        class="pa-0 ma-2"
+        rounded
+        v-for="(item, index) in datalist"
+        :key="index"
+        @click="opendialog(item)"
+      >
+        <v-row dense class="ma-0">
+          <v-col
+            align-self="center"
+            style="text-align: center; font-weight: 700"
+            cols="4"
+            >{{ item.home.substr(0,6) }}</v-col
+          >
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 12px"
+            cols="4"
+            >({{ item.league }})<br
+          /></v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-weight: 700"
+            cols="4"
+            >{{ item.guest.substr(0,6) }}</v-col
+          >
+        </v-row>
+        <v-row dense class="ma-0" v-show="showtuijian">
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="4"
+          >
+            时间：
+            <span style="font-size: 16px">{{
+              item.matchTime.substr(10, 6)
+            }}</span>
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="4"
+          >
+            状态：
+            <span style="font-size: 16px">{{ item.displayState }}</span>
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="4"
+          >
+            比分：
+            <span style="font-size: 16px">{{
+              item.homeScore + ":" + item.guestScore
+            }}</span>
+          </v-col>
+        </v-row>
+      </v-card>
+    </v-main>
+    <v-dialog v-model="dialog" hide-overlay persistent fullscreen>
+      <v-progress-linear
+        indeterminate
+        color="white"
+        class="mb-0"
+        v-show="linear"
+      ></v-progress-linear>
+      <v-card tile>
+        <v-toolbar flat dark color="red">
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>分析数据详情</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <!-- <v-row
+          v-show="this.detaillist.length == 0"
+          justify="center"
+          align="center"
+          class="mx-0"
+        >
+          数据将在<span style="color: red; padding: 0px 10px"
+            >{{ this.datalist.length * 3 }}
+          </span>
+          秒后完成，请耐心等待。
+        </v-row> -->
+        <v-card class="ma-2" rounded>
+          <v-row class="mx-0">{{ item1.test1 }}</v-row>
+          <v-row class="mx-0">{{ item1.test2 }}</v-row>
+          <v-row class="mx-0">{{ item1.test3 }}</v-row>
+          <v-row class="mx-0">{{ item1.test4 }}</v-row>
+          <v-row class="mx-0">{{ item1.test5 }}</v-row>
+          <v-row class="mx-0">{{ item1.test6 }}</v-row>
+          <v-row class="mx-0">{{ item1.test7 }}</v-row>
+          <v-row class="mx-0">{{ item1.test8 }}</v-row>
+          <v-row class="mx-0">{{ item1.test9 }}</v-row>
+          <v-row class="mx-0">{{ item1.test10 }}</v-row>
+          <v-row class="mx-0">{{ item1.test11 }}</v-row>
+          <v-row class="mx-0">{{ item1.test12 }}</v-row>
+          <v-row class="mx-0">{{ item1.test13 }}</v-row>
+          <v-row class="mx-0">{{ item1.test14 }}</v-row>
+          <v-row class="mx-0">{{ item1.test15 }}</v-row>
+          <v-row class="mx-0">{{ item1.test16 }}</v-row>
+          <v-row class="mx-0">{{ item1.test17 }}</v-row>
+          <v-row class="mx-0">{{ item1.test18 }}</v-row>
+          <v-row class="mx-0">{{ item1.test19 }}</v-row>
+          <v-row class="mx-0">{{ item1.test20 }}</v-row>
+          <v-row class="mx-0">{{ item1.test21 }}</v-row>
+          <v-row class="mx-0">{{ item1.test22 }}</v-row>
+        </v-card>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -66,37 +136,53 @@ export default {
       tab: null,
       showtuijian: true,
       date: new Date().toISOString().substr(0, 10),
-      datalist: []
+      datalist: [],
+      detaillist: [],
+      item1: {},
+      dialog: false,
+      linear: false,
     };
   },
   computed: {},
-  methods: {},
+  methods: {
+    opendialog(item) {
+      this.dialog = true;
+      this.linear = true;
+      let data = {
+        date: "2020-11-07",
+        matchId: item.matchId,
+      };
+      api
+        .GetResults(data)
+        .then((res) => {
+          // debugger
+          this.linear = false;
+          if (res.data.result.code == "200") {
+            this.detaillist = res.data.result.data;
+            if (this.detaillist.length > 0) {
+              this.item1 = this.detaillist[0];
+            }
+          }
+        })
+        .catch();
+    },
+  },
   mounted() {
     const data = {
-      date: this.date
+      date: "2020-11-07",
     };
     api
       .GetToday(data)
-      .then(res => {
-         // debugger
+      .then((res) => {
+        // debugger
         if (res.data.result.code == "200") {
-          this.datalist = res.data.result.data
+          this.datalist = res.data.result.data;
         }
       })
       .catch();
-  }
+  },
 };
 </script>
 
 <style>
-/* Helper classes */
-.basil {
-  background-color: #039be5 !important;
-}
-.basil--text {
-  color: #03a9f4 !important;
-}
-.tab {
-  min-width: 58px !important;
-}
 </style>

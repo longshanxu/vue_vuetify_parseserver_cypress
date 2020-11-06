@@ -11,7 +11,7 @@ import store from "../store/index"
 // import router from "../router/index.js"
 
 const apiService = axios.create({
-  baseURL: 'http://localhost/parse',
+  baseURL: 'http://192.168.1.107/parse',
   headers: {
     'X-Parse-Application-Id': "JsonApp",
     'X-Parse-REST-API-Key': "JsonRestKey"
@@ -36,9 +36,9 @@ apiService.interceptors.response.use(
   response => {
     store.dispatch("SET_LOADING", false)
     if (response.data.result.code == "200") {
-      const msg = response.data.result.msg;
-      store.dispatch("SET_SNACKBARMSG", msg)
-      store.dispatch("SET_SNACKBAR", true)
+      // const msg = response.data.result.msg;
+      // store.dispatch("SET_SNACKBARMSG", msg)
+      // store.dispatch("SET_SNACKBAR", true)
     }
     if (response.data.result.code == "500") {
       const msg = response.data.result.msg;
@@ -58,5 +58,9 @@ export default {
   ///获取今日比赛数据
   GetToday(data) {
     return apiService.post("/functions/GetToday", data);
+  },
+
+  GetResults(data){
+    return apiService.post("/functions/GetResults", data);
   }
 }

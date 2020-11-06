@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-11-05 18:14:40
+ * @LastEditTime: 2020-11-07 18:14:40
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2020-11-05/prev
-//https://vipc.cn/i/live/football/date/2020-11-05/next
+//https://vipc.cn/i/live/football/date/2020-11-07/prev
+//https://vipc.cn/i/live/football/date/2020-11-07/next
 
 Parse
     .Cloud
@@ -108,12 +108,13 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2020-11-05";
+        var datetemp = "2020-11-07";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
         query4.equalTo("date", datetemp);
         query4.limit(200);
+
         const results = await query4.find();
 
         for (var i = 0; i < results.length; i++) {
@@ -121,7 +122,7 @@ async function GetTodayMoney() {
             await object.destroy();
         }
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/2020-11-05/prev',
+            url: 'https://vipc.cn/i/live/football/date/2020-11-07/prev',
             headers: {
                 'User-Agent': 'request'
             },
@@ -388,9 +389,20 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2020-11-05";
+    var datetemp = "2020-11-07";
 
+    var OneResult = Parse.Object.extend("OneResult");
+    var queryOneResult = new Parse.Query(OneResult);
+    queryOneResult.equalTo("date", datetemp);
+    queryOneResult.limit(200);
 
+    const OneResultresults = await query.find();
+
+    for (var i = 0; i < OneResultresults.length; i++) {
+        var object = OneResultresults[i];
+
+        await object.destroy();
+    }
     //清空其他信息
 
     var historyMoney = Parse.Object.extend("HistoryMoney");
@@ -419,7 +431,7 @@ async function clearAllData() {
     var PankouMoney = Parse.Object.extend("PankouMoney");
     var query1 = new Parse.Query(PankouMoney);
     query1.equalTo("date", datetemp);
-    // query1.notEqualTo("displayState", "完场")
+    query1.notEqualTo("displayState", "完场")
     query1.limit(100);
     const results1 = await query1.find();
     for (var i = 0; i < results1.length; i++) {
@@ -447,14 +459,14 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-11-05"
+        datetemp = "2020-11-07"
 
         var tempMoney = Parse
             .Object
             .extend("Money");
         var query = new Parse.Query(tempMoney);
         query.equalTo("date", datetemp);
-        // query.notEqualTo("displayState", "完场")
+        query.notEqualTo("displayState", "完场")
         query.ascending("matchTime") //matchTime,league
         // query.greaterThan("matchTime",new Date());
         query.limit(500);
@@ -463,7 +475,6 @@ Parse
 
         const proxyHost = "forward.apeyun.com";
         const proxyPort = 9082;
-
         // 代理隧道验证信息
         const proxyUser = "2120101000101920323";
         const proxyPass = "GjTTwSPuyWogtxmj";

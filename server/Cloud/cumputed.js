@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-11-05 19:19:54
+ * @LastEditTime: 2020-11-07 19:19:54
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -29,6 +29,8 @@ Parse
     .Cloud
     .define("cpu", async (request) => {
 
+      
+       
 
         console.clear();
         var date = new Date();
@@ -40,24 +42,34 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-11-05"
+        datetemp = "2020-11-07"
+
 
         var tempMoney = Parse
             .Object
             .extend("Money");
         var query = new Parse.Query(tempMoney);
         query.equalTo("date", datetemp);
-        // query.notEqualTo("displayState", "完场")
+        query.notEqualTo("displayState", "完场")
         query.ascending("matchTime") //matchTime,league
         // query.greaterThan("matchTime",new Date());
         query.limit(500);
         const items = await query.find();
 
         for (let index = 0; index < items.length; index++) {
-
+            
             const element = items[index];
+
+            let OneResult = Parse
+                .Object
+                .extend("OneResult");
+            let oneresult = new OneResult();
+
+            oneresult.set("date", datetemp);
+
             let matchId = element.get('matchId');
 
+            oneresult.set("matchId", matchId);
             // if (matchId != "205132799") {     continue; }
 
             const OddsMoney = Parse
@@ -79,6 +91,9 @@ Parse
             const home = element.get('home');
             const guest = element.get('guest');
 
+            oneresult.set("home", home);
+            oneresult.set("guest", guest);
+
             // 获取到赔率（odds），获取到概率(ratio),获取到返回率（returnRatio）,获取到凯利（kelly）
             // 以威廉的概率为基准线，进行第一轮的5%的浮动
             let finalitem = ['0%', '0%', '0%'];
@@ -91,7 +106,7 @@ Parse
             if (weilianitem != undefined && weilianitem != null) {
                 //带入威廉的概率
                 finalitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
-                ouzhuanya= [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
+                ouzhuanya = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
                 justitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
 
             } else {
@@ -109,7 +124,7 @@ Parse
                 if (weilianitem == undefined || weilianitem == null) {
                     //带入bet365的概率
                     finalitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
-                    ouzhuanya= [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
+                    ouzhuanya = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
                     justitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
 
                 }
@@ -121,10 +136,10 @@ Parse
             }
 
             console.log('开局====:'.red + finalitem);
-
+            oneresult.set("test1", '开局====:' + finalitem);
             //新的方案。欧盘转亚盘
 
-           
+
             //进行第三轮bet10的5%的浮动
             let bet10item = results.get('bet10');
             let averageitem = results.get('average');
@@ -164,9 +179,13 @@ Parse
             // if (ticaiitem == undefined) {     continue; }
 
             console.log(element.get('league') + "----" + home + "(" + element.get('homeRank') + ")" + '  vs  ' + guest + "(" + element.get('guestRank') + ")" + "-----" + element.get('matchId') + "-----" + element.get('matchTime'));
+            
+            oneresult.set("test2", element.get('league') + "----" + home + "(" + element.get('homeRank') + ")" + '  vs  ' + guest + "(" + element.get('guestRank') + ")" + "-----" + element.get('matchId') + "-----" + element.get('matchTime'));
+            
             console.log('凯利:'.red + justitem);
 
-
+            oneresult.set("test3", '凯利:' + justitem);
+           
             if (ticaiitem != undefined && ticaiitem != null) {
                 //算出差距
                 let chaju0 = math.format(weilianitem.odds[0] - ticaiitem.odds[0], 3);
@@ -210,7 +229,8 @@ Parse
                 }
 
                 console.log('体彩:'.red + justitem);
-
+                
+                oneresult.set("test4", '体彩:' + justitem);
             }
 
 
@@ -278,6 +298,8 @@ Parse
             }
 
             console.log('两队历史:'.green + finalitem);
+           
+            oneresult.set("test5", '两队历史:' + finalitem);
 
             //进行第6轮的5 % 的浮动，主要是针对最近状态进行处理。
             let homelist = historyitems.get('homelist')
@@ -368,10 +390,14 @@ Parse
             }
             console.log('散户心理:'.red + finalitem);
 
+            oneresult.set("test6", '散户心理:' + finalitem);
+
             if (bet365item != null && bet365item != undefined) {
                 console.log('投注额:' + math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3) + ',' + math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3) + ',' + math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3));
                 console.log('赔率:' + bet365item.odds[0] + "," + bet365item.odds[1] + "," + bet365item.odds[2]);
-
+               
+                oneresult.set("test7", '投注额:' + math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3) + ',' + math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3) + ',' + math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3));
+                oneresult.set("test8", '赔率:' + bet365item.odds[0] + "," + bet365item.odds[1] + "," + bet365item.odds[2]);
             }
 
 
@@ -496,7 +522,8 @@ Parse
                     ]
 
                     console.log("亚盘初始概率:" + firstyapanitem[0] + "%-" + firstyapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
-
+                    
+                    oneresult.set("test9" , "亚盘初始概率:" + firstyapanitem[0] + "%-" + firstyapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
 
                     let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
                     let x1 = math.abs(math.format(bet365odds1 - bet10odds1, 2));
@@ -566,7 +593,8 @@ Parse
 
 
                     console.log("亚盘变动后的概率:".white + yapanitem[0] + "%-" + yapanitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
-
+                  
+                    oneresult.set("test10" , "亚盘变动后的概率:" + yapanitem[0] + "%-" + yapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
 
                     //在这里转换欧盘概率。
                     let temparray = [0, 0];
@@ -580,6 +608,8 @@ Parse
                         //计算大于0，增加概率
 
                         console.log("欧盘转亚盘后的概率:".green + (temparray[0] + temp) + "%," + (temparray[1] - temp) + "%");
+
+                        oneresult.set("test11" , "欧盘转亚盘后的概率:" + (temparray[0] + temp) + "%," + (temparray[1] - temp) + "%");
                     }
 
                     if (pankou2 == 0) {
@@ -588,18 +618,22 @@ Parse
 
 
                         console.log("欧盘转亚盘后的概率:".green + temparray[0] + "%," + temparray[1] + "%");
+
+                        oneresult.set("test12" , "欧盘转亚盘后的概率:" + temparray[0] + "%," + temparray[1] + "%");
                     }
 
                     if (pankou2 < 0) {
                         temparray[0] = parseInt(ouzhuanya[0].replace('%', '')) + parseInt(ouzhuanya[1].replace('%', ''));
                         temparray[1] = parseInt(ouzhuanya[2].replace('%', ''));
 
-                        let temp = ( math.abs(pankou2) / 0.25) * 5;
+                        let temp = (math.abs(pankou2) / 0.25) * 5;
 
 
                         //计算大于0，增加概率
 
                         console.log("欧盘转亚盘后的概率:".green + (temparray[0] - temp) + "%," + (temparray[1] + temp) + "%");
+
+                        oneresult.set("test13" , "欧盘转亚盘后的概率:" + (temparray[0] - temp) + "%," + (temparray[1] + temp) + "%");
                     }
                 }
 
@@ -653,7 +687,9 @@ Parse
                         chaibieitem = [chaibieitem[0] - temp, chaibieitem[1] + temp];
                     }
 
-                    console.log("亚盘投注情况-----:".yellow + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+                    console.log("亚盘投注情况-----:" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+
+                    oneresult.set("test14" ,"亚盘投注情况-----:" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
                 }
 
 
@@ -693,6 +729,7 @@ Parse
 
                     console.log("球数初始概率:" + firstqiuitem[0] + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
 
+                    oneresult.set("test15" ,"球数初始概率:" + firstqiuitem[0] + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
 
                     let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
                     let x1 = math.abs(math.format(bet365odds1 - bet10odds1, 2));
@@ -761,6 +798,7 @@ Parse
 
                     console.log("球数变动后的概率:".white + qiuitem[0] + "%-" + qiuitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
 
+                    oneresult.set("test16" ,"球数变动后的概率:" + qiuitem[0] + "%-" + qiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
 
                 }
 
@@ -813,6 +851,9 @@ Parse
                     }
 
                     console.log("散户球数投注情况:" + "-------".yellow + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+
+                    oneresult.set("test17" ,"散户球数投注情况:" + "-------" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+
                 }
 
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
@@ -863,17 +904,22 @@ Parse
                     }
 
                     console.log("另一种散户球数投注情况:" + "-------".yellow + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+
+                    oneresult.set("test18" ,"另一种散户球数投注情况:" + "-------" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
                 }
 
                 console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu + " 约 :  ".green + (homeqiushu + guestqiushu) / 2);
-                console.log("两队最近战绩球数：".red + homezuijinqiushu + '（' + homediuqiu + '）' + '  ,  ' + guestzuijinqiushu + '（' + guestdiuqiu + '）' + " 约 :  ".green + (homezuijinqiushu + guestzuijinqiushu) / 2);
+                console.log("两队最近战绩球数：".red + homezuijinqiushu + '（' + homediuqiu + '）' + '  ,  ' + guestzuijinqiushu + '（' + guestdiuqiu + '）' + " 约 :  " + (homezuijinqiushu + guestzuijinqiushu) / 2);
                 // console.log("两队历史亚盘球数：".white + (homeqiushu + guestqiushu) / 2);
                 // console.log("两队最近亚盘球数：".white + (homezuijinqiushu + guestzuijinqiushu) / 2);
+                oneresult.set("test19" ,"两队历史记录球数：" + homeqiushu + '  ,  ' + guestqiushu + " 约 :  " + (homeqiushu + guestqiushu) / 2);
+                oneresult.set("test20" ,"两队最近战绩球数：" + homezuijinqiushu + '（' + homediuqiu + '）' + '  ,  ' + guestzuijinqiushu + '（' + guestdiuqiu + '）' + " 约 :  " + (homezuijinqiushu + guestzuijinqiushu) / 2);
 
                 console.log("两队常规球数：".yellow + (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4);
                 console.log("两队常规让球：".yellow + (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4);
                 // console.log("两队历史亚盘让球：".white + (homeqiushu - guestqiushu) / 2);
-
+                oneresult.set("test21" ,"两队常规球数：" + (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4);
+                oneresult.set("test22" ,"两队常规让球：" + (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4);
 
             }
 
@@ -896,6 +942,8 @@ Parse
                     console.log('结果：负\n');
                 }
             }
+
+            oneresult.save();
         }
 
     });
