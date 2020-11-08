@@ -6,6 +6,9 @@
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\web.js
  */
+
+const init = require("./init");
+
 Parse
     .Cloud
     .define("GetToday", async (request) => {
@@ -19,8 +22,8 @@ Parse
                 query.ascending("matchTime") //matchTime,league
                 const results = await query.find();
 
-               
-                let data =[];
+
+                let data = [];
                 for (let index = 0; index < results.length; index++) {
                     const element = results[index];
                     const temp = {
@@ -75,8 +78,8 @@ Parse
                 query.limit(1);
                 const results = await query.find();
 
-               
-                let data =[];
+
+                let data = [];
                 for (let index = 0; index < results.length; index++) {
                     const element = results[index];
                     let temp = {
@@ -125,6 +128,38 @@ Parse
             return {
                 code: 500,
                 msg: "获取数据失败"
+            }
+        }
+
+    });
+
+
+Parse
+    .Cloud
+    .define("AsyncData", async (request) => {
+
+        try {
+
+            //先清除数据。
+            init.clearAllData();
+            setTimeout(() => {
+                init.GetTodayMoney();
+                setTimeout(() => {
+                   init.OneByOne();
+                }, 3000);
+            }, 3000);
+
+            //获取数据。
+            return {
+                code: 200,
+                msg: "获取数据成功"
+            }
+
+        } catch (error) {
+            return {
+                code: 500,
+                msg: "获取数据失败",
+                data:error
             }
         }
 

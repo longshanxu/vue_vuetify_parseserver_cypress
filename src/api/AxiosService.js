@@ -62,5 +62,12 @@ export default {
 
   GetResults(data){
     return apiService.post("/functions/GetResults", data);
+  },
+
+  AsyncData(){
+    return apiService.post("/functions/AsyncData");
+  },
+  cpu(){
+    return apiService.post("/functions/cpu");
   }
 }

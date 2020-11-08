@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-11-07 18:14:40
+ * @LastEditTime: 2020-11-08 18:14:40
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2020-11-07/prev
-//https://vipc.cn/i/live/football/date/2020-11-07/next
+//https://vipc.cn/i/live/football/date/2020-11-08/prev
+//https://vipc.cn/i/live/football/date/2020-11-08/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2020-11-07";
+        var datetemp = "2020-11-08";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -122,7 +122,7 @@ async function GetTodayMoney() {
             await object.destroy();
         }
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/2020-11-07/prev',
+            url: 'https://vipc.cn/i/live/football/date/2020-11-08/prev',
             headers: {
                 'User-Agent': 'request'
             },
@@ -389,14 +389,14 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2020-11-07";
+    var datetemp = "2020-11-08";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
     queryOneResult.equalTo("date", datetemp);
     queryOneResult.limit(200);
 
-    const OneResultresults = await query.find();
+    const OneResultresults = await queryOneResult.find();
 
     for (var i = 0; i < OneResultresults.length; i++) {
         var object = OneResultresults[i];
@@ -448,131 +448,139 @@ Parse
     .Cloud
     .define("OneByOne", async (request) => {
 
-
-        console.clear();
-        var date = new Date();
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1;
-        var day = date.getDate();
-        var datetemp = year + "-" + month + "-" + day;
-        if (month < 10) {
-            datetemp = year + "-0" + month + "-0" + day;
-        }
-
-        datetemp = "2020-11-07"
-
-        var tempMoney = Parse
-            .Object
-            .extend("Money");
-        var query = new Parse.Query(tempMoney);
-        query.equalTo("date", datetemp);
-        query.notEqualTo("displayState", "完场")
-        query.ascending("matchTime") //matchTime,league
-        // query.greaterThan("matchTime",new Date());
-        query.limit(500);
-        const items = await query.find();
-        let templength = items.length;
-
-        const proxyHost = "forward.apeyun.com";
-        const proxyPort = 9082;
-        // 代理隧道验证信息
-        const proxyUser = "2120101000101920323";
-        const proxyPass = "GjTTwSPuyWogtxmj";
-
-        const proxyUrl = "http://" + proxyUser + ":" + proxyPass + "@" + proxyHost + ":" + proxyPort;
-
-        const proxiedRequest = httprequest.defaults({ 'proxy': proxyUrl });
-
-        for (let index = 0; index < items.length; index++) {
-
-            const element = items[index];
-            let mamatchId = element.get('matchId');
-
-            //每2秒 一条一条拿数据
-
-            if (index == 0) {
-                console.log("一共" + templength + "条数据");
-            }
-
-            setTimeout(() => {
-
-                console.log("正在获取第" + index + "条数据");
-
-
-                // GetHistoryByID(mamatchId, datetemp, proxiedRequest);
-
-                // GetPankouByID(mamatchId,datetemp, proxiedRequest);  
-
-                GetOddsByID(mamatchId, datetemp, proxiedRequest);
-
-                if (index == templength - 1) {
-                    console.log("获取赔率数据完毕");
-
-                    for (let index = 0; index < items.length; index++) {
-
-                        const element = items[index];
-                        let mamatchId = element.get('matchId');
-
-                        //每2秒 一条一条拿数据
-
-                        if (index == 0) {
-                            console.log("一共" + templength + "条数据");
-                        }
-
-                        setTimeout(() => {
-
-                            console.log("正在获取第" + index + "条数据");
-
-
-                            GetHistoryByID(mamatchId, datetemp, proxiedRequest);
-
-                            // GetPankouByID(mamatchId,datetemp, proxiedRequest);  
-
-                            // GetOddsByID(mamatchId,datetemp, proxiedRequest);  
-
-                            if (index == templength - 1) {
-                                console.log("获取历史数据完毕");
-
-                                for (let index = 0; index < items.length; index++) {
-
-                                    const element = items[index];
-                                    let mamatchId = element.get('matchId');
-
-                                    //每2秒 一条一条拿数据
-
-                                    if (index == 0) {
-                                        console.log("一共" + templength + "条数据");
-                                    }
-
-                                    setTimeout(() => {
-
-                                        console.log("正在获取第" + index + "条数据");
-
-
-                                        // GetHistoryByID(mamatchId, datetemp, proxiedRequest);
-
-                                        GetPankouByID(mamatchId, datetemp, proxiedRequest);
-
-                                        // GetOddsByID(mamatchId, datetemp, proxiedRequest);
-
-                                        if (index == templength - 1) {
-                                            console.log("获取盘口数据完毕");
-                                        }
-
-                                    }, index * 1100);
-                                }
-                            }
-
-                        }, index * 1100);
-
-                    }
-                }
-
-            }, index * 1100);
-        }
+        OneByOne();
     })
 
+async function OneByOne(){
+    
+    console.clear();
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var datetemp = year + "-" + month + "-" + day;
+    if (month < 10) {
+        datetemp = year + "-0" + month + "-0" + day;
+    }
 
+    datetemp = "2020-11-08"
+
+    var tempMoney = Parse
+        .Object
+        .extend("Money");
+    var query = new Parse.Query(tempMoney);
+    query.equalTo("date", datetemp);
+    query.notEqualTo("displayState", "完场")
+    query.ascending("matchTime") //matchTime,league
+    // query.greaterThan("matchTime",new Date());
+    query.limit(500);
+    const items = await query.find();
+    let templength = items.length;
+
+    const proxyHost = "forward.apeyun.com";
+    const proxyPort = 9082;
+    // 代理隧道验证信息
+    const proxyUser = "2120101000101920323";
+    const proxyPass = "GjTTwSPuyWogtxmj";
+
+    const proxyUrl = "http://" + proxyUser + ":" + proxyPass + "@" + proxyHost + ":" + proxyPort;
+
+    const proxiedRequest = httprequest.defaults({ 'proxy': proxyUrl });
+
+    for (let index = 0; index < items.length; index++) {
+
+        const element = items[index];
+        let mamatchId = element.get('matchId');
+
+        //每2秒 一条一条拿数据
+
+        if (index == 0) {
+            console.log("一共" + templength + "条数据");
+        }
+
+        setTimeout(() => {
+
+            console.log("正在获取第" + index + "条数据");
+
+
+            // GetHistoryByID(mamatchId, datetemp, proxiedRequest);
+
+            // GetPankouByID(mamatchId,datetemp, proxiedRequest);  
+
+            GetOddsByID(mamatchId, datetemp, proxiedRequest);
+
+            if (index == templength - 1) {
+                console.log("获取赔率数据完毕");
+
+                for (let index = 0; index < items.length; index++) {
+
+                    const element = items[index];
+                    let mamatchId = element.get('matchId');
+
+                    //每2秒 一条一条拿数据
+
+                    if (index == 0) {
+                        console.log("一共" + templength + "条数据");
+                    }
+
+                    setTimeout(() => {
+
+                        console.log("正在获取第" + index + "条数据");
+
+
+                        GetHistoryByID(mamatchId, datetemp, proxiedRequest);
+
+                        // GetPankouByID(mamatchId,datetemp, proxiedRequest);  
+
+                        // GetOddsByID(mamatchId,datetemp, proxiedRequest);  
+
+                        if (index == templength - 1) {
+                            console.log("获取历史数据完毕");
+
+                            for (let index = 0; index < items.length; index++) {
+
+                                const element = items[index];
+                                let mamatchId = element.get('matchId');
+
+                                //每2秒 一条一条拿数据
+
+                                if (index == 0) {
+                                    console.log("一共" + templength + "条数据");
+                                }
+
+                                setTimeout(() => {
+
+                                    console.log("正在获取第" + index + "条数据");
+
+
+                                    // GetHistoryByID(mamatchId, datetemp, proxiedRequest);
+
+                                    GetPankouByID(mamatchId, datetemp, proxiedRequest);
+
+                                    // GetOddsByID(mamatchId, datetemp, proxiedRequest);
+
+                                    if (index == templength - 1) {
+                                        console.log("获取盘口数据完毕");
+                                    }
+
+                                }, index * 1100);
+                            }
+                        }
+
+                    }, index * 1100);
+
+                }
+            }
+
+        }, index * 1100);
+    }
+}
+
+module.exports = {
+    OneByOne,
+    clearAllData,
+    GetTodayMoney
+}
 
 /******************************
  *
