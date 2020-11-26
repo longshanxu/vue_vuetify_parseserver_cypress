@@ -24,7 +24,7 @@ export default Vue.extend({
   },
   methods: {
     name() {
-      console.log(123);
+      //console.log(123);
     }
   }
 });

@@ -1,10 +1,10 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2019-12-30 14:43:49
- * @LastEditTime: 2019-12-31 11:02:48
+ * @LastEditTime: 2020-11-26 15:40:33
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \moch-vue-mobile\src\components\LoadingCard.vue
+ * @FilePath: \vue_vuetify_parseserver\src\components\LoadingCard.vue
  -->
 <template>
   <v-card class="text-center mx-auto">

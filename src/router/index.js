@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-04 19:00:51
- * @LastEditTime: 2020-02-28 11:31:33
+ * @LastEditTime: 2020-11-26 15:03:24
  * @LastEditors: Json.Xu
  * @Description: In User Settings Edit
  * @FilePath: \vue_vuetify_parseserver\src\router\index.js
@@ -28,8 +28,8 @@ const routes = [{
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+  mode: 'hash',
+  // base: process.env.BASE_URL,
   routes
 })
 

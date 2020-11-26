@@ -1,18 +1,19 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-12 17:51:18
- * @LastEditTime: 2020-04-23 14:35:33
+ * @LastEditTime: 2020-11-09 16:18:00
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\vue.config.js
  */
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ?
-    '/' :
-    '/'
-  ,
-  lintOnSave: process.env.NODE_ENV !== 'production',
+  // publicPath: process.env.NODE_ENV === 'production' ?
+  //   '/' :
+  //   '/'
+  // ,
+  publicPath: './',
+  // lintOnSave: process.env.NODE_ENV !== 'production',
   productionSourceMap:false,
   "transpileDependencies": [
     "vuetify"
@@ -39,6 +40,6 @@ module.exports = {
     // 模板会被推导为 `public/subpage.html`
     // 并且如果找不到的话，就回退到 `public/index.html`。
     // 输出文件名会被推导为 `subpage.html`。
-    admin: 'src/admin/admin.js',
+    // admin: 'src/admin/admin.js',
   }
 }
