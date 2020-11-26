@@ -83,7 +83,7 @@ export default {
   mounted() {
     console.time("Loop time");
     for (var i = 0; i < 50; i++) {
-      console.log(123);
+      //console.log(123);
     }
     console.timeEnd("Loop time");
     var personArr = [
@@ -103,11 +103,11 @@ export default {
         [this.name, this.surname] = value.split(" ");
       }
     });
-    console.log(person.fullName);
+    //console.log(person.fullName);
     person.surname = "777";
-    console.log(person.fullName);
+    //console.log(person.fullName);
     person.fullName = "json xu";
-    console.log(person.name);
+    //console.log(person.name);
 
     var obj = { a: "hello", b: "this is", c: "javascript!" };
 
@@ -115,22 +115,22 @@ export default {
       return obj[key];
     });
 
-    console.log(array);
+    //console.log(array);
 
     var x = { a: 10, b: 3 },
       props;
     props = Object.getOwnPropertyNames(x);
-    console.log(props);
+    //console.log(props);
 
     var obj1 = { 0: "a", 1: "b", 2: "c" };
-    console.log(Object.values(obj1));
+    //console.log(Object.values(obj1));
 
-    console.log(Math.PI);
+    //console.log(Math.PI);
 
     var a1 = 5;
     var b1 = a1++;
 
-    console.log(b1);
+    //console.log(b1);
 
     var monitor = {
       threshold: 5,
@@ -142,7 +142,7 @@ export default {
         }
       },
       display(message) {
-        console.log(message);
+        //console.log(message);
       }
     };
     monitor.check(6666);
@@ -160,12 +160,12 @@ export default {
 
     var obj3 = Object.create(prototype);
 
-    console.log(obj3.foo);
-    console.log(obj3.bar());
+    //console.log(obj3.foo);
+    //console.log(obj3.bar());
     prototype.foo = "bar";
-    console.log(obj3.foo);
+    //console.log(obj3.foo);
 
-    console.log(performance.now());
+    //console.log(performance.now());
 
     let handler = {
       get(target, property) {
@@ -179,7 +179,7 @@ export default {
 
     let proxied = new Proxy({ foo: "bar" }, handler);
 
-    console.log(proxied.foo);
+    //console.log(proxied.foo);
 
     let obejct1 = {};
     let handler1 = {
@@ -192,7 +192,7 @@ export default {
     };
     let proxied1 = new Proxy(obejct1, handler1);
     proxied1.example = "example111";
-    console.log(obejct1);
+    //console.log(obejct1);
 
     //观察者模式
     function Subject() {
@@ -226,7 +226,7 @@ export default {
     function Employee(name) {
       this.name = name;
       this.notify = function(meetingTime) {
-        console.log(this.name + ":666:" + meetingTime);
+        //console.log(this.name + ":666:" + meetingTime);
       };
     }
 
@@ -244,7 +244,7 @@ export default {
           log += msg + "\n";
         },
         show: function() {
-          console.log(log);
+          //console.log(log);
           log = "";
         }
       };
@@ -307,10 +307,10 @@ export default {
     try {
       throw new Error("Useful message");
     } catch (error) {
-      console.log("Something went wrong! " + error.message);
+      //console.log("Something went wrong! " + error.message);
     }
 
-    console.log(performance.now());
+    //console.log(performance.now());
   }
 };
 </script>

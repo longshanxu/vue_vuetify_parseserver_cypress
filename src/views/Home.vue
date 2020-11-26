@@ -117,7 +117,7 @@
           <v-row class="mx-0">{{ item1.test15 }}</v-row>
           <v-row class="mx-0">{{ item1.test16 }}</v-row>
           <v-row class="mx-0">{{ item1.test17 }}</v-row>
-          <v-row class="mx-0">{{ item1.test18 }}</v-row>
+          <!-- <v-row class="mx-0">{{ item1.test18 }}</v-row> -->
           <v-row class="mx-0">{{ item1.test19 }}</v-row>
           <v-row class="mx-0">{{ item1.test20 }}</v-row>
           <v-row class="mx-0">{{ item1.test21 }}</v-row>
@@ -149,7 +149,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2020-11-07",
+        date: "2020-11-26",
         matchId: item.matchId,
       };
       api
@@ -169,7 +169,7 @@ export default {
   },
   mounted() {
     const data = {
-      date: "2020-11-07",
+      date: "2020-11-26",
     };
     api
       .GetToday(data)

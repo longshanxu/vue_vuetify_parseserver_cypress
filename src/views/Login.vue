@@ -78,11 +78,11 @@ export default {
     },
 
     getuserrole() {
-      //console.log(this.$store.state.message);
+      ////console.log(this.$store.state.message);
       // api
       //   .getUserRole()
       //   .then(res => {
-      //     console.log(res);
+      //     //console.log(res);
       //   })
       //   .catch(err => {
       //     console.error(err);

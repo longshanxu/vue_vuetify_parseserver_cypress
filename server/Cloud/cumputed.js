@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-11-07 19:19:54
+ * @LastEditTime: 2020-11-26 13:22:14
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -42,7 +42,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-11-07"
+        datetemp = "2020-11-26"
 
 
         var tempMoney = Parse
@@ -496,14 +496,14 @@ Parse
                     const pankou2 = parseFloat(changepankou(bet10pankou.pankou));
 
 
-                    let bet365firstratio = math.format(bet365pankou.firstReturnRatio.replace('%', '') / 100, 3);
+                    let bet10firstratio = math.format(bet10pankou.firstReturnRatio.replace('%', '') / 100, 3);
 
-                    let bet365firstodds0 = parseFloat(bet365pankou.firstOdds[0]) + 1;
-                    let bet365firstodds1 = parseFloat(bet365pankou.firstOdds[1]) + 1;
+                    let bet10firstodds0 = parseFloat(bet10pankou.firstOdds[0]) + 1;
+                    let bet10firstodds1 = parseFloat(bet10pankou.firstOdds[1]) + 1;
 
                     firstyapanitem = [
-                        math.format(bet365firstratio / bet365firstodds0, 2) * 100,
-                        math.format(bet365firstratio / bet365firstodds1, 2) * 100
+                        math.format(bet10firstratio / bet10firstodds0, 2) * 100,
+                        math.format(bet10firstratio / bet10firstodds1, 2) * 100
                     ]
 
                     // let bet365ratio = math.format(bet365pankou.returnRatio.replace('%', '') / 100, 3);
@@ -521,9 +521,10 @@ Parse
                         math.format(bet10ratio / bet10odds1, 2) * 100
                     ]
 
-                    console.log("亚盘初始概率:" + firstyapanitem[0] + "%-" + firstyapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
+                    //降返回率 是不打算赔付高概率的一面
+                    console.log("亚盘初始概率:" + firstyapanitem[0] + "%-" + firstyapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2 +" 返回率:" +bet10firstratio+ " => ".green+ bet10ratio);
                     
-                    oneresult.set("test9" , "亚盘初始概率:" + firstyapanitem[0] + "%-" + firstyapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
+                    oneresult.set("test9" , "亚盘初始概率:" + firstyapanitem[0] + "%-" + firstyapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2+" 返回率:" +bet10firstratio+ " => "+ bet10ratio);
 
                     let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
                     let x1 = math.abs(math.format(bet365odds1 - bet10odds1, 2));
@@ -701,10 +702,10 @@ Parse
                     const pankou1 = parseFloat(changeqiu(bet10qiu.firstPankou));
                     const pankou2 = parseFloat(changeqiu(bet10qiu.pankou));
 
-                    let bet365firstratio = math.format(bet365qiu.firstReturnRatio.replace('%', '') / 100, 3);
+                    let bet10firstratio = math.format(bet10qiu.firstReturnRatio.replace('%', '') / 100, 3);
 
-                    let bet365firstodds0 = parseFloat(bet365qiu.firstOdds[0]) + 1;
-                    let bet365firstodds1 = parseFloat(bet365qiu.firstOdds[1]) + 1;
+                    let bet10firstodds0 = parseFloat(bet10qiu.firstOdds[0]) + 1;
+                    let bet10firstodds1 = parseFloat(bet10qiu.firstOdds[1]) + 1;
 
                     // let bet365ratio = math.format(bet365qiu.returnRatio.replace('%', '') / 100, 3);
 
@@ -723,13 +724,13 @@ Parse
                     ]
 
                     firstqiuitem = [
-                        math.format(bet365firstratio / bet365firstodds0, 2) * 100,
-                        math.format(bet365firstratio / bet365firstodds1, 2) * 100
+                        math.format(bet10firstratio / bet10firstodds0, 2) * 100,
+                        math.format(bet10firstratio / bet10firstodds1, 2) * 100
                     ]
 
-                    console.log("球数初始概率:" + firstqiuitem[0] + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
+                    console.log("球数初始概率:" + firstqiuitem[0] + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2+" 返回率:" +bet10firstratio+ " => ".green + bet10ratio);
 
-                    oneresult.set("test15" ,"球数初始概率:" + firstqiuitem[0] + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
+                    oneresult.set("test15" ,"球数初始概率:" + firstqiuitem[0] + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2+" 返回率:" +bet10firstratio+ " => "+ bet10ratio);
 
                     let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
                     let x1 = math.abs(math.format(bet365odds1 - bet10odds1, 2));
@@ -903,9 +904,9 @@ Parse
                         chaibieitem = [chaibieitem[0] + temp, chaibieitem[1] - temp];
                     }
 
-                    console.log("另一种散户球数投注情况:" + "-------".yellow + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+                    // console.log("另一种散户球数投注情况:" + "-------".yellow + chaibieitem[0] + "%," + chaibieitem[1] + "%");
 
-                    oneresult.set("test18" ,"另一种散户球数投注情况:" + "-------" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+                    // oneresult.set("test18" ,"另一种散户球数投注情况:" + "-------" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
                 }
 
                 console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu + " 约 :  ".green + (homeqiushu + guestqiushu) / 2);

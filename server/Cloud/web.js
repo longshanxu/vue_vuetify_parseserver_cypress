@@ -100,7 +100,7 @@ Parse
                         "test15": element.attributes.test15, //客队名称
                         "test16": element.attributes.test16, //客队名称
                         "test17": element.attributes.test17, //客队名称
-                        "test18": element.attributes.test18, //客队名称
+                        // "test18": element.attributes.test18, //客队名称
                         "test19": element.attributes.test19, //客队名称
                         "test20": element.attributes.test20, //客队名称
                         "test21": element.attributes.test21, //客队名称

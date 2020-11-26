@@ -30,7 +30,7 @@
             <br />var myCar= {
             <br />name:"Ford Escort",
             <br />brake:function(){
-            <br />console.log("Stop! I am applying brakes");
+            <br />//console.log("Stop! I am applying brakes");
             <br />},
             <br />Panic : function (){
             <br />console.log ( "wait. how do you stop thuis thing?")
@@ -84,7 +84,7 @@
           <br />let count = 0;
           <br />function init() {
           <br />
-          console.log(`Opening database #${count + 1}`);
+          //console.log(`Opening database #${count + 1}`);
           <br />//now perform operation
           <br />}
           <br />function createIntance() {
@@ -94,7 +94,7 @@
           <br />return databaseInstance;
           <br />}
           <br />function closeIntance() {
-          <br />console.log('closing database');
+          <br />//console.log('closing database');
           <br />databaseInstance = null;
           <br />}
           <br />return {
@@ -171,14 +171,14 @@ export default {
     // var myCar ={
     //     name:"mycar",
     //     brake:function(){
-    //         console.log("brake");
+    //         //console.log("brake");
     //     },
     //     panic:function(){
-    //         console.log("panic");
+    //         //console.log("panic");
     //     }
     // }
     // var yourCar = Object.create(myCar);
-    // console.log(yourCar.name);
+    // //console.log(yourCar.name);
     // function AnimalContainter() {
     //   const container = [];
     //   function addAnimal(name) {
@@ -204,14 +204,14 @@ export default {
     // test.add("Hen");
     // test.add("Goat");
     // test.add("Sheep");
-    // console.log(test.get());
+    // //console.log(test.get());
     // test.remove("Sheep");
-    // console.log(test.get());
+    // //console.log(test.get());
     // function DatabaseConnection() {
     //   let databaseInstance = null;
     //   let count = 0;
     //   function init() {
-    //     console.log(`Opening database ${count + 1}`);
+    //     //console.log(`Opening database ${count + 1}`);
     //   }
     //   function createIntance() {
     //     if (databaseInstance == null) {
@@ -220,7 +220,7 @@ export default {
     //     return databaseInstance;
     //   }
     //   function closeIntance() {
-    //     console.log("close");
+    //     //console.log("close");
     //     databaseInstance = null;
     //   }
     //   return {
@@ -238,7 +238,7 @@ export default {
     //       return "Dealer A";
     //     };
     //     DealerA.pay = function pay(amount) {
-    //       console.log(
+    //       //console.log(
     //         `set up configuration using username: ${this.username} and password: ${this.password}`
     //       );
     //       return `Payment for service ${amount} is successful using ${this.title()}`;
@@ -252,8 +252,8 @@ export default {
     //       username: "user",
     //       password: "pass"
     //     });
-    //     console.log(dealerFactory.title());
-    //     console.log(dealerFactory.pay(12));
+    //     //console.log(dealerFactory.title());
+    //     //console.log(dealerFactory.pay(12));
 
     // function Observer(){
     //     this.observerContainer = [];
@@ -277,7 +277,7 @@ export default {
     // {
     //     var a = 123;
     //     pro = function pro(){
-    //         console.log("6666"+a);
+    //         //console.log("6666"+a);
     //     };
     // }
     // a = 321;
