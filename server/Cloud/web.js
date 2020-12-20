@@ -39,6 +39,13 @@ Parse
                         //"homeLogo": element.attributes.homeLogo, //主队logo
                         //"guestLogo": element.attributes.guestLogo, //客队logo
                         "displayState": element.attributes.displayState, //当前状态
+                        sanhuxinli: element.attributes.sanhuxinli, //散户心理
+                        yapanpankou1: element.attributes.yapanpankou1, //让球前
+                        yapanpankou2: element.attributes.yapanpankou2, //让球后
+                        qiushupankou1: element.attributes.qiushupankou1, //球数前
+                        qiushupankou2: element.attributes.qiushupankou2, //球数后
+                        changguiqiushu: element.attributes.changguiqiushu, //常规球数
+                        changguiyapan: element.attributes.changguiyapan, //常规让球
                     }
                     data.push(temp);
 

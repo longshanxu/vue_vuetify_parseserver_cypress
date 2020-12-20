@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-11-26 13:22:14
+ * @LastEditTime: 2020-12-21 13:22:14
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -42,7 +42,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-11-26"
+        datetemp = "2020-12-21"
 
 
         var tempMoney = Parse
@@ -59,7 +59,7 @@ Parse
         for (let index = 0; index < items.length; index++) {
             
             const element = items[index];
-
+            
             let OneResult = Parse
                 .Object
                 .extend("OneResult");
@@ -392,6 +392,8 @@ Parse
 
             oneresult.set("test6", '散户心理:' + finalitem);
 
+            element.set("sanhuxinli",finalitem);
+
             if (bet365item != null && bet365item != undefined) {
                 console.log('投注额:' + math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3) + ',' + math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3) + ',' + math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3));
                 console.log('赔率:' + bet365item.odds[0] + "," + bet365item.odds[1] + "," + bet365item.odds[2]);
@@ -594,7 +596,11 @@ Parse
 
 
                     console.log("亚盘变动后的概率:".white + yapanitem[0] + "%-" + yapanitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
-                  
+                    
+                    element.set('yapanpankou1',pankou1);
+                    element.set('yapanpankou2',pankou2);
+
+
                     oneresult.set("test10" , "亚盘变动后的概率:" + yapanitem[0] + "%-" + yapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
 
                     //在这里转换欧盘概率。
@@ -730,6 +736,7 @@ Parse
 
                     console.log("球数初始概率:" + firstqiuitem[0] + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2+" 返回率:" +bet10firstratio+ " => ".green + bet10ratio);
 
+                    
                     oneresult.set("test15" ,"球数初始概率:" + firstqiuitem[0] + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2+" 返回率:" +bet10firstratio+ " => "+ bet10ratio);
 
                     let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
@@ -798,6 +805,9 @@ Parse
                     }
 
                     console.log("球数变动后的概率:".white + qiuitem[0] + "%-" + qiuitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
+
+                    element.set('qiushupankou1',pankou1);
+                    element.set('qiushupankou2',pankou2);
 
                     oneresult.set("test16" ,"球数变动后的概率:" + qiuitem[0] + "%-" + qiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2);
 
@@ -918,6 +928,10 @@ Parse
 
                 console.log("两队常规球数：".yellow + (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4);
                 console.log("两队常规让球：".yellow + (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4);
+
+                element.set("changguiqiushu",(homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4);
+                element.set("changguiyapan",(homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4);
+                
                 // console.log("两队历史亚盘让球：".white + (homeqiushu - guestqiushu) / 2);
                 oneresult.set("test21" ,"两队常规球数：" + (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4);
                 oneresult.set("test22" ,"两队常规让球：" + (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4);
@@ -943,7 +957,8 @@ Parse
                     console.log('结果：负\n');
                 }
             }
-
+            
+            element.save();
             oneresult.save();
         }
 

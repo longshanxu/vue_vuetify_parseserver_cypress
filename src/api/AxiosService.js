@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-14 20:27:02
- * @LastEditTime: 2020-11-26 11:42:17
+ * @LastEditTime: 2020-12-21 11:42:17
  * @LastEditors: Json.Xu
  * @Description: 所有的调用接口的方法存放在此
  * @FilePath: \vue_vuetify_parseserver\src\api\AxiosService.js
@@ -11,13 +11,12 @@ import store from "../store/index"
 // import router from "../router/index.js"
 
 const apiService = axios.create({
-  baseURL: 'http://192.168.1.125/parse',
+  baseURL: 'http://192.168.1.106/parse',
   headers: {
     'X-Parse-Application-Id': "JsonApp",
     'X-Parse-REST-API-Key': "JsonRestKey"
   },
 });
-
 
 apiService.interceptors.request.use(config => {
   // Do something before request is sent
