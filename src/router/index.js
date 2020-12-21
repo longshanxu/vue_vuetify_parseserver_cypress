@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-11-04 19:00:51
- * @LastEditTime: 2020-11-26 15:03:24
+ * @LastEditTime: 2020-12-17 10:58:26
  * @LastEditors: Json.Xu
  * @Description: In User Settings Edit
  * @FilePath: \vue_vuetify_parseserver\src\router\index.js

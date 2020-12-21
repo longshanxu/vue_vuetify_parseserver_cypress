@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2020-11-26 10:16:59
+ * @LastEditTime: 2020-12-17 10:16:59
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2020-11-26/prev
-//https://vipc.cn/i/live/football/date/2020-11-26/next
+//https://vipc.cn/i/live/football/date/2020-12-17/prev
+//https://vipc.cn/i/live/football/date/2020-12-17/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2020-11-26";
+        var datetemp = "2020-12-17";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -122,7 +122,7 @@ async function GetTodayMoney() {
             await object.destroy();
         }
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/2020-11-26/prev',
+            url: 'https://vipc.cn/i/live/football/date/2020-12-17/prev',
             headers: {
                 'User-Agent': 'request'
             },
@@ -389,7 +389,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2020-11-26";
+    var datetemp = "2020-12-17";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
@@ -459,7 +459,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-11-26"
+        datetemp = "2020-12-17"
 
         var tempMoney = Parse
             .Object

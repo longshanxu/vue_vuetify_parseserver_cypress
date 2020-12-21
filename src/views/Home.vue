@@ -149,7 +149,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2020-11-26",
+        date: "2020-12-17",
         matchId: item.matchId,
       };
       api
@@ -169,7 +169,7 @@ export default {
   },
   mounted() {
     const data = {
-      date: "2020-11-26",
+      date: "2020-12-17",
     };
     api
       .GetToday(data)

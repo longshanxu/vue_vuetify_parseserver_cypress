@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2020-11-26 13:22:14
+ * @LastEditTime: 2020-12-15 20:30:58
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -42,7 +42,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2020-11-26"
+        datetemp = "2020-12-17"
 
 
         var tempMoney = Parse
@@ -70,7 +70,7 @@ Parse
             let matchId = element.get('matchId');
 
             oneresult.set("matchId", matchId);
-            // if (matchId != "205132799") {     continue; }
+            // if (matchId != "243746778") {     continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -522,7 +522,7 @@ Parse
                     ]
 
                     //降返回率 是不打算赔付高概率的一面
-                    console.log("亚盘初始概率:" + firstyapanitem[0] + "%-" + firstyapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2 +" 返回率:" +bet10firstratio+ " => ".green+ bet10ratio);
+                    console.log("亚盘初始概率:" + math.format(firstyapanitem[0],2) + "%-" + firstyapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2 +" 返回率:" +bet10firstratio+ " => ".green+ bet10ratio);
                     
                     oneresult.set("test9" , "亚盘初始概率:" + firstyapanitem[0] + "%-" + firstyapanitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2+" 返回率:" +bet10firstratio+ " => "+ bet10ratio);
 
@@ -728,7 +728,7 @@ Parse
                         math.format(bet10firstratio / bet10firstodds1, 2) * 100
                     ]
 
-                    console.log("球数初始概率:" + firstqiuitem[0] + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2+" 返回率:" +bet10firstratio+ " => ".green + bet10ratio);
+                    console.log("球数初始概率:" + math.format(firstqiuitem[0],2) + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2+" 返回率:" +bet10firstratio+ " => ".green + bet10ratio);
 
                     oneresult.set("test15" ,"球数初始概率:" + firstqiuitem[0] + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2+" 返回率:" +bet10firstratio+ " => "+ bet10ratio);
 
