@@ -6,6 +6,9 @@
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\web.js
  */
+
+const init = require("./init");
+
 Parse
     .Cloud
     .define("GetToday", async (request) => {
@@ -19,8 +22,8 @@ Parse
                 query.ascending("matchTime") //matchTime,league
                 const results = await query.find();
 
-               
-                let data =[];
+
+                let data = [];
                 for (let index = 0; index < results.length; index++) {
                     const element = results[index];
                     const temp = {
@@ -36,6 +39,13 @@ Parse
                         //"homeLogo": element.attributes.homeLogo, //主队logo
                         //"guestLogo": element.attributes.guestLogo, //客队logo
                         "displayState": element.attributes.displayState, //当前状态
+                        sanhuxinli: element.attributes.sanhuxinli, //散户心理
+                        yapanpankou1: element.attributes.yapanpankou1, //让球前
+                        yapanpankou2: element.attributes.yapanpankou2, //让球后
+                        qiushupankou1: element.attributes.qiushupankou1, //球数前
+                        qiushupankou2: element.attributes.qiushupankou2, //球数后
+                        changguiqiushu: element.attributes.changguiqiushu, //常规球数
+                        changguiyapan: element.attributes.changguiyapan, //常规让球
                     }
                     data.push(temp);
 
@@ -75,8 +85,8 @@ Parse
                 query.limit(1);
                 const results = await query.find();
 
-               
-                let data =[];
+
+                let data = [];
                 for (let index = 0; index < results.length; index++) {
                     const element = results[index];
                     let temp = {
@@ -125,6 +135,38 @@ Parse
             return {
                 code: 500,
                 msg: "获取数据失败"
+            }
+        }
+
+    });
+
+
+Parse
+    .Cloud
+    .define("AsyncData", async (request) => {
+
+        try {
+
+            //先清除数据。
+            init.clearAllData();
+            setTimeout(() => {
+                init.GetTodayMoney();
+                setTimeout(() => {
+                   init.OneByOne();
+                }, 3000);
+            }, 3000);
+
+            //获取数据。
+            return {
+                code: 200,
+                msg: "获取数据成功"
+            }
+
+        } catch (error) {
+            return {
+                code: 500,
+                msg: "获取数据失败",
+                data:error
             }
         }
 

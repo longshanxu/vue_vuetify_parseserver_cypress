@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2020-04-23 14:51:56
+ * @LastEditTime: 2020-12-21 10:03:42
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -9,9 +9,11 @@
 <template>
   <v-container class="fill-height grey lighten-3 pa-0" fluid>
     <v-app-bar dark app fixed color="primary" dense>
+      <v-icon @click="cpu" color="green">mdi-crane</v-icon>
       <v-spacer></v-spacer>
       <v-toolbar-title class="white--text">我命由我不由天</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-icon @click="asyncData" color="red">mdi-hand-heart</v-icon>
     </v-app-bar>
     <v-main class="fill-height grey lighten-3 align-start justify-start">
       <v-card
@@ -26,7 +28,7 @@
             align-self="center"
             style="text-align: center; font-weight: 700"
             cols="4"
-            >{{ item.home.substr(0,6) }}</v-col
+            >{{ item.home.substr(0, 6) }}</v-col
           >
           <v-col
             align-self="center"
@@ -38,7 +40,7 @@
             align-self="center"
             style="text-align: center; font-weight: 700"
             cols="4"
-            >{{ item.guest.substr(0,6) }}</v-col
+            >{{ item.guest.substr(0, 6) }}</v-col
           >
         </v-row>
         <v-row dense class="ma-0" v-show="showtuijian">
@@ -69,6 +71,94 @@
             <span style="font-size: 16px">{{
               item.homeScore + ":" + item.guestScore
             }}</span>
+          </v-col>
+        </v-row>
+        <v-row dense class="ma-0" v-show="showtuijian">
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            散户心理:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="9"
+          >
+            <span style="font-size: 16px">{{
+              item.sanhuxinli &&
+              item.sanhuxinli[0] +
+                " - " +
+                item.sanhuxinli[1] +
+                " - " +
+                item.sanhuxinli[2]
+            }}</span>
+          </v-col>
+        </v-row>
+        <v-row dense class="ma-0" v-show="showtuijian">
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            常规让球:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            <span style="font-size: 16px">{{ item.changguiyapan }}</span>
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            常规球数:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            <span style="font-size: 16px">{{ item.changguiqiushu }}</span>
+          </v-col>
+        </v-row>
+        <v-row dense class="ma-0" v-show="showtuijian">
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            让球前后:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+            class="px-0"
+          >
+            <span style="font-size: 16px">{{
+              item.yapanpankou1
+            }} -> {{item.yapanpankou2}}</span>
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            球数前后:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            <span style="font-size: 16px">{{
+              item.qiushupankou1 
+            }} -> {{item.qiushupankou2}}</span>
           </v-col>
         </v-row>
       </v-card>
@@ -125,6 +215,16 @@
         </v-card>
       </v-card>
     </v-dialog>
+    <v-bottom-sheet v-model="sheet" persistent>
+      <v-sheet class="text-center" height="200px">
+        <v-btn class="mt-6" text color="error" @click="asyncDataTrue"
+          >同步</v-btn
+        >
+        <div class="py-3">
+          这个同步很厉害大概需要{{ datalist.length * 3 }}秒
+        </div>
+      </v-sheet>
+    </v-bottom-sheet>
   </v-container>
 </template>
 
@@ -141,6 +241,7 @@ export default {
       item1: {},
       dialog: false,
       linear: false,
+      sheet: false,
     };
   },
   computed: {},
@@ -149,7 +250,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2020-12-17",
+        date: "2020-12-21",
         matchId: item.matchId,
       };
       api
@@ -166,10 +267,20 @@ export default {
         })
         .catch();
     },
+    asyncData() {
+      this.sheet = true;
+    },
+    asyncDataTrue() {
+      this.sheet = false;
+      api.AsyncData().then().catch();
+    },
+    cpu() {
+      api.cpu().then().catch();
+    },
   },
   mounted() {
     const data = {
-      date: "2020-12-17",
+      date: "2020-12-21",
     };
     api
       .GetToday(data)
