@@ -470,7 +470,7 @@ async function OneByOne(){
         .extend("Money");
     var query = new Parse.Query(tempMoney);
     query.equalTo("date", datetemp);
-    // query.notEqualTo("displayState", "完场")
+    query.notEqualTo("displayState", "完场")
     query.ascending("matchTime") //matchTime,league
     // query.greaterThan("matchTime",new Date());
     query.limit(500);

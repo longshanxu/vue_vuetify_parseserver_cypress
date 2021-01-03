@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-01-03 14:23:43
+ * @LastEditTime: 2021-01-03 20:34:07
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -800,7 +800,7 @@ Parse
                     element.set('qiushupankou1', pankou1);
                     element.set('qiushupankou2', pankou2);
 
-                    oneresult.set("test16", [math.format(qiuitem[0], 2),math.format(qiuitem[0], 2), pankou1, pankou2]);
+                    oneresult.set("test16", [math.format(qiuitem[0], 2),math.format(qiuitem[1], 2), pankou1, pankou2]);
 
                 }
 

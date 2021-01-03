@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-12 17:51:18
- * @LastEditTime: 2020-12-17 14:54:01
+ * @LastEditTime: 2021-01-03 14:55:58
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\vue.config.js
@@ -21,7 +21,7 @@ module.exports = {
   devServer: {
     port:90, // 端口
     disableHostCheck: true,
-    inline:false
+    // inline:false
   },
   pages: {
     index: {
