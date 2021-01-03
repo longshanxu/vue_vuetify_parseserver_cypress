@@ -24,6 +24,7 @@
     "mathjs": "^7.0.2",
     "parse-server": "^3.10.0",
     "serve-index": "^1.9.1",
+    "vconsole": "^3.3.4",
     "vue": "^2.6.11",
     "vue-router": "^3.3.4",
     "vuetify": "^2.3.2",

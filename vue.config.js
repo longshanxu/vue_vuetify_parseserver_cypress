@@ -19,7 +19,9 @@ module.exports = {
     "vuetify"
   ],
   devServer: {
-    port: 90, // 端口
+    port:90, // 端口
+    disableHostCheck: true,
+    inline:false
   },
   pages: {
     index: {

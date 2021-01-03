@@ -11,7 +11,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
-
+import Vconsole from 'vconsole';
+new Vconsole();
 
 new Vue({
   router,
