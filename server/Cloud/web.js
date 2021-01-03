@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-02-28 13:29:07
- * @LastEditTime: 2020-02-28 14:31:12
+ * @LastEditTime: 2021-01-03 14:40:17
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\web.js
@@ -46,6 +46,8 @@ Parse
                         qiushupankou2: element.attributes.qiushupankou2, //球数后
                         changguiqiushu: element.attributes.changguiqiushu, //常规球数
                         changguiyapan: element.attributes.changguiyapan, //常规让球
+                        yapantouzhu: element.attributes.yapantouzhu, //亚盘投注
+                        qiushutouzhu: element.attributes.qiushutouzhu, //球数投注
                     }
                     data.push(temp);
 

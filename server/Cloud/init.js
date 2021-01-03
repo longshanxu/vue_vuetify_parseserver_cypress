@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2021-01-02 10:16:59
+ * @LastEditTime: 2021-01-03 12:19:00
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2021-01-02/prev
-//https://vipc.cn/i/live/football/date/2021-01-02/next
+//https://vipc.cn/i/live/football/date/2021-01-03/prev
+//https://vipc.cn/i/live/football/date/2021-01-03/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2021-01-02";
+        var datetemp = "2021-01-03";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -123,7 +123,7 @@ async function GetTodayMoney() {
         }
         // https://vipc.cn/i/live/football/date/today/next
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/today/next',
+            url: 'https://vipc.cn/i/live/football/date/2021-01-03/prev',
             headers: {
                 'User-Agent': 'request'
             },
@@ -390,12 +390,12 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2021-01-02";
+    var datetemp = "2021-01-03";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
     queryOneResult.equalTo("date", datetemp);
-    queryOneResult.limit(200);
+    queryOneResult.limit(300);
 
     const OneResultresults = await queryOneResult.find();
 
@@ -432,8 +432,7 @@ async function clearAllData() {
     var PankouMoney = Parse.Object.extend("PankouMoney");
     var query1 = new Parse.Query(PankouMoney);
     query1.equalTo("date", datetemp);
-    query1.notEqualTo("displayState", "完场")
-    query1.limit(100);
+    query1.limit(300);
     const results1 = await query1.find();
     for (var i = 0; i < results1.length; i++) {
         var object = results1[i];
@@ -464,14 +463,14 @@ async function OneByOne(){
         datetemp = year + "-0" + month + "-0" + day;
     }
 
-        datetemp = "2021-01-02"
+        datetemp = "2021-01-03"
 
     var tempMoney = Parse
         .Object
         .extend("Money");
     var query = new Parse.Query(tempMoney);
     query.equalTo("date", datetemp);
-    query.notEqualTo("displayState", "完场")
+    // query.notEqualTo("displayState", "完场")
     query.ascending("matchTime") //matchTime,league
     // query.greaterThan("matchTime",new Date());
     query.limit(500);
