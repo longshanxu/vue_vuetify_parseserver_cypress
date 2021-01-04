@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-01-03 14:43:47
+ * @LastEditTime: 2021-01-04 11:03:45
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -89,9 +89,9 @@
             <span style="font-size: 14px; color: #a60056">{{
               item.sanhuxinli &&
               item.sanhuxinli[0] +
-                " - " +
+                " ~ " +
                 item.sanhuxinli[1] +
-                " - " +
+                " ~ " +
                 item.sanhuxinli[2]
             }}</span>
           </v-col>
@@ -164,7 +164,7 @@
             <v-row dense class="ma-0" v-show="showtuijian">
           <v-col
             align-self="center"
-            style="text-align: center; font-size: 14px"
+            style="text-align: center; font-size: 14px;font-weight: 500"
             cols="3"
           >
             让球投注:
@@ -175,13 +175,13 @@
             cols="3"
             class="px-0"
           >
-            <span style="font-size: 14px"
+            <span style="font-size: 14px; color: #a60056"
               >{{  item.yapantouzhu && item.yapantouzhu[0] +"%" +" ~ "+ item.yapantouzhu[1]  +"%"}}</span
             >
           </v-col>
           <v-col
             align-self="center"
-            style="text-align: center; font-size: 14px"
+            style="text-align: center; font-size: 14px; font-weight: 500"
             cols="3"
           >
             球数投注:
@@ -191,7 +191,7 @@
             style="text-align: center; font-size: 14px"
             cols="3"
           >
-            <span style="font-size: 14px"
+            <span style="font-size: 14px; color: #a60056"
               >{{ item.qiushutouzhu && item.qiushutouzhu[0] +"%" +" ~ "+ item.qiushutouzhu[1]  +"%"}}</span
             >
           </v-col>
@@ -574,7 +574,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-01-03",
+        date: "2021-01-04",
         matchId: item.matchId,
       };
       api
@@ -604,7 +604,7 @@ export default {
   },
   mounted() {
     const data = {
-      date: "2021-01-03",
+      date: "2021-01-04",
     };
     api
       .GetToday(data)

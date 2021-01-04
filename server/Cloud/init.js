@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2021-01-03 12:19:00
+ * @LastEditTime: 2021-01-04 13:42:32
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2021-01-03/prev
-//https://vipc.cn/i/live/football/date/2021-01-03/next
+//https://vipc.cn/i/live/football/date/2021-01-04/prev
+//https://vipc.cn/i/live/football/date/2021-01-04/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2021-01-03";
+        var datetemp = "2021-01-04";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -123,7 +123,7 @@ async function GetTodayMoney() {
         }
         // https://vipc.cn/i/live/football/date/today/next
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/2021-01-03/prev',
+            url: 'https://vipc.cn/i/live/football/date/2021-01-04/prev',
             headers: {
                 'User-Agent': 'request'
             },
@@ -240,7 +240,7 @@ async function GetHistoryByID(matchId, datetemp, proxiedRequest) {
 
 async function GetOddsByID(matchId, datetemp, proxiedRequest) {
     try {
-
+        
         //清楚当天数据
         var OddsMoney = Parse.Object.extend("OddsMoney");
 
@@ -259,6 +259,10 @@ async function GetOddsByID(matchId, datetemp, proxiedRequest) {
                 let data = await JSON.parse(body);
                 let money = new OddsMoney();
                 money.set("matchId", matchId);           //全局唯一ID
+
+                if(matchId == "235608343"){
+                    console.log(123);
+                }
                 money.set("date", datetemp);
                 for (let index = 0; index < data.odds.length; index++) {
                     const element = data.odds[index];
@@ -390,7 +394,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2021-01-03";
+    var datetemp = "2021-01-04";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
@@ -463,7 +467,7 @@ async function OneByOne(){
         datetemp = year + "-0" + month + "-0" + day;
     }
 
-        datetemp = "2021-01-03"
+        datetemp = "2021-01-04"
 
     var tempMoney = Parse
         .Object
