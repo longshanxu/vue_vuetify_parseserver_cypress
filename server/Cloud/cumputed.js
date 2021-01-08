@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-01-06 17:27:24
+ * @LastEditTime: 2021-01-08 16:34:37
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-01-06"
+        datetemp = "2021-01-08"
 
 
         var tempMoney = Parse
@@ -645,14 +645,14 @@ Parse
 
                     let chaibieitem = temparray;
 
-                    if (changguiqiushu > 0) {
-                        let temp = math.abs(chaibie) / 0.25 ;
-                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
-                    }
-                    else if (changguiqiushu < 0) {
-                        let temp = math.abs(chaibie) / 0.25;
-                        chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
-                    }
+                    // if (changguiqiushu > 0) {
+                    //     let temp = math.abs(chaibie) / 0.25 ;
+                    //     chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
+                    // }
+                    // else if (changguiqiushu < 0) {
+                    //     let temp = math.abs(chaibie) / 0.25;
+                    //     chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
+                    // }
 
                     let chaibie2 = (homeqiushu - guestqiushu) / 2  - qiushupankou;
 
@@ -665,16 +665,16 @@ Parse
                         chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
                     }
 
-                    // let chaibie3 = (homezuijinqiushu - guestzuijinqiushu) / 2 - qiushupankou;
+                    let chaibie3 = (homezuijinqiushu - guestzuijinqiushu) / 2 - qiushupankou;
 
-                    // if (chaibie3 > 0) {
-                    //     let temp = math.abs(chaibie3) / 0.25;
-                    //     chaibieitem = [chaibieitem[0] + temp* tempjiange, chaibieitem[1] - temp* tempjiange];
-                    // }
-                    // else if (chaibie3 < 0) {
-                    //     let temp = math.abs(chaibie3) / 0.25;
-                    //     chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
-                    // }
+                    if (chaibie3 > 0) {
+                        let temp = math.abs(chaibie3) / 0.25;
+                        chaibieitem = [chaibieitem[0] + temp* tempjiange, chaibieitem[1] - temp* tempjiange];
+                    }
+                    else if (chaibie3 < 0) {
+                        let temp = math.abs(chaibie3) / 0.25;
+                        chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
+                    }
 
                     console.log("亚盘投注情况-----:" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
 
@@ -811,7 +811,7 @@ Parse
 
                    
                     
-                    let chaibie = changguiqiushu - qiushupankou ;
+                    // let chaibie = changguiqiushu - qiushupankou ;
 
                     let chaibieitem = [
                         math.format(bet365ratio / bet365odds0, 2) * 100,
@@ -820,14 +820,14 @@ Parse
 
                     let tempjiange =  math.format( chaibieitem[1] / (  math.abs(qiushupankou)  / 0.25) , 2) ;
                     
-                    if (chaibie > 0) {
-                        let temp = math.abs(chaibie) / 0.25;
-                        chaibieitem = [chaibieitem[0] + temp* tempjiange, chaibieitem[1] - temp* tempjiange];
-                    }
-                    else if (chaibie < 0) {
-                        let temp = math.abs(chaibie) / 0.25;
-                        chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
-                    }
+                    // if (chaibie > 0) {
+                    //     let temp = math.abs(chaibie) / 0.25;
+                    //     chaibieitem = [chaibieitem[0] + temp* tempjiange, chaibieitem[1] - temp* tempjiange];
+                    // }
+                    // else if (chaibie < 0) {
+                    //     let temp = math.abs(chaibie) / 0.25;
+                    //     chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
+                    // }
 
                     let chaibie2 = (homeqiushu + guestqiushu) / 2 - qiushupankou ;
 
