@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-01-08 16:34:37
+ * @LastEditTime: 2021-01-10 16:34:37
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-01-08"
+        datetemp = "2021-01-10"
 
 
         var tempMoney = Parse
@@ -239,26 +239,43 @@ Parse
             let historylist = historyitems.get('againstlist')
 
             // finalitem = ["33%","33%","33%"];
-            let historycount = 0;
+
             for (let index = 0; index < historylist.length; index++) {
                 const element = historylist[index];
-                if (historycount < 2) {
+                if (index < 2) {
                     if (home == element.home && guest == element.guest) {
-                        historycount ++;
+                        // historycount ++;
                         if (element.goal[0] > element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 16) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
                         }
                         if (element.goal[0] == element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 16) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
                         }
                         if (element.goal[0] < element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 10) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 15) + '%';
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 16) + '%';
+                        }
+                    }
+                    if (home == element.guest && guest == element.home) {
+                        if (element.goal[0] < element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 16) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
+                        }
+                        if (element.goal[0] == element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 16) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
+                        }
+                        if (element.goal[0] > element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 16) + '%';
                         }
                     }
                 } else {
@@ -273,88 +290,88 @@ Parse
 
             //进行第6轮的5 % 的浮动，主要是针对最近状态进行处理。
             let homelist = historyitems.get('homelist');
-            let homecount = 0;
+      
             for (let index = 0; index < homelist.length; index++) {
                 const element = homelist[index];
-                if (homecount < 2) {
+                if (index < 2) {
                     if (home == element.home) {
-                        homecount++;
+                        // homecount++;
                         if (element.goal[0] > element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 16) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
                         }
                         if (element.goal[0] == element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 16) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
                         }
                         if (element.goal[0] < element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 16) + '%';
                         }
                     }
-                    // if (home == element.guest) {
-                    //     if (element.goal[0] < element.goal[1]) {
-                    //         finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
-                    //         finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                    //         finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-                    //     }
-                    //     if (element.goal[0] == element.goal[1]) {
-                    //         finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                    //         finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
-                    //         finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-                    //     }
-                    //     if (element.goal[0] > element.goal[1]) {
-                    //         finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                    //         finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                    //         finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
-                    //     }
-                    // }
+                    if (home == element.guest) {
+                        if (element.goal[0] < element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 16) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
+                        }
+                        if (element.goal[0] == element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 16) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
+                        }
+                        if (element.goal[0] > element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 16) + '%';
+                        }
+                    }
                     // console.log( "----------"+finalitem)
                 } else {
                     break;
                 };
             }
             let guestlist = historyitems.get('guestlist')
-            let guestcount = 0;
+
             for (let index = 0; index < guestlist.length; index++) {
                 const element = guestlist[index];
-                if (guestcount < 2) {
-                    // if (guest == element.home) {
-                    //     if (element.goal[0] > element.goal[1]) {
-                    //         finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                    //         finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                    //         finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
-                    //     }
-                    //     if (element.goal[0] == element.goal[1]) {
-                    //         finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                    //         finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
-                    //         finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-                    //     }
-                    //     if (element.goal[0] < element.goal[1]) {
-                    //         finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
-                    //         finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                    //         finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
-                    //     }
-                    // }
-                    if (guest == element.guest) {
-                        guestcount++;
-                        if (element.goal[0] < element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 10) + '%';
+                if (index < 2) {
+                    if (guest == element.home) {
+                        if (element.goal[0] > element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 16) + '%';
                         }
                         if (element.goal[0] == element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 5) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 10) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 16) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
+                        }
+                        if (element.goal[0] < element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 16) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
+                        }
+                    }
+                    if (guest == element.guest) {
+                        // guestcount++;
+                        if (element.goal[0] < element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 16) + '%';
+                        }
+                        if (element.goal[0] == element.goal[1]) {
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 16) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
                         }
                         if (element.goal[0] > element.goal[1]) {
-                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 10) + '%';
-                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 5) + '%';
-                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 5) + '%';
+                            finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 16) + '%';
+                            finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
+                            finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
                         }
                     }
                     // console.log( "+++++++++"+ finalitem);
@@ -559,14 +576,14 @@ Parse
                     //降盘
                     if (pankou1 > pankou2) {
 
-                        yapanitem = [yapanitem[0] - 5, yapanitem[1] + 5];
+                        // yapanitem = [yapanitem[0] - 5, yapanitem[1] + 5];
                         let chaibie = pankou1 - pankou2;
                         let temp = math.abs(chaibie) / 0.25;
                         yapanitem = [yapanitem[0] - temp*4, yapanitem[1] + temp*4];
                     }
                     //升盘
                     if (pankou1 < pankou2) {
-                        yapanitem = [yapanitem[0] + 5, yapanitem[1] - 5];
+                        // yapanitem = [yapanitem[0] + 5, yapanitem[1] - 5];
                         let chaibie = pankou1 - pankou2;
                         let temp = math.abs(chaibie) / 0.25;
                         yapanitem = [yapanitem[0] + temp*4, yapanitem[1] - temp*4];
@@ -631,33 +648,17 @@ Parse
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
                     //散户投注数据。
 
-                    // let bet365ratio = math.format(bet365pankou.returnRatio.replace('%', '') / 100, 3);
 
-                    // let bet365odds0 = parseFloat(bet365pankou.odds[0]) + 1;
-                    // let bet365odds1 = parseFloat(bet365pankou.odds[1]) + 1;
-
-
-                    let changguiqiushu = (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4
                     let qiushupankou = parseFloat(changepankou(bet365pankou.pankou));
-                    let tempjiange = 4;
-                    //开盘盘口 - 常规盘口，负数看大，正数看小，相等55开。
-                    let chaibie =  math.abs(changguiqiushu) - math.abs(qiushupankou);
+                    let tempjiange = qiushupankou == 0 ? 1 : math.abs(qiushupankou / 0.25);
 
-                    let chaibieitem = temparray;
+                    let chaibieitem = yapanitem;
 
-                    // if (changguiqiushu > 0) {
-                    //     let temp = math.abs(chaibie) / 0.25 ;
-                    //     chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
-                    // }
-                    // else if (changguiqiushu < 0) {
-                    //     let temp = math.abs(chaibie) / 0.25;
-                    //     chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
-                    // }
-
-                    let chaibie2 = (homeqiushu - guestqiushu) / 2  - qiushupankou;
+                    let chaibie2 =  homeqiushu - guestqiushu;
 
                     if (chaibie2 > 0) {
                         let temp = math.abs(chaibie2) / 0.25;
+                       
                         chaibieitem = [chaibieitem[0] + temp* tempjiange, chaibieitem[1] - temp* tempjiange];
                     }
                     else if (chaibie2 < 0) {
@@ -665,7 +666,7 @@ Parse
                         chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
                     }
 
-                    let chaibie3 = (homezuijinqiushu - guestzuijinqiushu) / 2 - qiushupankou;
+                    let chaibie3 = homezuijinqiushu - guestzuijinqiushu;
 
                     if (chaibie3 > 0) {
                         let temp = math.abs(chaibie3) / 0.25;
@@ -675,6 +676,9 @@ Parse
                         let temp = math.abs(chaibie3) / 0.25;
                         chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
                     }
+
+
+
 
                     console.log("亚盘投注情况-----:" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
 

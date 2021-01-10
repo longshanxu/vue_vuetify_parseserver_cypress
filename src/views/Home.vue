@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-01-08 11:03:45
+ * @LastEditTime: 2021-01-10 11:03:45
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -574,7 +574,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-01-08",
+        date: "2021-01-10",
         matchId: item.matchId,
       };
       api
@@ -604,7 +604,7 @@ export default {
   },
   mounted() {
     const data = {
-      date: "2021-01-08",
+      date: "2021-01-10",
     };
     api
       .GetToday(data)
