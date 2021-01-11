@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-01-10 16:34:37
+ * @LastEditTime: 2021-01-11 16:34:37
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-01-10"
+        datetemp = "2021-01-11"
 
 
         var tempMoney = Parse
@@ -81,7 +81,7 @@ Parse
             let matchId = element.get('matchId');
 
             oneresult.set("matchId", matchId);
-            
+
             // if (matchId != "221105073") {     continue; }
 
             const OddsMoney = Parse
@@ -115,17 +115,17 @@ Parse
             let weilianitem = results.get('weilian');
 
             // 过滤体彩 if (results.get('ticai') == undefined) {     continue; }
-            if (weilianitem != undefined && weilianitem != null) {
-                //带入威廉的概率
-                finalitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
-                ouzhuanya = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
-                justitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
+            // if (weilianitem != undefined && weilianitem != null) {
+            //     //带入威廉的概率
+            //     finalitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
+            //     ouzhuanya = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
+            //     justitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
 
-            } else {
+            // } else {
 
-                console.log("缺少威廉数据");
-                continue
-            }
+            //     console.log("缺少威廉数据");
+            //     continue
+            // }
 
             // 进行第二轮bet365的5%的浮动
 
@@ -133,15 +133,15 @@ Parse
 
             if (bet365item != undefined && bet365item != null) {
                 //如果威廉数据为空，带入bet365的数据
-                if (weilianitem == undefined || weilianitem == null) {
-                    //带入bet365的概率
-                    finalitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
-                    ouzhuanya = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
-                    justitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
 
-                }
+                //带入bet365的概率
+                finalitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
+                ouzhuanya = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
+                justitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
+
+
             } else {
-                if (weilianitem == undefined || weilianitem == null) {
+                if (bet365item == undefined || bet365item == null) {
                     console.log("缺少bet365的数据");
                     continue;
                 }
@@ -185,7 +185,7 @@ Parse
 
             console.log(element.get('league') + "----" + home + "(" + element.get('homeRank') + ")" + '  vs  ' + guest + "(" + element.get('guestRank') + ")" + "-----" + element.get('matchId') + "-----" + element.get('matchTime'));
 
-            oneresult.set("test2", [element.get('league') , (home + "(" + element.get('homeRank') + ")"), (guest + "(" + element.get('guestRank') + ")"), element.get('matchTime')]);
+            oneresult.set("test2", [element.get('league'), (home + "(" + element.get('homeRank') + ")"), (guest + "(" + element.get('guestRank') + ")"), element.get('matchTime')]);
 
             console.log('凯利:'.red + kailiresult);
 
@@ -194,21 +194,21 @@ Parse
             let ticairesult = [];
             if (ticaiitem != undefined && ticaiitem != null) {
                 //算出差距
-                let chaju0 = math.abs(math.format(weilianitem.odds[0] - ticaiitem.odds[0], 3)) ;
+                let chaju0 = math.abs(math.format(weilianitem.odds[0] - ticaiitem.odds[0], 3));
                 let chaju1 = math.abs(math.format(weilianitem.odds[1] - ticaiitem.odds[1], 3));
                 let chaju2 = math.abs(math.format(weilianitem.odds[2] - ticaiitem.odds[2], 3));
 
                 // if (chaju0 >= 0 && chaju1 >= 0 && chaju2 >= 0) {
-                    if (chaju0 <= chaju1 || chaju0 <= chaju2) {
-                        ticairesult.push("胜")
-                    }
-                    if (chaju1 <= chaju2 || chaju1 <= chaju0) {
-                        ticairesult.push("平")
-                    }
+                if (chaju0 <= chaju1 || chaju0 <= chaju2) {
+                    ticairesult.push("胜")
+                }
+                if (chaju1 <= chaju2 || chaju1 <= chaju0) {
+                    ticairesult.push("平")
+                }
 
-                    if (chaju2 <= chaju1 || chaju2 <= chaju0) {
-                        ticairesult.push("负")
-                    }
+                if (chaju2 <= chaju1 || chaju2 <= chaju0) {
+                    ticairesult.push("负")
+                }
 
                 // }
 
@@ -290,7 +290,7 @@ Parse
 
             //进行第6轮的5 % 的浮动，主要是针对最近状态进行处理。
             let homelist = historyitems.get('homelist');
-      
+
             for (let index = 0; index < homelist.length; index++) {
                 const element = homelist[index];
                 if (index < 2) {
@@ -483,7 +483,7 @@ Parse
 
                 //亚盘
 
-                let temparray = [50, 50];
+                let temparray = [0, 0];
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
 
                     //firstOdds,odds,firstPankou,pankou,firstReturnRatio,returnRatio //大小球一样
@@ -522,7 +522,7 @@ Parse
                     // pankou2 
 
 
-                    oneresult.set("test9", [math.format(firstyapanitem[0], 2),math.format(firstyapanitem[1], 2), pankou1, pankou2, bet10firstratio, bet10ratio]);
+                    oneresult.set("test9", [math.format(firstyapanitem[0], 2), math.format(firstyapanitem[1], 2), pankou1, pankou2, bet10firstratio, bet10ratio, bet365pankou.odds, bet10pankou.odds, parseFloat(changepankou(bet365pankou.pankou))]);
 
                     let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
                     let x1 = math.abs(math.format(bet365odds1 - bet10odds1, 2));
@@ -579,14 +579,14 @@ Parse
                         // yapanitem = [yapanitem[0] - 5, yapanitem[1] + 5];
                         let chaibie = pankou1 - pankou2;
                         let temp = math.abs(chaibie) / 0.25;
-                        yapanitem = [yapanitem[0] - temp*4, yapanitem[1] + temp*4];
+                        yapanitem = [yapanitem[0] - temp * 4, yapanitem[1] + temp * 4];
                     }
                     //升盘
                     if (pankou1 < pankou2) {
                         // yapanitem = [yapanitem[0] + 5, yapanitem[1] - 5];
                         let chaibie = pankou1 - pankou2;
                         let temp = math.abs(chaibie) / 0.25;
-                        yapanitem = [yapanitem[0] + temp*4, yapanitem[1] - temp*4];
+                        yapanitem = [yapanitem[0] + temp * 4, yapanitem[1] - temp * 4];
                     }
 
 
@@ -597,10 +597,10 @@ Parse
                     element.set('yapanpankou2', pankou2);
 
 
-                    oneresult.set("test10", [math.format(yapanitem[0], 2),math.format(yapanitem[1], 2), pankou1, pankou2]);
+                    oneresult.set("test10", [math.format(yapanitem[0], 2), math.format(yapanitem[1], 2), pankou1, pankou2]);
 
                     //在这里转换欧盘概率。
-                   
+
                     if (pankou2 > 0) {
                         temparray[0] = parseInt(ouzhuanya[0].replace('%', ''));
                         temparray[1] = parseInt(ouzhuanya[1].replace('%', '')) + parseInt(ouzhuanya[2].replace('%', ''));
@@ -614,7 +614,7 @@ Parse
 
                         temparray = [(temparray[0] + temp), (temparray[1] - temp)]
                     }
-               
+
                     if (pankou2 == 0) {
                         temparray[0] = parseInt(ouzhuanya[0].replace('%', '')) + parseInt(ouzhuanya[1].replace('%', ''));
                         temparray[1] = parseInt(ouzhuanya[2].replace('%', ''));
@@ -622,7 +622,7 @@ Parse
 
                         console.log("欧盘转亚盘后的概率:".green + temparray[0] + "%," + temparray[1] + "%");
 
-                       // oneresult.set("test12", temparray);
+                        // oneresult.set("test12", temparray);
                     }
 
                     if (pankou2 < 0) {
@@ -636,11 +636,11 @@ Parse
 
                         console.log("欧盘转亚盘后的概率:".green + (temparray[0] - temp) + "%," + (temparray[1] + temp) + "%");
 
-                       // oneresult.set("test13", [(temparray[0] - temp), (temparray[1] + temp)]);
-                       temparray = [(temparray[0] - temp), (temparray[1] + temp)]
+                        // oneresult.set("test13", [(temparray[0] - temp), (temparray[1] + temp)]);
+                        temparray = [(temparray[0] - temp), (temparray[1] + temp)]
                     }
 
-                    oneresult.set("test11",temparray );
+                    oneresult.set("test11", temparray);
                 }
 
                 //亚盘投注情况
@@ -652,29 +652,40 @@ Parse
                     let qiushupankou = parseFloat(changepankou(bet365pankou.pankou));
                     let tempjiange = qiushupankou == 0 ? 1 : math.abs(qiushupankou / 0.25);
 
-                    let chaibieitem = yapanitem;
+                    let bet365ratio = math.format(bet365pankou.returnRatio.replace('%', '') / 100, 3);
 
-                    let chaibie2 =  homeqiushu - guestqiushu;
+
+                    let bet365odds0 = parseFloat(bet365pankou.odds[0]) + 1;
+                    let bet365odds1 = parseFloat(bet365pankou.odds[1]) + 1;
+
+                    let temptem = [
+                        math.format(bet365ratio / bet365odds0, 2) * 100,
+                        math.format(bet365ratio / bet365odds1, 2) * 100
+                    ]
+
+                    let chaibieitem = temptem;
+
+                    let chaibie2 = homeqiushu - guestqiushu;
 
                     if (chaibie2 > 0) {
                         let temp = math.abs(chaibie2) / 0.25;
-                       
-                        chaibieitem = [chaibieitem[0] + temp* tempjiange, chaibieitem[1] - temp* tempjiange];
+
+                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
                     }
                     else if (chaibie2 < 0) {
                         let temp = math.abs(chaibie2) / 0.25;
-                        chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
+                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
                     }
 
                     let chaibie3 = homezuijinqiushu - guestzuijinqiushu;
 
                     if (chaibie3 > 0) {
                         let temp = math.abs(chaibie3) / 0.25;
-                        chaibieitem = [chaibieitem[0] + temp* tempjiange, chaibieitem[1] - temp* tempjiange];
+                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
                     }
                     else if (chaibie3 < 0) {
                         let temp = math.abs(chaibie3) / 0.25;
-                        chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
+                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
                     }
 
 
@@ -682,7 +693,7 @@ Parse
 
                     console.log("亚盘投注情况-----:" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
 
-                    element.set('yapantouzhu', [math.format(chaibieitem[0],2),math.format(chaibieitem[1],2)]);
+                    element.set('yapantouzhu', [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
 
                     oneresult.set("test14", chaibieitem);
                 }
@@ -725,7 +736,7 @@ Parse
                     console.log("球数初始概率:" + math.format(firstqiuitem[0], 2) + "%-" + firstqiuitem[1] + "%" + " <=> 盘口:" + pankou1 + "," + pankou2 + " 返回率:" + bet10firstratio + " => ".green + bet10ratio);
 
 
-                    oneresult.set("test15", [math.format(firstqiuitem[0], 2), math.format(firstqiuitem[1], 2),pankou1, pankou2, bet10firstratio, bet10ratio]);
+                    oneresult.set("test15", [math.format(firstqiuitem[0], 2), math.format(firstqiuitem[1], 2), pankou1, pankou2, bet10firstratio, bet10ratio, bet365qiu.odds, bet10qiu.odds, parseFloat(changeqiu(bet365qiu.pankou))]);
 
                     let x0 = math.abs(math.format(bet365odds0 - bet10odds0, 2));
                     let x1 = math.abs(math.format(bet365odds1 - bet10odds1, 2));
@@ -781,7 +792,7 @@ Parse
                         qiuitem = [qiuitem[0] - 5, qiuitem[1] + 5];
                         let chaibie = pankou1 - pankou2;
                         let temp = math.abs(chaibie) / 0.25;
-                        qiuitem = [qiuitem[0] - temp * 4, qiuitem[1] + temp *4];
+                        qiuitem = [qiuitem[0] - temp * 4, qiuitem[1] + temp * 4];
 
                     }
                     //升盘
@@ -789,7 +800,7 @@ Parse
                         qiuitem = [qiuitem[0] + 5, qiuitem[1] - 5];
                         let chaibie = pankou1 - pankou2;
                         let temp = math.abs(chaibie) / 0.25;
-                        qiuitem = [qiuitem[0] + temp * 4 , qiuitem[1] - temp * 4];
+                        qiuitem = [qiuitem[0] + temp * 4, qiuitem[1] - temp * 4];
                     }
 
                     console.log("球数变动后的概率:".white + qiuitem[0] + "%-" + qiuitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
@@ -797,7 +808,7 @@ Parse
                     element.set('qiushupankou1', pankou1);
                     element.set('qiushupankou2', pankou2);
 
-                    oneresult.set("test16", [math.format(qiuitem[0], 2),math.format(qiuitem[1], 2), pankou1, pankou2]);
+                    oneresult.set("test16", [math.format(qiuitem[0], 2), math.format(qiuitem[1], 2), pankou1, pankou2]);
 
                 }
 
@@ -810,11 +821,11 @@ Parse
                     let bet365odds0 = parseFloat(bet365qiu.odds[0]) + 1;
                     let bet365odds1 = parseFloat(bet365qiu.odds[1]) + 1;
 
-                    let changguiqiushu = (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4
+
                     let qiushupankou = parseFloat(changeqiu(bet365qiu.pankou));
 
-                   
-                    
+
+
                     // let chaibie = changguiqiushu - qiushupankou ;
 
                     let chaibieitem = [
@@ -822,41 +833,32 @@ Parse
                         math.format(bet365ratio / bet365odds1, 2) * 100
                     ]
 
-                    let tempjiange =  math.format( chaibieitem[1] / (  math.abs(qiushupankou)  / 0.25) , 2) ;
-                    
-                    // if (chaibie > 0) {
-                    //     let temp = math.abs(chaibie) / 0.25;
-                    //     chaibieitem = [chaibieitem[0] + temp* tempjiange, chaibieitem[1] - temp* tempjiange];
-                    // }
-                    // else if (chaibie < 0) {
-                    //     let temp = math.abs(chaibie) / 0.25;
-                    //     chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
-                    // }
+                    let tempjiange = math.format(chaibieitem[1] / (math.abs(qiushupankou) / 0.25), 2);
 
-                    let chaibie2 = (homeqiushu + guestqiushu) / 2 - qiushupankou ;
+                    let chaibie2 = (homeqiushu + guestqiushu) / 2 - qiushupankou;
 
                     if (chaibie2 > 0) {
                         let temp = math.abs(chaibie2) / 0.25;
-                        chaibieitem = [chaibieitem[0] + temp* tempjiange, chaibieitem[1] - temp* tempjiange];
+                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
                     }
                     else if (chaibie2 < 0) {
                         let temp = math.abs(chaibie2) / 0.25;
-                        chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
+                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
                     }
                     let chaibie3 = (homezuijinqiushu + guestzuijinqiushu) / 2 - qiushupankou;
 
                     if (chaibie3 > 0) {
                         let temp = math.abs(chaibie3) / 0.25;
-                        chaibieitem = [chaibieitem[0] + temp* tempjiange, chaibieitem[1] - temp* tempjiange];
+                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
                     }
                     else if (chaibie3 < 0) {
                         let temp = math.abs(chaibie3) / 0.25;
-                        chaibieitem = [chaibieitem[0] - temp* tempjiange, chaibieitem[1] + temp* tempjiange];
+                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
                     }
 
-                    console.log("散户球数投注情况:" + "-------".yellow + math.format(chaibieitem[0],2)  + "%," + math.format(chaibieitem[1],2) + "%");
-                    element.set("qiushutouzhu",[math.format(chaibieitem[0],2),math.format(chaibieitem[1],2)]);
-                    oneresult.set("test17", [math.format(chaibieitem[0],2),math.format(chaibieitem[1],2)]);
+                    console.log("散户球数投注情况:" + "-------".yellow + math.format(chaibieitem[0], 2) + "%," + math.format(chaibieitem[1], 2) + "%");
+                    element.set("qiushutouzhu", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
+                    oneresult.set("test17", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
 
                 }
 
@@ -880,7 +882,7 @@ Parse
             }
 
             console.log("\n\n");
-            
+
             element.save();
             oneresult.save();
         }
@@ -911,10 +913,10 @@ function changepankou(temp) {
         return 2.25;
     } else if (temp == '二球半') {
         return 2.5;
-    } 
+    }
     else if (temp == '二球半/三球') {
         return 2.75;
-    }else if (temp == '受平手') {
+    } else if (temp == '受平手') {
         return 0;
     } else if (temp == '受平手/半球') {
         return -0.25;

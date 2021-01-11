@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2019-12-30 14:43:49
- * @LastEditTime: 2021-01-10 15:40:33
+ * @LastEditTime: 2021-01-11 15:40:33
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\components\LoadingCard.vue

@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-01-10 11:03:45
+ * @LastEditTime: 2021-01-11 11:03:45
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -161,10 +161,10 @@
             >
           </v-col>
         </v-row>
-            <v-row dense class="ma-0" v-show="showtuijian">
+        <v-row dense class="ma-0" v-show="showtuijian">
           <v-col
             align-self="center"
-            style="text-align: center; font-size: 14px;font-weight: 500"
+            style="text-align: center; font-size: 14px; font-weight: 500"
             cols="3"
           >
             让球投注:
@@ -175,9 +175,10 @@
             cols="3"
             class="px-0"
           >
-            <span style="font-size: 14px; color: #a60056"
-              >{{  item.yapantouzhu && item.yapantouzhu[0] +"%" +" ~ "+ item.yapantouzhu[1]  +"%"}}</span
-            >
+            <span style="font-size: 14px; color: #a60056">{{
+              item.yapantouzhu &&
+              item.yapantouzhu[0] + "%" + " ~ " + item.yapantouzhu[1] + "%"
+            }}</span>
           </v-col>
           <v-col
             align-self="center"
@@ -191,9 +192,10 @@
             style="text-align: center; font-size: 14px"
             cols="3"
           >
-            <span style="font-size: 14px; color: #a60056"
-              >{{ item.qiushutouzhu && item.qiushutouzhu[0] +"%" +" ~ "+ item.qiushutouzhu[1]  +"%"}}</span
-            >
+            <span style="font-size: 14px; color: #a60056">{{
+              item.qiushutouzhu &&
+              item.qiushutouzhu[0] + "%" + " ~ " + item.qiushutouzhu[1] + "%"
+            }}</span>
           </v-col>
         </v-row>
       </v-card>
@@ -205,7 +207,7 @@
         class="mb-0"
         v-show="linear"
       ></v-progress-linear>
-      <v-card style="background-color: #e5e5e5;overflow-y: auto;">
+      <v-card style="background-color: #e5e5e5; overflow-y: auto">
         <v-toolbar flat dark color="red">
           <v-btn icon dark @click="dialog = false">
             <v-icon>mdi-close</v-icon>
@@ -334,6 +336,24 @@
               {{ item1.test8 }}
             </v-col></v-row
           >
+          <v-row dense class="mx-0"
+            ><v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700; color: #a60056"
+              cols="5"
+              >欧盘转亚盘概率：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{
+                item1.test11 &&
+                item1.test11[0] + "%" + " - " + item1.test11[1] + "%"
+              }}
+            </v-col></v-row
+          >
           <v-row dense class="mx-0">
             <v-col
               align-self="center"
@@ -349,19 +369,23 @@
               {{
                 item1.test9 &&
                 item1.test9[0] +
-                  "-" +
+                  "%" +
+                  " - " +
                   item1.test9[1] +
-                  " " +
+                  "%" +
+                  " 【 " +
                   item1.test9[2] +
-                  ":" +
-                  item1.test9[3]
+                  " -> " +
+                  item1.test9[3] +
+                  " 】 " +
+                  item1.test9[8]
               }}
             </v-col></v-row
           >
-          <v-row dense class="mx-0">
+             <v-row dense class="mx-0">
             <v-col
               align-self="center"
-              style="text-align: right; font-weight: 700"
+              style="text-align: right; font-weight: 700; color: #a60056"
               cols="5"
               >亚盘变动后概率：</v-col
             >
@@ -373,34 +397,55 @@
               {{
                 item1.test10 &&
                 item1.test10[0] +
-                  "-" +
+                  "%" +
+                  " ~ " +
                   item1.test10[1] +
-                  " " +
-                  item1.test10[2] +
-                  ":" +
-                  item1.test10[3]
+                  "% " 
               }}
             </v-col></v-row
           >
-          <v-row dense class="mx-0"
-            ><v-col
+          <v-row dense class="mx-0">
+            <v-col
               align-self="center"
-              style="text-align: right; font-weight: 700"
+              style="text-align: right; font-weight: 700; color: #a60056"
               cols="5"
-              >欧盘转亚盘概率：</v-col
+              >亚盘基础数据：</v-col
             >
             <v-col
               align-self="center"
               style="text-align: left; font-size: 14px"
               cols="7"
             >
-              {{ item1.test11 && item1.test11 }}
+              {{
+                item1.test9 &&
+                "【 " + item1.test9[6] + " ~ " + item1.test9[7] + " 】 "
+              }}
             </v-col></v-row
           >
+          <v-row dense class="mx-0">
+            <v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700; color: #a60056"
+              cols="5"
+              >亚盘返回率：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{
+                item1.test9 &&
+                "【 " + item1.test9[4] + " -> " + item1.test9[5] + " 】 "
+              }}
+            </v-col></v-row
+          >
+       
+
           <v-row dense class="mx-0"
             ><v-col
               align-self="center"
-              style="text-align: right; font-weight: 700"
+              style="text-align: right; font-weight: 700;color:blue"
               cols="5"
               >亚盘投注情况：</v-col
             >
@@ -409,11 +454,13 @@
               style="text-align: left; font-size: 14px"
               cols="7"
             >
-              {{ item1.test14 && item1.test14 }}
+              {{
+                item1.test14 && item1.test14[0] + "% ~ " + item1.test14[1] + "%"
+              }}
             </v-col></v-row
           >
-          <v-row dense class="mx-0"
-            ><v-col
+          <v-row dense class="mx-0">
+            <v-col
               align-self="center"
               style="text-align: right; font-weight: 700"
               cols="5"
@@ -427,19 +474,23 @@
               {{
                 item1.test15 &&
                 item1.test15[0] +
-                  "-" +
+                  "%" +
+                  " - " +
                   item1.test15[1] +
-                  " " +
+                  "%" +
+                  " 【 " +
                   item1.test15[2] +
-                  ":" +
-                  item1.test15[3]
+                  " -> " +
+                  item1.test15[3] +
+                  " 】 " +
+                  item1.test15[8]
               }}
             </v-col></v-row
           >
-          <v-row dense class="mx-0"
+            <v-row dense class="mx-0"
             ><v-col
               align-self="center"
-              style="text-align: right; font-weight: 700"
+              style="text-align: right; font-weight: 700; color: #a60056"
               cols="5"
               >球数变动后概率：</v-col
             >
@@ -451,19 +502,52 @@
               {{
                 item1.test16 &&
                 item1.test16[0] +
-                  "-" +
-                  item1.test16[1] +
-                  " " +
-                  item1.test16[2] +
-                  ":" +
-                  item1.test16[3]
+                  "% ~ " +
+                  item1.test16[1] +"%"
               }}
             </v-col></v-row
           >
+          <v-row dense class="mx-0">
+            <v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700; color: #a60056"
+              cols="5"
+              >球数基础数据：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{
+                item1.test15 &&
+                "【 " + item1.test15[6] + " ~ " + item1.test15[7] + " 】 "
+              }}
+            </v-col></v-row
+          >
+          <v-row dense class="mx-0">
+            <v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700; color: #a60056"
+              cols="5"
+              >球数返回率：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{
+                item1.test9 &&
+                "【 " + item1.test15[4] + " -> " + item1.test15[5] + " 】 "
+              }}
+            </v-col></v-row
+          >
+        
           <v-row dense class="mx-0"
             ><v-col
               align-self="center"
-              style="text-align: right; font-weight: 700"
+              style="text-align: right; font-weight: 700;color:blue"
               cols="5"
               >球数投注情况：</v-col
             >
@@ -472,7 +556,9 @@
               style="text-align: left; font-size: 14px"
               cols="7"
             >
-              {{ item1.test17 && item1.test17 }}
+              {{
+                item1.test17 && item1.test17[0] + "% ~ " + item1.test17[1] + "%"
+              }}
             </v-col></v-row
           >
           <!-- <v-row class="mx-0">{{ item1.test18 }}</v-row> -->
@@ -488,7 +574,14 @@
               style="text-align: left; font-size: 14px"
               cols="7"
             >
-              {{ item1.test19 && item1.test19 }}
+              {{
+                item1.test19 &&
+                item1.test19[0] +
+                  " - " +
+                  item1.test19[1] +
+                  " ~ " +
+                  item1.test19[2]
+              }}
             </v-col></v-row
           >
           <v-row dense class="mx-0"
@@ -574,7 +667,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-01-10",
+        date: "2021-01-11",
         matchId: item.matchId,
       };
       api
@@ -604,7 +697,7 @@ export default {
   },
   mounted() {
     const data = {
-      date: "2021-01-10",
+      date: "2021-01-11",
     };
     api
       .GetToday(data)
