@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-01-12 16:34:37
+ * @LastEditTime: 2021-01-24 12:23:48
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-01-12"
+        datetemp = "2021-01-24"
 
 
         var tempMoney = Parse
@@ -143,7 +143,19 @@ Parse
             } else {
                 if (bet365item == undefined || bet365item == null) {
                     console.log("缺少bet365的数据");
-                    continue;
+                    // continue;
+                    bet365item = weilianitem;
+                    if (weilianitem != undefined && weilianitem != null) {
+                        //带入威廉的概率
+                        finalitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
+                        ouzhuanya = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
+                        justitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
+
+                    } else {
+
+                        console.log("缺少威廉数据");
+                        continue
+                    }
                 }
             }
 
@@ -192,7 +204,7 @@ Parse
             oneresult.set("test3", kailiresult);
 
             let ticairesult = [];
-            if (ticaiitem != undefined && ticaiitem != null) {
+            if (ticaiitem != undefined && ticaiitem != null && weilianitem != undefined && weilianitem !=null) {
                 //算出差距
                 let chaju0 = math.abs(math.format(weilianitem.odds[0] - ticaiitem.odds[0], 3));
                 let chaju1 = math.abs(math.format(weilianitem.odds[1] - ticaiitem.odds[1], 3));
@@ -855,6 +867,8 @@ Parse
                         let temp = math.abs(chaibie3) / 0.25;
                         chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
                     }
+
+                    //上升一个盘口，或者下降一个盘口。
 
                     console.log("散户球数投注情况:" + "-------".yellow + math.format(chaibieitem[0], 2) + "%," + math.format(chaibieitem[1], 2) + "%");
                     element.set("qiushutouzhu", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);

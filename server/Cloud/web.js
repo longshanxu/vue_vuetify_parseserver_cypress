@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-02-28 13:29:07
- * @LastEditTime: 2021-01-12 14:40:17
+ * @LastEditTime: 2021-01-24 14:49:04
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\web.js
@@ -42,12 +42,16 @@ Parse
                         sanhuxinli: element.attributes.sanhuxinli, //散户心理
                         yapanpankou1: element.attributes.yapanpankou1, //让球前
                         yapanpankou2: element.attributes.yapanpankou2, //让球后
+                        newpankou: element.attributes.yapanpankou2, //让球后
                         qiushupankou1: element.attributes.qiushupankou1, //球数前
                         qiushupankou2: element.attributes.qiushupankou2, //球数后
+                        newqiushu: element.attributes.qiushupankou2, //球数后
                         changguiqiushu: element.attributes.changguiqiushu, //常规球数
                         changguiyapan: element.attributes.changguiyapan, //常规让球
                         yapantouzhu: element.attributes.yapantouzhu, //亚盘投注
+                        newyapantouzhu: element.attributes.yapantouzhu, //亚盘投注
                         qiushutouzhu: element.attributes.qiushutouzhu, //球数投注
+                        newqiushutouzhu: element.attributes.qiushutouzhu, //球数投注
                     }
                     data.push(temp);
 

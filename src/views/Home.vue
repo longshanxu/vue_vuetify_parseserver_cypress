@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-01-12 11:03:45
+ * @LastEditTime: 2021-01-24 19:27:32
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -14,6 +14,57 @@
       <v-toolbar-title class="white--text">我命由我不由天</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-icon @click="asyncData" color="red">mdi-hand-heart</v-icon>
+      <template v-slot:extension>
+        <v-row align="center" justify="center" class="mx-0">
+          <v-col
+            cols="2"
+            class="px-0"
+            style="text-align: center; font-size: 14px"
+            @click="status = 1"
+            :class="status == 1 ? 'activeclass' : ''"
+            >升盘</v-col
+          >
+          <v-col
+            cols="2"
+            class="px-0"
+            style="text-align: center; font-size: 14px"
+            @click="status = 2"
+            :class="status == 2 ? 'activeclass' : ''"
+            >降盘</v-col
+          >
+          <v-col
+            cols="2"
+            class="px-0"
+            style="text-align: center; font-size: 14px"
+            @click="status = 3"
+            :class="status == 3 ? 'activeclass' : ''"
+            >球数升</v-col
+          >
+          <v-col
+            cols="2"
+            class="px-0"
+            style="text-align: center; font-size: 14px"
+            @click="status = 4"
+            :class="status == 4 ? 'activeclass' : ''"
+            >球数降</v-col
+          >
+          <v-col
+            cols="2"
+            class="px-0"
+            style="text-align: center; font-size: 14px"
+            @click="status = 5"
+            :class="status == 5 ? 'activeclass' : ''"
+            >超100%</v-col
+          >
+          <v-col
+            cols="2"
+            class="px-0"
+            style="text-align: center; font-size: 14px; color: yellow"
+            @click="status = 0"
+            >{{ count }}</v-col
+          >
+        </v-row>
+      </template>
     </v-app-bar>
     <v-main class="fill-height grey lighten-3 align-start justify-start">
       <v-card
@@ -21,7 +72,6 @@
         rounded
         v-for="(item, index) in datalist"
         :key="index"
-        @click="opendialog(item)"
       >
         <v-row dense class="ma-0">
           <v-col
@@ -164,6 +214,88 @@
         <v-row dense class="ma-0" v-show="showtuijian">
           <v-col
             align-self="center"
+            style="text-align: center; font-size: 14px;color:blue"
+            cols="3"
+          >
+            手动让球:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+            class="px-0"
+          >
+            <v-icon size="16" color="blue" @click="jianpankou(item)"
+              >mdi-battery-minus</v-icon
+            >
+            <span class="px-2"> {{ item.newpankou }} </span>
+            <v-icon size="16" color="blue" @click="addpankou(item)"
+              >mdi-battery-plus</v-icon
+            >
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px;color:blue"
+            cols="3"
+          >
+            手动球数:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            <v-icon size="16" color="blue" @click="jianqiushu(item)"
+              >mdi-thermometer-minus</v-icon
+            >
+
+            <span class="px-2"> {{ item.newqiushu }}</span>
+
+            <v-icon size="16" color="blue" @click="addqiushu(item)"
+              >mdi-thermometer-plus</v-icon
+            >
+          </v-col>
+        </v-row>
+        <v-row dense class="ma-0" v-show="showtuijian">
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            新让投注:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+            class="px-0"
+          >
+            {{
+              item.newyapantouzhu &&
+              item.newyapantouzhu[0] + " ~ " + item.newyapantouzhu[1]
+            }}
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            新球投注:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            {{
+              item.newqiushutouzhu &&
+              item.newqiushutouzhu[0] + " ~ " + item.newqiushutouzhu[1]
+            }}
+          </v-col>
+        </v-row>
+        <v-row dense class="ma-0" v-show="showtuijian">
+          <v-col
+            align-self="center"
             style="text-align: center; font-size: 14px; font-weight: 500"
             cols="3"
           >
@@ -197,6 +329,15 @@
               item.qiushutouzhu[0] + "%" + " ~ " + item.qiushutouzhu[1] + "%"
             }}</span>
           </v-col>
+        </v-row>
+        <v-row dense class="ma-0 px-2 py-1" v-show="showtuijian">
+          <v-btn
+            rounded
+            elevation="0"
+            style="background-color: #90caf9; color: white"
+            @click="opendialog(item)"
+            >详情</v-btn
+          >
         </v-row>
       </v-card>
     </v-main>
@@ -382,7 +523,7 @@
               }}
             </v-col></v-row
           >
-             <v-row dense class="mx-0">
+          <v-row dense class="mx-0">
             <v-col
               align-self="center"
               style="text-align: right; font-weight: 700; color: #a60056"
@@ -396,11 +537,7 @@
             >
               {{
                 item1.test10 &&
-                item1.test10[0] +
-                  "%" +
-                  " ~ " +
-                  item1.test10[1] +
-                  "% " 
+                item1.test10[0] + "%" + " ~ " + item1.test10[1] + "% "
               }}
             </v-col></v-row
           >
@@ -440,12 +577,11 @@
               }}
             </v-col></v-row
           >
-       
 
           <v-row dense class="mx-0"
             ><v-col
               align-self="center"
-              style="text-align: right; font-weight: 700;color:blue"
+              style="text-align: right; font-weight: 700; color: blue"
               cols="5"
               >亚盘投注情况：</v-col
             >
@@ -487,7 +623,7 @@
               }}
             </v-col></v-row
           >
-            <v-row dense class="mx-0"
+          <v-row dense class="mx-0"
             ><v-col
               align-self="center"
               style="text-align: right; font-weight: 700; color: #a60056"
@@ -500,10 +636,7 @@
               cols="7"
             >
               {{
-                item1.test16 &&
-                item1.test16[0] +
-                  "% ~ " +
-                  item1.test16[1] +"%"
+                item1.test16 && item1.test16[0] + "% ~ " + item1.test16[1] + "%"
               }}
             </v-col></v-row
           >
@@ -543,11 +676,11 @@
               }}
             </v-col></v-row
           >
-        
+
           <v-row dense class="mx-0"
             ><v-col
               align-self="center"
-              style="text-align: right; font-weight: 700;color:blue"
+              style="text-align: right; font-weight: 700; color: blue"
               cols="5"
               >球数投注情况：</v-col
             >
@@ -654,20 +787,59 @@ export default {
       showtuijian: true,
       date: new Date().toISOString().substr(0, 10),
       datalist: [],
+      list: [],
       detaillist: [],
       item1: {},
       dialog: false,
       linear: false,
       sheet: false,
+      status: 0,
+      count: 0,
+      qiushuvalue: 0,
     };
   },
   computed: {},
   methods: {
+    addqiushu(val) {
+      val.newqiushu += 0.25;
+debugger
+      let temp = 100 / (val.qiushupankou2 / 0.25);
+      val.newqiushutouzhu[0] =
+        parseInt(val.newqiushutouzhu[0]) - parseInt(temp);
+      val.newqiushutouzhu[1] =
+        parseInt(val.newqiushutouzhu[1]) + parseInt(temp);
+    },
+    jianqiushu(val) {
+      debugger
+      val.newqiushu -= 0.25;
+      let temp = 100 / (val.qiushupankou2 / 0.25);
+      val.newqiushutouzhu[0] =
+        parseInt(val.newqiushutouzhu[0]) + parseInt(temp);
+      val.newqiushutouzhu[1] =
+        parseInt(val.newqiushutouzhu[1]) - parseInt(temp);
+    },
+    addpankou(val) {
+      val.newpankou += 0.25;
+            let temp = val.newpankou == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
+      val.newyapantouzhu[0] =
+        parseInt(val.newyapantouzhu[0]) - (parseInt(temp) * 4);
+      val.newyapantouzhu[1] =
+        parseInt(val.newyapantouzhu[1]) + (parseInt(temp) * 4);
+    },
+    jianpankou(val) {
+      val.newpankou -= 0.25;
+      let temp = val.newpankou == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
+      val.newyapantouzhu[0] =
+        parseInt(val.newyapantouzhu[0]) + (parseInt(temp) * 4);
+      val.newyapantouzhu[1] =
+        parseInt(val.newyapantouzhu[1]) - (parseInt(temp) * 4);
+
+    },
     opendialog(item) {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-01-12",
+        date: "2021-01-24",
         matchId: item.matchId,
       };
       api
@@ -694,21 +866,67 @@ export default {
     cpu() {
       api.cpu().then().catch();
     },
+    loaddata() {
+      const data = {
+        date: "2021-01-24",
+      };
+      api
+        .GetToday(data)
+        .then((res) => {
+          // debugger
+          if (res.data.result.code == "200") {
+            this.datalist = res.data.result.data;
+            this.list = res.data.result.data;
+          }
+        })
+        .catch();
+    },
+  },
+  watch: {
+    status(val) {
+      if (val == 0) {
+        this.count = 0;
+        this.datalist = this.list;
+      } else if (val == 1) {
+        this.datalist = this.list.filter((item) => {
+          if (item.yapanpankou1 != null && item.yapanpankou2 != null) {
+            return item.yapanpankou1 < item.yapanpankou2;
+          }
+        });
+        this.count = this.datalist.length;
+      } else if (val == 2) {
+        this.datalist = this.list.filter((item) => {
+          if (item.yapanpankou1 != null && item.yapanpankou2 != null) {
+            return item.yapanpankou1 > item.yapanpankou2;
+          }
+        });
+        this.count = this.datalist.length;
+      } else if (val == 3) {
+        this.datalist = this.list.filter((item) => {
+          if (item.yapanpankou1 != null && item.yapanpankou2 != null) {
+            return item.qiushupankou1 < item.qiushupankou2;
+          }
+        });
+        this.count = this.datalist.length;
+      } else if (val == 4) {
+        this.datalist = this.list.filter((item) => {
+          if (item.qiushupankou1 != null && item.qiushupankou2 != null) {
+            return item.qiushupankou1 > item.qiushupankou2;
+          }
+        });
+        this.count = this.datalist.length;
+      } else if (val == 5) {
+        this.datalist = this.list.filter((item) => {
+          if (item.qiushutouzhu) {
+            return item.qiushutouzhu[0] > 100 || item.qiushutouzhu[1] > 100;
+          }
+        });
+        this.count = this.datalist.length;
+      }
+    },
   },
   mounted() {
-    const data = {
-      date: "2021-01-12",
-    };
-    api
-      .GetToday(data)
-      .then((res) => {
-        // debugger
-        if (res.data.result.code == "200") {
-          this.datalist = res.data.result.data;
-          console.log(this.datalist);
-        }
-      })
-      .catch();
+    this.loaddata();
   },
 };
 </script>
@@ -718,5 +936,8 @@ export default {
   background: #ffffff;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05) !important;
   border-radius: 8px;
+}
+.activeclass {
+  background-color: #64b5f6;
 }
 </style>
