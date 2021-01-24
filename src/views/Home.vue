@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-01-24 19:27:32
+ * @LastEditTime: 2021-01-24 20:09:23
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -819,16 +819,18 @@ debugger
         parseInt(val.newqiushutouzhu[1]) - parseInt(temp);
     },
     addpankou(val) {
+      debugger
       val.newpankou += 0.25;
-            let temp = val.newpankou == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
+            let temp = val.yapanpankou2 == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
       val.newyapantouzhu[0] =
         parseInt(val.newyapantouzhu[0]) - (parseInt(temp) * 4);
       val.newyapantouzhu[1] =
         parseInt(val.newyapantouzhu[1]) + (parseInt(temp) * 4);
     },
     jianpankou(val) {
+      debugger
       val.newpankou -= 0.25;
-      let temp = val.newpankou == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
+      let temp = val.yapanpankou2 == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
       val.newyapantouzhu[0] =
         parseInt(val.newyapantouzhu[0]) + (parseInt(temp) * 4);
       val.newyapantouzhu[1] =

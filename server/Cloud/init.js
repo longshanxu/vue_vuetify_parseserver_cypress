@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2021-01-24 12:24:18
+ * @LastEditTime: 2021-01-24 19:52:56
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -484,7 +484,7 @@ async function OneByOne() {
         .extend("Money");
     var query = new Parse.Query(tempMoney);
     query.equalTo("date", datetemp);
-    // query.notEqualTo("displayState", "完场")
+    query.notEqualTo("displayState", "完场")
     query.ascending("matchTime") //matchTime,league
     // query.greaterThan("matchTime",new Date());
     query.limit(500);
