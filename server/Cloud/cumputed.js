@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-01-24 12:23:48
+ * @LastEditTime: 2021-02-14 11:45:33
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-01-24"
+        datetemp = "2021-02-14"
 
 
         var tempMoney = Parse
@@ -48,7 +48,7 @@ Parse
             .extend("Money");
         var query = new Parse.Query(tempMoney);
         query.equalTo("date", datetemp);
-        query.ascending("matchTime") //matchTime,league
+        //query.descending("updatedAt") //matchTime,league
         // query.greaterThan("matchTime",new Date());
         query.limit(500);
         const items = await query.find();
@@ -82,7 +82,7 @@ Parse
 
             oneresult.set("matchId", matchId);
 
-            // if (matchId != "221105073") {     continue; }
+            // if (matchId != "250029497") {     continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -91,7 +91,7 @@ Parse
             const query = new Parse.Query(OddsMoney);
 
             query.equalTo("matchId", matchId);
-
+            query.descending("matchTime")
             query.limit(1);
 
             const results = await query.first();
@@ -204,7 +204,7 @@ Parse
             oneresult.set("test3", kailiresult);
 
             let ticairesult = [];
-            if (ticaiitem != undefined && ticaiitem != null && weilianitem != undefined && weilianitem !=null) {
+            if (ticaiitem != undefined && ticaiitem != null && weilianitem != undefined && weilianitem != null) {
                 //算出差距
                 let chaju0 = math.abs(math.format(weilianitem.odds[0] - ticaiitem.odds[0], 3));
                 let chaju1 = math.abs(math.format(weilianitem.odds[1] - ticaiitem.odds[1], 3));
@@ -239,7 +239,7 @@ Parse
             const historyquery = new Parse.Query(HistoryMoney);
 
             historyquery.equalTo("matchId", matchId);
-
+            historyquery.descending("updatedAt") //matchTime,league
             historyquery.limit(1);
 
             const historyitems = await historyquery.first();
@@ -412,7 +412,7 @@ Parse
             const pankoumoney = new Parse.Query(PankouMoney);
 
             pankoumoney.equalTo("matchId", matchId);
-
+            pankoumoney.descending("updatedAt") //matchTime,league
             pankoumoney.limit(1);
 
             const pankoumoneyitem = await pankoumoney.first();
@@ -675,7 +675,7 @@ Parse
                         math.format(bet365ratio / bet365odds1, 2) * 100
                     ]
 
-                    let chaibieitem = temptem;
+                    let chaibieitem = [50, 50];
 
                     let chaibie2 = homeqiushu - guestqiushu;
 
@@ -845,6 +845,8 @@ Parse
                         math.format(bet365ratio / bet365odds1, 2) * 100
                     ]
 
+                    chaibieitem = [50, 50];
+
                     let tempjiange = math.format(chaibieitem[1] / (math.abs(qiushupankou) / 0.25), 2);
 
                     let chaibie2 = (homeqiushu + guestqiushu) / 2 - qiushupankou;
@@ -883,15 +885,37 @@ Parse
                 oneresult.set("test19", [homeqiushu, guestqiushu, (homeqiushu + guestqiushu) / 2]);
                 oneresult.set("test20", [homezuijinqiushu + '（' + homediuqiu + '）', guestzuijinqiushu + '（' + guestdiuqiu + '）', (homezuijinqiushu + guestzuijinqiushu) / 2]);
 
-                console.log("两队常规球数：".yellow + (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4);
-                console.log("两队常规让球：".yellow + (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4);
+                if ((homezuijinqiushu - guestzuijinqiushu) > (homeqiushu - guestqiushu)) {
+                    console.log("用户期望让球：".yellow + (homezuijinqiushu - guestzuijinqiushu) / 2);
+                    element.set("changguiyapan", (homezuijinqiushu - guestzuijinqiushu) / 2);
+                    oneresult.set("test22", (homezuijinqiushu - guestzuijinqiushu) / 2);
 
-                element.set("changguiqiushu", (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4);
-                element.set("changguiyapan", (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4);
+                } else {
+                 
+                    console.log("用户期望让球：".yellow + (homeqiushu - guestqiushu) / 2);
+                    element.set("changguiyapan", (homeqiushu - guestqiushu) / 2);
+                    oneresult.set("test22", (homeqiushu - guestqiushu) / 2);
+
+                }
+
+                if ((homezuijinqiushu + guestzuijinqiushu) > (homeqiushu + guestqiushu)) {
+                    console.log("用户期望球数：".yellow + (homezuijinqiushu + guestzuijinqiushu) / 2);
+                    element.set("changguiqiushu", (homezuijinqiushu + guestzuijinqiushu) / 2);
+
+                    oneresult.set("test21", (homezuijinqiushu + guestzuijinqiushu) / 2);
+
+                } else {
+                    console.log("用户期望球数：".yellow + (homeqiushu + guestqiushu) / 2);
+                    element.set("changguiqiushu", (homeqiushu + guestqiushu) / 2);
+
+                    oneresult.set("test21", (homeqiushu + guestqiushu) / 2);
+
+                }
+
+
+
 
                 // console.log("两队历史亚盘让球：".white + (homeqiushu - guestqiushu) / 2);
-                oneresult.set("test21", (homezuijinqiushu + homeqiushu + guestzuijinqiushu + guestqiushu) / 4);
-                oneresult.set("test22", (homezuijinqiushu + homeqiushu - guestzuijinqiushu - guestqiushu) / 4);
 
             }
 

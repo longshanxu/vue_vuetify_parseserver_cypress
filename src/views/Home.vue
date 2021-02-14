@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-01-24 20:09:23
+ * @LastEditTime: 2021-02-14 04:21:43
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -152,7 +152,7 @@
             style="text-align: center; font-size: 14px; font-weight: 500"
             cols="3"
           >
-            常规让球:
+            期望让球:
           </v-col>
           <v-col
             align-self="center"
@@ -166,7 +166,7 @@
             style="text-align: center; font-size: 14px; font-weight: 500"
             cols="3"
           >
-            常规球数:
+            期望球数:
           </v-col>
           <v-col
             align-self="center"
@@ -737,7 +737,7 @@
               align-self="center"
               style="text-align: right; font-weight: 700"
               cols="5"
-              >两队常规球数：</v-col
+              >用户期望球数：</v-col
             >
             <v-col
               align-self="center"
@@ -752,7 +752,7 @@
               align-self="center"
               style="text-align: right; font-weight: 700"
               cols="5"
-              >两队常规让球：</v-col
+              >用户期望让球：</v-col
             >
             <v-col
               align-self="center"
@@ -802,7 +802,7 @@ export default {
   methods: {
     addqiushu(val) {
       val.newqiushu += 0.25;
-debugger
+
       let temp = 100 / (val.qiushupankou2 / 0.25);
       val.newqiushutouzhu[0] =
         parseInt(val.newqiushutouzhu[0]) - parseInt(temp);
@@ -810,7 +810,7 @@ debugger
         parseInt(val.newqiushutouzhu[1]) + parseInt(temp);
     },
     jianqiushu(val) {
-      debugger
+
       val.newqiushu -= 0.25;
       let temp = 100 / (val.qiushupankou2 / 0.25);
       val.newqiushutouzhu[0] =
@@ -819,7 +819,7 @@ debugger
         parseInt(val.newqiushutouzhu[1]) - parseInt(temp);
     },
     addpankou(val) {
-      debugger
+ 
       val.newpankou += 0.25;
             let temp = val.yapanpankou2 == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
       val.newyapantouzhu[0] =
@@ -828,7 +828,7 @@ debugger
         parseInt(val.newyapantouzhu[1]) + (parseInt(temp) * 4);
     },
     jianpankou(val) {
-      debugger
+
       val.newpankou -= 0.25;
       let temp = val.yapanpankou2 == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
       val.newyapantouzhu[0] =
@@ -841,7 +841,7 @@ debugger
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-01-24",
+        date: "2021-02-14",
         matchId: item.matchId,
       };
       api
@@ -870,7 +870,7 @@ debugger
     },
     loaddata() {
       const data = {
-        date: "2021-01-24",
+        date: "2021-02-14",
       };
       api
         .GetToday(data)
