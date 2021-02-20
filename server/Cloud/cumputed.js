@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-02-14 11:45:33
+ * @LastEditTime: 2021-02-19 17:36:46
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-02-14"
+        datetemp = "2021-02-19"
 
 
         var tempMoney = Parse
@@ -81,8 +81,8 @@ Parse
             let matchId = element.get('matchId');
 
             oneresult.set("matchId", matchId);
-
-            // if (matchId != "250029497") {     continue; }
+         
+            // if (matchId != "244771908") {     continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -885,30 +885,30 @@ Parse
                 oneresult.set("test19", [homeqiushu, guestqiushu, (homeqiushu + guestqiushu) / 2]);
                 oneresult.set("test20", [homezuijinqiushu + '（' + homediuqiu + '）', guestzuijinqiushu + '（' + guestdiuqiu + '）', (homezuijinqiushu + guestzuijinqiushu) / 2]);
 
-                if ((homezuijinqiushu - guestzuijinqiushu) > (homeqiushu - guestqiushu)) {
-                    console.log("用户期望让球：".yellow + (homezuijinqiushu - guestzuijinqiushu) / 2);
-                    element.set("changguiyapan", (homezuijinqiushu - guestzuijinqiushu) / 2);
-                    oneresult.set("test22", (homezuijinqiushu - guestzuijinqiushu) / 2);
+                if ((homezuijinqiushu - guestzuijinqiushu) < (homeqiushu - guestqiushu)) {
+                    console.log("用户期望让球：".yellow + (homezuijinqiushu - guestzuijinqiushu) / 2+" : "+ (homeqiushu - guestqiushu) / 2);
+                    element.set("changguiyapan", (homezuijinqiushu - guestzuijinqiushu) / 2+" : "+ (homeqiushu - guestqiushu) / 2);
+                    oneresult.set("test22", (homezuijinqiushu - guestzuijinqiushu) / 2+" : "+ (homeqiushu - guestqiushu) / 2);
 
                 } else {
                  
-                    console.log("用户期望让球：".yellow + (homeqiushu - guestqiushu) / 2);
-                    element.set("changguiyapan", (homeqiushu - guestqiushu) / 2);
-                    oneresult.set("test22", (homeqiushu - guestqiushu) / 2);
+                    console.log("用户期望让球：".yellow + (homeqiushu - guestqiushu) / 2+" : "+ (homezuijinqiushu - guestzuijinqiushu) / 2);
+                    element.set("changguiyapan", (homeqiushu - guestqiushu) / 2+" : "+ (homezuijinqiushu - guestzuijinqiushu) / 2);
+                    oneresult.set("test22", (homeqiushu - guestqiushu) / 2+" : "+ (homezuijinqiushu - guestzuijinqiushu) / 2);
 
                 }
 
-                if ((homezuijinqiushu + guestzuijinqiushu) > (homeqiushu + guestqiushu)) {
-                    console.log("用户期望球数：".yellow + (homezuijinqiushu + guestzuijinqiushu) / 2);
-                    element.set("changguiqiushu", (homezuijinqiushu + guestzuijinqiushu) / 2);
+                if ((homezuijinqiushu + guestzuijinqiushu) < (homeqiushu + guestqiushu)) {
+                    console.log("用户期望球数：".yellow + (homezuijinqiushu + guestzuijinqiushu) / 2+" : "+ (homeqiushu + guestqiushu) / 2);
+                    element.set("changguiqiushu", (homezuijinqiushu + guestzuijinqiushu) / 2+" : "+ (homeqiushu + guestqiushu) / 2);
 
-                    oneresult.set("test21", (homezuijinqiushu + guestzuijinqiushu) / 2);
+                    oneresult.set("test21", (homezuijinqiushu + guestzuijinqiushu) / 2+" : "+ (homeqiushu + guestqiushu) / 2);
 
                 } else {
-                    console.log("用户期望球数：".yellow + (homeqiushu + guestqiushu) / 2);
-                    element.set("changguiqiushu", (homeqiushu + guestqiushu) / 2);
+                    console.log("用户期望球数：".yellow + (homeqiushu + guestqiushu) / 2+" : "+ (homezuijinqiushu + guestzuijinqiushu) / 2);
+                    element.set("changguiqiushu", (homeqiushu + guestqiushu) / 2+" : "+ (homezuijinqiushu + guestzuijinqiushu) / 2);
 
-                    oneresult.set("test21", (homeqiushu + guestqiushu) / 2);
+                    oneresult.set("test21", (homeqiushu + guestqiushu) / 2+" : "+ (homezuijinqiushu + guestzuijinqiushu) / 2);
 
                 }
 
