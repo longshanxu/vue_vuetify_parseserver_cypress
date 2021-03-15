@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-02-18 23:25:36
+ * @LastEditTime: 2021-03-15 18:16:03
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -173,7 +173,7 @@
             style="text-align: center; font-size: 14px"
             cols="3"
           >
-            <span style="font-size: 14px">{{ item.changguiqiushu }}</span>
+            <span style="font-size: 14px">{{ item.changguiqiushu && item.changguiqiushu + ' ~ '}}{{item.changguiqiushu && parseFloat(parseFloat(item.changguiqiushu.split(':')[0])+ parseFloat(item.changguiqiushu.split(':')[1]))/2}}</span>
           </v-col>
         </v-row>
         <v-row dense class="ma-0" v-show="showtuijian">
@@ -841,7 +841,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-02-19",
+        date: "2021-03-15",
         matchId: item.matchId,
       };
       api
@@ -870,7 +870,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-02-19",
+        date: "2021-03-15",
       };
       api
         .GetToday(data)

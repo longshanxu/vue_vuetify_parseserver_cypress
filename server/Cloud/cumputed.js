@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-02-19 17:36:46
+ * @LastEditTime: 2021-03-15 10:03:17
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-02-19"
+        datetemp = "2021-03-15"
 
 
         var tempMoney = Parse
@@ -754,7 +754,7 @@ Parse
                     let x1 = math.abs(math.format(bet365odds1 - bet10odds1, 2));
 
 
-
+                    
                     if (parseFloat(x0) > parseFloat(x1)) {
                         //说明看好 右边
                         qiuitem = [
@@ -799,6 +799,7 @@ Parse
                             ];
                         }
                     }
+                    
                     //降盘
                     if (pankou1 > pankou2) {
                         qiuitem = [qiuitem[0] - 5, qiuitem[1] + 5];
@@ -905,6 +906,7 @@ Parse
                     oneresult.set("test21", (homezuijinqiushu + guestzuijinqiushu) / 2+" : "+ (homeqiushu + guestqiushu) / 2);
 
                 } else {
+                    
                     console.log("用户期望球数：".yellow + (homeqiushu + guestqiushu) / 2+" : "+ (homezuijinqiushu + guestzuijinqiushu) / 2);
                     element.set("changguiqiushu", (homeqiushu + guestqiushu) / 2+" : "+ (homezuijinqiushu + guestzuijinqiushu) / 2);
 
