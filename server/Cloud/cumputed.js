@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-03-15 10:03:17
+ * @LastEditTime: 2021-04-01 17:16:18
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-03-15"
+        // datetemp = "2021-04-01"
 
 
         var tempMoney = Parse
@@ -48,7 +48,8 @@ Parse
             .extend("Money");
         var query = new Parse.Query(tempMoney);
         query.equalTo("date", datetemp);
-        //query.descending("updatedAt") //matchTime,league
+        query.ascending("matchTime")
+        // query.descending("updatedAt") //matchTime,league
         // query.greaterThan("matchTime",new Date());
         query.limit(500);
         const items = await query.find();
@@ -81,8 +82,8 @@ Parse
             let matchId = element.get('matchId');
 
             oneresult.set("matchId", matchId);
-         
-            // if (matchId != "244771908") {     continue; }
+
+            if (matchId != "241571760") {     continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -91,7 +92,7 @@ Parse
             const query = new Parse.Query(OddsMoney);
 
             query.equalTo("matchId", matchId);
-            query.descending("matchTime")
+            query.descending("updatedAt")
             query.limit(1);
 
             const results = await query.first();
@@ -460,6 +461,8 @@ Parse
                 let homediuqiu = 0;
                 let guestdiuqiu = 0;
 
+
+
                 for (let index = 0; index < homelist.length; index++) {
                     const element = homelist[index];
                     if (index < 2) {
@@ -475,6 +478,7 @@ Parse
                         break;
                     };
                 }
+
 
                 //客队最近进球数。
                 for (let index = 0; index < guestlist.length; index++) {
@@ -492,6 +496,49 @@ Parse
                         break;
                     };
                 }
+
+                //获取主队最多进球数及近10场总进球数
+                let homezuidajinqiushu = 0;
+                let home10jinqiu = 0;
+                for (let index = 0; index < homelist.length; index++) {
+                    const element = homelist[index];
+
+                    if (home == element.home) {
+                        home10jinqiu += element.goal[0];
+                        if (homezuidajinqiushu < element.goal[0]) {
+                            homezuidajinqiushu = element.goal[0]
+                        }
+                    }
+                    if (home == element.guest) {
+                        home10jinqiu += element.goal[1];
+                        if (homezuidajinqiushu < element.goal[1]) {
+                            homezuidajinqiushu = element.goal[1]
+                        }
+                    }
+
+                }
+
+                //获取主队最多进球数及近10场总进球数
+                let guestzuidajinqiushu = 0;
+                let guest10jinqiu = 0;
+                for (let index = 0; index < guestlist.length; index++) {
+                    const element = guestlist[index];
+
+                    if (guest == element.home) {
+                        guest10jinqiu += element.goal[0];
+                        if (guestzuidajinqiushu < element.goal[0]) {
+                            guestzuidajinqiushu = element.goal[0]
+                        }
+                    }
+                    if (guest == element.guest) {
+                        guest10jinqiu += element.goal[1];
+                        if (guestzuidajinqiushu < element.goal[1]) {
+                            guestzuidajinqiushu = element.goal[1]
+                        }
+                    }
+
+                }
+
 
                 //亚盘
 
@@ -714,6 +761,7 @@ Parse
 
                 //球数
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
+                    
 
                     //firstOdds,odds,firstPankou,pankou,firstReturnRatio,returnRatio //大小球一样
                     const pankou1 = parseFloat(changeqiu(bet10qiu.firstPankou));
@@ -754,7 +802,7 @@ Parse
                     let x1 = math.abs(math.format(bet365odds1 - bet10odds1, 2));
 
 
-                    
+
                     if (parseFloat(x0) > parseFloat(x1)) {
                         //说明看好 右边
                         qiuitem = [
@@ -799,7 +847,7 @@ Parse
                             ];
                         }
                     }
-                    
+
                     //降盘
                     if (pankou1 > pankou2) {
                         qiuitem = [qiuitem[0] - 5, qiuitem[1] + 5];
@@ -887,33 +935,34 @@ Parse
                 oneresult.set("test20", [homezuijinqiushu + '（' + homediuqiu + '）', guestzuijinqiushu + '（' + guestdiuqiu + '）', (homezuijinqiushu + guestzuijinqiushu) / 2]);
 
                 if ((homezuijinqiushu - guestzuijinqiushu) < (homeqiushu - guestqiushu)) {
-                    console.log("用户期望让球：".yellow + (homezuijinqiushu - guestzuijinqiushu) / 2+" : "+ (homeqiushu - guestqiushu) / 2);
-                    element.set("changguiyapan", (homezuijinqiushu - guestzuijinqiushu) / 2+" : "+ (homeqiushu - guestqiushu) / 2);
-                    oneresult.set("test22", (homezuijinqiushu - guestzuijinqiushu) / 2+" : "+ (homeqiushu - guestqiushu) / 2);
+                    console.log("用户期望让球：".yellow + (homezuijinqiushu - guestzuijinqiushu) / 2 + " : " + (homeqiushu - guestqiushu) / 2);
+                    element.set("changguiyapan", (homezuijinqiushu - guestzuijinqiushu) / 2 + " : " + (homeqiushu - guestqiushu) / 2);
+                    oneresult.set("test22", (homezuijinqiushu - guestzuijinqiushu) / 2 + " : " + (homeqiushu - guestqiushu) / 2);
 
                 } else {
-                 
-                    console.log("用户期望让球：".yellow + (homeqiushu - guestqiushu) / 2+" : "+ (homezuijinqiushu - guestzuijinqiushu) / 2);
-                    element.set("changguiyapan", (homeqiushu - guestqiushu) / 2+" : "+ (homezuijinqiushu - guestzuijinqiushu) / 2);
-                    oneresult.set("test22", (homeqiushu - guestqiushu) / 2+" : "+ (homezuijinqiushu - guestzuijinqiushu) / 2);
+
+                    console.log("用户期望让球：".yellow + (homeqiushu - guestqiushu) / 2 + " : " + (homezuijinqiushu - guestzuijinqiushu) / 2);
+                    element.set("changguiyapan", (homeqiushu - guestqiushu) / 2 + " : " + (homezuijinqiushu - guestzuijinqiushu) / 2);
+                    oneresult.set("test22", (homeqiushu - guestqiushu) / 2 + " : " + (homezuijinqiushu - guestzuijinqiushu) / 2);
 
                 }
 
                 if ((homezuijinqiushu + guestzuijinqiushu) < (homeqiushu + guestqiushu)) {
-                    console.log("用户期望球数：".yellow + (homezuijinqiushu + guestzuijinqiushu) / 2+" : "+ (homeqiushu + guestqiushu) / 2);
-                    element.set("changguiqiushu", (homezuijinqiushu + guestzuijinqiushu) / 2+" : "+ (homeqiushu + guestqiushu) / 2);
+                    console.log("用户期望球数：".yellow + (homezuijinqiushu + guestzuijinqiushu) / 2 + " : " + (homeqiushu + guestqiushu) / 2);
+                    element.set("changguiqiushu", (homezuijinqiushu + guestzuijinqiushu) / 2 + " : " + (homeqiushu + guestqiushu) / 2);
 
-                    oneresult.set("test21", (homezuijinqiushu + guestzuijinqiushu) / 2+" : "+ (homeqiushu + guestqiushu) / 2);
+                    oneresult.set("test21", (homezuijinqiushu + guestzuijinqiushu) / 2 + " : " + (homeqiushu + guestqiushu) / 2);
 
                 } else {
-                    
-                    console.log("用户期望球数：".yellow + (homeqiushu + guestqiushu) / 2+" : "+ (homezuijinqiushu + guestzuijinqiushu) / 2);
-                    element.set("changguiqiushu", (homeqiushu + guestqiushu) / 2+" : "+ (homezuijinqiushu + guestzuijinqiushu) / 2);
 
-                    oneresult.set("test21", (homeqiushu + guestqiushu) / 2+" : "+ (homezuijinqiushu + guestzuijinqiushu) / 2);
+                    console.log("用户期望球数：".yellow + (homeqiushu + guestqiushu) / 2 + " : " + (homezuijinqiushu + guestzuijinqiushu) / 2);
+                    element.set("changguiqiushu", (homeqiushu + guestqiushu) / 2 + " : " + (homezuijinqiushu + guestzuijinqiushu) / 2);
+
+                    oneresult.set("test21", (homeqiushu + guestqiushu) / 2 + " : " + (homezuijinqiushu + guestzuijinqiushu) / 2);
 
                 }
 
+                console.log("主客队十场数据：".white + home10jinqiu + " ( " + homezuidajinqiushu + " )" + " , " + guest10jinqiu + " ( " + guestzuidajinqiushu + " ) ");
 
 
 
@@ -921,7 +970,7 @@ Parse
 
             }
 
-            console.log("\n\n");
+            console.log("\n");
 
             element.save();
             oneresult.save();

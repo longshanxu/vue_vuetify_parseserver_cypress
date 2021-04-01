@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-02-28 13:29:07
- * @LastEditTime: 2021-03-15 16:01:41
+ * @LastEditTime: 2021-04-01 19:51:29
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\web.js
@@ -18,7 +18,7 @@ Parse
                 var tempMoney = Parse.Object.extend("Money");
                 var query = new Parse.Query(tempMoney);
                 query.equalTo("date", request.params.date);
-                // query.notEqualTo("displayState", "完场")
+                query.notEqualTo("displayState", "完场")
                 query.limit(200);
                 query.ascending("matchTime") //matchTime,league
                 const results = await query.find();

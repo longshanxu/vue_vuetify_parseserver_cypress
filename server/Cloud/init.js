@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2021-03-15 15:32:45
+ * @LastEditTime: 2021-04-01 14:27:32
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2021-03-15/prev
-//https://vipc.cn/i/live/football/date/2021-03-15/next
+//https://vipc.cn/i/live/football/date/2021-04-01/prev
+//https://vipc.cn/i/live/football/date/2021-04-01/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2021-03-15";
+        var datetemp = "2021-04-01";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -123,7 +123,7 @@ async function GetTodayMoney() {
         }
         // https://vipc.cn/i/live/football/date/today/next
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/2021-03-15/prev',
+            url: 'https://vipc.cn/i/live/football/date/2021-04-01/prev',
             headers: {
                 'User-Agent': 'request'
             },
@@ -403,7 +403,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2021-03-15";
+    var datetemp = "2021-04-01";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
@@ -477,14 +477,14 @@ async function OneByOne() {
         datetemp = year + "-0" + month + "-0" + day;
     }
 
-    datetemp = "2021-03-15"
+    datetemp = "2021-04-01"
 
     var tempMoney = Parse
         .Object
         .extend("Money");
     var query = new Parse.Query(tempMoney);
     query.equalTo("date", datetemp);
-    // query.notEqualTo("displayState", "完场")
+    query.notEqualTo("displayState", "完场")
     query.ascending("matchTime") //matchTime,league
     // query.greaterThan("matchTime",new Date());
     query.limit(500);
@@ -597,8 +597,9 @@ async function OneByOne() {
             console.log("执行遗漏的数据------------------");
             for (let index = 0; index < count.length; index++) {
 
-                const element = items[index];
+                const element = count[index];
                 let mamatchId = element;
+                console.log("正在获取的id:"+mamatchId);
         
                 //每2秒 一条一条拿数据
         
