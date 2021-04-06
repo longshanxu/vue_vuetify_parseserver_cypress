@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2021-04-01 14:27:32
+ * @LastEditTime: 2021-04-06 11:34:39
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2021-04-01/prev
-//https://vipc.cn/i/live/football/date/2021-04-01/next
+//https://vipc.cn/i/live/football/date/2021-04-06/prev
+//https://vipc.cn/i/live/football/date/2021-04-06/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2021-04-01";
+        var datetemp = "2021-04-06";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -123,7 +123,7 @@ async function GetTodayMoney() {
         }
         // https://vipc.cn/i/live/football/date/today/next
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/2021-04-01/prev',
+            url: 'https://vipc.cn/i/live/football/date/2021-04-06/prev',
             headers: {
                 'User-Agent': 'request'
             },
@@ -403,7 +403,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2021-04-01";
+    var datetemp = "2021-04-06";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
@@ -477,7 +477,7 @@ async function OneByOne() {
         datetemp = year + "-0" + month + "-0" + day;
     }
 
-    datetemp = "2021-04-01"
+    datetemp = "2021-04-06"
 
     var tempMoney = Parse
         .Object
@@ -486,8 +486,9 @@ async function OneByOne() {
     query.equalTo("date", datetemp);
     query.notEqualTo("displayState", "完场")
     query.ascending("matchTime") //matchTime,league
+    //  修改访问的数据数量。
     // query.greaterThan("matchTime",new Date());
-    query.limit(500);
+    query.limit(30); //
     const items = await query.find();
     let templength = items.length;
 
