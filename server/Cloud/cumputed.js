@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-04-06 17:03:01
+ * @LastEditTime: 2021-04-14 17:09:44
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-04-06"
+        datetemp = "2021-04-14"
 
 
         var tempMoney = Parse
@@ -571,8 +571,8 @@ Parse
                     let bet10odds1 = parseFloat(bet10pankou.odds[1]) + 1;
 
                     yapanitem = [
-                        math.format(bet10ratio / bet10odds0, 2) * 100,
-                        math.format(bet10ratio / bet10odds1, 2) * 100
+                      50,
+                       50
                     ]
 
                     //降返回率 是不打算赔付高概率的一面
@@ -591,28 +591,28 @@ Parse
                     if (parseFloat(x0) > parseFloat(x1)) {
                         //说明看好 右边
                         yapanitem = [
-                            yapanitem[0] - 5,
-                            yapanitem[1] + 5
+                            yapanitem[0] - 25,
+                            yapanitem[1] + 25
                         ];
                     }
 
                     if (parseFloat(x0) < parseFloat(x1)) {
                         //说明看好 左边
                         yapanitem = [
-                            yapanitem[0] + 5,
-                            yapanitem[1] - 5
+                            yapanitem[0] + 25,
+                            yapanitem[1] - 25
                         ];
                     }
                     if (parseFloat(x0) == parseFloat(x1)) {
                         if (bet365odds0 <= bet365odds1) {
                             yapanitem = [
-                                yapanitem[0] + 5,
-                                yapanitem[1] - 5
+                                yapanitem[0] + 25,
+                                yapanitem[1] - 25
                             ];
                         } else {
                             yapanitem = [
-                                yapanitem[0] - 5,
-                                yapanitem[1] + 5
+                                yapanitem[0] - 25,
+                                yapanitem[1] + 25
                             ];
                         }
                     }
@@ -622,13 +622,13 @@ Parse
 
                         if (bet365odds0 <= bet365odds1) {
                             yapanitem = [
-                                yapanitem[0] + 5,
-                                yapanitem[1] - 5
+                                yapanitem[0] + 25,
+                                yapanitem[1] - 25
                             ];
                         } else {
                             yapanitem = [
-                                yapanitem[0] - 5,
-                                yapanitem[1] + 5
+                                yapanitem[0] - 25,
+                                yapanitem[1] + 25
                             ];
                         }
                     }
@@ -638,23 +638,24 @@ Parse
                         // yapanitem = [yapanitem[0] - 5, yapanitem[1] + 5];
                         let chaibie = pankou1 - pankou2;
                         let temp = math.abs(chaibie) / 0.25;
-                        yapanitem = [yapanitem[0] - temp * 4, yapanitem[1] + temp * 4];
+                        yapanitem = [yapanitem[0] - temp * 25, yapanitem[1] + temp * 25];
                     }
                     //升盘
                     if (pankou1 < pankou2) {
                         // yapanitem = [yapanitem[0] + 5, yapanitem[1] - 5];
                         let chaibie = pankou1 - pankou2;
                         let temp = math.abs(chaibie) / 0.25;
-                        yapanitem = [yapanitem[0] + temp * 4, yapanitem[1] - temp * 4];
+                        yapanitem = [yapanitem[0] + temp * 25, yapanitem[1] - temp * 25];
                     }
 
 
 
-                    console.log("亚盘变动后的概率:".white + yapanitem[0] + "%-" + yapanitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
+                    console.log("亚盘AI概率:".white + yapanitem[0] + "%-" + yapanitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
 
                     element.set('yapanpankou1', pankou1);
                     element.set('yapanpankou2', pankou2);
 
+                    element.set("yapanai", [math.format(yapanitem[0], 2),math.format(yapanitem[1], 2)]);
 
                     oneresult.set("test10", [math.format(yapanitem[0], 2), math.format(yapanitem[1], 2), pankou1, pankou2]);
 
@@ -964,7 +965,9 @@ Parse
 
                 console.log("主客队十场数据：".white + home10jinqiu + " ( " + homezuidajinqiushu + " )" + " , " + guest10jinqiu + " ( " + guestzuidajinqiushu + " ) ");
 
+                element.set("qiushuai", [home10jinqiu,homezuidajinqiushu,guest10jinqiu,guestzuidajinqiushu]);
 
+                oneresult.set("test23", home10jinqiu + " ( " + homezuidajinqiushu + " )" + " , " + guest10jinqiu + " ( " + guestzuidajinqiushu + " ) ");
 
                 // console.log("两队历史亚盘让球：".white + (homeqiushu - guestqiushu) / 2);
 
@@ -1023,6 +1026,9 @@ function changepankou(temp) {
         return -1.75;
     } else if (temp == '受二球') {
         return -2;
+    } 
+    else if (temp == '受二球/二球半') {
+        return -2.25;
     } else {
         console.log("没有匹配到亚盘盘口".red);
     }

@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-04-06 18:16:03
+ * @LastEditTime: 2021-04-14 18:14:31
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -173,7 +173,59 @@
             style="text-align: center; font-size: 14px"
             cols="3"
           >
-            <span style="font-size: 14px">{{ item.changguiqiushu && item.changguiqiushu + ' ~ '}}{{item.changguiqiushu && parseFloat(parseFloat(item.changguiqiushu.split(':')[0])+ parseFloat(item.changguiqiushu.split(':')[1]))/2}}</span>
+            <span style="font-size: 14px"
+              >{{ item.changguiqiushu && item.changguiqiushu + " ~ "
+              }}{{
+                item.changguiqiushu &&
+                parseFloat(
+                  parseFloat(item.changguiqiushu.split(":")[0]) +
+                    parseFloat(item.changguiqiushu.split(":")[1])
+                ) / 2
+              }}</span
+            >
+          </v-col>
+        </v-row>
+        <v-row dense class="ma-0" v-show="showtuijian">
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px; font-weight: 500"
+            cols="3"
+          >
+            让球AI:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+          >
+            <span style="font-size: 14px;color:blue">{{
+              item.yapanai && item.yapanai[0] + "% ~ " + item.yapanai[1]+"%"
+            }}</span>
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px; font-weight: 500"
+            cols="3"
+          >
+            球数AI:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px;color:blue"
+            cols="3"
+          >
+            <span style="font-size: 14px">{{
+              item.qiushuai &&
+              item.qiushuai[0] +
+                "(" +
+                item.qiushuai[1] +
+                ")" +
+                " ~ " +
+                item.qiushuai[2] +
+                "(" +
+                item.qiushuai[3] +
+                ")"
+            }}</span>
           </v-col>
         </v-row>
         <v-row dense class="ma-0" v-show="showtuijian">
@@ -214,7 +266,7 @@
         <v-row dense class="ma-0" v-show="showtuijian">
           <v-col
             align-self="center"
-            style="text-align: center; font-size: 14px;color:blue"
+            style="text-align: center; font-size: 14px; color: blue"
             cols="3"
           >
             手动让球:
@@ -235,7 +287,7 @@
           </v-col>
           <v-col
             align-self="center"
-            style="text-align: center; font-size: 14px;color:blue"
+            style="text-align: center; font-size: 14px; color: blue"
             cols="3"
           >
             手动球数:
@@ -528,7 +580,7 @@
               align-self="center"
               style="text-align: right; font-weight: 700; color: #a60056"
               cols="5"
-              >亚盘变动后概率：</v-col
+              >亚盘AI概率：</v-col
             >
             <v-col
               align-self="center"
@@ -762,6 +814,21 @@
               {{ item1.test22 && item1.test22 }}
             </v-col></v-row
           >
+          <v-row dense class="mx-0"
+            ><v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700; color: blue"
+              cols="5"
+              >球数AI：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{ item1.test23 && item1.test23 }}
+            </v-col></v-row
+          >
         </v-card>
       </v-card>
     </v-dialog>
@@ -810,38 +877,40 @@ export default {
         parseInt(val.newqiushutouzhu[1]) + parseInt(temp);
     },
     jianqiushu(val) {
-
       val.newqiushu -= 0.25;
       let temp = 100 / (val.qiushupankou2 / 0.25);
       val.newqiushutouzhu[0] =
         parseInt(val.newqiushutouzhu[0]) + parseInt(temp);
       val.newqiushutouzhu[1] =
         parseInt(val.newqiushutouzhu[1]) - parseInt(temp);
+
     },
     addpankou(val) {
- 
       val.newpankou += 0.25;
-            let temp = val.yapanpankou2 == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
+      let temp = val.yapanpankou2 == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
       val.newyapantouzhu[0] =
-        parseInt(val.newyapantouzhu[0]) - (parseInt(temp) * 4);
+        parseInt(val.newyapantouzhu[0]) - parseInt(temp) * 4;
       val.newyapantouzhu[1] =
-        parseInt(val.newyapantouzhu[1]) + (parseInt(temp) * 4);
+        parseInt(val.newyapantouzhu[1]) + parseInt(temp) * 4;
+
+      val.yapanai[0] = parseInt(val.yapanai[0]) - 25;
+      val.yapanai[1] = parseInt(val.yapanai[1]) + 25;
     },
     jianpankou(val) {
-
       val.newpankou -= 0.25;
       let temp = val.yapanpankou2 == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
       val.newyapantouzhu[0] =
-        parseInt(val.newyapantouzhu[0]) + (parseInt(temp) * 4);
+        parseInt(val.newyapantouzhu[0]) + parseInt(temp) * 4;
       val.newyapantouzhu[1] =
-        parseInt(val.newyapantouzhu[1]) - (parseInt(temp) * 4);
-
+        parseInt(val.newyapantouzhu[1]) - parseInt(temp) * 4;
+      val.yapanai[0] = parseInt(val.yapanai[0]) + 25;
+      val.yapanai[1] = parseInt(val.yapanai[1]) - 25;
     },
     opendialog(item) {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-04-06",
+        date: "2021-04-14",
         matchId: item.matchId,
       };
       api
@@ -870,7 +939,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-04-06",
+        date: "2021-04-14",
       };
       api
         .GetToday(data)
