@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-04-14 17:09:44
+ * @LastEditTime: 2021-04-17 14:06:33
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-04-14"
+        datetemp = "2021-04-17"
 
 
         var tempMoney = Parse
@@ -785,8 +785,8 @@ Parse
 
 
                     qiuitem = [
-                        math.format(bet10ratio / bet10odds0, 2) * 100,
-                        math.format(bet10ratio / bet10odds1, 2) * 100
+                        50,
+                        50
                     ]
 
                     firstqiuitem = [
@@ -807,28 +807,28 @@ Parse
                     if (parseFloat(x0) > parseFloat(x1)) {
                         //说明看好 右边
                         qiuitem = [
-                            qiuitem[0] - 5,
-                            qiuitem[1] + 5
+                            qiuitem[0] - 25,
+                            qiuitem[1] + 25
                         ];
                     }
 
                     if (parseFloat(x0) < parseFloat(x1)) {
                         //说明看好 左边
                         qiuitem = [
-                            qiuitem[0] + 5,
-                            qiuitem[1] - 5
+                            qiuitem[0] + 25,
+                            qiuitem[1] - 25
                         ];
                     }
                     if (parseFloat(x0) == parseFloat(x1)) {
                         if (bet365odds0 <= bet365odds1) {
                             qiuitem = [
-                                qiuitem[0] + 5,
-                                qiuitem[1] - 5
+                                qiuitem[0] + 25,
+                                qiuitem[1] - 25
                             ];
                         } else {
                             qiuitem = [
-                                qiuitem[0] - 5,
-                                qiuitem[1] + 5
+                                qiuitem[0] - 25,
+                                qiuitem[1] + 25
                             ];
                         }
                     }
@@ -838,39 +838,43 @@ Parse
 
                         if (bet365odds0 <= bet365odds1) {
                             qiuitem = [
-                                qiuitem[0] + 5,
-                                qiuitem[1] - 5
+                                qiuitem[0] + 25,
+                                qiuitem[1] - 25
                             ];
                         } else {
                             qiuitem = [
-                                qiuitem[0] - 5,
-                                qiuitem[1] + 5
+                                qiuitem[0] - 25,
+                                qiuitem[1] + 25
                             ];
                         }
                     }
 
                     //降盘
                     if (pankou1 > pankou2) {
-                        qiuitem = [qiuitem[0] - 5, qiuitem[1] + 5];
+                      
                         let chaibie = pankou1 - pankou2;
                         let temp = math.abs(chaibie) / 0.25;
-                        qiuitem = [qiuitem[0] - temp * 4, qiuitem[1] + temp * 4];
+                        qiuitem = [qiuitem[0] - temp * 25, qiuitem[1] + temp * 25];
 
                     }
                     //升盘
                     if (pankou1 < pankou2) {
-                        qiuitem = [qiuitem[0] + 5, qiuitem[1] - 5];
                         let chaibie = pankou1 - pankou2;
                         let temp = math.abs(chaibie) / 0.25;
-                        qiuitem = [qiuitem[0] + temp * 4, qiuitem[1] - temp * 4];
+                        qiuitem = [qiuitem[0] + temp * 25, qiuitem[1] - temp * 25];
                     }
 
-                    console.log("球数变动后的概率:".white + qiuitem[0] + "%-" + qiuitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
+                    console.log("球数AI:".white + qiuitem[0] + "%-" + qiuitem[1] + "%" + " <=> 盘口:".red + pankou1 + "," + pankou2);
 
                     element.set('qiushupankou1', pankou1);
                     element.set('qiushupankou2', pankou2);
 
                     oneresult.set("test16", [math.format(qiuitem[0], 2), math.format(qiuitem[1], 2), pankou1, pankou2]);
+
+                    
+                    element.set("qiushuai", [qiuitem[0],qiuitem[1]]);
+
+                    
 
                 }
 
@@ -965,7 +969,7 @@ Parse
 
                 console.log("主客队十场数据：".white + home10jinqiu + " ( " + homezuidajinqiushu + " )" + " , " + guest10jinqiu + " ( " + guestzuidajinqiushu + " ) ");
 
-                element.set("qiushuai", [home10jinqiu,homezuidajinqiushu,guest10jinqiu,guestzuidajinqiushu]);
+                element.set("qiushuAll", [home10jinqiu,homezuidajinqiushu,guest10jinqiu,guestzuidajinqiushu]);
 
                 oneresult.set("test23", home10jinqiu + " ( " + homezuidajinqiushu + " )" + " , " + guest10jinqiu + " ( " + guestzuidajinqiushu + " ) ");
 
@@ -1008,7 +1012,10 @@ function changepankou(temp) {
     }
     else if (temp == '二球半/三球') {
         return 2.75;
-    } else if (temp == '受平手') {
+    }else if (temp == '三球半') {
+        return 3.5;
+    }
+     else if (temp == '受平手') {
         return 0;
     } else if (temp == '受平手/半球') {
         return -0.25;

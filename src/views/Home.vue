@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-04-14 18:14:31
+ * @LastEditTime: 2021-04-17 09:57:46
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -191,6 +191,35 @@
             style="text-align: center; font-size: 14px; font-weight: 500"
             cols="3"
           >
+            球数统计:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px; color: red"
+            cols="9"
+          >
+            <span style="font-size: 14px">{{
+              item.qiushuAll &&
+              item.qiushuAll[0] +
+                " ( " +
+                item.qiushuAll[1] +
+                " ) " +
+                " ~ " +
+                item.qiushuAll[2] +
+                " ( " +
+                item.qiushuAll[3] +
+                " ) "
+
+                +" => " +(item.qiushuAll[0]+item.qiushuAll[2])/10
+            }}</span>
+          </v-col>
+        </v-row>
+        <v-row dense class="ma-0" v-show="showtuijian">
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px; font-weight: 500"
+            cols="3"
+          >
             让球AI:
           </v-col>
           <v-col
@@ -198,8 +227,8 @@
             style="text-align: center; font-size: 14px"
             cols="3"
           >
-            <span style="font-size: 14px;color:blue">{{
-              item.yapanai && item.yapanai[0] + "% ~ " + item.yapanai[1]+"%"
+            <span style="font-size: 14px; color: blue">{{
+              item.yapanai && item.yapanai[0] + "% ~ " + item.yapanai[1] + "%"
             }}</span>
           </v-col>
           <v-col
@@ -211,20 +240,12 @@
           </v-col>
           <v-col
             align-self="center"
-            style="text-align: center; font-size: 14px;color:blue"
+            style="text-align: center; font-size: 14px; color: blue"
             cols="3"
           >
             <span style="font-size: 14px">{{
               item.qiushuai &&
-              item.qiushuai[0] +
-                "(" +
-                item.qiushuai[1] +
-                ")" +
-                " ~ " +
-                item.qiushuai[2] +
-                "(" +
-                item.qiushuai[3] +
-                ")"
+              item.qiushuai[0] + "% ~ " + item.qiushuai[1] + "%"
             }}</span>
           </v-col>
         </v-row>
@@ -389,6 +410,14 @@
             style="background-color: #90caf9; color: white"
             @click="opendialog(item)"
             >详情</v-btn
+          >
+
+          <v-btn
+            rounded
+            elevation="0"
+            style="background-color: #90caf9; color: white;margin-left:10px"
+            @click="openUserdialog(item)"
+            >方案</v-btn
           >
         </v-row>
       </v-card>
@@ -832,6 +861,229 @@
         </v-card>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="userdialog" hide-overlay persistent fullscreen>
+      <v-progress-linear
+        indeterminate
+        color="white"
+        class="mb-0"
+        v-show="linear"
+      ></v-progress-linear>
+      <v-card style="background-color: #e5e5e5; overflow-y: auto">
+        <v-toolbar flat dark color="red">
+          <v-btn icon dark @click="userdialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>方案详情</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-card class="ma-2 cardclass" rounded>
+          <v-row dense class="ma-0">
+            <v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700"
+              cols="5"
+              >比赛信息：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{ item1.test2 && item1.test2[1] + " vs " + item1.test2[2] }}
+            </v-col>
+          </v-row>
+          <v-row dense class="ma-0">
+            <v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700"
+              cols="5"
+              >庄控概率：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{ item1.test1 }}
+            </v-col>
+          </v-row>
+          <v-row dense class="mx-0">
+            <v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700"
+              cols="5"
+              >凯利看法：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{ item1.test3 }}
+            </v-col>
+          </v-row>
+          <v-row dense class="mx-0">
+            <v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700"
+              cols="5"
+              >体彩看法：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{ item1.test4 }}
+            </v-col></v-row
+          >
+          <v-row dense class="mx-0">
+            <v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700"
+              cols="5"
+              >两队历史概率：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{ item1.test5 }}
+            </v-col></v-row
+          >
+          <v-row dense class="mx-0">
+            <v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700"
+              cols="5"
+              >散户心理概率：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{ item1.test6 }}
+            </v-col></v-row
+          >
+          <v-row dense class="mx-0">
+            <v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700"
+              cols="5"
+              >投注额压力位：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{ item1.test7 }}
+            </v-col></v-row
+          >
+          <v-row dense class="mx-0">
+            <v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700; color: #a60056"
+              cols="5"
+              >AI让球概率：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{
+                item1.test10 &&
+                item1.test10[0] + "%" + " ~ " + item1.test10[1] + "% "  + " ( " + item1.test9[3] + " )" 
+              }}
+            </v-col></v-row
+          >
+          <v-row dense class="mx-0"
+            ><v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700; color: blue"
+              cols="5"
+              >让球投注压力：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{
+                item1.test14 && item1.test14[0] + "% ~ " + item1.test14[1] + "%"
+              }}
+            </v-col></v-row
+          >
+          <v-row dense class="mx-0"
+            ><v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700; color: #a60056"
+              cols="5"
+              >AI球数概率：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{
+                item1.test16 && item1.test16[0] + "% ~ " + item1.test16[1] + "%"
+              }}
+            </v-col></v-row
+          >
+          <v-row dense class="mx-0"
+            ><v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700; color: blue"
+              cols="5"
+              >球数投注压力：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{
+                item1.test17 && item1.test17[0] + "% ~ " + item1.test17[1] + "%" + " ( " + item1.test15[3] + " )" 
+              }}
+            </v-col></v-row
+          >
+          <v-row dense class="mx-0"
+            ><v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700"
+              cols="5"
+              >用户期望球数：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{ item1.test21 && item1.test21 }}
+            </v-col></v-row
+          >
+          <v-row dense class="mx-0"
+            ><v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700"
+              cols="5"
+              >用户期望让球：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{ item1.test22 && item1.test22 }}
+            </v-col></v-row
+          >
+        </v-card>
+      </v-card>
+    </v-dialog>
     <v-bottom-sheet v-model="sheet" persistent>
       <v-sheet class="text-center" height="200px">
         <v-btn class="mt-6" text color="error" @click="asyncDataTrue"
@@ -863,6 +1115,7 @@ export default {
       status: 0,
       count: 0,
       qiushuvalue: 0,
+      userdialog:false
     };
   },
   computed: {},
@@ -875,6 +1128,8 @@ export default {
         parseInt(val.newqiushutouzhu[0]) - parseInt(temp);
       val.newqiushutouzhu[1] =
         parseInt(val.newqiushutouzhu[1]) + parseInt(temp);
+      val.qiushuai[0] = parseInt(val.qiushuai[0]) - 25;
+      val.qiushuai[1] = parseInt(val.qiushuai[1]) + 25;
     },
     jianqiushu(val) {
       val.newqiushu -= 0.25;
@@ -883,7 +1138,8 @@ export default {
         parseInt(val.newqiushutouzhu[0]) + parseInt(temp);
       val.newqiushutouzhu[1] =
         parseInt(val.newqiushutouzhu[1]) - parseInt(temp);
-
+      val.qiushuai[0] = parseInt(val.qiushuai[0]) + 25;
+      val.qiushuai[1] = parseInt(val.qiushuai[1]) - 25;
     },
     addpankou(val) {
       val.newpankou += 0.25;
@@ -910,7 +1166,28 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-04-14",
+        date: "2021-04-17",
+        matchId: item.matchId,
+      };
+      api
+        .GetResults(data)
+        .then((res) => {
+          // debugger
+          this.linear = false;
+          if (res.data.result.code == "200") {
+            this.detaillist = res.data.result.data;
+            if (this.detaillist.length > 0) {
+              this.item1 = this.detaillist[0];
+            }
+          }
+        })
+        .catch();
+    },
+     openUserdialog(item) {
+      this.userdialog = true;
+      this.linear = true;
+      let data = {
+        date: "2021-04-17",
         matchId: item.matchId,
       };
       api
@@ -939,7 +1216,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-04-14",
+        date: "2021-04-17",
       };
       api
         .GetToday(data)

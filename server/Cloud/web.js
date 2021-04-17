@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-02-28 13:29:07
- * @LastEditTime: 2021-04-14 18:04:24
+ * @LastEditTime: 2021-04-17 14:58:01
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\web.js
@@ -55,6 +55,7 @@ Parse
                         newqiushutouzhu: element.attributes.qiushutouzhu, //球数投注
                         qiushuai: element.attributes.qiushuai, //球数AI
                         yapanai: element.attributes.yapanai, //亚盘AI
+                        qiushuAll: element.attributes.qiushuAll
                     }
                     data.push(temp);
 
