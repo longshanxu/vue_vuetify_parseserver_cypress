@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-04-17 09:57:46
+ * @LastEditTime: 2021-04-20 14:37:17
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -118,7 +118,7 @@
             cols="4"
           >
             比分：
-            <span style="font-size: 14px">{{
+            <span style="font-size: 14px" v-show="isshowbifen">{{
               item.homeScore + ":" + item.guestScore
             }}</span>
           </v-col>
@@ -208,9 +208,9 @@
                 item.qiushuAll[2] +
                 " ( " +
                 item.qiushuAll[3] +
-                " ) "
-
-                +" => " +(item.qiushuAll[0]+item.qiushuAll[2])/10
+                " ) " +
+                " => " +
+                (item.qiushuAll[0] + item.qiushuAll[2]) / 10
             }}</span>
           </v-col>
         </v-row>
@@ -415,7 +415,7 @@
           <v-btn
             rounded
             elevation="0"
-            style="background-color: #90caf9; color: white;margin-left:10px"
+            style="background-color: #90caf9; color: white; margin-left: 10px"
             @click="openUserdialog(item)"
             >方案</v-btn
           >
@@ -996,7 +996,14 @@
             >
               {{
                 item1.test10 &&
-                item1.test10[0] + "%" + " ~ " + item1.test10[1] + "% "  + " ( " + item1.test9[3] + " )" 
+                item1.test10[0] +
+                  "%" +
+                  " ~ " +
+                  item1.test10[1] +
+                  "% " +
+                  " ( " +
+                  item1.test9[3] +
+                  " )"
               }}
             </v-col></v-row
           >
@@ -1047,7 +1054,14 @@
               cols="7"
             >
               {{
-                item1.test17 && item1.test17[0] + "% ~ " + item1.test17[1] + "%" + " ( " + item1.test15[3] + " )" 
+                item1.test17 &&
+                item1.test17[0] +
+                  "% ~ " +
+                  item1.test17[1] +
+                  "%" +
+                  " ( " +
+                  item1.test15[3] +
+                  " )"
               }}
             </v-col></v-row
           >
@@ -1094,6 +1108,10 @@
         </div>
       </v-sheet>
     </v-bottom-sheet>
+
+    <v-btn fab bottom right class="v-btn--example" @click="isshowbifen = !isshowbifen">
+      <v-icon color="red">mdi-usb-port</v-icon>
+    </v-btn>
   </v-container>
 </template>
 
@@ -1115,7 +1133,8 @@ export default {
       status: 0,
       count: 0,
       qiushuvalue: 0,
-      userdialog:false
+      userdialog: false,
+      isshowbifen: true,
     };
   },
   computed: {},
@@ -1166,7 +1185,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-04-17",
+        date: "2021-04-20",
         matchId: item.matchId,
       };
       api
@@ -1183,11 +1202,11 @@ export default {
         })
         .catch();
     },
-     openUserdialog(item) {
+    openUserdialog(item) {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2021-04-17",
+        date: "2021-04-20",
         matchId: item.matchId,
       };
       api
@@ -1216,7 +1235,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-04-17",
+        date: "2021-04-20",
       };
       api
         .GetToday(data)
@@ -1280,6 +1299,12 @@ export default {
 </script>
 
 <style>
+.v-btn--example {
+  bottom: 0;
+  right: 0;
+  position: fixed !important;
+  margin:  0 16px 16px 0 ;
+}
 .cardclass {
   background: #ffffff;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05) !important;

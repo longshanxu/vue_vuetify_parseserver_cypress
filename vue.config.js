@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-12 17:51:18
- * @LastEditTime: 2021-04-17 14:06:45
+ * @LastEditTime: 2021-04-20 14:06:45
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\vue.config.js
