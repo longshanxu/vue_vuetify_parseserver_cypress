@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-02-28 13:29:07
- * @LastEditTime: 2021-04-20 18:06:51
+ * @LastEditTime: 2021-04-25 10:21:33
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\web.js
@@ -19,7 +19,7 @@ Parse
                 var query = new Parse.Query(tempMoney);
                 query.equalTo("date", request.params.date);
                 query.notEqualTo("displayState", "完场")
-                //   query.equalTo("displayState", "完场")
+                // query.equalTo("displayState", "完场")
                 query.limit(200);
                 query.ascending("matchTime") //matchTime,league
                 const results = await query.find();
@@ -164,7 +164,7 @@ Parse
             setTimeout(() => {
                 init.GetTodayMoney();
                 setTimeout(() => {
-                   init.OneByOne();
+                    init.OneByOne();
                 }, 3000);
             }, 3000);
 
@@ -178,7 +178,7 @@ Parse
             return {
                 code: 500,
                 msg: "获取数据失败",
-                data:error
+                data: error
             }
         }
 
