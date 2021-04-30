@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-04-25 10:20:41
+ * @LastEditTime: 2021-04-30 10:20:41
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-04-25"
+        datetemp = "2021-04-30"
 
 
         var tempMoney = Parse
@@ -251,7 +251,7 @@ Parse
 
             let historylist = historyitems.get('againstlist')
 
-            // finalitem = ["33%","33%","33%"];
+            finalitem = ["33%","33%","33%"];
 
             for (let index = 0; index < historylist.length; index++) {
                 const element = historylist[index];
