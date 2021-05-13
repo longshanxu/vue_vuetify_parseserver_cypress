@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-04-30 14:37:17
+ * @LastEditTime: 2021-05-13 16:11:27
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -159,14 +159,16 @@
             style="text-align: center; font-size: 14px"
             cols="3"
           >
-            <span style="font-size: 14px">{{ item.changguiyapan && item.changguiyapan + " ~ "
+            <span style="font-size: 14px"
+              >{{ item.changguiyapan && item.changguiyapan + " ~ "
               }}{{
                 item.changguiyapan &&
                 parseFloat(
                   parseFloat(item.changguiyapan.split(":")[0]) +
                     parseFloat(item.changguiyapan.split(":")[1])
                 ) / 2
-              }}</span>
+              }}</span
+            >
           </v-col>
           <v-col
             align-self="center"
@@ -205,20 +207,26 @@
             style="text-align: center; font-size: 14px; color: red"
             cols="9"
           >
-            <span style="font-size: 14px">{{
-              item.qiushuAll &&
-              item.qiushuAll[0] +
-                " ( " +
-                item.qiushuAll[1] +
-                " ) " +
-                " ~ " +
-                item.qiushuAll[2] +
-                " ( " +
-                item.qiushuAll[3] +
-                " ) " +
-                " => " +
-                (item.qiushuAll[0] + item.qiushuAll[2]) / 10
-            }}</span>
+            <span style="font-size: 14px"
+              ><span style="color: blue">{{
+                item.qiushuAll && (item.qiushuAll[0] - item.qiushuAll[2]) / 10
+              }}</span>
+              ===
+              {{
+                item.qiushuAll &&
+                item.qiushuAll[0] +
+                  " ( " +
+                  item.qiushuAll[1] +
+                  " ) " +
+                  " ~ " +
+                  item.qiushuAll[2] +
+                  " ( " +
+                  item.qiushuAll[3] +
+                  " ) " +
+                  " => " +
+                  (item.qiushuAll[0] + item.qiushuAll[2]) / 10
+              }}</span
+            >
           </v-col>
         </v-row>
         <v-row dense class="ma-0" v-show="showtuijian">
@@ -538,7 +546,7 @@
           <v-row dense class="mx-0">
             <v-col
               align-self="center"
-              style="text-align: right; font-weight: 700"
+              style="text-align: right; font-weight: 700;color:green "
               cols="5"
               >投注额：</v-col
             >
@@ -683,6 +691,30 @@
               }}
             </v-col></v-row
           >
+          <v-row dense class="mx-0"
+            ><v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700;;color:green"
+              cols="5"
+              >亚盘投注额：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{
+                item1.test14 &&
+                item1.test14[0] *
+                  (parseFloat(item1.test9[7].toString().split(",")[0]) + 1) +
+                  "元 ~ " +
+                  item1.test14[1] *
+                    (parseFloat(item1.test9[7].toString().split(",")[1]) + 1) +
+                  "元"
+              }}
+            </v-col></v-row
+          >
+
           <v-row dense class="mx-0">
             <v-col
               align-self="center"
@@ -779,6 +811,29 @@
             >
               {{
                 item1.test17 && item1.test17[0] + "% ~ " + item1.test17[1] + "%"
+              }}
+            </v-col></v-row
+          >
+          <v-row dense class="mx-0"
+            ><v-col
+              align-self="center"
+              style="text-align: right; font-weight: 700;;color:green"
+              cols="5"
+              >球数投注额：</v-col
+            >
+            <v-col
+              align-self="center"
+              style="text-align: left; font-size: 14px"
+              cols="7"
+            >
+              {{
+                item1.test17 &&
+                item1.test17[0] *
+                  (parseFloat(item1.test15[7].toString().split(",")[0]) + 1) +
+                  "元 ~ " +
+                  item1.test17[1] *
+                    (parseFloat(item1.test15[7].toString().split(",")[1]) + 1) +
+                  "元"
               }}
             </v-col></v-row
           >
@@ -1116,7 +1171,13 @@
       </v-sheet>
     </v-bottom-sheet>
 
-    <v-btn fab bottom right class="v-btn--example" @click="isshowbifen = !isshowbifen">
+    <v-btn
+      fab
+      bottom
+      right
+      class="v-btn--example"
+      @click="isshowbifen = !isshowbifen"
+    >
       <v-icon color="red">mdi-usb-port</v-icon>
     </v-btn>
   </v-container>
@@ -1192,7 +1253,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-04-30",
+        date: "2021-05-13",
         matchId: item.matchId,
       };
       api
@@ -1213,7 +1274,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2021-04-30",
+        date: "2021-05-13",
         matchId: item.matchId,
       };
       api
@@ -1242,7 +1303,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-04-30",
+        date: "2021-05-13",
       };
       api
         .GetToday(data)
@@ -1310,7 +1371,7 @@ export default {
   bottom: 0;
   right: 0;
   position: fixed !important;
-  margin:  0 16px 16px 0 ;
+  margin: 0 16px 16px 0;
 }
 .cardclass {
   background: #ffffff;
