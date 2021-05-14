@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-05-13 10:20:41
+ * @LastEditTime: 2021-05-14 11:20:34
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-05-13"
+        datetemp = "2021-05-14"
 
 
         var tempMoney = Parse
@@ -251,7 +251,7 @@ Parse
 
             let historylist = historyitems.get('againstlist')
 
-            finalitem = ["33%","33%","33%"];
+            finalitem = ["33%", "33%", "33%"];
 
             for (let index = 0; index < historylist.length; index++) {
                 const element = historylist[index];
@@ -571,8 +571,8 @@ Parse
                     let bet10odds1 = parseFloat(bet10pankou.odds[1]) + 1;
 
                     yapanitem = [
-                      50,
-                       50
+                        50,
+                        50
                     ]
 
                     //降返回率 是不打算赔付高概率的一面
@@ -655,7 +655,7 @@ Parse
                     element.set('yapanpankou1', pankou1);
                     element.set('yapanpankou2', pankou2);
 
-                    element.set("yapanai", [math.format(yapanitem[0], 2),math.format(yapanitem[1], 2)]);
+                    element.set("yapanai", [math.format(yapanitem[0], 2), math.format(yapanitem[1], 2)]);
 
                     oneresult.set("test10", [math.format(yapanitem[0], 2), math.format(yapanitem[1], 2), pankou1, pankou2]);
 
@@ -762,7 +762,7 @@ Parse
 
                 //球数
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
-                    
+
 
                     //firstOdds,odds,firstPankou,pankou,firstReturnRatio,returnRatio //大小球一样
                     const pankou1 = parseFloat(changeqiu(bet10qiu.firstPankou));
@@ -851,7 +851,7 @@ Parse
 
                     //降盘
                     if (pankou1 > pankou2) {
-                      
+
                         let chaibie = pankou1 - pankou2;
                         let temp = math.abs(chaibie) / 0.25;
                         qiuitem = [qiuitem[0] - temp * 25, qiuitem[1] + temp * 25];
@@ -871,10 +871,10 @@ Parse
 
                     oneresult.set("test16", [math.format(qiuitem[0], 2), math.format(qiuitem[1], 2), pankou1, pankou2]);
 
-                    
-                    element.set("qiushuai", [qiuitem[0],qiuitem[1]]);
 
-                    
+                    element.set("qiushuai", [qiuitem[0], qiuitem[1]]);
+
+
 
                 }
 
@@ -939,37 +939,23 @@ Parse
                 oneresult.set("test19", [homeqiushu, guestqiushu, (homeqiushu + guestqiushu) / 2]);
                 oneresult.set("test20", [homezuijinqiushu + '（' + homediuqiu + '）', guestzuijinqiushu + '（' + guestdiuqiu + '）', (homezuijinqiushu + guestzuijinqiushu) / 2]);
 
-                if ((homezuijinqiushu - guestzuijinqiushu) < (homeqiushu - guestqiushu)) {
-                    console.log("用户期望让球：".yellow + (homezuijinqiushu - guestzuijinqiushu) / 2 + " : " + (homeqiushu - guestqiushu) / 2);
-                    element.set("changguiyapan", (homezuijinqiushu - guestzuijinqiushu) / 2 + " : " + (homeqiushu - guestqiushu) / 2);
-                    oneresult.set("test22", (homezuijinqiushu - guestzuijinqiushu) / 2 + " : " + (homeqiushu - guestqiushu) / 2);
 
-                } else {
 
-                    console.log("用户期望让球：".yellow + (homeqiushu - guestqiushu) / 2 + " : " + (homezuijinqiushu - guestzuijinqiushu) / 2);
-                    element.set("changguiyapan", (homeqiushu - guestqiushu) / 2 + " : " + (homezuijinqiushu - guestzuijinqiushu) / 2);
-                    oneresult.set("test22", (homeqiushu - guestqiushu) / 2 + " : " + (homezuijinqiushu - guestzuijinqiushu) / 2);
+                console.log("用户期望让球：".yellow + (homeqiushu - guestqiushu) / 2 + " : " + (homezuijinqiushu - guestzuijinqiushu) / 2);
+                element.set("changguiyapan", (homeqiushu - guestqiushu) / 2 + " : " + (homezuijinqiushu - guestzuijinqiushu) / 2);
+                oneresult.set("test22", (homeqiushu - guestqiushu) / 2 + " : " + (homezuijinqiushu - guestzuijinqiushu) / 2);
 
-                }
 
-                if ((homezuijinqiushu + guestzuijinqiushu) < (homeqiushu + guestqiushu)) {
-                    console.log("用户期望球数：".yellow + (homezuijinqiushu + guestzuijinqiushu) / 2 + " : " + (homeqiushu + guestqiushu) / 2);
-                    element.set("changguiqiushu", (homezuijinqiushu + guestzuijinqiushu) / 2 + " : " + (homeqiushu + guestqiushu) / 2);
+                console.log("用户期望球数：".yellow + (homeqiushu + guestqiushu) / 2 + " : " + (homezuijinqiushu + guestzuijinqiushu) / 2);
+                element.set("changguiqiushu", (homeqiushu + guestqiushu) / 2 + " : " + (homezuijinqiushu + guestzuijinqiushu) / 2);
 
-                    oneresult.set("test21", (homezuijinqiushu + guestzuijinqiushu) / 2 + " : " + (homeqiushu + guestqiushu) / 2);
+                oneresult.set("test21", (homeqiushu + guestqiushu) / 2 + " : " + (homezuijinqiushu + guestzuijinqiushu) / 2);
 
-                } else {
 
-                    console.log("用户期望球数：".yellow + (homeqiushu + guestqiushu) / 2 + " : " + (homezuijinqiushu + guestzuijinqiushu) / 2);
-                    element.set("changguiqiushu", (homeqiushu + guestqiushu) / 2 + " : " + (homezuijinqiushu + guestzuijinqiushu) / 2);
-
-                    oneresult.set("test21", (homeqiushu + guestqiushu) / 2 + " : " + (homezuijinqiushu + guestzuijinqiushu) / 2);
-
-                }
 
                 console.log("主客队十场数据：".white + home10jinqiu + " ( " + homezuidajinqiushu + " )" + " , " + guest10jinqiu + " ( " + guestzuidajinqiushu + " ) ");
 
-                element.set("qiushuAll", [home10jinqiu,homezuidajinqiushu,guest10jinqiu,guestzuidajinqiushu]);
+                element.set("qiushuAll", [home10jinqiu, homezuidajinqiushu, guest10jinqiu, guestzuidajinqiushu]);
 
                 oneresult.set("test23", home10jinqiu + " ( " + homezuidajinqiushu + " )" + " , " + guest10jinqiu + " ( " + guestzuidajinqiushu + " ) ");
 
@@ -1012,10 +998,10 @@ function changepankou(temp) {
     }
     else if (temp == '二球半/三球') {
         return 2.75;
-    }else if (temp == '三球半') {
+    } else if (temp == '三球半') {
         return 3.5;
     }
-     else if (temp == '受平手') {
+    else if (temp == '受平手') {
         return 0;
     } else if (temp == '受平手/半球') {
         return -0.25;
@@ -1033,7 +1019,7 @@ function changepankou(temp) {
         return -1.75;
     } else if (temp == '受二球') {
         return -2;
-    } 
+    }
     else if (temp == '受二球/二球半') {
         return -2.25;
     } else {

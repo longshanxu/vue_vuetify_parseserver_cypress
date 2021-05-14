@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-05-13 16:11:27
+ * @LastEditTime: 2021-05-14 11:02:57
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -160,7 +160,7 @@
             cols="3"
           >
             <span style="font-size: 14px"
-              >{{ item.changguiyapan && item.changguiyapan + " ~ "
+              >{{ item.changguiyapan && item.changguiyapan + "^"
               }}{{
                 item.changguiyapan &&
                 parseFloat(
@@ -705,11 +705,11 @@
             >
               {{
                 item1.test14 &&
-                item1.test14[0] *
-                  (parseFloat(item1.test9[7].toString().split(",")[0]) + 1) +
+                  parseInt( item1.test14[0] *
+                  (parseFloat(item1.test9[7].toString().split(",")[0]) + 1) ) +
                   "元 ~ " +
-                  item1.test14[1] *
-                    (parseFloat(item1.test9[7].toString().split(",")[1]) + 1) +
+                    parseInt( item1.test14[1] *
+                    (parseFloat(item1.test9[7].toString().split(",")[1]) + 1) ) +
                   "元"
               }}
             </v-col></v-row
@@ -828,11 +828,11 @@
             >
               {{
                 item1.test17 &&
-                item1.test17[0] *
-                  (parseFloat(item1.test15[7].toString().split(",")[0]) + 1) +
+                 parseInt( item1.test17[0] *
+                  (parseFloat(item1.test15[7].toString().split(",")[0]) + 1) ) +
                   "元 ~ " +
-                  item1.test17[1] *
-                    (parseFloat(item1.test15[7].toString().split(",")[1]) + 1) +
+                   parseInt(  item1.test17[1] *
+                    (parseFloat(item1.test15[7].toString().split(",")[1]) + 1)) +
                   "元"
               }}
             </v-col></v-row
@@ -1253,7 +1253,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-05-13",
+        date: "2021-05-14",
         matchId: item.matchId,
       };
       api
@@ -1274,7 +1274,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2021-05-13",
+        date: "2021-05-14",
         matchId: item.matchId,
       };
       api
@@ -1303,7 +1303,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-05-13",
+        date: "2021-05-14",
       };
       api
         .GetToday(data)
