@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-05-17 11:02:57
+ * @LastEditTime: 2021-06-06 11:02:57
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -222,11 +222,11 @@
                   item.qiushuAll[2] +
                   " ( " +
                   item.qiushuAll[3] +
-                  " ) " +
-                  " => " +
-                  (item.qiushuAll[0] + item.qiushuAll[2]) / 10
-              }}</span
-            >
+                  " ) " }}
+                  <span style="color:green;padding:0px 2px">
+                   =>   {{  item.qiushuAll &&  (item.qiushuAll[0] + item.qiushuAll[2] - item.qiushuAll[1] - item.qiushuAll[3] ) / 10}}
+                  </span>
+                  => {{ item.qiushuAll && (item.qiushuAll[0] + item.qiushuAll[2]) / 10 }}</span>
           </v-col>
         </v-row>
         <v-row dense class="ma-0" v-show="showtuijian">
@@ -1230,22 +1230,22 @@ export default {
     },
     addpankou(val) {
       val.newpankou += 0.25;
-      let temp = val.yapanpankou2 == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
+     let temp = 100 / (val.qiushupankou2 / 0.25);
       val.newyapantouzhu[0] =
-        parseInt(val.newyapantouzhu[0]) - parseInt(temp) * 4;
+        parseInt(val.newyapantouzhu[0]) - parseInt(temp) ;
       val.newyapantouzhu[1] =
-        parseInt(val.newyapantouzhu[1]) + parseInt(temp) * 4;
+        parseInt(val.newyapantouzhu[1]) + parseInt(temp) ;
 
       val.yapanai[0] = parseInt(val.yapanai[0]) - 25;
       val.yapanai[1] = parseInt(val.yapanai[1]) + 25;
     },
     jianpankou(val) {
       val.newpankou -= 0.25;
-      let temp = val.yapanpankou2 == 0 ? 1 : Math.abs(val.yapanpankou2 / 0.25);
+     let temp = 100 / (val.qiushupankou2 / 0.25);
       val.newyapantouzhu[0] =
-        parseInt(val.newyapantouzhu[0]) + parseInt(temp) * 4;
+        parseInt(val.newyapantouzhu[0]) + parseInt(temp);
       val.newyapantouzhu[1] =
-        parseInt(val.newyapantouzhu[1]) - parseInt(temp) * 4;
+        parseInt(val.newyapantouzhu[1]) - parseInt(temp);
       val.yapanai[0] = parseInt(val.yapanai[0]) + 25;
       val.yapanai[1] = parseInt(val.yapanai[1]) - 25;
     },
@@ -1253,7 +1253,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-05-17",
+        date: "2021-06-06",
         matchId: item.matchId,
       };
       api
@@ -1274,7 +1274,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2021-05-17",
+        date: "2021-06-06",
         matchId: item.matchId,
       };
       api
@@ -1303,7 +1303,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-05-17",
+        date: "2021-06-06",
       };
       api
         .GetToday(data)
@@ -1353,7 +1353,7 @@ export default {
       } else if (val == 5) {
         this.datalist = this.list.filter((item) => {
           if (item.qiushutouzhu) {
-            return item.qiushutouzhu[0] > 100 || item.qiushutouzhu[1] > 100;
+            return item.qiushutouzhu[0] > 90 || item.qiushutouzhu[1] > 90;
           }
         });
         this.count = this.datalist.length;

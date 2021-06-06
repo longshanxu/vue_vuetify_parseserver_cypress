@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-11-04 19:00:51
- * @LastEditTime: 2021-05-17 10:05:33
+ * @LastEditTime: 2021-06-06 10:05:33
  * @LastEditors: Json.Xu
  * @Description: In User Settings Edit
  * @FilePath: \vue_vuetify_parseserver\src\App.vue

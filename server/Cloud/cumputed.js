@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-05-17 11:20:34
+ * @LastEditTime: 2021-06-05 11:20:34
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-05-17"
+        datetemp = "2021-06-06"
 
 
         var tempMoney = Parse
@@ -83,7 +83,7 @@ Parse
 
             oneresult.set("matchId", matchId);
 
-            // if (matchId != "241571760") {     continue; }
+            if (matchId != "252084592") { continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -707,51 +707,43 @@ Parse
 
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
                     //散户投注数据。
+                    const pankou2 = parseFloat(changeqiu(bet10qiu.pankou));
 
-
-                    let qiushupankou = parseFloat(changepankou(bet365pankou.pankou));
-                    let tempjiange = qiushupankou == 0 ? 1 : math.abs(qiushupankou / 0.25);
-
-                    let bet365ratio = math.format(bet365pankou.returnRatio.replace('%', '') / 100, 3);
-
-
-                    let bet365odds0 = parseFloat(bet365pankou.odds[0]) + 1;
-                    let bet365odds1 = parseFloat(bet365pankou.odds[1]) + 1;
-
-                    let temptem = [
-                        math.format(bet365ratio / bet365odds0, 2) * 100,
-                        math.format(bet365ratio / bet365odds1, 2) * 100
-                    ]
+                    let qiushupankou = parseFloat(changepankou(bet10pankou.pankou));
 
                     let chaibieitem = [50, 50];
 
-                    let chaibie2 = homeqiushu - guestqiushu;
+                    let tempjiange = math.format(chaibieitem[1] / (pankou2 / 0.25), 2);
+
+
+
+                    let chaibie2 = qiushupankou - (homeqiushu - guestqiushu)/2;
 
                     if (chaibie2 > 0) {
                         let temp = math.abs(chaibie2) / 0.25;
 
-                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
+                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
                     }
                     else if (chaibie2 < 0) {
                         let temp = math.abs(chaibie2) / 0.25;
-                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
+                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
                     }
 
-                    let chaibie3 = homezuijinqiushu - guestzuijinqiushu;
+                    let chaibie3 = qiushupankou - (homezuijinqiushu - guestzuijinqiushu) /2 ;
 
                     if (chaibie3 > 0) {
                         let temp = math.abs(chaibie3) / 0.25;
-                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
+                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
                     }
                     else if (chaibie3 < 0) {
                         let temp = math.abs(chaibie3) / 0.25;
-                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
+                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
                     }
 
 
 
 
-                    console.log("亚盘投注情况-----:" + chaibieitem[0] + "%," + chaibieitem[1] + "%");
+                    console.log("亚盘投注情况-----:" + math.format(chaibieitem[0], 2) + "%," + math.format(chaibieitem[1], 2) + "%");
 
                     element.set('yapantouzhu', [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
 
