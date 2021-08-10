@@ -12,7 +12,8 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "cypress": "npx cypress open",
-    "dev": "set NODE_ENV=production && nodemon ./server.js --config nodemon.config.json"
+    "dev": "set NODE_ENV=production && nodemon ./server.js --config nodemon.config.json",
+    "start": "nodemon server.js --config nodemon.config.json"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -50,7 +51,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "istanbul-lib-coverage": "^3.0.0",
     "material-design-icons-iconfont": "^5.0.1",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.12",
     "nyc": "^15.1.0",
     "parse-dashboard": "^2.1.0",
     "sass": "^1.26.9",
