@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-08-10 00:36:03
+ * @LastEditTime: 2021-08-10 23:48:07
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver_cypress\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-08-10"
+        datetemp = "2021-08-25"
 
 
         var tempMoney = Parse
@@ -747,7 +747,7 @@ Parse
 
                     element.set('yapantouzhu', [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
 
-                    oneresult.set("test14", chaibieitem);
+                    oneresult.set("test14", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
                 }
 
 

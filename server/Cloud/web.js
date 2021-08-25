@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-02-28 13:29:07
- * @LastEditTime: 2021-08-10 21:14:43
+ * @LastEditTime: 2021-08-22 18:04:44
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver_cypress\server\Cloud\web.js
@@ -17,7 +17,7 @@ Parse
             if (request.params.date != "" && request.params.date != undefined && request.params.date != null) {
                 var tempMoney = Parse.Object.extend("Money");
                 var query = new Parse.Query(tempMoney);
-                var datetemp = "2021-08-10";
+                var datetemp = "2021-08-25";
                 // query.equalTo("date", request.params.date);
                 query.notEqualTo("displayState", "完场")
                 query.equalTo("date", datetemp);

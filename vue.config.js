@@ -1,10 +1,10 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-12 17:51:18
- * @LastEditTime: 2021-08-10 14:06:45
+ * @LastEditTime: 2021-08-24 23:39:05
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver\vue.config.js
+ * @FilePath: \vue_vuetify_parseserver_cypress\vue.config.js
  */
 
 module.exports = {
