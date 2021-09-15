@@ -1,10 +1,10 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-08-10 23:48:07
+ * @LastEditTime: 2021-09-15 10:53:39
  * @LastEditors: Json.Xu
  * @Description:
- * @FilePath: \vue_vuetify_parseserver_cypress\server\Cloud\cumputed.js
+ * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
  */
 // 计算概率 胜平负的概率，依赖返回率，凯利 大小球的概率，依赖返回率， 亚盘的概率，依赖返回率 最近战绩和历史战绩 赔率转换成概率公式 概率 = 1 /
 // 赔率
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-08-25"
+        datetemp = "2021-09-15"
 
 
         var tempMoney = Parse
@@ -252,9 +252,12 @@ Parse
             let historylist = historyitems.get('againstlist')
 
             finalitem = ["33%", "33%", "33%"];
-
+            let liangduibisai = [];
             for (let index = 0; index < historylist.length; index++) {
                 const element = historylist[index];
+                if (index == 0) {
+                    liangduibisai = [element.matchTime, element.home, element.guest, element.goal[0], element.goal[1], element.league];
+                }
                 if (index < 2) {
                     if (home == element.home && guest == element.guest) {
                         // historycount ++;
@@ -297,6 +300,8 @@ Parse
 
             }
 
+            element.set("liangduibisai", liangduibisai);
+            oneresult.set("test24",liangduibisai);
             console.log('两队历史:'.green + finalitem);
 
             oneresult.set("test5", Object.assign([], finalitem));
@@ -304,8 +309,14 @@ Parse
             //进行第6轮的5 % 的浮动，主要是针对最近状态进行处理。
             let homelist = historyitems.get('homelist');
 
+            //获取两队历史比赛，时间，队伍，比分，类型。
+            let homezuijinbisai = [];
+            let guestzuijinbisai = [];
             for (let index = 0; index < homelist.length; index++) {
                 const element = homelist[index];
+                if (index == 0) {
+                    homezuijinbisai = [element.matchTime, element.home, element.guest, element.goal[0], element.goal[1], element.league];
+                }
                 if (index < 2) {
                     if (home == element.home) {
                         // homecount++;
@@ -347,10 +358,15 @@ Parse
                     break;
                 };
             }
+            element.set("homezuijinbisai", homezuijinbisai);
+            oneresult.set("test25",homezuijinbisai);
             let guestlist = historyitems.get('guestlist')
 
             for (let index = 0; index < guestlist.length; index++) {
                 const element = guestlist[index];
+                if (index == 0) {
+                    guestzuijinbisai = [element.matchTime, element.home, element.guest, element.goal[0], element.goal[1], element.league];
+                }
                 if (index < 2) {
                     if (guest == element.home) {
                         if (element.goal[0] > element.goal[1]) {
@@ -392,10 +408,14 @@ Parse
                     break;
                 }
             }
+
+            element.set("guestzuijinbisai", guestzuijinbisai);
+            oneresult.set("test26",guestzuijinbisai);
+
             console.log('散户心理:'.red + finalitem);
 
             oneresult.set("test6", Object.assign([], finalitem));
-
+       
             element.set("sanhuxinli", finalitem);
 
             if (bet365item != null && bet365item != undefined) {
@@ -717,7 +737,7 @@ Parse
 
 
 
-                    let chaibie2 = qiushupankou - (homeqiushu - guestqiushu)/2;
+                    let chaibie2 = qiushupankou - (homeqiushu - guestqiushu) / 2;
 
                     if (chaibie2 > 0) {
                         let temp = math.abs(chaibie2) / 0.25;
@@ -729,7 +749,7 @@ Parse
                         chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
                     }
 
-                    let chaibie3 = qiushupankou - (homezuijinqiushu - guestzuijinqiushu) /2 ;
+                    let chaibie3 = qiushupankou - (homezuijinqiushu - guestzuijinqiushu) / 2;
 
                     if (chaibie3 > 0) {
                         let temp = math.abs(chaibie3) / 0.25;

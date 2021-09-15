@@ -1,10 +1,10 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-08-25 23:29:03
+ * @LastEditTime: 2021-09-15 11:21:53
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
+ * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
  -->
 <template>
   <v-container class="fill-height grey lighten-3 pa-0" fluid>
@@ -123,6 +123,40 @@
             }}</span>
           </v-col>
         </v-row>
+        <v-row dense class="ma-0" v-show="showtuijian">
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px; font-weight: 500"
+            cols="3"
+          >
+            两队交战:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: left; font-size: 14px"
+            cols="9"
+            class="px-0"
+          >
+            <span style="font-size: 14px">
+              {{
+                item.liangduibisai &&
+                item.liangduibisai.length > 0 &&
+                item.liangduibisai[0].toString().split(" ")[0] +
+                  "(" +
+                  item.liangduibisai[5] +
+                  ")," +
+                  item.liangduibisai[1].substr(0, 3) +
+                  " VS " +
+                  item.liangduibisai[2].substr(0, 3) +
+                  "," +
+                  item.liangduibisai[3] +
+                  ":" +
+                  item.liangduibisai[4]
+              }}
+            </span>
+          </v-col>
+        </v-row>
+
         <v-row dense class="ma-0" v-show="showtuijian">
           <v-col
             align-self="center"
@@ -429,6 +463,71 @@
               item.qiushutouzhu &&
               item.qiushutouzhu[0] + "%" + " ~ " + item.qiushutouzhu[1] + "%"
             }}</span>
+          </v-col>
+        </v-row>
+
+        <v-row dense class="ma-0" v-show="showtuijian">
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px; font-weight: 500"
+            cols="3"
+          >
+            主队交战:
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+            class="px-0"
+            v-if="item.homezuijinbisai && item.homezuijinbisai.length > 0"
+          >
+            <div style="font-size: 14px;;color:blue">
+              {{ item.homezuijinbisai[0].toString().split(" ")[0] }}
+            </div>
+            <div style="font-size: 14px">
+              {{ "(" + item.homezuijinbisai[5] + ")" }}
+            </div>
+            <div style="font-size: 12px;color:red">
+              {{
+                item.homezuijinbisai[1].substr(0, 3) +
+                "VS" +
+                item.homezuijinbisai[2].substr(0, 3) 
+              }}
+            </div>
+            <div style="font-size: 18px">
+              {{ item.homezuijinbisai[3] + ":" + item.homezuijinbisai[4] }}
+            </div>
+          </v-col>
+          <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px; font-weight: 500"
+            cols="3"
+          >
+            客队交战:
+          </v-col>
+           <v-col
+            align-self="center"
+            style="text-align: center; font-size: 14px"
+            cols="3"
+            class="px-0"
+            v-if="item.guestzuijinbisai && item.guestzuijinbisai.length > 0"
+          >
+            <div style="font-size: 14px;color:blue">
+              {{ item.guestzuijinbisai[0].toString().split(" ")[0] }}
+            </div>
+            <div style="font-size: 14px">
+              {{ "(" + item.guestzuijinbisai[5] + ")" }}
+            </div>
+            <div style="font-size: 12px;color:green">
+              {{
+                item.guestzuijinbisai[1].substr(0, 3) +
+                "VS" +
+                item.guestzuijinbisai[2].substr(0, 3) 
+              }}
+            </div>
+            <div style="font-size: 18px">
+              {{ item.guestzuijinbisai[3] + ":" + item.guestzuijinbisai[4] }}
+            </div>
           </v-col>
         </v-row>
         <v-row dense class="ma-0 px-2 py-1" v-show="showtuijian">
@@ -1528,7 +1627,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-08-25",
+        date: "2021-09-15",
         matchId: item.matchId,
       };
       api
@@ -1550,7 +1649,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2021-08-25",
+        date: "2021-09-15",
         matchId: item.matchId,
       };
       api
@@ -1571,7 +1670,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2021-08-25",
+        date: "2021-09-15",
         matchId: item.matchId,
       };
       api
@@ -1599,7 +1698,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-08-25",
+        date: "2021-09-15",
       };
       api
         .GetToday(data)

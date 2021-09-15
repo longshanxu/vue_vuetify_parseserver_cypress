@@ -1,10 +1,10 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-02-28 13:29:07
- * @LastEditTime: 2021-08-22 18:04:44
+ * @LastEditTime: 2021-09-15 10:58:27
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver_cypress\server\Cloud\web.js
+ * @FilePath: \vue_vuetify_parseserver\server\Cloud\web.js
  */
 
 const init = require("./init");
@@ -17,11 +17,11 @@ Parse
             if (request.params.date != "" && request.params.date != undefined && request.params.date != null) {
                 var tempMoney = Parse.Object.extend("Money");
                 var query = new Parse.Query(tempMoney);
-                var datetemp = "2021-08-25";
+                var datetemp = "2021-09-15";
                 // query.equalTo("date", request.params.date);
-                query.notEqualTo("displayState", "完场")
+                // query.notEqualTo("displayState", "完场")
                 query.equalTo("date", datetemp);
-                // query.equalTo("displayState", "完场")
+                query.equalTo("displayState", "完场")
                 query.limit(300);
                 query.ascending("matchTime") //matchTime,league
                 const results = await query.find();
@@ -58,7 +58,10 @@ Parse
                         newqiushutouzhu: element.attributes.qiushutouzhu, //球数投注
                         qiushuai: element.attributes.qiushuai, //球数AI
                         yapanai: element.attributes.yapanai, //亚盘AI
-                        qiushuAll: element.attributes.qiushuAll
+                        qiushuAll: element.attributes.qiushuAll,
+                        liangduibisai: element.attributes.liangduibisai, //两队最近一场比赛
+                        homezuijinbisai: element.attributes.homezuijinbisai, //主队最近一场比赛
+                        guestzuijinbisai: element.attributes.guestzuijinbisai//客队最近一场比赛
                     }
                     data.push(temp);
 
