@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-09-15 11:21:53
+ * @LastEditTime: 2021-09-22 16:17:38
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -276,7 +276,7 @@
             >
           </v-col>
         </v-row>
-        <v-row dense class="ma-0" v-show="showtuijian">
+        <!-- <v-row dense class="ma-0" v-show="showtuijian">
           <v-col
             align-self="center"
             style="text-align: center; font-size: 14px; font-weight: 500"
@@ -310,7 +310,7 @@
               item.qiushuai[0] + "% ~ " + item.qiushuai[1] + "%"
             }}</span>
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-row dense class="ma-0" v-show="showtuijian">
           <v-col
             align-self="center"
@@ -711,7 +711,7 @@
               }}
             </v-col></v-row
           >
-          <v-row dense class="mx-0">
+          <!-- <v-row dense class="mx-0">
             <v-col
               align-self="center"
               style="text-align: right; font-weight: 700"
@@ -738,8 +738,8 @@
                   item1.test9[8]
               }}
             </v-col></v-row
-          >
-          <v-row dense class="mx-0">
+          > -->
+          <!-- <v-row dense class="mx-0">
             <v-col
               align-self="center"
               style="text-align: right; font-weight: 700; color: #a60056"
@@ -756,8 +756,8 @@
                 item1.test10[0] + "%" + " ~ " + item1.test10[1] + "% "
               }}
             </v-col></v-row
-          >
-          <v-row dense class="mx-0">
+          > -->
+          <!-- <v-row dense class="mx-0">
             <v-col
               align-self="center"
               style="text-align: right; font-weight: 700; color: #a60056"
@@ -774,7 +774,7 @@
                 "【 " + item1.test9[6] + " ~ " + item1.test9[7] + " 】 "
               }}
             </v-col></v-row
-          >
+          > -->
           <v-row dense class="mx-0">
             <v-col
               align-self="center"
@@ -839,7 +839,7 @@
             </v-col></v-row
           >
 
-          <v-row dense class="mx-0">
+          <!-- <v-row dense class="mx-0">
             <v-col
               align-self="center"
               style="text-align: right; font-weight: 700"
@@ -866,8 +866,8 @@
                   item1.test15[8]
               }}
             </v-col></v-row
-          >
-          <v-row dense class="mx-0"
+          > -->
+          <!-- <v-row dense class="mx-0"
             ><v-col
               align-self="center"
               style="text-align: right; font-weight: 700; color: #a60056"
@@ -883,8 +883,8 @@
                 item1.test16 && item1.test16[0] + "% ~ " + item1.test16[1] + "%"
               }}
             </v-col></v-row
-          >
-          <v-row dense class="mx-0">
+          > -->
+          <!-- <v-row dense class="mx-0">
             <v-col
               align-self="center"
               style="text-align: right; font-weight: 700; color: #a60056"
@@ -901,7 +901,7 @@
                 "【 " + item1.test15[6] + " ~ " + item1.test15[7] + " 】 "
               }}
             </v-col></v-row
-          >
+          > -->
           <v-row dense class="mx-0">
             <v-col
               align-self="center"
@@ -1003,7 +1003,7 @@
               {{ item1.test20 && item1.test20 }}
             </v-col></v-row
           >
-          <v-row dense class="mx-0"
+          <!-- <v-row dense class="mx-0"
             ><v-col
               align-self="center"
               style="text-align: right; font-weight: 700"
@@ -1017,8 +1017,8 @@
             >
               {{ item1.test21 && item1.test21 }}
             </v-col></v-row
-          >
-          <v-row dense class="mx-0"
+          > -->
+          <!-- <v-row dense class="mx-0"
             ><v-col
               align-self="center"
               style="text-align: right; font-weight: 700"
@@ -1032,22 +1032,8 @@
             >
               {{ item1.test22 && item1.test22 }}
             </v-col></v-row
-          >
-          <v-row dense class="mx-0"
-            ><v-col
-              align-self="center"
-              style="text-align: right; font-weight: 700; color: blue"
-              cols="5"
-              >球数AI：</v-col
-            >
-            <v-col
-              align-self="center"
-              style="text-align: left; font-size: 14px"
-              cols="7"
-            >
-              {{ item1.test23 && item1.test23 }}
-            </v-col></v-row
-          >
+          > -->
+         
         </v-card>
       </v-card>
     </v-dialog>
@@ -1627,7 +1613,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-09-15",
+        date: "2021-09-22",
         matchId: item.matchId,
       };
       api
@@ -1649,7 +1635,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2021-09-15",
+        date: "2021-09-22",
         matchId: item.matchId,
       };
       api
@@ -1670,7 +1656,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2021-09-15",
+        date: "2021-09-22",
         matchId: item.matchId,
       };
       api
@@ -1698,7 +1684,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-09-15",
+        date: "2021-09-22",
       };
       api
         .GetToday(data)
