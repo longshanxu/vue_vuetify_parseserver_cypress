@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2021-09-22 10:53:39
+ * @LastEditTime: 2021-10-13 19:55:36
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2021-09-22"
+        datetemp = "2021-10-13"
 
 
         var tempMoney = Parse
@@ -301,7 +301,7 @@ Parse
             }
 
             element.set("liangduibisai", liangduibisai);
-            oneresult.set("test24",liangduibisai);
+            oneresult.set("test24", liangduibisai);
             console.log('两队历史:'.green + finalitem);
 
             oneresult.set("test5", Object.assign([], finalitem));
@@ -359,7 +359,7 @@ Parse
                 };
             }
             element.set("homezuijinbisai", homezuijinbisai);
-            oneresult.set("test25",homezuijinbisai);
+            oneresult.set("test25", homezuijinbisai);
             let guestlist = historyitems.get('guestlist')
 
             for (let index = 0; index < guestlist.length; index++) {
@@ -410,12 +410,12 @@ Parse
             }
 
             element.set("guestzuijinbisai", guestzuijinbisai);
-            oneresult.set("test26",guestzuijinbisai);
+            oneresult.set("test26", guestzuijinbisai);
 
             console.log('散户心理:'.red + finalitem);
 
             oneresult.set("test6", Object.assign([], finalitem));
-       
+
             element.set("sanhuxinli", finalitem);
 
             if (bet365item != null && bet365item != undefined) {
@@ -520,17 +520,20 @@ Parse
                 //获取主队最多进球数及近10场总进球数
                 let homezuidajinqiushu = 0;
                 let home10jinqiu = 0;
+                let home10diuqiu = 0;
                 for (let index = 0; index < homelist.length; index++) {
                     const element = homelist[index];
 
                     if (home == element.home) {
                         home10jinqiu += element.goal[0];
+                        home10diuqiu += element.goal[1];
                         if (homezuidajinqiushu < element.goal[0]) {
                             homezuidajinqiushu = element.goal[0]
                         }
                     }
                     if (home == element.guest) {
                         home10jinqiu += element.goal[1];
+                        home10diuqiu += element.goal[0];
                         if (homezuidajinqiushu < element.goal[1]) {
                             homezuidajinqiushu = element.goal[1]
                         }
@@ -541,17 +544,20 @@ Parse
                 //获取主队最多进球数及近10场总进球数
                 let guestzuidajinqiushu = 0;
                 let guest10jinqiu = 0;
+                let guest10diuqiu = 0;
                 for (let index = 0; index < guestlist.length; index++) {
                     const element = guestlist[index];
 
                     if (guest == element.home) {
                         guest10jinqiu += element.goal[0];
+                        guest10diuqiu += element.goal[1];
                         if (guestzuidajinqiushu < element.goal[0]) {
                             guestzuidajinqiushu = element.goal[0]
                         }
                     }
                     if (guest == element.guest) {
                         guest10jinqiu += element.goal[1];
+                        guest10diuqiu += element.goal[0];
                         if (guestzuidajinqiushu < element.goal[1]) {
                             guestzuidajinqiushu = element.goal[1]
                         }
@@ -967,7 +973,7 @@ Parse
 
                 console.log("主客队十场数据：".white + home10jinqiu + " ( " + homezuidajinqiushu + " )" + " , " + guest10jinqiu + " ( " + guestzuidajinqiushu + " ) ");
 
-                element.set("qiushuAll", [home10jinqiu, homezuidajinqiushu, guest10jinqiu, guestzuidajinqiushu]);
+                element.set("qiushuAll", [home10jinqiu, homezuidajinqiushu, guest10jinqiu, guestzuidajinqiushu, home10diuqiu,guest10diuqiu]);
 
                 oneresult.set("test23", home10jinqiu + " ( " + homezuidajinqiushu + " )" + " , " + guest10jinqiu + " ( " + guestzuidajinqiushu + " ) ");
 

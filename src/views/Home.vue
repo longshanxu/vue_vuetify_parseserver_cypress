@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-09-22 16:17:38
+ * @LastEditTime: 2021-10-13 20:14:51
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -251,12 +251,12 @@
                 item.qiushuAll[0] +
                   " ( " +
                   item.qiushuAll[1] +
-                  " ) " +
+                  " ) " + item.qiushuAll[4] +
                   " ~ " +
                   item.qiushuAll[2] +
                   " ( " +
                   item.qiushuAll[3] +
-                  " ) "
+                  " ) "+ item.qiushuAll[5]
               }}
               <span style="color: green; padding: 0px 2px">
                 =>
@@ -1613,7 +1613,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-09-22",
+        date: "2021-10-13",
         matchId: item.matchId,
       };
       api
@@ -1635,7 +1635,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2021-09-22",
+        date: "2021-10-13",
         matchId: item.matchId,
       };
       api
@@ -1656,7 +1656,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2021-09-22",
+        date: "2021-10-13",
         matchId: item.matchId,
       };
       api
@@ -1684,7 +1684,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-09-22",
+        date: "2021-10-13",
       };
       api
         .GetToday(data)
