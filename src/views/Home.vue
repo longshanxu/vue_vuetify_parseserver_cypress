@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-10-13 20:14:51
+ * @LastEditTime: 2021-10-28 20:53:52
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -1613,7 +1613,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-10-13",
+        date: "2021-11-06",
         matchId: item.matchId,
       };
       api
@@ -1635,7 +1635,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2021-10-13",
+        date: "2021-11-06",
         matchId: item.matchId,
       };
       api
@@ -1656,7 +1656,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2021-10-13",
+        date: "2021-11-06",
         matchId: item.matchId,
       };
       api
@@ -1684,7 +1684,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-10-13",
+        date: "2021-11-06",
       };
       api
         .GetToday(data)
@@ -1735,7 +1735,7 @@ export default {
       } else if (val == 5) {
         this.datalist = this.list.filter((item) => {
           if (item.qiushutouzhu) {
-            return item.qiushutouzhu[0] > 90 || item.qiushutouzhu[1] > 90;
+            return item.qiushutouzhu[0] >= 90 || item.qiushutouzhu[1] >= 90;
           }
         });
         this.count = this.datalist.length;
