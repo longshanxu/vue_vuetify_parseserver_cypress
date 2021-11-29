@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-10-28 20:53:52
+ * @LastEditTime: 2021-11-29 15:20:05
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -78,7 +78,7 @@
             align-self="center"
             style="text-align: center; font-weight: 700"
             cols="4"
-            >{{ item.home.substr(0, 6) }}</v-col
+            >{{ item.home && item.home.substr(0, 6) }}</v-col
           >
           <v-col
             align-self="center"
@@ -1613,7 +1613,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-11-06",
+        date: "2021-11-29",
         matchId: item.matchId,
       };
       api
@@ -1635,7 +1635,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2021-11-06",
+        date: "2021-11-29",
         matchId: item.matchId,
       };
       api
@@ -1656,7 +1656,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2021-11-06",
+        date: "2021-11-29",
         matchId: item.matchId,
       };
       api
@@ -1684,7 +1684,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-11-06",
+        date: "2021-11-29",
       };
       api
         .GetToday(data)
