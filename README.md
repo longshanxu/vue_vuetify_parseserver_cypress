@@ -1,10 +1,10 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2019-12-21 14:51:07
- * @LastEditTime: 2020-05-04 15:54:45
+ * @LastEditTime: 2022-02-20 21:57:49
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver\README.md
+ * @FilePath: \vue_vuetify_parseserver_cypress\README.md
  -->
 # VUE + VUE_Cli 4.0 + Vuetify UI + Express + ParseServer + Mongodb 
 # Cypress + e2e + CodeCoverage 

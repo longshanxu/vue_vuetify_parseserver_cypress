@@ -1,10 +1,10 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2021-11-29 15:20:05
+ * @LastEditTime: 2022-02-20 11:33:26
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
+ * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
  -->
 <template>
   <v-container class="fill-height grey lighten-3 pa-0" fluid>
@@ -1613,7 +1613,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2021-11-29",
+        date: "2022-02-20",
         matchId: item.matchId,
       };
       api
@@ -1635,7 +1635,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2021-11-29",
+        date: "2022-02-20",
         matchId: item.matchId,
       };
       api
@@ -1656,7 +1656,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2021-11-29",
+        date: "2022-02-20",
         matchId: item.matchId,
       };
       api
@@ -1684,7 +1684,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2021-11-29",
+        date: "2022-02-20",
       };
       api
         .GetToday(data)
@@ -1734,8 +1734,8 @@ export default {
         this.count = this.datalist.length;
       } else if (val == 5) {
         this.datalist = this.list.filter((item) => {
-          if (item.qiushutouzhu) {
-            return item.qiushutouzhu[0] >= 90 || item.qiushutouzhu[1] >= 90;
+          if (item.qiushutouzhu || item.yapantouzhu) {
+            return item.qiushutouzhu[0] >= 80 || item.qiushutouzhu[1] >= 80 || item.yapantouzhu[0] >= 80 || item.yapantouzhu[1] >= 80;
           }
         });
         this.count = this.datalist.length;
