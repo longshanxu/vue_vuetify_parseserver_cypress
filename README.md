@@ -1,10 +1,10 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2019-12-21 14:51:07
- * @LastEditTime: 2022-02-20 21:57:49
+ * @LastEditTime: 2022-03-21 01:38:50
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver_cypress\README.md
+ * @FilePath: \vue_vuetify_parseserver\README.md
  -->
 # VUE + VUE_Cli 4.0 + Vuetify UI + Express + ParseServer + Mongodb 
 # Cypress + e2e + CodeCoverage 
@@ -52,7 +52,7 @@ npm run dev
 Parse Server Address: http://localhost/parse (config in server.js)
 
 ### Dashboard Address
-http://localhost/dashboard
+http://localhost/x
 user: admin
 pwd : admin
 

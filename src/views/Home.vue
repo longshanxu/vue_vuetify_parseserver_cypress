@@ -1,17 +1,17 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-02-20 11:33:26
+ * @LastEditTime: 2022-03-21 14:00:14
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
+ * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
  -->
 <template>
   <v-container class="fill-height grey lighten-3 pa-0" fluid>
     <v-app-bar dark app fixed color="primary" dense>
       <v-icon @dblclick="cpu" color="green">mdi-crane</v-icon>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="white--text">我命由我不由天</v-toolbar-title>
+      <v-toolbar-title class="white--text" @click="status = 0">我命由我不由天 ({{count}})</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-icon @click="asyncData" color="red">mdi-hand-heart</v-icon>
       <template v-slot:extension>
@@ -38,7 +38,7 @@
             style="text-align: center; font-size: 14px"
             @click="status = 3"
             :class="status == 3 ? 'activeclass' : ''"
-            >球数升</v-col
+            >球升</v-col
           >
           <v-col
             cols="2"
@@ -46,7 +46,7 @@
             style="text-align: center; font-size: 14px"
             @click="status = 4"
             :class="status == 4 ? 'activeclass' : ''"
-            >球数降</v-col
+            >球降</v-col
           >
           <v-col
             cols="2"
@@ -54,15 +54,17 @@
             style="text-align: center; font-size: 14px"
             @click="status = 5"
             :class="status == 5 ? 'activeclass' : ''"
-            >超100%</v-col
+            >球100%</v-col
           >
           <v-col
             cols="2"
             class="px-0"
-            style="text-align: center; font-size: 14px; color: yellow"
-            @click="status = 0"
-            >{{ count }}</v-col
+            style="text-align: center; font-size: 14px"
+            @click="status = 6"
+            :class="status == 6 ? 'activeclass' : ''"
+            >盘100%</v-col
           >
+       
         </v-row>
       </template>
     </v-app-bar>
@@ -1613,7 +1615,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-02-20",
+        date: "2022-03-21",
         matchId: item.matchId,
       };
       api
@@ -1635,7 +1637,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-02-20",
+        date: "2022-03-21",
         matchId: item.matchId,
       };
       api
@@ -1656,7 +1658,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-02-20",
+        date: "2022-03-21",
         matchId: item.matchId,
       };
       api
@@ -1684,7 +1686,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-02-20",
+        date: "2022-03-21",
       };
       api
         .GetToday(data)
@@ -1734,8 +1736,19 @@ export default {
         this.count = this.datalist.length;
       } else if (val == 5) {
         this.datalist = this.list.filter((item) => {
-          if (item.qiushutouzhu || item.yapantouzhu) {
-            return item.qiushutouzhu[0] >= 80 || item.qiushutouzhu[1] >= 80 || item.yapantouzhu[0] >= 80 || item.yapantouzhu[1] >= 80;
+          if (item.qiushutouzhu) {
+            // return item.qiushutouzhu[0] >= 80 || item.qiushutouzhu[1] >= 80 || item.yapantouzhu[0] >= 80 || item.yapantouzhu[1] >= 80;
+            return item.qiushutouzhu[0] >= 80 || item.qiushutouzhu[1] >= 80 ;
+            
+          }
+        });
+        this.count = this.datalist.length;
+      }else if (val == 6) {
+        this.datalist = this.list.filter((item) => {
+          if (item.yapantouzhu) {
+            // return item.qiushutouzhu[0] >= 80 || item.qiushutouzhu[1] >= 80 || item.yapantouzhu[0] >= 80 || item.yapantouzhu[1] >= 80;
+            return item.yapantouzhu[0] >= 80 || item.yapantouzhu[1] >= 80 ;
+            
           }
         });
         this.count = this.datalist.length;

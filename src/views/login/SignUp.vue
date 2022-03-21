@@ -1,10 +1,10 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2019-11-26 10:13:57
- * @LastEditTime: 2019-11-27 18:40:46
+ * @LastEditTime: 2022-03-21 10:19:09
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \moch-vue-mobile\src\views\SignUp.vue
+ * @FilePath: \vue_vuetify_parseserver\src\views\login\SignUp.vue
  -->
 <template>
   <v-container class="pa-0">
