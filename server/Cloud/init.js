@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2022-03-21 14:36:27
+ * @LastEditTime: 2022-05-13 00:33:47
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2022-03-21/prev
-//https://vipc.cn/i/live/football/date/2022-03-21/next
+//https://vipc.cn/i/live/football/date/2022-05-13/prev
+//https://vipc.cn/i/live/football/date/2022-05-13/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2022-03-21";
+        var datetemp = "2022-05-13";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -123,7 +123,7 @@ async function GetTodayMoney() {
         }
         // https://vipc.cn/i/live/football/date/today/next
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/2022-03-21/prev',
+            url: 'https://vipc.cn/i/live/football/date/2022-05-13/prev',
             headers: {
                 'User-Agent': 'request'
             },
@@ -192,7 +192,7 @@ async function GetTodayMoney() {
 
 //获取竞彩热度
 
-async function GetHistoryByID(matchId, datetemp, proxiedRequest) {
+async function GetHistoryByID(matchId, datetemp, proxiedRequest, ip) {
     try {
 
         var historyMoney = Parse.Object.extend("HistoryMoney");
@@ -202,7 +202,8 @@ async function GetHistoryByID(matchId, datetemp, proxiedRequest) {
         const options = {
             url: 'https://vipc.cn/i/match/football/' + matchId + '/history',
             headers: {
-                'User-Agent': 'request'
+                'User-Agent': 'request',
+                'X-Forwarded-For': ip
             },
             gzip: true,
         };
@@ -241,7 +242,7 @@ async function GetHistoryByID(matchId, datetemp, proxiedRequest) {
     }
 }
 
-async function GetOddsByID(matchId, datetemp, proxiedRequest) {
+async function GetOddsByID(matchId, datetemp, proxiedRequest, ip) {
     try {
 
         //清楚当天数据
@@ -251,7 +252,8 @@ async function GetOddsByID(matchId, datetemp, proxiedRequest) {
         const options = {
             url: 'https://vipc.cn/i/match/football/' + matchId + '/odds/euro',
             headers: {
-                'User-Agent': 'request'
+                'User-Agent': 'request',
+                'X-Forwarded-For': ip
             },
             gzip: true
         };
@@ -314,7 +316,7 @@ async function GetOddsByID(matchId, datetemp, proxiedRequest) {
     }
 }
 
-async function GetPankouByID(matchId, datetemp, proxiedRequest) {
+async function GetPankouByID(matchId, datetemp, proxiedRequest, ip) {
     try {
 
         var PankouMoney = Parse.Object.extend("PankouMoney");
@@ -324,7 +326,8 @@ async function GetPankouByID(matchId, datetemp, proxiedRequest) {
         const options = {
             url: 'https://vipc.cn/i/match/football/' + matchId + '/odds/pankou',
             headers: {
-                'User-Agent': 'request'
+                'User-Agent': 'request',
+                'X-Forwarded-For': ip
             },
             gzip: true
         };
@@ -403,7 +406,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2022-03-21";
+    var datetemp = "2022-05-13";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
@@ -452,7 +455,7 @@ async function clearAllData() {
 
         await object.destroy();
     }
-    
+
 
 
 }
@@ -478,15 +481,15 @@ async function OneByOne() {
         datetemp = year + "-0" + month + "-0" + day;
     }
 
-    datetemp = "2022-03-21"
+    datetemp = "2022-05-13"
 
     var tempMoney = Parse
         .Object
         .extend("Money");
     var query = new Parse.Query(tempMoney);
     query.equalTo("date", datetemp);
-    // query.notEqualTo("displayState", "完场")
-    query.equalTo("displayState", "完场")
+    query.notEqualTo("displayState", "完场")
+    // query.equalTo("displayState", "完场")
     // query.ascending("matchTime") //matchTime,league
     //  修改访问的数据数量。
     // query.greaterThan("matchTime",new Date());
@@ -595,107 +598,191 @@ async function OneByOne() {
     }
 
     setTimeout(() => {
-        if(count.length>0){
+        if (count.length > 0) {
 
             console.log("执行遗漏的数据------------------");
             for (let index = 0; index < count.length; index++) {
 
                 const element = count[index];
                 let mamatchId = element;
-                console.log("正在获取的id:"+mamatchId);
-        
+                console.log("正在获取的id:" + mamatchId);
+
                 //每2秒 一条一条拿数据
-        
+
                 if (index == 0) {
                     console.log("一共" + count.length + "条数据");
                 }
-        
+
                 setTimeout(() => {
-        
+
                     console.log("正在获取第" + index + "条数据");
-        
-        
+
+
                     // GetHistoryByID(mamatchId, datetemp, proxiedRequest);
-        
+
                     // GetPankouByID(mamatchId,datetemp, proxiedRequest);  
-        
+
                     GetOddsByID(mamatchId, datetemp, proxiedRequest);
-        
+
                     if (index == count.length - 1) {
                         console.log("获取赔率数据完毕");
-        
+
                         for (let index = 0; index < count.length; index++) {
-        
+
                             const element = count[index];
                             let mamatchId = element
-        
+
                             //每2秒 一条一条拿数据
-        
+
                             if (index == 0) {
                                 console.log("一共" + count.length + "条数据");
                             }
-        
+
                             setTimeout(() => {
-        
+
                                 console.log("正在获取第" + index + "条数据");
-        
-        
+
+
                                 GetHistoryByID(mamatchId, datetemp, proxiedRequest);
-        
+
                                 // GetPankouByID(mamatchId,datetemp, proxiedRequest);  
-        
+
                                 // GetOddsByID(mamatchId,datetemp, proxiedRequest);  
-        
+
                                 if (index == count.length - 1) {
                                     console.log("获取历史数据完毕");
-        
+
                                     for (let index = 0; index < count.length; index++) {
-        
+
                                         const element = count[index];
                                         let mamatchId = element;
-        
+
                                         //每2秒 一条一条拿数据
-        
+
                                         if (index == 0) {
                                             console.log("一共" + count.length + "条数据");
                                         }
-        
+
                                         setTimeout(() => {
-        
+
                                             console.log("正在获取第" + index + "条数据");
-        
-        
+
+
                                             // GetHistoryByID(mamatchId, datetemp, proxiedRequest);
-        
+
                                             GetPankouByID(mamatchId, datetemp, proxiedRequest);
-        
+
                                             // GetOddsByID(mamatchId, datetemp, proxiedRequest);
-        
+
                                             if (index == count.length - 1) {
                                                 console.log("获取盘口数据完毕");
                                             }
-        
+
                                         }, index * 1100);
                                     }
                                 }
-        
+
                             }, index * 1100);
-        
+
                         }
                     }
-        
+
                 }, index * 1100);
-        
-        
+
+
             }
         }
     }, items.length * 3 * 1200);
 }
 
+
+Parse
+    .Cloud
+    .define("GetDataByTen", async (request) => {
+
+        GetDataByTen();
+    })
+
+///每10s获取一次数据
+async function GetDataByTen() {
+    var datetemp = "2022-05-13";
+
+    var tempMoney = Parse
+        .Object
+        .extend("Money");
+    var query = new Parse.Query(tempMoney);
+    query.equalTo("date", datetemp);
+    query.notEqualTo("displayState", "完场")
+    // query.equalTo("displayState", "完场")
+    // query.ascending("matchTime") //matchTime,league
+    //  修改访问的数据数量。
+    // query.greaterThan("matchTime",new Date());
+    query.limit(300);
+    const items = await query.find();
+    let templength = items.length;
+
+    for (let index = 0; index < items.length; index++) {
+
+        const element = items[index];
+        let mamatchId = element.get('matchId');
+
+        //每2秒 一条一条拿数据
+
+        if (index == 0) {
+            console.log("一共" + templength + "条数据");
+        }
+
+        setTimeout(() => {
+            var ip = Math.random(1, 254)
+                + "." + Math.random(1, 254)
+                + "." + Math.random(1, 254)
+                + "." + Math.random(1, 254)
+
+            console.log("获取历史数据-------第" + index + "条数据");
+
+            GetHistoryByID(mamatchId, datetemp, httprequest, ip);
+
+
+        }, index * 1000);
+
+        setTimeout(() => {
+            var ip = Math.random(1, 254)
+                + "." + Math.random(1, 254)
+                + "." + Math.random(1, 254)
+                + "." + Math.random(1, 254)
+
+            console.log("获取盘口数据-------第" + index + "条数据");
+
+
+
+            GetPankouByID(mamatchId, datetemp, httprequest, ip);
+
+
+        }, (index + templength) * 1000);
+
+        setTimeout(() => {
+            var ip = Math.random(1, 254)
+                + "." + Math.random(1, 254)
+                + "." + Math.random(1, 254)
+                + "." + Math.random(1, 254)
+
+            console.log("获取赔率数据-------第" + index + "条数据");
+
+
+            GetOddsByID(mamatchId, datetemp, httprequest, ip);
+
+        }, (index + templength + templength) * 1000);
+
+
+
+    }
+}
+
 module.exports = {
     OneByOne,
     clearAllData,
-    GetTodayMoney
+    GetTodayMoney,
+    GetDataByTen
 }
 
 /******************************
