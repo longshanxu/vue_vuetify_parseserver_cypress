@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2022-05-13 00:33:47
+ * @LastEditTime: 2022-06-02 11:00:20
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2022-05-13/prev
-//https://vipc.cn/i/live/football/date/2022-05-13/next
+//https://vipc.cn/i/live/football/date/2022-05-25/prev
+//https://vipc.cn/i/live/football/date/2022-05-25/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2022-05-13";
+        var datetemp = "2022-05-25";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -123,60 +123,53 @@ async function GetTodayMoney() {
         }
         // https://vipc.cn/i/live/football/date/today/next
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/2022-05-13/prev',
+            url: 'https://vipc.cn/i/live/football/date/2022-05-25/prev',
             headers: {
                 'User-Agent': 'request'
             },
             gzip: true
         };
 
-
-        httprequest(options, async function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                let data = await JSON.parse(body);
-                for (let index = 0; index < data.items.length; index++) {
-                    const element = data.items[index];
-
-                    var tempMoney = Parse.Object.extend("Money");
-                    var query = new Parse.Query(tempMoney);
-                    query.equalTo("date", element.date);
-                    query.limit(300);
-                    const results = await query.find();
-                    for (var i = 0; i < results.length; i++) {
-                        var object = results[i];
-
-                        await object.destroy();
+        setTimeout(() => {
+            httprequest(options, async function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    let data = await JSON.parse(body);
+                    for (let index = 0; index < data.items.length; index++) {
+                        const element = data.items[index];
+    
+                     
+                        for (let j = 0; j < element.matches.length; j++) {
+                            const temp = element.matches[j];
+                            let Todaymoney = Parse
+                                .Object
+                                .extend("Money");
+                            let money = new Todaymoney();
+    
+                            money.set("date", element.date);
+                            money.set("dateDesc", element.dateDesc);
+                            money.set("matchId", temp.model.matchId); //全局唯一ID
+                            money.set("home", temp.model.home); //主队名称
+                            money.set("guest", temp.model.guest); //客队名称
+                            money.set("league", temp.model.league); //比赛名称
+                            money.set("matchTime", temp.model.matchTime); //开赛日期
+                            money.set("homeScore", temp.model.homeScore); //主队得分
+                            money.set("guestScore", temp.model.guestScore); //客队得分
+                            money.set("homeLogo", temp.model.homeLogo); //主队logo
+                            money.set("guestLogo", temp.model.guestLogo); //客队logo
+                            money.set("displayState", temp.model.displayState); //当前状态
+                            money.set("homeRank", temp.model.homeRank); //主队排名
+                            money.set("guestRank", temp.model.guestRank); //客队排名
+                            money.save();
+                        }
+    
                     }
-
-                    for (let j = 0; j < element.matches.length; j++) {
-                        const temp = element.matches[j];
-                        let Todaymoney = Parse
-                            .Object
-                            .extend("Money");
-                        let money = new Todaymoney();
-
-                        money.set("date", element.date);
-                        money.set("dateDesc", element.dateDesc);
-                        money.set("matchId", temp.model.matchId); //全局唯一ID
-                        money.set("home", temp.model.home); //主队名称
-                        money.set("guest", temp.model.guest); //客队名称
-                        money.set("league", temp.model.league); //比赛名称
-                        money.set("matchTime", temp.model.matchTime); //开赛日期
-                        money.set("homeScore", temp.model.homeScore); //主队得分
-                        money.set("guestScore", temp.model.guestScore); //客队得分
-                        money.set("homeLogo", temp.model.homeLogo); //主队logo
-                        money.set("guestLogo", temp.model.guestLogo); //客队logo
-                        money.set("displayState", temp.model.displayState); //当前状态
-                        money.set("homeRank", temp.model.homeRank); //主队排名
-                        money.set("guestRank", temp.model.guestRank); //客队排名
-                        money.save();
-                    }
-
+    
+    
                 }
+            });
+        }, 2000);
 
-
-            }
-        });
+   
         return {
             code: 200,
             msg: "获取数据成功"
@@ -406,7 +399,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2022-05-13";
+    var datetemp = "2022-05-25";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
@@ -481,15 +474,15 @@ async function OneByOne() {
         datetemp = year + "-0" + month + "-0" + day;
     }
 
-    datetemp = "2022-05-13"
+    datetemp = "2022-05-25"
 
     var tempMoney = Parse
         .Object
         .extend("Money");
     var query = new Parse.Query(tempMoney);
     query.equalTo("date", datetemp);
-    query.notEqualTo("displayState", "完场")
-    // query.equalTo("displayState", "完场")
+    // query.notEqualTo("displayState", "完场")
+    query.equalTo("displayState", "完场")
     // query.ascending("matchTime") //matchTime,league
     //  修改访问的数据数量。
     // query.greaterThan("matchTime",new Date());
@@ -705,15 +698,15 @@ Parse
 
 ///每10s获取一次数据
 async function GetDataByTen() {
-    var datetemp = "2022-05-13";
+    var datetemp = "2022-05-25";
 
     var tempMoney = Parse
         .Object
         .extend("Money");
     var query = new Parse.Query(tempMoney);
     query.equalTo("date", datetemp);
-    query.notEqualTo("displayState", "完场")
-    // query.equalTo("displayState", "完场")
+    // query.notEqualTo("displayState", "完场")
+    query.equalTo("displayState", "完场")
     // query.ascending("matchTime") //matchTime,league
     //  修改访问的数据数量。
     // query.greaterThan("matchTime",new Date());
