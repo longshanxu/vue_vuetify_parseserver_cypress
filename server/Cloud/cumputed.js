@@ -1,10 +1,10 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2022-05-25 14:27:35
+ * @LastEditTime: 2022-06-05 11:27:23
  * @LastEditors: Json.Xu
  * @Description:
- * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
+ * @FilePath: \vue_vuetify_parseserver_cypress\server\Cloud\cumputed.js
  */
 // 计算概率 胜平负的概率，依赖返回率，凯利 大小球的概率，依赖返回率， 亚盘的概率，依赖返回率 最近战绩和历史战绩 赔率转换成概率公式 概率 = 1 /
 // 赔率
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2022-05-25"
+        datetemp = "2022-06-05"
 
 
         var tempMoney = Parse
@@ -523,20 +523,22 @@ Parse
                 let home10diuqiu = 0;
                 for (let index = 0; index < homelist.length; index++) {
                     const element = homelist[index];
+                    if (index < 5) {
+                        if (home == element.home) {
+                            home10jinqiu += element.goal[0];
+                            home10diuqiu += element.goal[1];
+                            if (homezuidajinqiushu < element.goal[0]) {
+                                homezuidajinqiushu = element.goal[0]
+                            }
+                        }
+                        if (home == element.guest) {
+                            home10jinqiu += element.goal[1];
+                            home10diuqiu += element.goal[0];
+                            if (homezuidajinqiushu < element.goal[1]) {
+                                homezuidajinqiushu = element.goal[1]
+                            }
+                        }
 
-                    if (home == element.home) {
-                        home10jinqiu += element.goal[0];
-                        home10diuqiu += element.goal[1];
-                        if (homezuidajinqiushu < element.goal[0]) {
-                            homezuidajinqiushu = element.goal[0]
-                        }
-                    }
-                    if (home == element.guest) {
-                        home10jinqiu += element.goal[1];
-                        home10diuqiu += element.goal[0];
-                        if (homezuidajinqiushu < element.goal[1]) {
-                            homezuidajinqiushu = element.goal[1]
-                        }
                     }
 
                 }
@@ -547,19 +549,20 @@ Parse
                 let guest10diuqiu = 0;
                 for (let index = 0; index < guestlist.length; index++) {
                     const element = guestlist[index];
-
-                    if (guest == element.home) {
-                        guest10jinqiu += element.goal[0];
-                        guest10diuqiu += element.goal[1];
-                        if (guestzuidajinqiushu < element.goal[0]) {
-                            guestzuidajinqiushu = element.goal[0]
+                    if (index < 5) {
+                        if (guest == element.home) {
+                            guest10jinqiu += element.goal[0];
+                            guest10diuqiu += element.goal[1];
+                            if (guestzuidajinqiushu < element.goal[0]) {
+                                guestzuidajinqiushu = element.goal[0]
+                            }
                         }
-                    }
-                    if (guest == element.guest) {
-                        guest10jinqiu += element.goal[1];
-                        guest10diuqiu += element.goal[0];
-                        if (guestzuidajinqiushu < element.goal[1]) {
-                            guestzuidajinqiushu = element.goal[1]
+                        if (guest == element.guest) {
+                            guest10jinqiu += element.goal[1];
+                            guest10diuqiu += element.goal[0];
+                            if (guestzuidajinqiushu < element.goal[1]) {
+                                guestzuidajinqiushu = element.goal[1]
+                            }
                         }
                     }
 
@@ -931,6 +934,10 @@ Parse
                         let temp = math.abs(chaibie2) / 0.25;
                         chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
                     }
+
+                    
+
+
                     let chaibie3 = (homezuijinqiushu + guestzuijinqiushu) / 2 - qiushupankou;
 
                     if (chaibie3 > 0) {
@@ -942,10 +949,24 @@ Parse
                         chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
                     }
 
-                    //上升一个盘口，或者下降一个盘口。
+                    let shixiangailv = 100;
+                    //两队最近两场概率。
+                  
+                   let chabibie4 = (home10jinqiu + guest10jinqiu - homezuidajinqiushu - guestzuidajinqiushu) / 4  - qiushupankou;
+                    
+
+                    if (chabibie4 > 0) {
+                        let temp = math.abs(chabibie4) / 0.25;
+                        shixiangailv = 100 + temp * tempjiange 
+                    }
+                    else if (chabibie4 < 0) {
+                        let temp = math.abs(chabibie4) / 0.25;
+                        shixiangailv = 100 - temp * tempjiange 
+                    }
+
 
                     console.log("散户球数投注情况:" + "-------".yellow + math.format(chaibieitem[0], 2) + "%," + math.format(chaibieitem[1], 2) + "%");
-                    element.set("qiushutouzhu", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
+                    element.set("qiushutouzhu", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2),shixiangailv]);
                     oneresult.set("test17", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
 
                 }
@@ -973,7 +994,7 @@ Parse
 
                 console.log("主客队十场数据：".white + home10jinqiu + " ( " + homezuidajinqiushu + " )" + " , " + guest10jinqiu + " ( " + guestzuidajinqiushu + " ) ");
 
-                element.set("qiushuAll", [home10jinqiu, homezuidajinqiushu, guest10jinqiu, guestzuidajinqiushu, home10diuqiu,guest10diuqiu]);
+                element.set("qiushuAll", [home10jinqiu, homezuidajinqiushu, guest10jinqiu, guestzuidajinqiushu, home10diuqiu, guest10diuqiu]);
 
                 oneresult.set("test23", home10jinqiu + " ( " + homezuidajinqiushu + " )" + " , " + guest10jinqiu + " ( " + guestzuidajinqiushu + " ) ");
 
