@@ -1,10 +1,10 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-06-05 18:47:19
+ * @LastEditTime: 2022-06-06 14:53:41
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
+ * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
  -->
 <template>
   <v-container class="fill-height grey lighten-3 pa-0" fluid>
@@ -274,7 +274,7 @@
             style="text-align: center; font-size: 14px; font-weight: 500"
             cols="3"
           >
-            最大区间:
+            实现程度:
           </v-col>
           <v-col
             align-self="center"
@@ -297,11 +297,13 @@
               <span style="color: green; padding: 0px 2px">
                 ({{ item.qiushutouzhu && item.qiushutouzhu[2] }}%)
               </span>
+              -> {{item.qiushutouzhu && item.qiushutouzhu[3]}}  <span style="color: green; padding: 0px 2px">
               ->
               {{
                 item.qiushuAll && (item.qiushuAll[0] + item.qiushuAll[2]) / 4
               }}</span
             >
+            </span>
           </v-col>
         </v-row>
         <!-- <v-row dense class="ma-0" v-show="showtuijian">
@@ -1544,9 +1546,7 @@
         <v-btn class="mt-6" text color="error" @click="asyncDataTrue"
           >同步</v-btn
         >
-        <v-btn class="mt-6" text color="success" @click="asyncGameData"
-          >只同步比赛结果</v-btn
-        >
+       
         <v-btn class="mt-6" text color="info" @click="cancelasyncDataTrue"
           >取消</v-btn
         >
@@ -1654,7 +1654,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-06-05",
+        date: "2022-06-06",
         matchId: item.matchId,
       };
       api
@@ -1676,7 +1676,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-06-05",
+        date: "2022-06-06",
         matchId: item.matchId,
       };
       api
@@ -1697,7 +1697,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-06-05",
+        date: "2022-06-06",
         matchId: item.matchId,
       };
       api
@@ -1732,7 +1732,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-06-05",
+        date: "2022-06-06",
       };
       api
         .GetToday(data)
