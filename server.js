@@ -1,10 +1,10 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-29 15:50:37
- * @LastEditTime: 2022-06-06 20:12:54
+ * @LastEditTime: 2022-06-15 10:06:22
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver_cypress\server.js
+ * @FilePath: \vue_vuetify_parseserver\server.js
  */
 const express = require('express');
 const serveIndex = require('serve-index');

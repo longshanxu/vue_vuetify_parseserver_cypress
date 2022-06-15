@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-06-06 14:53:41
+ * @LastEditTime: 2022-06-15 18:13:01
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -1654,7 +1654,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-06-06",
+        date: "2022-06-15",
         matchId: item.matchId,
       };
       api
@@ -1676,7 +1676,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-06-06",
+        date: "2022-06-15",
         matchId: item.matchId,
       };
       api
@@ -1697,7 +1697,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-06-06",
+        date: "2022-06-15",
         matchId: item.matchId,
       };
       api
@@ -1732,7 +1732,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-06-06",
+        date: "2022-06-15",
       };
       api
         .GetToday(data)
@@ -1784,6 +1784,7 @@ export default {
         this.datalist = this.list.filter((item) => {
           if (item.qiushutouzhu) {
             // return item.qiushutouzhu[0] >= 80 || item.qiushutouzhu[1] >= 80 || item.yapantouzhu[0] >= 80 || item.yapantouzhu[1] >= 80;
+       
             return item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100;
           }
         });
