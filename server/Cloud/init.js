@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2022-06-15 18:15:18
+ * @LastEditTime: 2022-06-27 00:03:54
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2022-06-15/prev
-//https://vipc.cn/i/live/football/date/2022-06-15/next
+//https://vipc.cn/i/live/football/date/2022-06-27/prev
+//https://vipc.cn/i/live/football/date/2022-06-27/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2022-06-15";
+        var datetemp = "2022-06-27";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -123,7 +123,7 @@ async function GetTodayMoney() {
         }
         // https://vipc.cn/i/live/football/date/today/next
         const options = {
-            url: 'https://vipc.cn/i/live/football/date/2022-06-15/prev',
+            url: 'https://vipc.cn/i/live/football/date/2022-06-27/prev',
             headers: {
                 'User-Agent': 'request'
             },
@@ -397,7 +397,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2022-06-15";
+    var datetemp = "2022-06-27";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
@@ -472,7 +472,7 @@ async function OneByOne() {
         datetemp = year + "-0" + month + "-0" + day;
     }
 
-    datetemp = "2022-06-15"
+    datetemp = "2022-06-27"
 
     var tempMoney = Parse
         .Object
@@ -696,7 +696,7 @@ Parse
 
 ///每10s获取一次数据
 async function GetDataByTen() {
-    var datetemp = "2022-06-15";
+    var datetemp = "2022-06-27";
 
     var tempMoney = Parse
         .Object

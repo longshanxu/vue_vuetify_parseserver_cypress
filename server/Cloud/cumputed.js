@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2022-06-15 16:05:33
+ * @LastEditTime: 2022-06-27 20:17:50
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2022-06-15"
+        datetemp = "2022-06-27"
 
 
         var tempMoney = Parse
@@ -83,7 +83,7 @@ Parse
 
             oneresult.set("matchId", matchId);
 
-            // if (matchId != "350074724") { continue; }
+            // if (matchId != "328942328") { continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -415,8 +415,12 @@ Parse
             console.log('散户心理:'.red + finalitem);
 
             oneresult.set("test6", Object.assign([], finalitem));
+            finalitem.push(element.get('homeRank') + "~" + element.get('guestRank'));
+            let temparray = finalitem;
+            element.set("sanhuxinli", temparray);
 
-            element.set("sanhuxinli", finalitem);
+
+
 
             if (bet365item != null && bet365item != undefined) {
                 console.log('投注额:' + math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3) + ',' + math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3) + ',' + math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3));
@@ -521,6 +525,10 @@ Parse
                 let homezuidajinqiushu = 0;
                 let home10jinqiu = 0;
                 let home10diuqiu = 0;
+
+                let home5jinqiu = 0;
+                let home5zuidajinqiu = 0;
+
                 for (let index = 0; index < homelist.length; index++) {
                     const element = homelist[index];
                     if (index < 4) {
@@ -540,6 +548,20 @@ Parse
                         }
 
                     }
+                    if (index < 5) {
+                        if (home == element.home) {
+                            home5jinqiu += element.goal[0];
+                            if (home5zuidajinqiu < element.goal[0]) {
+                                home5zuidajinqiu = element.goal[0]
+                            }
+                        }
+                        if (home == element.guest) {
+                            home5jinqiu += element.goal[1];
+                            if (home5zuidajinqiu < element.goal[1]) {
+                                home5zuidajinqiu = element.goal[1]
+                            }
+                        }
+                    }
 
                 }
 
@@ -547,6 +569,9 @@ Parse
                 let guestzuidajinqiushu = 0;
                 let guest10jinqiu = 0;
                 let guest10diuqiu = 0;
+
+                let guest5jinqiu = 0;
+                let guest5zuidajinqiu = 0;
                 for (let index = 0; index < guestlist.length; index++) {
                     const element = guestlist[index];
                     if (index < 4) {
@@ -562,6 +587,21 @@ Parse
                             guest10diuqiu += element.goal[0];
                             if (guestzuidajinqiushu < element.goal[1]) {
                                 guestzuidajinqiushu = element.goal[1]
+                            }
+                        }
+                    }
+
+                    if (index < 5) {
+                        if (guest == element.home) {
+                            guest5jinqiu += element.goal[0];
+                            if (guest5zuidajinqiu < element.goal[0]) {
+                                guest5zuidajinqiu = element.goal[0]
+                            }
+                        }
+                        if (guest == element.guest) {
+                            guest5jinqiu += element.goal[1];
+                            if (guest5zuidajinqiu < element.goal[1]) {
+                                guest5zuidajinqiu = element.goal[1]
                             }
                         }
                     }
@@ -770,11 +810,46 @@ Parse
                     }
 
 
+                    let chaibieitem1 = [50, 50];
 
+                    let chabibie4 = qiushupankou - (home10jinqiu - guest10jinqiu) / 4 ;
+
+                    let chabibie5 = qiushupankou - (home10diuqiu - guest10diuqiu) / 4 ;
+
+                    let chabibie6 = qiushupankou - ((home5jinqiu - home5zuidajinqiu) - (guest5jinqiu  - guest5zuidajinqiu)) / 4;
+
+                    if (chabibie4 > 0) {
+                        let temp = math.abs(chabibie4) / 0.25;
+                        chaibieitem1 = [chaibieitem1[0] - temp * tempjiange, chaibieitem1[1] + temp * tempjiange];
+                    }
+                    else{
+                        let temp = math.abs(chabibie4) / 0.25;
+                        chaibieitem1 = [chaibieitem1[0] + temp * tempjiange, chaibieitem1[1] - temp * tempjiange];
+                    }
+
+
+                    if (chabibie5 > 0) {
+                        let temp = math.abs(chabibie5) / 0.25;
+                        chaibieitem1 = [chaibieitem1[0] - temp * tempjiange, chaibieitem1[1] + temp * tempjiange];
+                    }
+                    else{
+                        let temp = math.abs(chabibie5) / 0.25;
+                        chaibieitem1 = [chaibieitem1[0] + temp * tempjiange, chaibieitem1[1] - temp * tempjiange];
+                    }
+
+
+                    if (chabibie6 > 0) {
+                        let temp = math.abs(chabibie6) / 0.25;
+                        chaibieitem1 = [chaibieitem1[0] - temp * tempjiange, chaibieitem1[1] + temp * tempjiange];
+                    }
+                    else{
+                        let temp = math.abs(chabibie6) / 0.25;
+                        chaibieitem1 = [chaibieitem1[0] + temp * tempjiange, chaibieitem1[1] - temp * tempjiange];
+                    }
 
                     console.log("亚盘投注情况-----:" + math.format(chaibieitem[0], 2) + "%," + math.format(chaibieitem[1], 2) + "%");
 
-                    element.set('yapantouzhu', [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
+                    element.set('yapantouzhu', [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2),math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2)]);
 
                     oneresult.set("test14", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
                 }
@@ -924,7 +999,7 @@ Parse
 
                     let tempjiange = math.format(chaibieitem[1] / (math.abs(qiushupankou) / 0.25), 2);
 
-                    let shixiangailv = 100;
+                    let shixiangailv = "";
 
                     let chaibie2 = (homeqiushu + guestqiushu) / 2 - qiushupankou;
 
@@ -934,84 +1009,86 @@ Parse
 
                     let chabibie5 = (home10diuqiu + guest10diuqiu) / 4 - qiushupankou;
 
+                    let chabibie6 = (home5jinqiu + guest5jinqiu - home5zuidajinqiu - guest5zuidajinqiu) / 4 - qiushupankou;
+
+                    console.log("==================", chabibie6);
+
                     //判定拿小球算还是拿大球算
 
                     if (historylist.length <= 1) {
                         shixiangailv = "no@two";
                     }
 
-                    if ((homezuijinqiushu + guestzuijinqiushu + homeqiushu + guestqiushu) / 4 <= qiushupankou) {
-
-                        if ((homeqiushu + guestqiushu) > (homezuijinqiushu + guestzuijinqiushu)) {
-                            if (chaibie2 > 0) {
-                                let temp = math.abs(chaibie2) / 0.25;
-                                chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
-                            }
-                        } else {
-                            if (chaibie3 > 0) {
-                                let temp = math.abs(chaibie3) / 0.25;
-                                chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
-                            }
-                        }
+                    shixiangailv += (home5jinqiu + guest5jinqiu - home5zuidajinqiu - guest5zuidajinqiu) / 4;
 
 
-                        if (home10jinqiu + guest10jinqiu > home10diuqiu + guest10diuqiu) {
 
-                            if (chabibie4 > 0) {
-                                let temp = math.abs(chabibie4) / 0.25;
-                                chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
-                            }
-
-                        } else {
-
-
-                            if (chabibie5 > 0) {
-                                let temp = math.abs(chabibie5) / 0.25;
-                                chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
-                            }
-
-
-                        }
-
-                    } else {
-
-                        if ((homeqiushu + guestqiushu) < (homezuijinqiushu + guestzuijinqiushu)) {
-                            if (chaibie2 < 0) {
-                                let temp = math.abs(chaibie2) / 0.25;
-                                chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
-                            }
-                        } else {
-                            if (chaibie3 < 0) {
-                                let temp = math.abs(chaibie3) / 0.25;
-                                chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
-                            }
-                        }
-
-                        if (home10jinqiu + guest10jinqiu < home10diuqiu + guest10diuqiu) {
-
-                            if (chabibie4 < 0) {
-                                let temp = math.abs(chabibie4) / 0.25;
-                                chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
-                            }
-
-                        } else {
-
-                            if (chabibie5 < 0) {
-                                let temp = math.abs(chabibie5) / 0.25;
-                                chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
-                            }
-                        }
-
-
+                    if (chabibie6 > 0) {
+                        let temp = math.abs(chabibie6) / 0.25;
+                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
                     }
 
 
+                    if (chabibie4 > 0) {
+                        let temp = math.abs(chabibie4) / 0.25;
+                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
+                    }
+
+                    if (chabibie5 > 0) {
+                        let temp = math.abs(chabibie5) / 0.25;
+                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
+                    }
+
+                    if (chabibie6 < 0) {
+                        let temp = math.abs(chabibie6) / 0.25;
+                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
+                    }
+
+                    if (chabibie4 < 0) {
+                        let temp = math.abs(chabibie4) / 0.25;
+                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
+                    }
+
+                    if (chabibie5 < 0) {
+                        let temp = math.abs(chabibie5) / 0.25;
+                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
+                    }
+        
+
+
+                    let chaibieitem1 = [50, 50];
+
+                    let tempjiange1 = math.format(chaibieitem1[1] / (math.abs(qiushupankou) / 0.25), 2);
+
+                    let chaibie21 = (homeqiushu + guestqiushu) / 2 - qiushupankou;
+
+                    if (chaibie21 > 0) {
+                        let temp = math.abs(chaibie21) / 0.25;
+                        chaibieitem1 = [chaibieitem1[0] + temp * tempjiange1, chaibieitem1[1] - temp * tempjiange1];
+                    }
+                    else if (chaibie21 < 0) {
+                        let temp = math.abs(chaibie21) / 0.25;
+                        chaibieitem1 = [chaibieitem1[0] - temp * tempjiange1, chaibieitem1[1] + temp * tempjiange1];
+                    }
+                    let chaibie31 = (homezuijinqiushu + guestzuijinqiushu) / 2 - qiushupankou;
+
+                    if (chaibie31 > 0) {
+                        let temp = math.abs(chaibie31) / 0.25;
+                        chaibieitem1 = [chaibieitem1[0] + temp * tempjiange1, chaibieitem1[1] - temp * tempjiange1];
+                    }
+                    else if (chaibie31 < 0) {
+                        let temp = math.abs(chaibie31) / 0.25;
+                        chaibieitem1 = [chaibieitem1[0] - temp * tempjiange1, chaibieitem1[1] + temp * tempjiange1];
+                    }
+                    shixiangailv += "==>" + math.format(chaibieitem1[0], 2) + "%~" + math.format(chaibieitem1[1], 2) + "%";
 
                     console.log("散户球数投注情况:" + "-------".yellow + math.format(chaibieitem[0], 2) + "%," + math.format(chaibieitem[1], 2) + "%");
-                    element.set("qiushutouzhu", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2), shixiangailv, (home10diuqiu + guest10diuqiu) / 4]);
+                    element.set("qiushutouzhu", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2), shixiangailv, (home10diuqiu + guest10diuqiu) / 4, math.format(chaibieitem1[0], 2),math.format(chaibieitem1[1], 2)]);
                     oneresult.set("test17", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
 
                 }
+
+
 
                 console.log("两队历史记录球数：".red + homeqiushu + '  ,  ' + guestqiushu + " 约 :  ".green + (homeqiushu + guestqiushu) / 2);
                 console.log("两队最近战绩球数：".red + homezuijinqiushu + '（' + homediuqiu + '）' + '  ,  ' + guestzuijinqiushu + '（' + guestdiuqiu + '）' + " 约 :  " + (homezuijinqiushu + guestzuijinqiushu) / 2);
