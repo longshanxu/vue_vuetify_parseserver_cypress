@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2022-06-27 20:17:50
+ * @LastEditTime: 2022-07-05 15:56:12
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2022-06-27"
+        datetemp = "2022-07-05"
 
 
         var tempMoney = Parse
@@ -83,7 +83,7 @@ Parse
 
             oneresult.set("matchId", matchId);
 
-            // if (matchId != "328942328") { continue; }
+            // if (matchId != "316616798") { continue; }
 
             const OddsMoney = Parse
                 .Object
@@ -447,6 +447,8 @@ Parse
             let guestqiushu = 0;  //客队进球数
             let homezuijinqiushu = 0;  //主队最近进球数
             let guestzuijinqiushu = 0; //客队最近进球数
+            let homehistoryqiushu = 0; //主队历史主场作战能力
+            let guesthistoryqiushu = 0; //客队历史客场作战能力
 
             if (pankoumoneyitem != undefined && pankoumoneyitem != null) {
                 const bet365pankou = pankoumoneyitem.get('bet365pankou');
@@ -475,7 +477,18 @@ Parse
 
                 }
 
+                for (let index = 0; index < historylist.length; index++) {
 
+                    const element = historylist[index];
+
+                    if (home == element.home && guest == element.guest) {
+               
+                        homehistoryqiushu += element.goal[0];
+                        guesthistoryqiushu += element.goal[1];
+                        break;
+                    }
+
+                }
 
 
                 //降盘是为了能 更容易的买大球，升盘，为了更容易的买小球
@@ -776,53 +789,100 @@ Parse
 
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
                     //散户投注数据。
-                    const pankou2 = parseFloat(changeqiu(bet10qiu.pankou));
+                    const qiupan = parseFloat(changeqiu(bet10qiu.pankou));
+                    const pankou1 = parseFloat(changepankou(bet10pankou.firstPankou));
+                    const pankou2 = parseFloat(changepankou(bet10pankou.pankou));
 
                     let qiushupankou = parseFloat(changepankou(bet10pankou.pankou));
 
                     let chaibieitem = [50, 50];
 
-                    let tempjiange = math.format(chaibieitem[1] / (pankou2 / 0.25), 2);
+                    let tempjiange = math.format(chaibieitem[1] / (qiupan / 0.25), 2);
+
+                    let chaibie1 = ((homeqiushu - guestqiushu) / 2 + (homezuijinqiushu - guestzuijinqiushu) / 2) / 2 - qiushupankou;
+
+                    if ((((homeqiushu - guestqiushu) / 2 + (homezuijinqiushu - guestzuijinqiushu) / 2) / 2 > 0 && qiushupankou < 0) || (((homeqiushu - guestqiushu) / 2 + (homezuijinqiushu - guestzuijinqiushu) / 2) / 2 < 0 && qiushupankou > 0)) {
+                        chaibie1 = ((homeqiushu - guestqiushu) / 2 + (homezuijinqiushu - guestzuijinqiushu) / 2) / 2 + qiushupankou;
+                    }
+
+                    if (chaibie1 < 0) {
+                        let temp = math.abs(chaibie1) / 0.25;
+
+                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
+                    }
+
+                    if (chaibie1 > 0) {
+                        let temp = math.abs(chaibie1) / 0.25;
+                        chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
+                    }
 
 
 
-                    let chaibie2 = qiushupankou - (homeqiushu - guestqiushu) / 2;
+                    let chaibie2 = (homeqiushu - guestqiushu) / 2 - qiushupankou;
+
+                    if (((homeqiushu - guestqiushu) / 2 > 0 && qiushupankou < 0) || ((homeqiushu - guestqiushu) / 2 < 0 && qiushupankou > 0)) {
+                        chaibie2 = (homeqiushu - guestqiushu) / 2 + qiushupankou;
+                    }
+
+
+                    if (chaibie2 < 0) {
+                        let temp = math.abs(chaibie2) / 0.25;
+
+                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
+                    }
 
                     if (chaibie2 > 0) {
                         let temp = math.abs(chaibie2) / 0.25;
-
-                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
-                    }
-                    else if (chaibie2 < 0) {
-                        let temp = math.abs(chaibie2) / 0.25;
                         chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
                     }
 
-                    let chaibie3 = qiushupankou - (homezuijinqiushu - guestzuijinqiushu) / 2;
+                    let chaibie3 = (homezuijinqiushu - guestzuijinqiushu) / 2 - qiushupankou;
 
+
+                    if (((homezuijinqiushu - guestzuijinqiushu) / 2 > 0 && qiushupankou < 0) || ((homezuijinqiushu - guestzuijinqiushu) / 2 < 0 && qiushupankou > 0)) {
+                        chaibie3 = (homezuijinqiushu - guestzuijinqiushu) / 2 - qiushupankou;
+                    }
+
+
+
+                    if (chaibie3 < 0) {
+                        let temp = math.abs(chaibie3) / 0.25;
+                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
+                    }
                     if (chaibie3 > 0) {
                         let temp = math.abs(chaibie3) / 0.25;
-                        chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
-                    }
-                    else if (chaibie3 < 0) {
-                        let temp = math.abs(chaibie3) / 0.25;
                         chaibieitem = [chaibieitem[0] + temp * tempjiange, chaibieitem[1] - temp * tempjiange];
                     }
 
 
-                    let chaibieitem1 = [50, 50];
+                    let chaibieitem1 = chaibieitem;
 
-                    let chabibie4 = qiushupankou - (home10jinqiu - guest10jinqiu) / 4 ;
+                    let chabibie4 = (home10jinqiu - guest10jinqiu) / 4 - qiushupankou;
 
-                    let chabibie5 = qiushupankou - (home10diuqiu - guest10diuqiu) / 4 ;
+                    if (((home10jinqiu - guest10jinqiu) / 4 > 0 && qiushupankou < 0) || ((home10jinqiu - guest10jinqiu) / 4 < 0 && qiushupankou > 0)) {
+                        chabibie4 = (home10jinqiu - guest10jinqiu) / 4 + qiushupankou;
+                    }
 
-                    let chabibie6 = qiushupankou - ((home5jinqiu - home5zuidajinqiu) - (guest5jinqiu  - guest5zuidajinqiu)) / 4;
 
-                    if (chabibie4 > 0) {
+
+                    let chabibie5 = (home10diuqiu - guest10diuqiu) / 4 - qiushupankou;
+
+                    // if (((home10diuqiu - guest10diuqiu) / 4 > 0 && qiushupankou < 0) || ((home10diuqiu - guest10diuqiu) / 4 < 0 && qiushupankou > 0)) {
+                    //     chabibie5 = (home10diuqiu - guest10diuqiu) / 4 + qiushupankou;
+                    // }
+
+                    let chabibie6 = ((home5jinqiu - home5zuidajinqiu) - (guest5jinqiu - guest5zuidajinqiu)) / 4 - qiushupankou;
+
+                    if ((((home5jinqiu - home5zuidajinqiu) - (guest5jinqiu - guest5zuidajinqiu)) / 4 > 0 && qiushupankou < 0) || (((home5jinqiu - home5zuidajinqiu) - (guest5jinqiu - guest5zuidajinqiu)) / 4 < 0 && qiushupankou > 0)) {
+                        chabibie6 = ((home5jinqiu - home5zuidajinqiu) - (guest5jinqiu - guest5zuidajinqiu)) / 4 + qiushupankou;
+
+                    }
+
+                    if (chabibie4 < 0) {
                         let temp = math.abs(chabibie4) / 0.25;
                         chaibieitem1 = [chaibieitem1[0] - temp * tempjiange, chaibieitem1[1] + temp * tempjiange];
                     }
-                    else{
+                    if (chabibie4 > 0) {
                         let temp = math.abs(chabibie4) / 0.25;
                         chaibieitem1 = [chaibieitem1[0] + temp * tempjiange, chaibieitem1[1] - temp * tempjiange];
                     }
@@ -832,24 +892,26 @@ Parse
                         let temp = math.abs(chabibie5) / 0.25;
                         chaibieitem1 = [chaibieitem1[0] - temp * tempjiange, chaibieitem1[1] + temp * tempjiange];
                     }
-                    else{
+                    if (chabibie5 < 0) {
                         let temp = math.abs(chabibie5) / 0.25;
                         chaibieitem1 = [chaibieitem1[0] + temp * tempjiange, chaibieitem1[1] - temp * tempjiange];
                     }
 
 
-                    if (chabibie6 > 0) {
+                    if (chabibie6 < 0) {
                         let temp = math.abs(chabibie6) / 0.25;
                         chaibieitem1 = [chaibieitem1[0] - temp * tempjiange, chaibieitem1[1] + temp * tempjiange];
                     }
-                    else{
+                    if (chabibie6 > 0) {
                         let temp = math.abs(chabibie6) / 0.25;
                         chaibieitem1 = [chaibieitem1[0] + temp * tempjiange, chaibieitem1[1] - temp * tempjiange];
                     }
 
                     console.log("亚盘投注情况-----:" + math.format(chaibieitem[0], 2) + "%," + math.format(chaibieitem[1], 2) + "%");
 
-                    element.set('yapantouzhu', [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2),math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2)]);
+                    // element.set('yapantouzhu', [math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2), math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2),(homeqiushu - guestqiushu),(homezuijinqiushu - guestzuijinqiushu),(home10jinqiu - guest10jinqiu),(home10diuqiu - guest10diuqiu),pankou1,pankou2]);
+                    // console.log([math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2), math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2),(homeqiushu - guestqiushu)/2,(homezuijinqiushu - guestzuijinqiushu)/2,(home10jinqiu - guest10jinqiu)/4,(home10diuqiu - guest10diuqiu)/4,pankou1,pankou2]);
+                    element.set('yapantouzhu', [math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2), math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2), (homeqiushu - guestqiushu) / 2, (homezuijinqiushu - guestzuijinqiushu) / 2, (home10jinqiu - guest10jinqiu) / 4, (home10diuqiu - guest10diuqiu) / 4, pankou1, pankou2,homehistoryqiushu,guesthistoryqiushu]);
 
                     oneresult.set("test14", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
                 }
@@ -995,6 +1057,8 @@ Parse
                     //     math.format(bet365ratio / bet365odds1, 2) * 100
                     // ]
 
+                    // console.log(chaibieitem);
+
                     let chaibieitem = [50, 50];
 
                     let tempjiange = math.format(chaibieitem[1] / (math.abs(qiushupankou) / 0.25), 2);
@@ -1053,12 +1117,12 @@ Parse
                         let temp = math.abs(chabibie5) / 0.25;
                         chaibieitem = [chaibieitem[0] - temp * tempjiange, chaibieitem[1] + temp * tempjiange];
                     }
-        
 
 
-                    let chaibieitem1 = [50, 50];
 
-                    let tempjiange1 = math.format(chaibieitem1[1] / (math.abs(qiushupankou) / 0.25), 2);
+                    let chaibieitem1 = chaibieitem;
+
+                    let tempjiange1 = tempjiange;
 
                     let chaibie21 = (homeqiushu + guestqiushu) / 2 - qiushupankou;
 
@@ -1066,7 +1130,7 @@ Parse
                         let temp = math.abs(chaibie21) / 0.25;
                         chaibieitem1 = [chaibieitem1[0] + temp * tempjiange1, chaibieitem1[1] - temp * tempjiange1];
                     }
-                    else if (chaibie21 < 0) {
+                    if (chaibie21 < 0) {
                         let temp = math.abs(chaibie21) / 0.25;
                         chaibieitem1 = [chaibieitem1[0] - temp * tempjiange1, chaibieitem1[1] + temp * tempjiange1];
                     }
@@ -1076,14 +1140,27 @@ Parse
                         let temp = math.abs(chaibie31) / 0.25;
                         chaibieitem1 = [chaibieitem1[0] + temp * tempjiange1, chaibieitem1[1] - temp * tempjiange1];
                     }
-                    else if (chaibie31 < 0) {
+                    if (chaibie31 < 0) {
                         let temp = math.abs(chaibie31) / 0.25;
                         chaibieitem1 = [chaibieitem1[0] - temp * tempjiange1, chaibieitem1[1] + temp * tempjiange1];
                     }
-                    shixiangailv += "==>" + math.format(chaibieitem1[0], 2) + "%~" + math.format(chaibieitem1[1], 2) + "%";
+
+                    let chaibie41 = ((homezuijinqiushu + guestzuijinqiushu) / 2 + (homeqiushu + guestqiushu) / 2) / 2 - qiushupankou;
+
+                    if (chaibie41 > 0) {
+                        let temp = math.abs(chaibie41) / 0.25;
+                        chaibieitem1 = [chaibieitem1[0] + temp * tempjiange1, chaibieitem1[1] - temp * tempjiange1];
+                    }
+                    if (chaibie41 < 0) {
+                        let temp = math.abs(chaibie41) / 0.25;
+                        chaibieitem1 = [chaibieitem1[0] - temp * tempjiange1, chaibieitem1[1] + temp * tempjiange1];
+                    }
+
+
+                    // shixiangailv += "==>" + math.format(chaibieitem1[0], 2) + "%~" + math.format(chaibieitem1[1], 2) + "%";
 
                     console.log("散户球数投注情况:" + "-------".yellow + math.format(chaibieitem[0], 2) + "%," + math.format(chaibieitem[1], 2) + "%");
-                    element.set("qiushutouzhu", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2), shixiangailv, (home10diuqiu + guest10diuqiu) / 4, math.format(chaibieitem1[0], 2),math.format(chaibieitem1[1], 2)]);
+                    element.set("qiushutouzhu", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2), shixiangailv, (home10diuqiu + guest10diuqiu) / 4, math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2)]);
                     oneresult.set("test17", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
 
                 }
