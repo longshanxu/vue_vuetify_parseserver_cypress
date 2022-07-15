@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-07-10 00:20:04
+ * @LastEditTime: 2022-07-15 22:17:27
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -17,13 +17,13 @@
       <template v-slot:extension>
         <v-row justify="center" class="mx-0">
           <v-col cols="2" class="px-0" style="text-align: center; font-size: 14px" @click="status = 1"
-            :class="status == 1 ? 'activeclass' : ''">某彩</v-col>
+            :class="status == 1 ? 'activeclass' : ''">升级盘</v-col>
           <v-col cols="2" class="px-0" style="text-align: center; font-size: 14px" @click="status = 2"
             :class="status == 2 ? 'activeclass' : ''">黄金盘</v-col>
           <v-col cols="2" class="px-0" style="text-align: center; font-size: 14px" @click="status = 3"
             :class="status == 3 ? 'activeclass' : ''">必进球</v-col>
           <v-col cols="2" class="px-0" style="text-align: center; font-size: 14px" @click="status = 4"
-            :class="status == 4 ? 'activeclass' : ''">球降</v-col>
+            :class="status == 4 ? 'activeclass' : ''">球升级</v-col>
           <v-col cols="2" class="px-0" style="text-align: center; font-size: 14px" @click="status = 5"
             :class="status == 5 ? 'activeclass' : ''">球100%</v-col>
           <v-col cols="2" class="px-0" style="text-align: center; font-size: 14px" @click="status = 6"
@@ -1067,7 +1067,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-05",
+        date: "2022-07-16",
         matchId: item.matchId,
       };
       api
@@ -1089,7 +1089,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-05",
+        date: "2022-07-16",
         matchId: item.matchId,
       };
       api
@@ -1110,7 +1110,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-07-05",
+        date: "2022-07-16",
         matchId: item.matchId,
       };
       api
@@ -1145,7 +1145,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-07-05",
+        date: "2022-07-16",
       };
       api
         .GetToday(data)
@@ -1167,9 +1167,43 @@ export default {
         this.datalist = this.list;
       } else if (val == 1) {
         this.datalist = this.list.filter((item) => {
-          if (item.league != null) {
-            return item.league.indexOf(" ") > -1 && item.league.indexOf("周") > -1;
+          // if (item.league != null) {
+          //   return item.league.indexOf(" ") > -1 && item.league.indexOf("周") > -1;
+          // }
+
+          if (item.yapantouzhu && item.qiushutouzhu) {
+            if (item.qiushutouzhu[2].indexOf("no") > -1) {
+              return false;
+            }
+
+            if (item.yapantouzhu[0] >= 100 || item.yapantouzhu[1] >= 100) {
+
+              console.log(item.home, item.yapantouzhu);
+
+              if (item.yapantouzhu[4] <= 0 && item.yapantouzhu[5] >= 0 && (item.yapantouzhu[4] + item.yapantouzhu[5]) / 2 >= item.yapantouzhu[9]) {
+                if (item.yapantouzhu[10] - item.yapantouzhu[11] > 0) {
+                  return true;
+                }
+
+
+
+              }
+              if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0) {
+                if (item.yapantouzhu[8] < item.yapantouzhu[9]) {
+
+                  if (item.yapantouzhu[8] >= 0 && item.yapantouzhu[9] >= 0) {
+                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) >= 0 && item.yapantouzhu[8] * 2 >= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
+                      return true;
+                    }
+                  }
+                }
+              }
+
+
+            }
           }
+
+          return false;
         });
         this.count = this.datalist.length;
       } else if (val == 2) {
@@ -1183,25 +1217,31 @@ export default {
 
               console.log(item.home, item.yapantouzhu);
 
-              if (item.yapantouzhu[4] >= 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] >= 0 && item.yapantouzhu[7] < 0 && item.yapantouzhu[8] >= item.yapantouzhu[9]) {
-                if (item.yapantouzhu[4] > item.yapanpankou1 && item.yapantouzhu[5] > item.yapanpankou1 && item.yapantouzhu[6] > item.yapanpankou1) {
-                  return false;
+              if (item.yapantouzhu[4] >= 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] >= 0) {
+                if (item.yapantouzhu[8] >= item.yapantouzhu[9]) {
+                  if (item.yapantouzhu[8] >= 0 && item.yapantouzhu[9] >= 0) {
+                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) >= 0 && item.yapantouzhu[8] * 2 >= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
+                      return true;
+                    }
+                  }
                 }
-                if ((item.yapantouzhu[10] - item.yapantouzhu[11]) >= 0) {
-                  return true;
+                if (item.yapantouzhu[8] < item.yapantouzhu[9]) {
+                  if (item.yapantouzhu[8] <= 0 && item.yapantouzhu[9] >= 0) {
+                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) > 0 && item.yapantouzhu[8] * 2 >= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
+                      return true;
+                    }
+                  }
+
                 }
+
               }
 
-              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] >= 0 && item.yapantouzhu[8] <= item.yapantouzhu[9]) {
-                 if (item.yapantouzhu[4] < item.yapanpankou2 && item.yapantouzhu[5] < item.yapanpankou2 && item.yapantouzhu[6] < item.yapanpankou2) {
-                  return false;
-                }
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] >= 0) {
                 if (item.yapantouzhu[8] <= 0 && item.yapantouzhu[9] <= 0) {
-                  if ((item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
+                  if ((item.yapantouzhu[10] - item.yapantouzhu[11]) < 0 && item.yapantouzhu[8] * 2 <= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
                     return true;
                   }
                 }
-
 
               }
             }
@@ -1233,41 +1273,37 @@ export default {
 
 
 
-              if (temp1 < item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp6 < item.qiushupankou2) {
-                if (temp5 < item.qiushupankou2) {
-                  if (item.qiushupankou1 >= item.qiushupankou2) {
-                    return true;
-                  }
-                  if (item.yapanpankou1 < item.yapanpankou2 && item.qiushupankou1 < item.qiushupankou2) {
-                    return true;
-                  }
-                  if (item.yapanpankou1 == item.yapanpankou2 && item.qiushupankou1 < item.qiushupankou2) {
-                    return true;
-                  }
-                } else {
+              if (temp1 <= item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 <= item.qiushupankou2 && temp6 < item.qiushupankou2) {
 
-                  return true;
-                }
-
-
-              }
-
-              if (item.yapanpankou1 < item.yapanpankou2 && item.qiushupankou1 < item.qiushupankou2 && temp1 > item.qiushupankou2) {
-                return true;
-              }
-
-              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 > item.qiushupankou2) {
-                if (item.qiushupankou1 < item.qiushupankou2) {
+                if (item.qiushupankou1 <= item.qiushupankou2) {
                   return true;
                 }
 
               }
 
-              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
 
-                if (item.qiushupankou1 > item.qiushupankou2) {
-                  return true;
+              if (temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (temp5 > item.qiushupankou2) {
+                  if (temp1 > item.qiushupankou2) {
+                    // if (item.qiushupankou1 <= item.qiushupankou2) {
+                    //   return true;
+                    // }
+                  } else {
+                    if (item.qiushupankou1 <= item.qiushupankou2) {
+                      return true;
+                    }
+                  }
+
                 }
+                if (temp5 <= item.qiushupankou2) {
+                  if (temp1 > item.qiushupankou2) {
+                    return true;
+                  }
+
+                }
+
+
+
               }
             }
 
@@ -1280,10 +1316,47 @@ export default {
         this.count = this.datalist.length;
       } else if (val == 4) {
         this.datalist = this.list.filter((item) => {
-          if (item.qiushupankou1 != null && item.qiushupankou2 != null) {
-            return item.qiushupankou1 > item.qiushupankou2;
+          if (item.qiushutouzhu && item.liangduibisai && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2) {
+            if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
+              return false;
+            }
+
+            if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
+              let temp1 = parseFloat(item.changguiqiushu.split(":")[0]);
+              let temp2 = parseFloat(item.changguiqiushu.split(":")[1]);
+              let temp3 = parseFloat(
+                parseFloat(item.changguiqiushu.split(":")[0]) +
+                parseFloat(item.changguiqiushu.split(":")[1])
+              ) / 2;
+
+              let temp4 = item.qiushutouzhu && parseFloat(item.qiushutouzhu[2]);
+              let temp5 = item.qiushutouzhu && parseFloat(item.qiushutouzhu[3]);
+              let temp6 = (item.qiushuAll[0] + item.qiushuAll[2]) / 4;
+
+              console.log(item.home, temp1, temp2, temp3, temp4, temp5, temp6);
+
+
+
+              if (temp1 <= item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 >= item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+
+                if (item.qiushupankou1 <= item.qiushupankou2) {
+                  return true;
+                }
+
+              }
+
+
+              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                return true;
+
+              }
+            }
+
+            return false;
           }
+
         });
+
         this.count = this.datalist.length;
       } else if (val == 5) {
         this.datalist = this.list.filter((item) => {

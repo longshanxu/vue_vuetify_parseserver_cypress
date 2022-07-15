@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-02-28 13:29:07
- * @LastEditTime: 2022-07-05 23:18:42
+ * @LastEditTime: 2022-07-16 14:23:47
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\web.js
@@ -17,11 +17,11 @@ Parse
             if (request.params.date != "" && request.params.date != undefined && request.params.date != null) {
                 var tempMoney = Parse.Object.extend("Money");
                 var query = new Parse.Query(tempMoney);
-                var datetemp = "2022-07-05";
+                var datetemp = "2022-07-16";
                 query.equalTo("date", datetemp);
                 // query.equalTo("date", request.params.date);
-                // query.notEqualTo("displayState", "完场")
-                query.equalTo("displayState", "完场")
+                query.notEqualTo("displayState", "完场")
+                // query.equalTo("displayState", "完场")
                 query.limit(300);
                 query.ascending("matchTime") //matchTime,league
                 const results = await query.find();
