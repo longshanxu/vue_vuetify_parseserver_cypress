@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2022-07-16 11:19:02
+ * @LastEditTime: 2022-07-18 00:23:17
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2022-07-16/prev
-//https://vipc.cn/i/live/football/date/2022-07-16/next
+//https://vipc.cn/i/live/football/date/2022-07-18/prev
+//https://vipc.cn/i/live/football/date/2022-07-18/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2022-07-16";
+        var datetemp = "2022-07-18";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -125,14 +125,16 @@ async function GetTodayMoney() {
         setTimeout(() => {
             // https://vipc.cn/i/live/football/date/today/next
             const options = {
-                url: 'https://vipc.cn/i/live/football/date/2022-07-16/prev',
+                url: 'https://vipc.cn/i/live/football/date/2022-07-18/prev',
                 headers: {
                     'User-Agent': 'request'
                 },
-                gzip: true
+                gzip: true,
+                // proxy: 'http://127.0.0.1:54802',
+            
             };
 
-            httprequest(options, async function (error, response, body) {
+            httprequest(options,async function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     let data = await JSON.parse(body);
                     for (let index = 0; index < data.items.length; index++) {
@@ -201,6 +203,7 @@ async function GetHistoryByID(matchId, datetemp, proxiedRequest, ip) {
                 'X-Forwarded-For': ip
             },
             gzip: true,
+            // proxy: 'http://127.0.0.1:54802',
         };
 
         proxiedRequest.get(options, async function (error, response, body) {
@@ -250,7 +253,8 @@ async function GetOddsByID(matchId, datetemp, proxiedRequest, ip) {
                 'User-Agent': 'request',
                 'X-Forwarded-For': ip
             },
-            gzip: true
+            gzip: true,
+            // proxy: 'http://127.0.0.1:54802',
         };
         // httprequest(options, async function (error, response, body) {
         //     if (!error && response.statusCode == 200) {
@@ -324,7 +328,8 @@ async function GetPankouByID(matchId, datetemp, proxiedRequest, ip) {
                 'User-Agent': 'request',
                 'X-Forwarded-For': ip
             },
-            gzip: true
+            gzip: true,
+            // proxy: 'http://127.0.0.1:54802',
         };
 
         proxiedRequest.get(options, async function (error, response, body) {
@@ -401,7 +406,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2022-07-16";
+    var datetemp = "2022-07-18";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
@@ -476,7 +481,7 @@ async function OneByOne() {
         datetemp = year + "-0" + month + "-0" + day;
     }
 
-    datetemp = "2022-07-16"
+    datetemp = "2022-07-18"
 
     var tempMoney = Parse
         .Object
@@ -700,7 +705,7 @@ Parse
 
 ///每10s获取一次数据
 async function GetDataByTen() {
-    var datetemp = "2022-07-16";
+    var datetemp = "2022-07-18";
 
     var tempMoney = Parse
         .Object

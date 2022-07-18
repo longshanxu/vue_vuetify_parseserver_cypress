@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-07-15 22:17:27
+ * @LastEditTime: 2022-07-18 14:48:41
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -11,24 +11,25 @@
     <v-app-bar dark app fixed color="primary" dense>
       <v-icon @dblclick="cpu" color="green">mdi-crane</v-icon>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="white--text" @click="status = 0">我命由我不由天 ({{ count }})</v-toolbar-title>
+      <v-toolbar-title class="white--text">只此一眼，便是万年 {{ count == 0 ? "" : "( " + count + " )" }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-icon @click="asyncData" color="red">mdi-hand-heart</v-icon>
       <template v-slot:extension>
-        <v-row justify="center" class="mx-0">
-          <v-col cols="2" class="px-0" style="text-align: center; font-size: 14px" @click="status = 1"
-            :class="status == 1 ? 'activeclass' : ''">升级盘</v-col>
-          <v-col cols="2" class="px-0" style="text-align: center; font-size: 14px" @click="status = 2"
-            :class="status == 2 ? 'activeclass' : ''">黄金盘</v-col>
-          <v-col cols="2" class="px-0" style="text-align: center; font-size: 14px" @click="status = 3"
-            :class="status == 3 ? 'activeclass' : ''">必进球</v-col>
-          <v-col cols="2" class="px-0" style="text-align: center; font-size: 14px" @click="status = 4"
-            :class="status == 4 ? 'activeclass' : ''">球升级</v-col>
-          <v-col cols="2" class="px-0" style="text-align: center; font-size: 14px" @click="status = 5"
-            :class="status == 5 ? 'activeclass' : ''">球100%</v-col>
-          <v-col cols="2" class="px-0" style="text-align: center; font-size: 14px" @click="status = 6"
-            :class="status == 6 ? 'activeclass' : ''">盘100%</v-col>
-        </v-row>
+        <v-tabs v-model="currentItem" center-active slider-color="white" show-arrows @change="changevalue">
+          <v-tab i="0">初衷</v-tab>
+          <v-tab i="1">升级盘</v-tab>
+          <v-tab i="2">黄金盘</v-tab>
+          <v-tab i="3">盘100%</v-tab>
+          <v-tab i="4">总结盘</v-tab>
+          <v-tab i="5">必进球</v-tab>
+          <v-tab i="6">球升级</v-tab>
+          <v-tab i="7">球100%</v-tab>
+          <v-tab i="8">分析球</v-tab>
+          <v-tab i="9">某彩</v-tab>
+          <v-tab i="10">北单</v-tab>
+
+
+        </v-tabs>
       </template>
     </v-app-bar>
     <v-main class="fill-height grey lighten-3 align-start justify-start">
@@ -188,41 +189,6 @@
             </span>
           </v-col>
         </v-row>
-        <!-- <v-row dense class="ma-0" v-show="showtuijian">
-          <v-col
-            
-            style="text-align: center; font-size: 14px; font-weight: 500"
-            cols="3"
-          >
-            让球AI:
-          </v-col>
-          <v-col
-            
-            style="text-align: center; font-size: 14px"
-            cols="3"
-          >
-            <span style="font-size: 14px; color: blue">{{
-              item.yapanai && item.yapanai[0] + "% ~ " + item.yapanai[1] + "%"
-            }}</span>
-          </v-col>
-          <v-col
-            
-            style="text-align: center; font-size: 14px; font-weight: 500"
-            cols="3"
-          >
-            球数AI:
-          </v-col>
-          <v-col
-            
-            style="text-align: center; font-size: 14px; color: blue"
-            cols="3"
-          >
-            <span style="font-size: 14px">{{
-              item.qiushuai &&
-              item.qiushuai[0] + "% ~ " + item.qiushuai[1] + "%"
-            }}</span>
-          </v-col>
-        </v-row> -->
         <v-row dense class="ma-0" v-show="showtuijian">
           <v-col style="text-align: center; font-size: 14px" cols="3">
             让球前后:
@@ -425,70 +391,6 @@
               }}
             </v-col>
           </v-row>
-          <!-- <v-row dense class="mx-0">
-            <v-col
-              
-              style="text-align: right; font-weight: 700"
-              cols="5"
-              >亚盘初始概率：</v-col
-            >
-            <v-col
-              
-              style="text-align: left; font-size: 14px"
-              cols="7"
-            >
-              {{
-                item1.test9 &&
-                item1.test9[0] +
-                  "%" +
-                  " - " +
-                  item1.test9[1] +
-                  "%" +
-                  " 【 " +
-                  item1.test9[2] +
-                  " -> " +
-                  item1.test9[3] +
-                  " 】 " +
-                  item1.test9[8]
-              }}
-            </v-col></v-row
-          > -->
-          <!-- <v-row dense class="mx-0">
-            <v-col
-              
-              style="text-align: right; font-weight: 700; color: #a60056"
-              cols="5"
-              >亚盘AI概率：</v-col
-            >
-            <v-col
-              
-              style="text-align: left; font-size: 14px"
-              cols="7"
-            >
-              {{
-                item1.test10 &&
-                item1.test10[0] + "%" + " ~ " + item1.test10[1] + "% "
-              }}
-            </v-col></v-row
-          > -->
-          <!-- <v-row dense class="mx-0">
-            <v-col
-              
-              style="text-align: right; font-weight: 700; color: #a60056"
-              cols="5"
-              >亚盘基础数据：</v-col
-            >
-            <v-col
-              
-              style="text-align: left; font-size: 14px"
-              cols="7"
-            >
-              {{
-                item1.test9 &&
-                "【 " + item1.test9[6] + " ~ " + item1.test9[7] + " 】 "
-              }}
-            </v-col></v-row
-          > -->
           <v-row dense class="mx-0">
             <v-col style="text-align: right; font-weight: 700; color: #a60056" cols="5">亚盘返回率：
             </v-col>
@@ -527,69 +429,6 @@
             </v-col>
           </v-row>
 
-          <!-- <v-row dense class="mx-0">
-            <v-col
-              
-              style="text-align: right; font-weight: 700"
-              cols="5"
-              >球数初始概率：</v-col
-            >
-            <v-col
-              
-              style="text-align: left; font-size: 14px"
-              cols="7"
-            >
-              {{
-                item1.test15 &&
-                item1.test15[0] +
-                  "%" +
-                  " - " +
-                  item1.test15[1] +
-                  "%" +
-                  " 【 " +
-                  item1.test15[2] +
-                  " -> " +
-                  item1.test15[3] +
-                  " 】 " +
-                  item1.test15[8]
-              }}
-            </v-col></v-row
-          > -->
-          <!-- <v-row dense class="mx-0"
-            ><v-col
-              
-              style="text-align: right; font-weight: 700; color: #a60056"
-              cols="5"
-              >球数变动后概率：</v-col
-            >
-            <v-col
-              
-              style="text-align: left; font-size: 14px"
-              cols="7"
-            >
-              {{
-                item1.test16 && item1.test16[0] + "% ~ " + item1.test16[1] + "%"
-              }}
-            </v-col></v-row
-          > -->
-          <!-- <v-row dense class="mx-0">
-            <v-col
-              
-              style="text-align: right; font-weight: 700; color: #a60056"
-              cols="5"
-              >球数基础数据：</v-col
-            >
-            <v-col
-              
-              style="text-align: left; font-size: 14px"
-              cols="7"
-            >
-              {{
-                item1.test15 &&
-                "【 " + item1.test15[6] + " ~ " + item1.test15[7] + " 】 "
-              }}
-            </v-col></v-row
-          > -->
           <v-row dense class="mx-0">
             <v-col style="text-align: right; font-weight: 700; color: #a60056" cols="5">球数返回率：
             </v-col>
@@ -647,36 +486,6 @@
               {{ item1.test20 && item1.test20 }}
             </v-col>
           </v-row>
-          <!-- <v-row dense class="mx-0"
-            ><v-col
-              
-              style="text-align: right; font-weight: 700"
-              cols="5"
-              >用户期望球数：</v-col
-            >
-            <v-col
-              
-              style="text-align: left; font-size: 14px"
-              cols="7"
-            >
-              {{ item1.test21 && item1.test21 }}
-            </v-col></v-row
-          > -->
-          <!-- <v-row dense class="mx-0"
-            ><v-col
-              
-              style="text-align: right; font-weight: 700"
-              cols="5"
-              >用户期望让球：</v-col
-            >
-            <v-col
-              
-              style="text-align: left; font-size: 14px"
-              cols="7"
-            >
-              {{ item1.test22 && item1.test22 }}
-            </v-col></v-row
-          > -->
         </v-card>
       </v-card>
     </v-dialog>
@@ -827,6 +636,8 @@
           <br />
           （派）比分：
           <br />
+          <br />
+
           <v-row dense class="ma-0">
             <v-col style="text-align: right; font-weight: 700" cols="5">比赛队伍:</v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
@@ -1002,11 +813,296 @@ export default {
       userdialog: false,
       userdialog1: false,
       isshowbifen: true,
+      currentItem: null
     };
   },
   computed: {},
 
   methods: {
+    changevalue() {
+      let val = this.currentItem;
+      if (val == 0) {
+        this.count = 0;
+        this.datalist = this.list;
+      } else if (val == 1) {
+        this.datalist = this.list.filter((item) => {
+          // if (item.league != null) {
+          //   return item.league.indexOf(" ") > -1 && item.league.indexOf("周") > -1;
+          // }
+
+          if (item.yapantouzhu && item.qiushutouzhu) {
+            if (item.qiushutouzhu[2].indexOf("no") > -1) {
+              return false;
+            }
+
+            if (item.yapantouzhu[0] >= 100 || item.yapantouzhu[1] >= 100) {
+
+              // console.log(item.home, item.yapantouzhu);
+
+              if (item.yapantouzhu[4] <= 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] <= 0) {
+                if (item.yapantouzhu[8] <= item.yapantouzhu[9]) {
+                  if (item.yapantouzhu[8] <= 0 && item.yapantouzhu[9] <= 0) {
+                    if (item.yapantouzhu[9] == 0 && item.yapantouzhu[9] * 2 >= item.yapantouzhu[4] && item.yapantouzhu[9] * 2 >= item.yapantouzhu[5] && item.yapantouzhu[9] * 2 >= item.yapantouzhu[6]) {
+                      return false;
+                    }
+                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) <= 0 && item.yapantouzhu[4] > item.yapantouzhu[5]) {
+                      return true;
+                    }
+                  }
+                }
+
+              }
+              if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] >= 0) {
+                if (item.yapantouzhu[8] <= item.yapantouzhu[9]) {
+                  if (item.yapantouzhu[9] * 2 <= item.yapantouzhu[4] && item.yapantouzhu[9] * 2 <= item.yapantouzhu[5] && item.yapantouzhu[9] * 2 <= item.yapantouzhu[6]) {
+                    return false;
+                  }
+                  if (item.yapantouzhu[8] >= 0 && item.yapantouzhu[9] >= 0) {
+                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) >= 0 && item.yapantouzhu[8] * 2 <= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
+                      return true;
+                    }
+                  }
+                }
+              }
+
+
+            }
+          }
+
+          return false;
+        });
+        this.count = this.datalist.length;
+      } else if (val == 2) {
+        this.datalist = this.list.filter((item) => {
+          if (item.yapantouzhu && item.qiushutouzhu) {
+            if (item.qiushutouzhu[2].indexOf("no") > -1) {
+              return false;
+            }
+
+            if (item.yapantouzhu[0] >= 100 || item.yapantouzhu[1] >= 100) {
+
+              // console.log(item.home, item.yapantouzhu);
+
+              if (item.yapantouzhu[4] >= 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] >= 0) {
+                if (item.yapantouzhu[8] >= item.yapantouzhu[9]) {
+                  if (item.yapantouzhu[8] >= 0 && item.yapantouzhu[9] >= 0) {
+                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) >= 0 && item.yapantouzhu[8] * 2 >= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
+                      return true;
+                    }
+                  }
+                }
+                if (item.yapantouzhu[8] < item.yapantouzhu[9]) {
+                  if (item.yapantouzhu[8] <= 0 && item.yapantouzhu[9] >= 0) {
+                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) > 0 && item.yapantouzhu[8] * 2 >= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
+                      return true;
+                    }
+                  }
+
+                }
+
+              }
+
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] >= 0) {
+                if (item.yapantouzhu[8] <= 0 && item.yapantouzhu[9] <= 0) {
+                  if ((item.yapantouzhu[10] - item.yapantouzhu[11]) < 0 && item.yapantouzhu[8] * 2 <= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
+                    return true;
+                  }
+                }
+
+              }
+            }
+          }
+
+          return false;
+        });
+        this.count = this.datalist.length;
+      } else if (val == 3) {
+        this.datalist = this.list.filter((item) => {
+          if (item.yapantouzhu) {
+            // return item.qiushutouzhu[0] >= 80 || item.qiushutouzhu[1] >= 80 || item.yapantouzhu[0] >= 80 || item.yapantouzhu[1] >= 80;
+            return (item.yapantouzhu[0] >= 100 && item.yapantouzhu[2] >= 100) || (item.yapantouzhu[1] >= 100 && item.yapantouzhu[3] >= 100);
+          }
+        });
+        this.count = this.datalist.length;
+      } else if (val == 4) {
+
+        this.datalist = this.list.filter((item) => {
+          if (item.yapantouzhu && item.qiushutouzhu) {
+            if (item.qiushutouzhu[2].indexOf("no") > -1) {
+              return false;
+            }
+
+            if (item.yapantouzhu[0] >= 100 && (item.homeScore - item.guestScore) > item.yapantouzhu[9]) {
+              return true;
+            }
+            if (item.yapantouzhu[1] >= 100 && (item.homeScore - item.guestScore) < item.yapantouzhu[9]) {
+              return true;
+            }
+          }
+
+          return false;
+        });
+        this.count = this.datalist.length;
+      } else if (val == 5) {
+
+        this.datalist = this.list.filter((item) => {
+          if (item.qiushutouzhu && item.liangduibisai && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2) {
+            if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
+              return false;
+            }
+
+            if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
+              let temp1 = parseFloat(item.changguiqiushu.split(":")[0]);
+              let temp2 = parseFloat(item.changguiqiushu.split(":")[1]);
+              let temp3 = parseFloat(
+                parseFloat(item.changguiqiushu.split(":")[0]) +
+                parseFloat(item.changguiqiushu.split(":")[1])
+              ) / 2;
+
+              let temp4 = item.qiushutouzhu && parseFloat(item.qiushutouzhu[2]);
+              let temp5 = item.qiushutouzhu && parseFloat(item.qiushutouzhu[3]);
+              let temp6 = (item.qiushuAll[0] + item.qiushuAll[2]) / 4;
+
+              // console.log(item.home, temp1, temp2, temp3, temp4, temp5, temp6);
+
+
+
+              if (temp1 <= item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 <= item.qiushupankou2 && temp6 < item.qiushupankou2) {
+
+                if (item.qiushupankou1 <= item.qiushupankou2) {
+                  return true;
+                }
+
+              }
+
+
+              if (temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (temp5 > item.qiushupankou2) {
+                  if (temp1 > item.qiushupankou2) {
+                    // if (item.qiushupankou1 <= item.qiushupankou2) {
+                    //   return true;
+                    // }
+                  } else {
+                    if (item.qiushupankou1 <= item.qiushupankou2) {
+                      return true;
+                    }
+                  }
+
+                }
+                if (temp5 <= item.qiushupankou2) {
+                  if (temp1 > item.qiushupankou2) {
+                    return true;
+                  }
+
+                }
+
+
+
+              }
+            }
+
+
+
+            return false;
+          }
+
+        });
+        this.count = this.datalist.length;
+
+      } else if (val == 6) {
+        this.datalist = this.list.filter((item) => {
+          if (item.qiushutouzhu && item.liangduibisai && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2) {
+            if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
+              return false;
+            }
+
+            if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
+              let temp1 = parseFloat(item.changguiqiushu.split(":")[0]);
+              let temp2 = parseFloat(item.changguiqiushu.split(":")[1]);
+              let temp3 = parseFloat(
+                parseFloat(item.changguiqiushu.split(":")[0]) +
+                parseFloat(item.changguiqiushu.split(":")[1])
+              ) / 2;
+
+              let temp4 = item.qiushutouzhu && parseFloat(item.qiushutouzhu[2]);
+              let temp5 = item.qiushutouzhu && parseFloat(item.qiushutouzhu[3]);
+              let temp6 = (item.qiushuAll[0] + item.qiushuAll[2]) / 4;
+
+              // console.log(item.home, temp1, temp2, temp3, temp4, temp5, temp6);
+
+
+
+              if (temp1 <= item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 >= item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+
+                if (item.qiushupankou1 <= item.qiushupankou2) {
+                  return true;
+                }
+
+              }
+
+
+              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 >= item.qiushupankou2) {
+                  return true;
+                }
+
+              }
+            }
+
+            return false;
+          }
+
+        });
+
+        this.count = this.datalist.length;
+      } else if (val == 7) {
+
+        this.datalist = this.list.filter((item) => {
+          if (item.qiushutouzhu && item.liangduibisai.length > 0) {
+            // return item.qiushutouzhu[0] >= 80 || item.qiushutouzhu[1] >= 80 || item.yapantouzhu[0] >= 80 || item.yapantouzhu[1] >= 80;
+
+            return (item.qiushutouzhu[0] >= 100 && item.qiushutouzhu[4] >= 100) || (item.qiushutouzhu[1] >= 100 && item.qiushutouzhu[5] >= 100);
+          }
+        });
+
+        this.count = this.datalist.length;
+      } else if (val == 8) {
+        this.datalist = this.list.filter((item) => {
+          if (item.qiushutouzhu && item.liangduibisai.length > 0) {
+            if (item.qiushutouzhu && item.liangduibisai && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2) {
+              if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
+                return false;
+              }
+
+              if (item.qiushutouzhu[0] >= 100 && (item.homeScore + item.guestScore) > item.qiushupankou2) {
+                return true;
+              }
+              if (item.qiushutouzhu[1] >= 100 && (item.homeScore + item.guestScore) < item.qiushupankou2) {
+                return true;
+              }
+            }
+
+            return false
+          }
+        });
+        this.count = this.datalist.length;
+
+      } else if (val == 9) {
+        this.datalist = this.list.filter((item) => {
+          if (item.league != null) {
+            return item.league.indexOf(" ") > -1 && item.league.indexOf("周") > -1;
+          }
+        });
+        this.count = this.datalist.length;
+      } else if (val == 10) {
+        this.datalist = this.list.filter((item) => {
+          if (item.league != null) {
+            return item.league.indexOf(" ") > -1 && item.league.indexOf("北") > -1;
+          }
+        });
+        this.count = this.datalist.length;
+      }
+    },
     copycopy() {
       const range = document.createRange();
       range.selectNode(document.getElementById("copyid"));
@@ -1067,7 +1163,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-16",
+        date: "2022-07-18",
         matchId: item.matchId,
       };
       api
@@ -1079,7 +1175,7 @@ export default {
             this.detaillist = res.data.result.data;
             if (this.detaillist.length > 0) {
               this.item1 = this.detaillist[0];
-              console.log(this.item1);
+              // console.log(this.item1);
             }
           }
         })
@@ -1089,7 +1185,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-16",
+        date: "2022-07-18",
         matchId: item.matchId,
       };
       api
@@ -1110,7 +1206,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-07-16",
+        date: "2022-07-18",
         matchId: item.matchId,
       };
       api
@@ -1145,7 +1241,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-07-16",
+        date: "2022-07-18",
       };
       api
         .GetToday(data)
@@ -1153,7 +1249,7 @@ export default {
           // debugger
           if (res.data.result.code == "200") {
             this.datalist = res.data.result.data;
-            console.log(this.datalist);
+            // console.log(this.datalist);
             this.list = res.data.result.data;
           }
         })
@@ -1161,224 +1257,9 @@ export default {
     },
   },
   watch: {
-    status(val) {
-      if (val == 0) {
-        this.count = 0;
-        this.datalist = this.list;
-      } else if (val == 1) {
-        this.datalist = this.list.filter((item) => {
-          // if (item.league != null) {
-          //   return item.league.indexOf(" ") > -1 && item.league.indexOf("周") > -1;
-          // }
-
-          if (item.yapantouzhu && item.qiushutouzhu) {
-            if (item.qiushutouzhu[2].indexOf("no") > -1) {
-              return false;
-            }
-
-            if (item.yapantouzhu[0] >= 100 || item.yapantouzhu[1] >= 100) {
-
-              console.log(item.home, item.yapantouzhu);
-
-              if (item.yapantouzhu[4] <= 0 && item.yapantouzhu[5] >= 0 && (item.yapantouzhu[4] + item.yapantouzhu[5]) / 2 >= item.yapantouzhu[9]) {
-                if (item.yapantouzhu[10] - item.yapantouzhu[11] > 0) {
-                  return true;
-                }
-
-
-
-              }
-              if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0) {
-                if (item.yapantouzhu[8] < item.yapantouzhu[9]) {
-
-                  if (item.yapantouzhu[8] >= 0 && item.yapantouzhu[9] >= 0) {
-                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) >= 0 && item.yapantouzhu[8] * 2 >= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
-                      return true;
-                    }
-                  }
-                }
-              }
-
-
-            }
-          }
-
-          return false;
-        });
-        this.count = this.datalist.length;
-      } else if (val == 2) {
-        this.datalist = this.list.filter((item) => {
-          if (item.yapantouzhu && item.qiushutouzhu) {
-            if (item.qiushutouzhu[2].indexOf("no") > -1) {
-              return false;
-            }
-
-            if (item.yapantouzhu[0] >= 100 || item.yapantouzhu[1] >= 100) {
-
-              console.log(item.home, item.yapantouzhu);
-
-              if (item.yapantouzhu[4] >= 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] >= 0) {
-                if (item.yapantouzhu[8] >= item.yapantouzhu[9]) {
-                  if (item.yapantouzhu[8] >= 0 && item.yapantouzhu[9] >= 0) {
-                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) >= 0 && item.yapantouzhu[8] * 2 >= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
-                      return true;
-                    }
-                  }
-                }
-                if (item.yapantouzhu[8] < item.yapantouzhu[9]) {
-                  if (item.yapantouzhu[8] <= 0 && item.yapantouzhu[9] >= 0) {
-                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) > 0 && item.yapantouzhu[8] * 2 >= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
-                      return true;
-                    }
-                  }
-
-                }
-
-              }
-
-              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] >= 0) {
-                if (item.yapantouzhu[8] <= 0 && item.yapantouzhu[9] <= 0) {
-                  if ((item.yapantouzhu[10] - item.yapantouzhu[11]) < 0 && item.yapantouzhu[8] * 2 <= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
-                    return true;
-                  }
-                }
-
-              }
-            }
-          }
-
-          return false;
-        });
-        this.count = this.datalist.length;
-      } else if (val == 3) {
-        this.datalist = this.list.filter((item) => {
-          if (item.qiushutouzhu && item.liangduibisai && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2) {
-            if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
-              return false;
-            }
-
-            if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
-              let temp1 = parseFloat(item.changguiqiushu.split(":")[0]);
-              let temp2 = parseFloat(item.changguiqiushu.split(":")[1]);
-              let temp3 = parseFloat(
-                parseFloat(item.changguiqiushu.split(":")[0]) +
-                parseFloat(item.changguiqiushu.split(":")[1])
-              ) / 2;
-
-              let temp4 = item.qiushutouzhu && parseFloat(item.qiushutouzhu[2]);
-              let temp5 = item.qiushutouzhu && parseFloat(item.qiushutouzhu[3]);
-              let temp6 = (item.qiushuAll[0] + item.qiushuAll[2]) / 4;
-
-              console.log(item.home, temp1, temp2, temp3, temp4, temp5, temp6);
-
-
-
-              if (temp1 <= item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 <= item.qiushupankou2 && temp6 < item.qiushupankou2) {
-
-                if (item.qiushupankou1 <= item.qiushupankou2) {
-                  return true;
-                }
-
-              }
-
-
-              if (temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
-                if (temp5 > item.qiushupankou2) {
-                  if (temp1 > item.qiushupankou2) {
-                    // if (item.qiushupankou1 <= item.qiushupankou2) {
-                    //   return true;
-                    // }
-                  } else {
-                    if (item.qiushupankou1 <= item.qiushupankou2) {
-                      return true;
-                    }
-                  }
-
-                }
-                if (temp5 <= item.qiushupankou2) {
-                  if (temp1 > item.qiushupankou2) {
-                    return true;
-                  }
-
-                }
-
-
-
-              }
-            }
-
-
-
-            return false;
-          }
-
-        });
-        this.count = this.datalist.length;
-      } else if (val == 4) {
-        this.datalist = this.list.filter((item) => {
-          if (item.qiushutouzhu && item.liangduibisai && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2) {
-            if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
-              return false;
-            }
-
-            if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
-              let temp1 = parseFloat(item.changguiqiushu.split(":")[0]);
-              let temp2 = parseFloat(item.changguiqiushu.split(":")[1]);
-              let temp3 = parseFloat(
-                parseFloat(item.changguiqiushu.split(":")[0]) +
-                parseFloat(item.changguiqiushu.split(":")[1])
-              ) / 2;
-
-              let temp4 = item.qiushutouzhu && parseFloat(item.qiushutouzhu[2]);
-              let temp5 = item.qiushutouzhu && parseFloat(item.qiushutouzhu[3]);
-              let temp6 = (item.qiushuAll[0] + item.qiushuAll[2]) / 4;
-
-              console.log(item.home, temp1, temp2, temp3, temp4, temp5, temp6);
-
-
-
-              if (temp1 <= item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 >= item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
-
-                if (item.qiushupankou1 <= item.qiushupankou2) {
-                  return true;
-                }
-
-              }
-
-
-              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
-                return true;
-
-              }
-            }
-
-            return false;
-          }
-
-        });
-
-        this.count = this.datalist.length;
-      } else if (val == 5) {
-        this.datalist = this.list.filter((item) => {
-          if (item.qiushutouzhu && item.liangduibisai.length > 0) {
-            // return item.qiushutouzhu[0] >= 80 || item.qiushutouzhu[1] >= 80 || item.yapantouzhu[0] >= 80 || item.yapantouzhu[1] >= 80;
-
-            return (item.qiushutouzhu[0] >= 100 && item.qiushutouzhu[4] >= 100) || (item.qiushutouzhu[1] >= 100 && item.qiushutouzhu[5] >= 100);
-          }
-        });
-        this.count = this.datalist.length;
-      } else if (val == 6) {
-        this.datalist = this.list.filter((item) => {
-          if (item.yapantouzhu) {
-            // return item.qiushutouzhu[0] >= 80 || item.qiushutouzhu[1] >= 80 || item.yapantouzhu[0] >= 80 || item.yapantouzhu[1] >= 80;
-            return (item.yapantouzhu[0] >= 100 && item.yapantouzhu[2] >= 100) || (item.yapantouzhu[1] >= 100 && item.yapantouzhu[3] >= 100);
-          }
-        });
-        this.count = this.datalist.length;
-      }
-    },
   },
   mounted() {
+    // console.log(11111111111111111);
     this.loaddata();
   },
 };
