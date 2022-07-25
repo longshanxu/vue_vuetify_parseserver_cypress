@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-07-18 14:48:41
+ * @LastEditTime: 2022-07-25 16:12:48
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -826,9 +826,6 @@ export default {
         this.datalist = this.list;
       } else if (val == 1) {
         this.datalist = this.list.filter((item) => {
-          // if (item.league != null) {
-          //   return item.league.indexOf(" ") > -1 && item.league.indexOf("周") > -1;
-          // }
 
           if (item.yapantouzhu && item.qiushutouzhu) {
             if (item.qiushutouzhu[2].indexOf("no") > -1) {
@@ -837,34 +834,24 @@ export default {
 
             if (item.yapantouzhu[0] >= 100 || item.yapantouzhu[1] >= 100) {
 
-              // console.log(item.home, item.yapantouzhu);
 
-              if (item.yapantouzhu[4] <= 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] <= 0) {
-                if (item.yapantouzhu[8] <= item.yapantouzhu[9]) {
-                  if (item.yapantouzhu[8] <= 0 && item.yapantouzhu[9] <= 0) {
-                    if (item.yapantouzhu[9] == 0 && item.yapantouzhu[9] * 2 >= item.yapantouzhu[4] && item.yapantouzhu[9] * 2 >= item.yapantouzhu[5] && item.yapantouzhu[9] * 2 >= item.yapantouzhu[6]) {
-                      return false;
-                    }
-                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) <= 0 && item.yapantouzhu[4] > item.yapantouzhu[5]) {
-                      return true;
-                    }
-                  }
-                }
-
-              }
-              if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] >= 0) {
-                if (item.yapantouzhu[8] <= item.yapantouzhu[9]) {
-                  if (item.yapantouzhu[9] * 2 <= item.yapantouzhu[4] && item.yapantouzhu[9] * 2 <= item.yapantouzhu[5] && item.yapantouzhu[9] * 2 <= item.yapantouzhu[6]) {
-                    return false;
-                  }
-                  if (item.yapantouzhu[8] >= 0 && item.yapantouzhu[9] >= 0) {
-                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) >= 0 && item.yapantouzhu[8] * 2 <= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
-                      return true;
-                    }
-                  }
+              if (item.yapantouzhu[4] >= 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0) {
+                if (item.yapantouzhu[7] > 0 && item.yapantouzhu[8] >= 0 && item.yapantouzhu[9] >= 0) {
+                  return true;
                 }
               }
 
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] < 0) {
+                if (item.yapantouzhu[8] > 0 && item.yapantouzhu[9] >= 0 && item.yapantouzhu[8] >= item.yapantouzhu[9]) {
+                  return true;
+                }
+              }
+
+               if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] <= 0) {
+                if (item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0 && item.yapantouzhu[8] <= item.yapantouzhu[9]) {
+                  return true;
+                }
+              }
 
             }
           }
@@ -910,6 +897,36 @@ export default {
                 }
 
               }
+
+              //第一次升级过来的数据
+
+              if (item.yapantouzhu[4] <= 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] <= 0) {
+                if (item.yapantouzhu[8] <= item.yapantouzhu[9]) {
+                  if (item.yapantouzhu[8] <= 0 && item.yapantouzhu[9] <= 0) {
+                    if (item.yapantouzhu[9] == 0 && item.yapantouzhu[9] * 2 >= item.yapantouzhu[4] && item.yapantouzhu[9] * 2 >= item.yapantouzhu[5] && item.yapantouzhu[9] * 2 >= item.yapantouzhu[6]) {
+                      return false;
+                    }
+                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) <= 0 && item.yapantouzhu[4] > item.yapantouzhu[5]) {
+                      return true;
+                    }
+                  }
+                }
+
+              }
+              if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] >= 0) {
+                if (item.yapantouzhu[8] <= item.yapantouzhu[9]) {
+                  if (item.yapantouzhu[9] * 2 <= item.yapantouzhu[4] && item.yapantouzhu[9] * 2 <= item.yapantouzhu[5] && item.yapantouzhu[9] * 2 <= item.yapantouzhu[6]) {
+                    return false;
+                  }
+                  if (item.yapantouzhu[8] >= 0 && item.yapantouzhu[9] >= 0) {
+                    if ((item.yapantouzhu[10] - item.yapantouzhu[11]) >= 0 && item.yapantouzhu[8] * 2 <= (item.yapantouzhu[10] - item.yapantouzhu[11])) {
+                      return true;
+                    }
+                  }
+                }
+              }
+
+
             }
           }
 
@@ -1163,7 +1180,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-18",
+        date: "2022-07-24",
         matchId: item.matchId,
       };
       api
@@ -1185,7 +1202,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-18",
+        date: "2022-07-24",
         matchId: item.matchId,
       };
       api
@@ -1206,7 +1223,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-07-18",
+        date: "2022-07-24",
         matchId: item.matchId,
       };
       api
@@ -1241,7 +1258,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-07-18",
+        date: "2022-07-24",
       };
       api
         .GetToday(data)

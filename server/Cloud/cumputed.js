@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2022-07-18 13:17:46
+ * @LastEditTime: 2022-07-24 11:23:17
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2022-07-18"
+        datetemp = "2022-07-24"
 
 
         var tempMoney = Parse
@@ -482,7 +482,7 @@ Parse
                     const element = historylist[index];
 
                     if (home == element.home && guest == element.guest) {
-               
+
                         homehistoryqiushu += element.goal[0];
                         guesthistoryqiushu += element.goal[1];
                         break;
@@ -911,7 +911,7 @@ Parse
 
                     // element.set('yapantouzhu', [math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2), math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2),(homeqiushu - guestqiushu),(homezuijinqiushu - guestzuijinqiushu),(home10jinqiu - guest10jinqiu),(home10diuqiu - guest10diuqiu),pankou1,pankou2]);
                     // console.log([math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2), math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2),(homeqiushu - guestqiushu)/2,(homezuijinqiushu - guestzuijinqiushu)/2,(home10jinqiu - guest10jinqiu)/4,(home10diuqiu - guest10diuqiu)/4,pankou1,pankou2]);
-                    element.set('yapantouzhu', [math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2), math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2), (homeqiushu - guestqiushu) / 2, (homezuijinqiushu - guestzuijinqiushu) / 2, (home10jinqiu - guest10jinqiu) / 4, (home10diuqiu - guest10diuqiu) / 4, pankou1, pankou2,homehistoryqiushu,guesthistoryqiushu]);
+                    element.set('yapantouzhu', [math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2), math.format(chaibieitem1[0], 2), math.format(chaibieitem1[1], 2), (homeqiushu - guestqiushu) / 2, (homezuijinqiushu - guestzuijinqiushu) / 2, (home10jinqiu - guest10jinqiu) / 4, (home10diuqiu - guest10diuqiu) / 4, pankou1, pankou2, homehistoryqiushu, guesthistoryqiushu]);
 
                     oneresult.set("test14", [math.format(chaibieitem[0], 2), math.format(chaibieitem[1], 2)]);
                 }
@@ -1233,8 +1233,21 @@ function changepankou(temp) {
     }
     else if (temp == '二球半/三球') {
         return 2.75;
-    } else if (temp == '三球半') {
+    }
+    else if (temp == '三球') {
+        return 3.25;
+    }
+    else if (temp == '三球/三球半') {
+        return 3.25;
+    }
+    else if (temp == '三球半') {
         return 3.5;
+    }
+    else if (temp == '三球半/四球') {
+        return 3.75;
+    }
+    else if (temp == '四球') {
+        return 4;
     }
     else if (temp == '受平手') {
         return 0;
@@ -1257,7 +1270,12 @@ function changepankou(temp) {
     }
     else if (temp == '受二球/二球半') {
         return -2.25;
-    } else {
+    } else if (temp == '受二球半') {
+        return -2.5;
+    } else if (temp == '受二球半/三球') {
+        return -2.75;
+    }
+    else {
         console.log("没有匹配到亚盘盘口".red);
     }
 }
