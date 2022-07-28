@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2022-07-24 11:23:17
+ * @LastEditTime: 2022-07-29 09:35:00
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2022-07-24"
+        datetemp = "2022-07-29"
 
 
         var tempMoney = Parse
@@ -789,11 +789,26 @@ Parse
 
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
                     //散户投注数据。
-                    const qiupan = parseFloat(changeqiu(bet10qiu.pankou));
+                    
+                    let bet10odds0 = parseFloat(changeqiu(bet10qiu.firstPankou));
+                    let bet10odds1 = parseFloat(changeqiu(bet10qiu.pankou));
+
+                    let qiupan = bet10odds0;
+
+                    if ((bet10odds1 - bet10odds0 > 0.25) || (bet10odds1 - bet10odds0 < -0.25)) {
+                        qiupan = bet10odds1
+                    }
+
+
                     const pankou1 = parseFloat(changepankou(bet10pankou.firstPankou));
                     const pankou2 = parseFloat(changepankou(bet10pankou.pankou));
 
-                    let qiushupankou = parseFloat(changepankou(bet10pankou.pankou));
+                    
+                    let qiushupankou = pankou1;
+
+                    if ((pankou2 - pankou1 > 0.25) || (pankou2 - pankou1 < -0.25)) {
+                        qiushupankou = pankou2
+                    }
 
                     let chaibieitem = [50, 50];
 
@@ -1042,12 +1057,15 @@ Parse
 
                     // let bet365ratio = math.format(bet10qiu.returnRatio.replace('%', '') / 100, 3);
 
-                    // let bet365odds0 = parseFloat(bet10qiu.odds[0]) + 1;
-                    // let bet365odds1 = parseFloat(bet10qiu.odds[1]) + 1;
+                    let bet10odds0 = parseFloat(changeqiu(bet10qiu.firstPankou));
+                    let bet10odds1 = parseFloat(changeqiu(bet10qiu.pankou));
 
 
-                    let qiushupankou = parseFloat(changeqiu(bet10qiu.pankou));
+                    let qiushupankou = bet10odds0;
 
+                    if ((bet10odds1 - bet10odds0 > 0.25) || (bet10odds1 - bet10odds0 < -0.25)) {
+                        qiushupankou = bet10odds1
+                    }
 
 
                     // let chaibie = changguiqiushu - qiushupankou ;

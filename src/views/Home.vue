@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-07-25 16:12:48
+ * @LastEditTime: 2022-07-29 14:37:59
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -847,7 +847,7 @@ export default {
                 }
               }
 
-               if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] <= 0) {
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] <= 0) {
                 if (item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0 && item.yapantouzhu[8] <= item.yapantouzhu[9]) {
                   return true;
                 }
@@ -1013,7 +1013,14 @@ export default {
 
                 }
 
+              }
 
+              //第一次升级后的可用方法
+
+              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 > item.qiushupankou2) {
+                  return true;
+                }
 
               }
             }
@@ -1036,10 +1043,10 @@ export default {
             if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
               let temp1 = parseFloat(item.changguiqiushu.split(":")[0]);
               let temp2 = parseFloat(item.changguiqiushu.split(":")[1]);
-              let temp3 = parseFloat(
-                parseFloat(item.changguiqiushu.split(":")[0]) +
-                parseFloat(item.changguiqiushu.split(":")[1])
-              ) / 2;
+              // let temp3 = parseFloat(
+              //   parseFloat(item.changguiqiushu.split(":")[0]) +
+              //   parseFloat(item.changguiqiushu.split(":")[1])
+              // ) / 2;
 
               let temp4 = item.qiushutouzhu && parseFloat(item.qiushutouzhu[2]);
               let temp5 = item.qiushutouzhu && parseFloat(item.qiushutouzhu[3]);
@@ -1047,23 +1054,18 @@ export default {
 
               // console.log(item.home, temp1, temp2, temp3, temp4, temp5, temp6);
 
-
-
-              if (temp1 <= item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 >= item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
-
-                if (item.qiushupankou1 <= item.qiushupankou2) {
-                  return true;
-                }
-
+              if (temp1 < item.qiushupankou2 && temp2 < item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                return true;
               }
 
-
-              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
-                if (item.qiushupankou1 >= item.qiushupankou2) {
-                  return true;
-                }
-
+              if (temp1 > item.qiushupankou2 && temp2 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                return true;
               }
+
+              if (temp1 < item.qiushupankou2 && temp2 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 < item.qiushupankou2) {
+                return true;
+              }
+
             }
 
             return false;
@@ -1180,7 +1182,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-24",
+        date: "2022-07-29",
         matchId: item.matchId,
       };
       api
@@ -1202,7 +1204,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-24",
+        date: "2022-07-29",
         matchId: item.matchId,
       };
       api
@@ -1223,7 +1225,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-07-24",
+        date: "2022-07-29",
         matchId: item.matchId,
       };
       api
@@ -1258,7 +1260,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-07-24",
+        date: "2022-07-29",
       };
       api
         .GetToday(data)
