@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-07-29 14:37:59
+ * @LastEditTime: 2022-07-27 14:37:59
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -1182,7 +1182,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-29",
+        date: "2022-07-27",
         matchId: item.matchId,
       };
       api
@@ -1204,7 +1204,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-29",
+        date: "2022-07-27",
         matchId: item.matchId,
       };
       api
@@ -1225,7 +1225,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-07-29",
+        date: "2022-07-27",
         matchId: item.matchId,
       };
       api
@@ -1260,7 +1260,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-07-29",
+        date: "2022-07-27",
       };
       api
         .GetToday(data)

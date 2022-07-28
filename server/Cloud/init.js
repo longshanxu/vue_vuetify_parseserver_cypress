@@ -3,7 +3,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2022-07-29 16:44:58
+ * @LastEditTime: 2022-07-28 22:07:56
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\init.js
@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2022-07-29/prev
-//https://vipc.cn/i/live/football/date/2022-07-29/next
+//https://vipc.cn/i/live/football/date/2022-07-27/prev
+//https://vipc.cn/i/live/football/date/2022-07-27/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2022-07-29";
+        var datetemp = "2022-07-27";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -125,16 +125,16 @@ async function GetTodayMoney() {
         setTimeout(() => {
             // https://vipc.cn/i/live/football/date/today/next
             const options = {
-                url: 'https://vipc.cn/i/live/football/date/2022-07-29/prev',
+                url: 'https://vipc.cn/i/live/football/date/2022-07-27/prev',
                 headers: {
                     'User-Agent': 'request'
                 },
                 gzip: true,
                 // proxy: 'http://127.0.0.1:54802',
-            
+
             };
 
-            httprequest(options,async function (error, response, body) {
+            httprequest(options, async function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     let data = await JSON.parse(body);
                     for (let index = 0; index < data.items.length; index++) {
@@ -266,33 +266,38 @@ async function GetOddsByID(matchId, datetemp, proxiedRequest, ip) {
             if (!error && response.statusCode == 200) {
                 let data = await JSON.parse(body);
                 let money = new OddsMoney();
-                money.set("matchId", matchId);           //全局唯一ID
+                if (data.odds && data.odds.length > 0) {
+                    money.set("matchId", matchId);           //全局唯一ID
 
-                money.set("date", datetemp);
-                for (let index = 0; index < data.odds.length; index++) {
-                    const element = data.odds[index];
-                    if (element.companyName == "平均欧赔" || element.companyName == "竞彩" || element.companyName == "威廉希尔" || element.companyName == "Bet365" || element.companyName == "10BET") {
+                    money.set("date", datetemp);
 
-                        if (element.companyId == "") {
-                            money.set("average", element);    //平均欧赔
-                        }
-                        if (element.companyId == "115") {
-                            money.set("weilian", element);    //威廉
-                        }
-                        if (element.companyId == "281") {
-                            money.set("bet365", element);    //bet365
-                        }
-                        if (element.companyId == "16") {
-                            money.set("bet10", element);     //bet10
-                        }
-                        if (element.companyId == "-1") {
-                            money.set("ticai", element);    //体彩
+                    for (let index = 0; index < data.odds.length; index++) {
+                        const element = data.odds[index];
+                        if (element.companyName == "平均欧赔" || element.companyName == "竞彩" || element.companyName == "威廉希尔" || element.companyName == "Bet365" || element.companyName == "10BET") {
+
+                            if (element.companyId == "") {
+                                money.set("average", element);    //平均欧赔
+                            }
+                            if (element.companyId == "115") {
+                                money.set("weilian", element);    //威廉
+                            }
+                            if (element.companyId == "281") {
+                                money.set("bet365", element);    //bet365
+                            }
+                            if (element.companyId == "16") {
+                                money.set("bet10", element);     //bet10
+                            }
+                            if (element.companyId == "-1") {
+                                money.set("ticai", element);    //体彩
+                            }
+
                         }
 
                     }
 
+
+                    money.save();
                 }
-                money.save();
             }
         }).on("error", function (err) {
             if (matchId != null && matchId.length < 10) {
@@ -406,7 +411,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2022-07-29";
+    var datetemp = "2022-07-27";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
@@ -481,15 +486,15 @@ async function OneByOne() {
         datetemp = year + "-0" + month + "-0" + day;
     }
 
-    datetemp = "2022-07-29"
+    datetemp = "2022-07-27"
 
     var tempMoney = Parse
         .Object
         .extend("Money");
     var query = new Parse.Query(tempMoney);
     query.equalTo("date", datetemp);
-    query.notEqualTo("displayState", "完场")
-    // query.equalTo("displayState", "完场")
+    // query.notEqualTo("displayState", "完场")
+    query.equalTo("displayState", "完场")
     // query.ascending("matchTime") //matchTime,league
     //  修改访问的数据数量。
     // query.greaterThan("matchTime",new Date());
@@ -705,15 +710,15 @@ Parse
 
 ///每10s获取一次数据
 async function GetDataByTen() {
-    var datetemp = "2022-07-29";
+    var datetemp = "2022-07-27";
 
     var tempMoney = Parse
         .Object
         .extend("Money");
     var query = new Parse.Query(tempMoney);
     query.equalTo("date", datetemp);
-    query.notEqualTo("displayState", "完场")
-    // query.equalTo("displayState", "完场")
+    // query.notEqualTo("displayState", "完场")
+    query.equalTo("displayState", "完场")
     // query.ascending("matchTime") //matchTime,league
     //  修改访问的数据数量。
     // query.greaterThan("matchTime",new Date());
