@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-07-27 14:37:59
+ * @LastEditTime: 2022-07-31 20:20:04
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -839,15 +839,15 @@ export default {
                 if (item.yapantouzhu[7] > 0 && item.yapantouzhu[8] >= 0 && item.yapantouzhu[9] >= 0) {
                   return true;
                 }
-              }
-
-              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] < 0) {
-                if (item.yapantouzhu[8] > 0 && item.yapantouzhu[9] >= 0 && item.yapantouzhu[8] >= item.yapantouzhu[9]) {
+                if (item.yapantouzhu[7] > 0 && item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0) {
                   return true;
                 }
               }
 
-              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] <= 0) {
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] < 0.5) {
+                if (item.yapantouzhu[8] >= 0 && item.yapantouzhu[9] >= 0 && item.yapantouzhu[8] >= item.yapantouzhu[9]) {
+                  return true;
+                }
                 if (item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0 && item.yapantouzhu[8] <= item.yapantouzhu[9]) {
                   return true;
                 }
@@ -1109,14 +1109,14 @@ export default {
       } else if (val == 9) {
         this.datalist = this.list.filter((item) => {
           if (item.league != null) {
-            return item.league.indexOf(" ") > -1 && item.league.indexOf("周") > -1;
+            return item.league.indexOf("周") > -1;
           }
         });
         this.count = this.datalist.length;
       } else if (val == 10) {
         this.datalist = this.list.filter((item) => {
           if (item.league != null) {
-            return item.league.indexOf(" ") > -1 && item.league.indexOf("北") > -1;
+            return item.league.indexOf("北") > -1;
           }
         });
         this.count = this.datalist.length;
@@ -1182,7 +1182,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-27",
+        date: "2022-08-01",
         matchId: item.matchId,
       };
       api
@@ -1204,7 +1204,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-27",
+        date: "2022-08-01",
         matchId: item.matchId,
       };
       api
@@ -1225,7 +1225,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-07-27",
+        date: "2022-08-01",
         matchId: item.matchId,
       };
       api
@@ -1260,7 +1260,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-07-27",
+        date: "2022-08-01",
       };
       api
         .GetToday(data)
