@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-08-04 21:20:06
+ * @LastEditTime: 2022-08-05 19:31:45
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -83,6 +83,20 @@
                   item.liangduibisai[4]
               }}
             </span>
+          </v-col>
+        </v-row>
+        <v-row dense class="ma-0" v-show="showtuijian">
+          <v-col style="text-align: center; font-size: 14px" cols="3">
+            凯利预测:
+          </v-col>
+          <v-col style="text-align: center; font-size: 14px" cols="3" class="px-0">
+            <span style="font-size: 14px">{{ item.kailiresult }} </span>
+          </v-col>
+          <v-col style="text-align: center; font-size: 14px" cols="3">
+            体彩预测:
+          </v-col>
+          <v-col style="text-align: center; font-size: 14px" cols="3">
+            <span style="font-size: 14px">{{ item.ticairesult }}</span>
           </v-col>
         </v-row>
 
@@ -868,10 +882,8 @@ export default {
                 if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp > 0) {
                   return true;
                 }
-              }
 
-              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] > 0 && item.yapantouzhu[7] < 1) {
-                if (item.yapantouzhu[8] < item.yapantouzhu[9]) {
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp == 0) {
                   return true;
                 }
               }
@@ -899,13 +911,7 @@ export default {
                 }
               }
 
-              if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] > 0) {
 
-                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp == 0) {
-                  return true;
-                }
-
-              }
 
               if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] < 0) {
 
@@ -914,20 +920,21 @@ export default {
                 }
               }
 
-              if (item.yapantouzhu[4] >= 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] > 0) {
-
-                if (item.yapantouzhu[8] >= item.yapantouzhu[9] && temp > 0) {
-                  return true;
-                }
-              }
-
-              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] > 0) {
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] <= 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] > 0) {
 
                 if (item.yapantouzhu[8] > item.yapantouzhu[9] && item.yapantouzhu[9] < 0 && temp < 0) {
                   return true;
                 }
               }
 
+
+              if (item.yapantouzhu[4] >= 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] > 0) {
+
+                if (item.yapantouzhu[8] >= item.yapantouzhu[9] && temp >= 0) {
+                  return true;
+                }
+
+              }
 
             }
           }
@@ -1184,7 +1191,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-08-05",
+        date: "2022-07-30",
         matchId: item.matchId,
       };
       api
@@ -1206,7 +1213,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-08-05",
+        date: "2022-07-30",
         matchId: item.matchId,
       };
       api
@@ -1227,7 +1234,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-08-05",
+        date: "2022-07-30",
         matchId: item.matchId,
       };
       api
@@ -1262,7 +1269,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-08-05",
+        date: "2022-07-30",
       };
       api
         .GetToday(data)

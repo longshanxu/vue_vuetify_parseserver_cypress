@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2022-08-05 10:02:49
+ * @LastEditTime: 2022-07-30 10:02:49
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2022-08-05"
+        datetemp = "2022-07-30"
 
 
         var tempMoney = Parse
@@ -203,6 +203,8 @@ Parse
             console.log('凯利:'.red + kailiresult);
 
             oneresult.set("test3", kailiresult);
+            
+            element.set("kailiresult", kailiresult);
 
             let ticairesult = [];
             if (ticaiitem != undefined && ticaiitem != null && weilianitem != undefined && weilianitem != null) {
@@ -230,7 +232,8 @@ Parse
                 oneresult.set("test4", ticairesult);
             }
 
-
+            element.set("ticairesult", ticairesult);
+            
 
             //进行第5轮的5%的浮动，主要是针对平局进行处理。
             const HistoryMoney = Parse
