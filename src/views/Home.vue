@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-08-05 19:31:45
+ * @LastEditTime: 2022-08-08 14:48:24
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -102,21 +102,29 @@
 
         <v-row dense class="ma-0" v-show="showtuijian">
           <v-col style="text-align: center; font-size: 14px; font-weight: 500" cols="3">
-            散户心理:
+            心理数据:
           </v-col>
-          <v-col style="text-align: center; font-size: 14px" cols="9">
-            <span style="font-size: 14px; color: #a60056">
-              {{ item.sanhuxinli && item.sanhuxinli[3] }}
-              <br />
-              {{
-                  item.sanhuxinli &&
-                  item.sanhuxinli[0] +
-                  " ~ " +
-                  item.sanhuxinli[1] +
-                  " ~ " +
-                  item.sanhuxinli[2]
-              
-              }}</span>
+          <v-col style="text-align: right; font-size: 14px" cols="9">
+            <span>
+              {{ item.sanhuxinli && item.sanhuxinli[3] + "_________" }}
+              {{ item.touzhue && '[ "' + item.touzhue[0] + '", "' + item.touzhue[1] + '", "' +
+                  item.touzhue[2] + '" ]'
+              }}
+            </span>
+            <br />
+            <span style=" color: #a60056">
+              散户心理: {{ item.sanhuxinli && '[ "' + item.sanhuxinli[0] + '", "' + item.sanhuxinli[1] + '", "' +
+                  item.sanhuxinli[2] + '" ]'
+              }}
+            </span>
+            <br />
+            <span>
+              开局心理: {{ item.kaijuresult }}
+            </span>
+            <br />
+            <span style=" color: green">
+              两队历史: {{ item.liangduilishi }}
+            </span>
           </v-col>
         </v-row>
         <v-row dense class="ma-0" v-show="showtuijian">
@@ -217,7 +225,7 @@
             <span style="font-size: 14px">{{ item.qiushupankou1 }} -> {{ item.qiushupankou2 }}</span>
           </v-col>
         </v-row>
-        <v-row dense class="ma-0" v-show="showtuijian">
+        <!-- <v-row dense class="ma-0" v-show="showtuijian">
           <v-col style="text-align: center; font-size: 14px; color: blue" cols="3">
             手动让球:
           </v-col>
@@ -256,7 +264,7 @@
                 item.newqiushutouzhu[0] + " ~ " + item.newqiushutouzhu[1]
             }}
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-row dense class="ma-0" v-show="showtuijian">
           <v-col style="text-align: center; font-size: 14px; font-weight: 500" cols="3">
             让球投注:
@@ -300,6 +308,10 @@
             <div style="font-size: 18px">
               {{ item.homezuijinbisai[3] + ":" + item.homezuijinbisai[4] }}
             </div>
+            <div style="font-size: 18px;color:red">
+              {{ item.liangduiqiushu && item.liangduiqiushu[0] }}
+            </div>
+
           </v-col>
           <v-col style="text-align: center; font-size: 14px; font-weight: 500" cols="3">
             客队交战:
@@ -321,6 +333,9 @@
             </div>
             <div style="font-size: 18px">
               {{ item.guestzuijinbisai[3] + ":" + item.guestzuijinbisai[4] }}
+            </div>
+            <div style="font-size: 18px;color:red">
+              {{ item.liangduiqiushu && item.liangduiqiushu[1] }}
             </div>
           </v-col>
         </v-row>
@@ -869,11 +884,7 @@ export default {
               }
 
               if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0) {
-
-                // if (item.yapantouzhu[8] < 0.5 && item.yapantouzhu[9] < 0.5 && temp >= 0) {
-                //   return true;
-                // }
-                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp > 0) {
+                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
                   return true;
                 }
               }
@@ -915,7 +926,7 @@ export default {
 
               if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] < 0) {
 
-                if (item.yapantouzhu[8] <= item.yapantouzhu[9] && temp < 0) {
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp < 0) {
                   return true;
                 }
               }
@@ -1191,7 +1202,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-30",
+        date: "2022-08-08",
         matchId: item.matchId,
       };
       api
@@ -1213,7 +1224,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-07-30",
+        date: "2022-08-08",
         matchId: item.matchId,
       };
       api
@@ -1234,7 +1245,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-07-30",
+        date: "2022-08-08",
         matchId: item.matchId,
       };
       api
@@ -1269,7 +1280,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-07-30",
+        date: "2022-08-08",
       };
       api
         .GetToday(data)

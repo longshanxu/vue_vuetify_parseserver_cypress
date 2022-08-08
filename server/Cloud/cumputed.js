@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2022-07-30 10:02:49
+ * @LastEditTime: 2022-08-08 10:02:49
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2022-07-30"
+        datetemp = "2022-08-08"
 
 
         var tempMoney = Parse
@@ -161,6 +161,8 @@ Parse
             }
 
             console.log('开局====:'.red + finalitem);
+
+            element.set("kaijuresult",  Object.assign([], finalitem));
             oneresult.set("test1", Object.assign([], finalitem));
             //新的方案。欧盘转亚盘
 
@@ -306,7 +308,7 @@ Parse
             element.set("liangduibisai", liangduibisai);
             oneresult.set("test24", liangduibisai);
             console.log('两队历史:'.green + finalitem);
-
+            element.set("liangduilishi", Object.assign([], finalitem));
             oneresult.set("test5", Object.assign([], finalitem));
 
             //进行第6轮的5 % 的浮动，主要是针对最近状态进行处理。
@@ -428,7 +430,7 @@ Parse
             if (bet365item != null && bet365item != undefined) {
                 console.log('投注额:' + math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3) + ',' + math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3) + ',' + math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3));
                 console.log('赔率:' + bet365item.odds[0] + "," + bet365item.odds[1] + "," + bet365item.odds[2]);
-
+                element.set("touzhue", [math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3), math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3), math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3)]);
                 oneresult.set("test7", [math.format(bet365item.odds[0] * parseFloat(finalitem[0].replace('%', '')), 3), math.format(bet365item.odds[1] * parseFloat(finalitem[1].replace('%', '')), 3), math.format(bet365item.odds[2] * parseFloat(finalitem[2].replace('%', '')), 3)]);
                 oneresult.set("test8", bet365item.odds);
             }
@@ -1194,7 +1196,7 @@ Parse
                 // console.log("两队最近亚盘球数：".white + (homezuijinqiushu + guestzuijinqiushu) / 2);
                 oneresult.set("test19", [homeqiushu, guestqiushu, (homeqiushu + guestqiushu) / 2]);
                 oneresult.set("test20", [homezuijinqiushu + '（' + homediuqiu + '）', guestzuijinqiushu + '（' + guestdiuqiu + '）', (homezuijinqiushu + guestzuijinqiushu) / 2]);
-
+                element.set("liangduiqiushu", [homezuijinqiushu + '（' + homediuqiu + '）', guestzuijinqiushu + '（' + guestdiuqiu + '）']);
 
 
                 console.log("用户期望让球：".yellow + (homeqiushu - guestqiushu) / 2 + " : " + (homezuijinqiushu - guestzuijinqiushu) / 2);
