@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2019-11-26 10:13:57
- * @LastEditTime: 2022-08-08 15:23:05
+ * @LastEditTime: 2022-08-04 15:23:05
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\login\SignUp.vue
