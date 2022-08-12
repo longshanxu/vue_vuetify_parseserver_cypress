@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2022-08-04/prev
-//https://vipc.cn/i/live/football/date/2022-08-04/next
+//https://vipc.cn/i/live/football/date/2022-08-12/prev
+//https://vipc.cn/i/live/football/date/2022-08-12/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2022-08-04";
+        var datetemp = "2022-08-12";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -125,7 +125,7 @@ async function GetTodayMoney() {
         setTimeout(() => {
             // https://vipc.cn/i/live/football/date/today/next
             const options = {
-                url: 'https://vipc.cn/i/live/football/date/2022-08-04/prev',
+                url: 'https://vipc.cn/i/live/football/date/2022-08-12/prev',
                 headers: {
                     'User-Agent': 'request'
                 },
@@ -411,7 +411,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2022-08-04";
+    var datetemp = "2022-08-12";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
@@ -486,15 +486,15 @@ async function OneByOne() {
         datetemp = year + "-0" + month + "-0" + day;
     }
 
-    datetemp = "2022-08-04"
+    datetemp = "2022-08-12"
 
     var tempMoney = Parse
         .Object
         .extend("Money");
     var query = new Parse.Query(tempMoney);
     query.equalTo("date", datetemp);
-    // query.notEqualTo("displayState", "完场")
-    query.equalTo("displayState", "完场")
+    query.notEqualTo("displayState", "完场")
+    // query.equalTo("displayState", "完场")
     // query.ascending("matchTime") //matchTime,league
     //  修改访问的数据数量。
     // query.greaterThan("matchTime",new Date());
@@ -710,15 +710,15 @@ Parse
 
 ///每10s获取一次数据
 async function GetDataByTen() {
-    var datetemp = "2022-08-04";
+    var datetemp = "2022-08-12";
 
     var tempMoney = Parse
         .Object
         .extend("Money");
     var query = new Parse.Query(tempMoney);
     query.equalTo("date", datetemp);
-    // query.notEqualTo("displayState", "完场")
-    query.equalTo("displayState", "完场")
+    query.notEqualTo("displayState", "完场")
+    // query.equalTo("displayState", "完场")
     // query.ascending("matchTime") //matchTime,league
     //  修改访问的数据数量。
     // query.greaterThan("matchTime",new Date());
