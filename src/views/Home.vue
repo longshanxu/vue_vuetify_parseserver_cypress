@@ -1,10 +1,10 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-08-11 21:26:19
+ * @LastEditTime: 2022-08-14 22:45:16
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
+ * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
  -->
 <template>
   <v-container class="fill-height grey lighten-3 pa-0" fluid>
@@ -288,7 +288,7 @@
             }}</span>
             <br />
             <span style="font-size: 14px; color: #a60056">{{
-               item.qiushutouzhu && item.qiushutouzhu[6]
+                item.qiushutouzhu && item.qiushutouzhu[6]
             }}</span>
           </v-col>
         </v-row>
@@ -849,7 +849,7 @@ export default {
       userdialog: false,
       userdialog1: false,
       isshowbifen: true,
-      currentItem: null
+      currentItem: 0
     };
   },
   computed: {},
@@ -937,20 +937,30 @@ export default {
 
               if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] < 0) {
 
-                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp < 0) {
-                  item.yapantouzhu[12] += "（策略7??）"
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0) {
+                  item.yapantouzhu[12] += "（周六策略28）"
                   return true;
                 }
 
-                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0) {
-                  item.yapantouzhu[12] += "（周日策略17??）"
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0) {
+                  item.yapantouzhu[12] += "（周六策略31）"
                   return true;
                 }
 
-                  if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp == 0) {
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
                   item.yapantouzhu[12] += "（周五策略1）"
                   return true;
                 }
+
+              }
+
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] > 0) {
+
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp < 0 && item.yapantouzhu[10] - item.yapantouzhu[11] == 0) {
+                  item.yapantouzhu[12] += "(周六策略24)"
+                  return true;
+                }
+
 
               }
 
@@ -968,12 +978,16 @@ export default {
                   item.yapantouzhu[12] += "（周五策略8）"
                   return true;
                 }
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
+                  item.yapantouzhu[12] += "（周六策略29）"
+                  return true;
+                }
 
               }
 
-              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0) {
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] > 0) {
                 if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
-                  item.yapantouzhu[12] += "（策略2??）要改"
+                  item.yapantouzhu[12] += "（周六策略2）"
                   return true;
                 }
 
@@ -987,16 +1001,34 @@ export default {
 
               }
 
-              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] == 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] > 0) {
-                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0) {
-                  item.yapantouzhu[12] += "（周日策略2）"
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] == 0 && item.yapantouzhu[6] == 0 && item.yapantouzhu[7] < 0) {
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
+                  item.yapantouzhu[12] += "(周五策略22)"
                   return true;
                 }
 
               }
 
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] == 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] > 0) {
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0) {
+                  item.yapantouzhu[12] += "（周日策略2）"
+                  return true;
+                }
+                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
+                  item.yapantouzhu[12] += "（周六策略9）"
+                  return true;
+                }
+              }
+
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] == 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] > 0) {
+                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
+                  item.yapantouzhu[12] += "（周六策略38）"
+                  return true;
+                }
+              }
+
               if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] == 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] < 0) {
-                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0 ) {
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
                   item.yapantouzhu[12] += "（周五策略4）"
                   return true;
                 }
@@ -1008,17 +1040,17 @@ export default {
                   item.yapantouzhu[12] += "（策略4）"
                   return true;
                 }
-                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) < 0) {
-                  item.yapantouzhu[12] += "（策略10??）"
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
+                  item.yapantouzhu[12] += "（周六策略11??）"
                   return true;
                 }
-                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0) {
-                  item.yapantouzhu[12] += "（策略12??）"
+                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) < 0) {
+                  item.yapantouzhu[12] += "（周六策略15）"
                   return true;
                 }
 
-                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp < -1 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
-                  item.yapantouzhu[12] += "（策略15??）"
+                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) < 0) {
+                  item.yapantouzhu[12] += "（周六策略25）"
                   return true;
                 }
 
@@ -1042,7 +1074,7 @@ export default {
                 }
 
                 if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
-                  item.yapantouzhu[12] += "（周四策略3）"
+                  item.yapantouzhu[12] += "（周四策略3??）"
                   return true;
                 }
 
@@ -1052,16 +1084,32 @@ export default {
                 }
 
 
-              }
-
-              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] == 0) {
-                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
-                  item.yapantouzhu[12] += "（周日策略12??）"
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
+                  item.yapantouzhu[12] += "（周六策略6）"
                   return true;
                 }
 
-                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
-                  item.yapantouzhu[12] += "（周一策略1??）"
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
+                  item.yapantouzhu[12] += "（周六策略23）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0) {
+                  item.yapantouzhu[12] += "（周六策略37）"
+                  return true;
+                }
+
+              }
+
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] == 0) {
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) < 0) {
+                  item.yapantouzhu[12] += "（周日策略12）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) < 0) {
+                  item.yapantouzhu[12] += "（周一策略1）"
                   return true;
                 }
 
@@ -1070,6 +1118,10 @@ export default {
                   return true;
                 }
 
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周五策略23）"
+                  return true;
+                }
               }
 
               if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] == 0) {
@@ -1086,18 +1138,47 @@ export default {
                   return true;
                 }
 
-              }        
+              }
+
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] == 0 && item.yapantouzhu[7] == 0) {
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "(周五策略17)"
+                  return true;
+                }
+
+              }
 
               if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] < 0) {
                 if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
-                  item.yapantouzhu[12] += "（周日策略15）"
+                  item.yapantouzhu[12] += "（周日策略15??）"
                   return true;
                 }
 
-                  if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
                   item.yapantouzhu[12] += "（周五策略7）"
                   return true;
                 }
+
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0) {
+                  item.yapantouzhu[12] += "（周六策略1）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周六策略13）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
+                  item.yapantouzhu[12] += "（周五策略14）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0) {
+                  item.yapantouzhu[12] += "（周六策略34）"
+                  return true;
+                }
+
 
               }
 
@@ -1131,11 +1212,73 @@ export default {
                   return true;
                 }
 
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周六策略10）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) > 0.25) {
+                  item.yapantouzhu[12] += "（周六策略21）"
+                  return true;
+                }
+              }
+
+              if (item.yapantouzhu[4] == 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] < 0) {
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0) {
+                  item.yapantouzhu[12] += "（周六策略14）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
+                  item.yapantouzhu[12] += "（周六策略35）"
+                  return true;
+                }
+              }
+
+              if (item.yapantouzhu[4] == 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] == 0) {
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0) {
+                  item.yapantouzhu[12] += "（周六策略3）"
+                  return true;
+                }
+
+
+                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周五策略24）"
+                  return true;
+                }
+
+              }
+
+              if (item.yapantouzhu[4] == 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] > 0) {
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
+                  item.yapantouzhu[12] += "（周五策略18）"
+                  return true;
+                }
+
               }
 
               if (item.yapantouzhu[4] == 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] > 0) {
                 if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) > 0) {
                   item.yapantouzhu[12] += "（周日策略6）"
+                  return true;
+                }
+
+
+
+              }
+
+              if (item.yapantouzhu[4] == 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] < 0) {
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0) {
+                  item.yapantouzhu[12] += "（周六策略12）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) < 0) {
+                  item.yapantouzhu[12] += "(周五策略16)"
                   return true;
                 }
 
@@ -1172,6 +1315,12 @@ export default {
                   return true;
                 }
 
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周六策略20）"
+                  return true;
+                }
+
+
               }
 
               if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] < 0) {
@@ -1204,16 +1353,34 @@ export default {
                   return true;
                 }
 
-                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) > 0) {
                   item.yapantouzhu[12] += "（周四策略4）"
                   return true;
                 }
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周六策略8）"
+                  return true;
+                }
 
+                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0 && item.yapantouzhu[8] < 1) {
+                  item.yapantouzhu[12] += "（周六策略16）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周六策略18）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp < 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周六策略22）"
+                  return true;
+                }
               }
 
               if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] == 0) {
                 if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
-                  item.yapantouzhu[12] += "（周日策略7）"
+                  item.yapantouzhu[12] += "（周日策略7??）"
                   return true;
                 }
 
@@ -1226,6 +1393,30 @@ export default {
               if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] > 0) {
                 if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
                   item.yapantouzhu[12] += "（周三策略5）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0 && item.yapantouzhu[4] < item.yapantouzhu[9]) {
+                  item.yapantouzhu[12] += "（周六策略5）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) == 0) {
+                  item.yapantouzhu[12] += "（周六策略17）"
+                  return true;
+                }
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0) {
+                  item.yapantouzhu[12] += "（周六策略27??）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0) {
+                  item.yapantouzhu[12] += "（周五策略21）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周六策略36）"
                   return true;
                 }
               }
@@ -1241,8 +1432,8 @@ export default {
 
               if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] > 0) {
 
-                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[8] - item.yapantouzhu[9]) < 0.5) {
-                  item.yapantouzhu[12] += "（策略5??）"
+                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) > 0) {
+                  item.yapantouzhu[12] += "(周六策略30)"
                   return true;
                 }
 
@@ -1256,8 +1447,23 @@ export default {
                   return true;
                 }
 
-                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) > 0) {
-                  item.yapantouzhu[12] += "（策略16??）"
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周六策略26）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周六策略33）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[8] + item.yapantouzhu[9]) > 0) {
+                  item.yapantouzhu[12] += "(周六策略19)"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "(周五策略15)"
                   return true;
                 }
 
@@ -1282,6 +1488,27 @@ export default {
                   return true;
                 }
 
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周六策略4）"
+                  return true;
+                }
+
+              }
+
+              if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] == 0) {
+
+                if (item.yapantouzhu[8] > item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) == 0) {
+                  item.yapantouzhu[12] += "（周六策略7）"
+                  return true;
+                }
+
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp == 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周五策略20）"
+                  return true;
+                }
+
+
+
               }
 
               if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] == 0 && item.yapantouzhu[6] > 0 && item.yapantouzhu[7] < 0) {
@@ -1296,10 +1523,13 @@ export default {
               if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] == 0 && item.yapantouzhu[6] < 0 && item.yapantouzhu[7] < 0) {
 
                 if (item.yapantouzhu[8] == item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
-                  item.yapantouzhu[12] += "（周日策略13）"
+                  item.yapantouzhu[12] += "（周日策略13??）"
                   return true;
                 }
-
+                if (item.yapantouzhu[8] < item.yapantouzhu[9] && temp > 0 && (item.yapantouzhu[10] - item.yapantouzhu[11]) > 0) {
+                  item.yapantouzhu[12] += "（周日策略32）"
+                  return true;
+                }
               }
 
             }
@@ -1346,7 +1576,7 @@ export default {
             if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
 
               item.qiushutouzhu[6] = "";
-              
+
               let temp1 = parseFloat(item.changguiqiushu.split(":")[0]);
               let temp2 = parseFloat(item.changguiqiushu.split(":")[1]);
               let temp3 = parseFloat(
@@ -1360,154 +1590,345 @@ export default {
 
               console.log(item.home, temp1, temp2, temp3, temp4, temp5, temp6);
 
-
-
-
-              if (temp1 == item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 < item.qiushupankou2) {
-
-                if (item.qiushupankou1 == item.qiushupankou2) {
-                  
-              item.qiushutouzhu[6] += "必进1";
-              
-                  return true;
+              let temp = 0;
+              if (item.liangduibisai && item.liangduibisai.length > 0) {
+                if (item.home.indexOf(item.liangduibisai[1].substr(0, 3)) > -1) {
+                  temp = item.liangduibisai[3] + item.liangduibisai[4];
+                } else {
+                  temp = item.liangduibisai[4] + item.liangduibisai[3];
                 }
-
               }
 
 
-              if (temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
-                if (temp5 > item.qiushupankou2) {
-                  if (temp1 > item.qiushupankou2) {
-                    // if (item.qiushupankou1 <= item.qiushupankou2) {
-                    //   return true;
-                    // }
-                  } else {
-                    if (item.qiushupankou1 <= item.qiushupankou2) {
-                           
-              item.qiushutouzhu[6] += "必进2??";
-                      return true;
-                    }
-                  }
-
-                }
-                if (temp5 <= item.qiushupankou2) {
-                  if (temp1 > item.qiushupankou2) {
-                         
-              item.qiushutouzhu[6] += "必进3";
-                    return true;
-                  }
-
-                }
-
-              }
-
-              //第一次升级后的可用方法
-
-              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
-                if (item.qiushupankou1 > item.qiushupankou2) {
-                       
-              item.qiushutouzhu[6] += "必进4";
-                  return true;
-                }
-
-              }
-
-              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
-                if (item.qiushupankou1 == item.qiushupankou2) {
-                       
-              item.qiushutouzhu[6] += "(周四必进1??)";
-                  return true;
-                }
-
-              }
-
-              
               if (temp1 < item.qiushupankou2 && temp2 == item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 > item.qiushupankou2) {
                 if (item.qiushupankou1 == item.qiushupankou2) {
-                       
-              item.qiushutouzhu[6] += "(周四必进3)";
+
+                  item.qiushutouzhu[6] += "(周四必进3)";
                   return true;
                 }
 
               }
-      
+
               if (temp1 < item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
                 if (item.qiushupankou1 == item.qiushupankou2) {
-                       
-              item.qiushutouzhu[6] += "(周四必进4)";
+
+                  item.qiushutouzhu[6] += "(周四必进4)";
                   return true;
                 }
 
               }
 
+              if (temp1 < item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 < item.qiushupankou2) {
+                if (item.qiushupankou1 > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周五必进2??)";
+                  return true;
+                }
+
+                if (item.qiushupankou1 == item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进13??)";
+                  return true;
+                }
 
 
-
+              }
 
               if (temp1 < item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 > item.qiushupankou2) {
                 if (item.qiushupankou1 == item.qiushupankou2) {
-                       
-              item.qiushutouzhu[6] += "(周四必进2)";
+
+                  item.qiushutouzhu[6] += "(周四必进2??)";
+                  return true;
+                }
+
+                if (item.qiushupankou1 < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周五必进4??)";
+                  return true;
+                }
+
+                if (item.qiushupankou1 > item.qiushupankou2 && temp < item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进34)";
+                  return true;
+                }
+
+
+              }
+
+              if (temp1 < item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 == item.qiushupankou2 && temp < item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进14)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 < item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 > item.qiushupankou2 && temp < item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周日必进4)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 < item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 == item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 == item.qiushupankou2 && temp < item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周日必进9)";
                   return true;
                 }
 
               }
 
               
+              if (temp1 < item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 == item.qiushupankou2 && temp5 == item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 == item.qiushupankou2 && temp < item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周日必进2)";
+                  return true;
+                }
+
+              }
+
+
+              if (temp1 < item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 == item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进3)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 < item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 == item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进12)";
+                  return true;
+                }
+
+              }
+
               if (temp1 < item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 < item.qiushupankou2) {
                 if (item.qiushupankou1 > item.qiushupankou2) {
-                       
-              item.qiushutouzhu[6] += "(周五必进1)";
+
+                  item.qiushutouzhu[6] += "(周五必进1??)";
+                  return true;
+                }
+
+                if (item.qiushupankou1 == item.qiushupankou2 && temp < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进11??)";
                   return true;
                 }
 
               }
 
-                 if (temp1 < item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 < item.qiushupankou2) {
+              if (temp1 < item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 == item.qiushupankou2) {
+                if (item.qiushupankou1 > item.qiushupankou2 && temp < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周五必进6)";
+                  return true;
+                }
+
+
+              }
+
+              if (temp1 < item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 < item.qiushupankou2) {
+                if (item.qiushupankou1 == item.qiushupankou2 && temp < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进9??)";
+                  return true;
+                }
+
+                if (item.qiushupankou1 > item.qiushupankou2 && temp < item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周日必进5)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 < item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 == item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进1)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 < item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 == item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 == item.qiushupankou2 && temp < item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周日必进6)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 > item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 < item.qiushupankou2) {
                 if (item.qiushupankou1 > item.qiushupankou2) {
-                       
-              item.qiushutouzhu[6] += "(周五必进2)";
+
+                  item.qiushutouzhu[6] += "(周五必进3)";
                   return true;
                 }
 
-              }
-
-              
-                 if (temp1 > item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 < item.qiushupankou2) {
-                if (item.qiushupankou1 > item.qiushupankou2) {
-                       
-              item.qiushutouzhu[6] += "(周五必进3)";
-                  return true;
-                }
-
-              }
-
-                  
-                 if (temp1 < item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 > item.qiushupankou2) {
                 if (item.qiushupankou1 < item.qiushupankou2) {
-                       
-              item.qiushutouzhu[6] += "(周五必进4)";
+
+                  item.qiushutouzhu[6] += "(周六必进5)";
                   return true;
                 }
 
+                if (item.qiushupankou1 == item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进6)";
+                  return true;
+                }
+
+
               }
 
-               if (temp1 > item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 < item.qiushupankou2) {
+              if (temp1 > item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 < item.qiushupankou2) {
                 if (item.qiushupankou1 < item.qiushupankou2) {
-                       
-              item.qiushutouzhu[6] += "(周五必进5??)";
+
+                  item.qiushutouzhu[6] += "(周五必进5??)";
+                  return true;
+                }
+
+                         if (item.qiushupankou1 == item.qiushupankou2 && temp > item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周日必进8)";
+                  return true;
+                }
+
+
+              }
+
+              if (temp1 > item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 < item.qiushupankou2) {
+                if (item.qiushupankou1 == item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进4)";
                   return true;
                 }
 
               }
 
+              if (temp1 > item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进10)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 > item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 == item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 == item.qiushupankou2 && temp6 < item.qiushupankou2) {
+                if (item.qiushupankou1 > item.qiushupankou2 && temp > item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周五必进8)";
+                  return true;
+                }
+
+                if (item.qiushupankou1 == item.qiushupankou2 && temp > item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进32)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 > item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 == item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 < item.qiushupankou2) {
+                if (item.qiushupankou1 > item.qiushupankou2 && temp > item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周日必进7)";
+                  return true;
+                }
 
 
+
+              }
+
+              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 == item.qiushupankou2 && temp > item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进2??)";
+                  return true;
+                }
+
+                if (item.qiushupankou1 < item.qiushupankou2 && temp > item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周日必进1)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 == item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 == item.qiushupankou2 && temp > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进7??)";
+                  return true;
+                }
+
+                if (item.qiushupankou1 < item.qiushupankou2 && temp == item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) < item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周日必进3)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 == item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 < item.qiushupankou2 && temp > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进31)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 > item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 < item.qiushupankou2 && temp > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周五必进7)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 == item.qiushupankou2 && temp2 > item.qiushupankou2 && temp3 > item.qiushupankou2 && temp4 > item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 > item.qiushupankou2) {
+                if (item.qiushupankou1 == item.qiushupankou2 && temp > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进8)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 == item.qiushupankou2 && temp2 < item.qiushupankou2 && temp3 < item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 < item.qiushupankou2 && temp6 < item.qiushupankou2) {
+                if (item.qiushupankou1 == item.qiushupankou2 && temp > item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周六必进33)";
+                  return true;
+                }
+
+              }
+
+              if (temp1 == item.qiushupankou2 && temp2 == item.qiushupankou2 && temp3 == item.qiushupankou2 && temp4 < item.qiushupankou2 && temp5 > item.qiushupankou2 && temp6 < item.qiushupankou2) {
+                if (item.qiushupankou1 > item.qiushupankou2 && temp == item.qiushupankou2 && (item.yapantouzhu[10] + item.yapantouzhu[11]) == item.qiushupankou2) {
+
+                  item.qiushutouzhu[6] += "(周日必进10)";
+                  return true;
+                }
+
+              }
 
 
             }
-
-
 
             return false;
           }
@@ -1664,7 +2085,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-08-12",
+        date: "2022-08-15",
         matchId: item.matchId,
       };
       api
@@ -1686,7 +2107,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-08-12",
+        date: "2022-08-15",
         matchId: item.matchId,
       };
       api
@@ -1707,7 +2128,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-08-12",
+        date: "2022-08-15",
         matchId: item.matchId,
       };
       api
@@ -1742,7 +2163,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-08-12",
+        date: "2022-08-15",
       };
       api
         .GetToday(data)
