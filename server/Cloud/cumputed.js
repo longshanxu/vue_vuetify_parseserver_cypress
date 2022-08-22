@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2022-08-15 19:44:45
+ * @LastEditTime: 2022-08-22 20:22:48
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2022-08-15"
+        datetemp = "2022-08-22"
 
 
         var tempMoney = Parse
@@ -83,7 +83,7 @@ Parse
 
             oneresult.set("matchId", matchId);
 
-            // if (matchId != "355084470") { continue; }
+            // if (matchId != "358430709") { continue; }
 
             const OddsMoney = Parse
                 .Object

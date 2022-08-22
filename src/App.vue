@@ -1,14 +1,16 @@
 <!--
  * @Author: your name
  * @Date: 2019-11-04 19:00:51
- * @LastEditTime: 2022-08-15 10:05:33
+ * @LastEditTime: 2022-08-22 20:02:18
  * @LastEditors: Json.Xu
  * @Description: In User Settings Edit
  * @FilePath: \vue_vuetify_parseserver\src\App.vue
  -->
 <template>
   <v-app id="app" style="background:#E5E5E5">
+
     <router-view></router-view>
+
     <LoadingCard></LoadingCard>
   </v-app>
 </template>
