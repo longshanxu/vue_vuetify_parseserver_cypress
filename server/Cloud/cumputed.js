@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2022-08-22 20:22:48
+ * @LastEditTime: 2022-08-23 22:07:21
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2022-08-22"
+        datetemp = "2022-08-29"
 
 
         var tempMoney = Parse
@@ -305,10 +305,55 @@ Parse
 
             }
 
+            for (let index = 0; index < historylist.length; index++) {
+                const element = historylist[index];
+
+                if (index < 3) {
+                    if (home == element.home && guest == element.guest) {
+                        // historycount ++;
+                        if (element.goal[0] > element.goal[1]) {
+                            justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) + 16) + '%';
+                            justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) - 8) + '%';
+                            justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) - 8) + '%';
+                        }
+                        if (element.goal[0] == element.goal[1]) {
+                            justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) - 8) + '%';
+                            justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) + 16) + '%';
+                            justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) - 8) + '%';
+                        }
+                        if (element.goal[0] < element.goal[1]) {
+                            justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) - 8) + '%';
+                            justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) - 8) + '%';
+                            justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) + 16) + '%';
+                        }
+                    }
+                    if (home == element.guest && guest == element.home) {
+                        if (element.goal[0] < element.goal[1]) {
+                            justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) + 16) + '%';
+                            justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) - 8) + '%';
+                            justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) - 8) + '%';
+                        }
+                        if (element.goal[0] == element.goal[1]) {
+                            justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) - 8) + '%';
+                            justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) + 16) + '%';
+                            justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) - 8) + '%';
+                        }
+                        if (element.goal[0] > element.goal[1]) {
+                            justitem[0] = math.evaluate(parseFloat(justitem[0].replace('%', '')) - 8) + '%';
+                            justitem[1] = math.evaluate(parseFloat(justitem[1].replace('%', '')) - 8) + '%';
+                            justitem[2] = math.evaluate(parseFloat(justitem[2].replace('%', '')) + 16) + '%';
+                        }
+                    }
+                } else {
+                    break;
+                }
+
+            }
+
             element.set("liangduibisai", liangduibisai);
             oneresult.set("test24", liangduibisai);
-            console.log('两队历史:'.green + finalitem);
-            element.set("liangduilishi", Object.assign([], finalitem));
+            console.log('两队历史:'.green +  Object.assign([], justitem));
+            element.set("liangduilishi", Object.assign([], justitem));
             oneresult.set("test5", Object.assign([], finalitem));
 
             //进行第6轮的5 % 的浮动，主要是针对最近状态进行处理。

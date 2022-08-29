@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-08-22 17:34:14
+ * @LastEditTime: 2022-08-28 22:33:25
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -27,6 +27,9 @@
           <v-tab i="8">分析球</v-tab>
           <v-tab i="9">某彩</v-tab>
           <v-tab i="10">北单</v-tab>
+          <v-tab i="11">极端80-对</v-tab>
+          <v-tab i="12">极端80-错</v-tab>
+          <v-tab i="13">极端场</v-tab>
         </v-tabs>
       </template>
     </v-app-bar>
@@ -1607,13 +1610,6 @@ export default {
           if (item.yapantouzhu && item.qiushutouzhu && item.touzhue && item.sanhuxinli) {
             //去掉投注额+散户心理
 
-
-
-            if ((item.touzhue[0] > 180 || item.touzhue[1] > 180 || item.touzhue[2] > 180) && (item.sanhuxinli[0].replace("%", "") > 100 || item.sanhuxinli[1].replace("%", "") > 100 || item.sanhuxinli[2].replace("%", "") > 100)) {
-              // console.log(item.home+"__"+ item.touzhue +"- -"+item.sanhuxinli);
-              return false;
-            }
-
             if (item.qiushutouzhu[2].indexOf("no") > -1) {
               return false;
             }
@@ -2088,6 +2084,91 @@ export default {
         });
         this.count = this.datalist.length;
       }
+      else if (val == 11) {
+        this.datalist = this.list.filter((item) => {
+
+          if (item.yapantouzhu && item.qiushutouzhu && item.touzhue && item.sanhuxinli) {
+
+            if (item.qiushutouzhu[2].indexOf("no") > -1) {
+              return false;
+            }
+
+            if ((item.sanhuxinli[0].replace("%", "") > 80 || item.sanhuxinli[1].replace("%", "") > 80 || item.sanhuxinli[2].replace("%", "") > 80)) {
+              // console.log(item.home+"__"+ item.touzhue +"- -"+item.sanhuxinli);
+              if (item.yapantouzhu[0] >= 100 && (item.homeScore - item.guestScore) > item.yapantouzhu[9]) {
+                return true;
+              }
+              if (item.yapantouzhu[1] >= 100 && (item.homeScore - item.guestScore) < item.yapantouzhu[9]) {
+                return true;
+              }
+            }
+
+
+          }
+
+          return false;
+
+        });
+        this.count = this.datalist.length;
+      }
+      else if (val == 12) {
+        console.log("12");
+        this.datalist = this.list.filter((item) => {
+
+          if (item.yapantouzhu && item.qiushutouzhu && item.touzhue && item.sanhuxinli) {
+
+            if (item.qiushutouzhu[2].indexOf("no") > -1) {
+              return false;
+            }
+
+            if ((item.sanhuxinli[0].replace("%", "") > 80 || item.sanhuxinli[1].replace("%", "") > 80 || item.sanhuxinli[2].replace("%", "") > 80)) {
+              // console.log(item.home+"__"+ item.touzhue +"- -"+item.sanhuxinli);
+              if (item.yapantouzhu[0] >= 100 && (item.homeScore - item.guestScore) < item.yapantouzhu[9]) {
+                return true;
+              }
+              if (item.yapantouzhu[1] >= 100 && (item.homeScore - item.guestScore) > item.yapantouzhu[9]) {
+                return true;
+              }
+            }
+
+
+          }
+
+          return false;
+        });
+        this.count = this.datalist.length;
+      }
+      else if (val == 13) {
+        this.datalist = this.list.filter((item) => {
+
+          if (item.yapantouzhu && item.sanhuxinli) {
+
+            if ((item.sanhuxinli[0].replace("%", "") > 80 || item.sanhuxinli[1].replace("%", "") > 80 || item.sanhuxinli[2].replace("%", "") > 80)) {
+
+              if (item.yapantouzhu[0] >= 100 || item.yapantouzhu[1] >= 100) {
+
+                // if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
+
+                  if (item.yapantouzhu[9] >= 0.75 || item.yapantouzhu[9] <= -0.75) {
+
+                    return true;
+                    
+                  }
+
+                // }
+
+
+              }
+
+            }
+
+
+          }
+
+          return false;
+        });
+        this.count = this.datalist.length;
+      }
     },
     copycopy() {
       const range = document.createRange();
@@ -2149,7 +2230,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-08-22",
+        date: "2022-08-29",
         matchId: item.matchId,
       };
       api
@@ -2171,7 +2252,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-08-22",
+        date: "2022-08-29",
         matchId: item.matchId,
       };
       api
@@ -2192,7 +2273,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-08-22",
+        date: "2022-08-29",
         matchId: item.matchId,
       };
       api
@@ -2227,7 +2308,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-08-22",
+        date: "2022-08-29",
       };
       api
         .GetToday(data)
