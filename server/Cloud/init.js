@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2022-08-29/prev
-//https://vipc.cn/i/live/football/date/2022-08-29/next
+//https://vipc.cn/i/live/football/date/2022-09-05/prev
+//https://vipc.cn/i/live/football/date/2022-09-05/next
 
 Parse
     .Cloud
@@ -108,12 +108,12 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2022-08-29";
+        var datetemp = "2022-09-05";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
         query4.equalTo("date", datetemp);
-        query4.limit(300);
+        query4.limit(500);
 
         const results = await query4.find();
 
@@ -125,7 +125,7 @@ async function GetTodayMoney() {
         setTimeout(() => {
             // https://vipc.cn/i/live/football/date/today/next
             const options = {
-                url: 'https://vipc.cn/i/live/football/date/2022-08-29/prev',
+                url: 'https://vipc.cn/i/live/football/date/2022-09-05/prev',
                 headers: {
                     'User-Agent': 'request'
                 },
@@ -411,12 +411,12 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2022-08-29";
+    var datetemp = "2022-09-05";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
     queryOneResult.equalTo("date", datetemp);
-    queryOneResult.limit(300);
+    queryOneResult.limit(500);
 
     const OneResultresults = await queryOneResult.find();
 
@@ -430,7 +430,7 @@ async function clearAllData() {
     var historyMoney = Parse.Object.extend("HistoryMoney");
     var query3 = new Parse.Query(historyMoney);
     query3.equalTo("date", datetemp);
-    query3.limit(300);
+    query3.limit(500);
     const finditems = await query3.find();
 
     for (let index = 0; index < finditems.length; index++) {
@@ -442,7 +442,7 @@ async function clearAllData() {
     var OddsMoney = Parse.Object.extend("OddsMoney");
     var query2 = new Parse.Query(OddsMoney);
     query2.equalTo("date", datetemp);
-    query2.limit(300);
+    query2.limit(500);
     const finditems1 = await query2.find();
 
     for (let index = 0; index < finditems1.length; index++) {
@@ -453,7 +453,7 @@ async function clearAllData() {
     var PankouMoney = Parse.Object.extend("PankouMoney");
     var query1 = new Parse.Query(PankouMoney);
     query1.equalTo("date", datetemp);
-    query1.limit(300);
+    query1.limit(500);
     const results1 = await query1.find();
     for (var i = 0; i < results1.length; i++) {
         var object = results1[i];
@@ -486,7 +486,7 @@ async function OneByOne() {
         datetemp = year + "-0" + month + "-0" + day;
     }
 
-    datetemp = "2022-08-29"
+    datetemp = "2022-09-05"
 
     var tempMoney = Parse
         .Object
@@ -498,7 +498,7 @@ async function OneByOne() {
     // query.ascending("matchTime") //matchTime,league
     //  修改访问的数据数量。
     // query.greaterThan("matchTime",new Date());
-    query.limit(300);
+    query.limit(500);
     const items = await query.find();
     let templength = items.length;
 
@@ -710,7 +710,7 @@ Parse
 
 ///每10s获取一次数据
 async function GetDataByTen() {
-    var datetemp = "2022-08-29";
+    var datetemp = "2022-09-05";
 
     var tempMoney = Parse
         .Object
@@ -722,7 +722,7 @@ async function GetDataByTen() {
     // query.ascending("matchTime") //matchTime,league
     //  修改访问的数据数量。
     // query.greaterThan("matchTime",new Date());
-    query.limit(300);
+    query.limit(500);
     const items = await query.find();
     let templength = items.length;
 

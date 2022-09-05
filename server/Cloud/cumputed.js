@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2022-08-23 22:07:21
+ * @LastEditTime: 2022-09-04 20:16:53
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2022-08-29"
+        datetemp = "2022-09-05"
 
 
         var tempMoney = Parse
@@ -59,7 +59,7 @@ Parse
         var OneResult = Parse.Object.extend("OneResult");
         var queryOneResult = new Parse.Query(OneResult);
         queryOneResult.equalTo("date", datetemp);
-        queryOneResult.limit(300);
+        queryOneResult.limit(500);
         const OneResultresults = await queryOneResult.find();
 
         for (var i = 0; i < OneResultresults.length; i++) {
