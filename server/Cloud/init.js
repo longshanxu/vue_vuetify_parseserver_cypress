@@ -64,8 +64,8 @@ Parse
 
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2022-09-05/prev
-//https://vipc.cn/i/live/football/date/2022-09-05/next
+//https://vipc.cn/i/live/football/date/2022-09-07/prev
+//https://vipc.cn/i/live/football/date/2022-09-07/next
 
 Parse
     .Cloud
@@ -108,7 +108,7 @@ async function GetTodayMoney() {
     try {
 
 
-        var datetemp = "2022-09-05";
+        var datetemp = "2022-09-07";
 
         var tempMoney = Parse.Object.extend("Money");
         var query4 = new Parse.Query(tempMoney);
@@ -125,7 +125,7 @@ async function GetTodayMoney() {
         setTimeout(() => {
             // https://vipc.cn/i/live/football/date/today/next
             const options = {
-                url: 'https://vipc.cn/i/live/football/date/2022-09-05/prev',
+                url: 'https://vipc.cn/i/live/football/date/2022-09-07/prev',
                 headers: {
                     'User-Agent': 'request'
                 },
@@ -411,7 +411,7 @@ Parse
 
 async function clearAllData() {
     //清空比赛信息
-    var datetemp = "2022-09-05";
+    var datetemp = "2022-09-07";
 
     var OneResult = Parse.Object.extend("OneResult");
     var queryOneResult = new Parse.Query(OneResult);
@@ -486,7 +486,7 @@ async function OneByOne() {
         datetemp = year + "-0" + month + "-0" + day;
     }
 
-    datetemp = "2022-09-05"
+    datetemp = "2022-09-07"
 
     var tempMoney = Parse
         .Object
@@ -710,7 +710,7 @@ Parse
 
 ///每10s获取一次数据
 async function GetDataByTen() {
-    var datetemp = "2022-09-05";
+    var datetemp = "2022-09-07";
 
     var tempMoney = Parse
         .Object
