@@ -1,10 +1,10 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-09-07 00:31:26
+ * @LastEditTime: 2022-09-25 13:28:37
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
+ * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
  -->
 <template>
   <v-container class="fill-height grey lighten-3 pa-0" fluid>
@@ -39,7 +39,7 @@
       <v-card class="pa-0 ma-2 cardclass" rounded v-for="(item, index) in datalist" :key="index">
         <v-row dense class="ma-0">
           <v-col style="text-align: center; font-weight: 700" cols="4">{{ item.home &&
-              item.home.substr(0, 6)
+          item.home.substr(0, 6)
           }}</v-col>
           <v-col style="text-align: center; font-size: 12px" cols="4">({{ item.league }})<br />
           </v-col>
@@ -50,7 +50,7 @@
           <v-col style="text-align: center; font-size: 14px" cols="4">
             时间：
             <span style="font-size: 14px">{{
-                item.matchTime.substr(10, 6)
+            item.matchTime.substr(10, 6)
             }}</span>
           </v-col>
           <v-col style="text-align: center; font-size: 14px" cols="4">
@@ -60,7 +60,7 @@
           <v-col style="text-align: center; font-size: 14px" cols="4">
             比分：
             <span style="font-size: 14px" v-show="isshowbifen">{{
-                item.homeScore + ":" + item.guestScore
+            item.homeScore + ":" + item.guestScore
             }}</span>
           </v-col>
         </v-row>
@@ -71,19 +71,19 @@
           <v-col style="text-align: left; font-size: 14px" cols="9" class="px-0">
             <span style="font-size: 14px">
               {{
-                  item.liangduibisai &&
-                  item.liangduibisai.length > 0 &&
-                  item.liangduibisai[0].toString().split(" ")[0] +
-                  "(" +
-                  item.liangduibisai[5] +
-                  ")," +
-                  item.liangduibisai[1].substr(0, 3) +
-                  " VS " +
-                  item.liangduibisai[2].substr(0, 3) +
-                  "," +
-                  item.liangduibisai[3] +
-                  ":" +
-                  item.liangduibisai[4]
+              item.liangduibisai &&
+              item.liangduibisai.length > 0 &&
+              item.liangduibisai[0].toString().split(" ")[0] +
+              "(" +
+              item.liangduibisai[5] +
+              ")," +
+              item.liangduibisai[1].substr(0, 3) +
+              " VS " +
+              item.liangduibisai[2].substr(0, 3) +
+              "," +
+              item.liangduibisai[3] +
+              ":" +
+              item.liangduibisai[4]
               }}
             </span>
           </v-col>
@@ -111,13 +111,13 @@
             <span>
               {{ item.sanhuxinli && item.sanhuxinli[3] + "_________" }}
               {{ item.touzhue && '[ "' + item.touzhue[0] + '", "' + item.touzhue[1] + '", "' +
-                  item.touzhue[2] + '" ]'
+              item.touzhue[2] + '" ]'
               }}
             </span>
             <br />
             <span style=" color: #a60056">
               散户心理: {{ item.sanhuxinli && '[ "' + item.sanhuxinli[0] + '", "' + item.sanhuxinli[1] + '", "' +
-                  item.sanhuxinli[2] + '" ]'
+              item.sanhuxinli[2] + '" ]'
               }}
             </span>
             <br />
@@ -137,12 +137,12 @@
           <v-col style="text-align: center; font-size: 14px" cols="3">
             <span style="font-size: 14px">{{ item.changguiyapan && item.changguiyapan + "^"
             }}{{
-    item.changguiyapan &&
-    parseFloat(
-      parseFloat(item.changguiyapan.split(":")[0]) +
-      parseFloat(item.changguiyapan.split(":")[1])
-    ) / 2
-}}</span>
+              item.changguiyapan &&
+              parseFloat(
+              parseFloat(item.changguiyapan.split(":")[0]) +
+              parseFloat(item.changguiyapan.split(":")[1])
+              ) / 2
+              }}</span>
           </v-col>
           <v-col style="text-align: center; font-size: 14px; font-weight: 500" cols="3">
             期望球数:
@@ -150,12 +150,12 @@
           <v-col style="text-align: center; font-size: 14px" cols="3">
             <span style="font-size: 14px">{{ item.changguiqiushu && item.changguiqiushu + " ~ "
             }}{{
-    item.changguiqiushu &&
-    parseFloat(
-      parseFloat(item.changguiqiushu.split(":")[0]) +
-      parseFloat(item.changguiqiushu.split(":")[1])
-    ) / 2
-}}</span>
+              item.changguiqiushu &&
+              parseFloat(
+              parseFloat(item.changguiqiushu.split(":")[0]) +
+              parseFloat(item.changguiqiushu.split(":")[1])
+              ) / 2
+              }}</span>
           </v-col>
         </v-row>
         <v-row dense class="ma-0" v-show="showtuijian">
@@ -164,30 +164,30 @@
           </v-col>
           <v-col style="text-align: center; font-size: 14px; color: red" cols="9">
             <span style="font-size: 14px"><span style="color: blue">{{
-                item.qiushuAll && (item.qiushuAll[0] - item.qiushuAll[2]) / 4
+            item.qiushuAll && (item.qiushuAll[0] - item.qiushuAll[2]) / 4
             }}</span>
               ===
               {{
-                  item.qiushuAll &&
-                  item.qiushuAll[0] +
-                  " ( " +
-                  item.qiushuAll[1] +
-                  " ) " +
-                  item.qiushuAll[4] +
-                  " ~ " +
-                  item.qiushuAll[2] +
-                  " ( " +
-                  item.qiushuAll[3] +
-                  " ) " +
-                  item.qiushuAll[5]
+              item.qiushuAll &&
+              item.qiushuAll[0] +
+              " ( " +
+              item.qiushuAll[1] +
+              " ) " +
+              item.qiushuAll[4] +
+              " ~ " +
+              item.qiushuAll[2] +
+              " ( " +
+              item.qiushuAll[3] +
+              " ) " +
+              item.qiushuAll[5]
               }}
 
             </span>
             <br />
             <span style="font-size: 14px"><span style="color: blue">
                 {{ item.yapantouzhu && item.yapantouzhu[4] + "!" + item.yapantouzhu[5] + "!" + item.yapantouzhu[6] +
-                    "!" + item.yapantouzhu[7] + "!" + item.yapantouzhu[8] + "!" + item.yapantouzhu[9] + "~" +
-                    item.yapantouzhu[10] + "~" + item.yapantouzhu[11]
+                "!" + item.yapantouzhu[7] + "!" + item.yapantouzhu[8] + "!" + item.yapantouzhu[9] + "~" +
+                item.yapantouzhu[10] + "~" + item.yapantouzhu[11]
                 }}
               </span></span>
           </v-col>
@@ -209,7 +209,7 @@
               <br />
               <span style="color: green; padding: 0px 2px">
                 {{
-                    item.qiushuAll && (item.qiushuAll[0] + item.qiushuAll[2]) / 4
+                item.qiushuAll && (item.qiushuAll[0] + item.qiushuAll[2]) / 4
                 }} （4场平均进球）</span>
             </span>
           </v-col>
@@ -274,8 +274,8 @@
           </v-col>
           <v-col style="text-align: center; font-size: 14px" cols="3" class="px-0">
             <span style="font-size: 14px; color: #a60056">{{
-                item.yapantouzhu &&
-                item.yapantouzhu[0] + "%" + " ~ " + item.yapantouzhu[1] + "%"
+            item.yapantouzhu &&
+            item.yapantouzhu[0] + "%" + " ~ " + item.yapantouzhu[1] + "%"
             }}
               <br />
               {{ item.yapantouzhu && item.yapantouzhu[12] }}
@@ -286,12 +286,12 @@
           </v-col>
           <v-col style="text-align: center; font-size: 14px" cols="3">
             <span style="font-size: 14px; color: #a60056">{{
-                item.qiushutouzhu &&
-                item.qiushutouzhu[0] + "%" + " ~ " + item.qiushutouzhu[1] + "%"
+            item.qiushutouzhu &&
+            item.qiushutouzhu[0] + "%" + " ~ " + item.qiushutouzhu[1] + "%"
             }}</span>
             <br />
             <span style="font-size: 14px; color: #a60056">{{
-                item.qiushutouzhu && item.qiushutouzhu[6]
+            item.qiushutouzhu && item.qiushutouzhu[6]
             }}</span>
           </v-col>
         </v-row>
@@ -310,9 +310,9 @@
             </div>
             <div style="font-size: 12px; color: red">
               {{
-                  item.homezuijinbisai[1].substr(0, 3) +
-                  "VS" +
-                  item.homezuijinbisai[2].substr(0, 3)
+              item.homezuijinbisai[1].substr(0, 3) +
+              "VS" +
+              item.homezuijinbisai[2].substr(0, 3)
               }}
             </div>
             <div style="font-size: 18px">
@@ -336,9 +336,9 @@
             </div>
             <div style="font-size: 12px; color: green">
               {{
-                  item.guestzuijinbisai[1].substr(0, 3) +
-                  "VS" +
-                  item.guestzuijinbisai[2].substr(0, 3)
+              item.guestzuijinbisai[1].substr(0, 3) +
+              "VS" +
+              item.guestzuijinbisai[2].substr(0, 3)
               }}
             </div>
             <div style="font-size: 18px">
@@ -425,8 +425,8 @@
             </v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test11 &&
-                  item1.test11[0] + "%" + " - " + item1.test11[1] + "%"
+              item1.test11 &&
+              item1.test11[0] + "%" + " - " + item1.test11[1] + "%"
               }}
             </v-col>
           </v-row>
@@ -435,8 +435,8 @@
             </v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test9 &&
-                  "【 " + item1.test9[4] + " -> " + item1.test9[5] + " 】 "
+              item1.test9 &&
+              "【 " + item1.test9[4] + " -> " + item1.test9[5] + " 】 "
               }}
             </v-col>
           </v-row>
@@ -445,7 +445,7 @@
             <v-col style="text-align: right; font-weight: 700; color: blue" cols="5">亚盘投注情况：</v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test14 && item1.test14[0] + "% ~ " + item1.test14[1] + "%"
+              item1.test14 && item1.test14[0] + "% ~ " + item1.test14[1] + "%"
               }}
             </v-col>
           </v-row>
@@ -453,17 +453,17 @@
             <v-col style="text-align: right; font-weight: 700; color: green" cols="5">亚盘投注额：</v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test14 &&
-                  parseInt(
-                    item1.test14[0] *
-                    (parseFloat(item1.test9[7].toString().split(",")[0]) + 1)
-                  ) +
-                  "元 ~ " +
-                  parseInt(
-                    item1.test14[1] *
-                    (parseFloat(item1.test9[7].toString().split(",")[1]) + 1)
-                  ) +
-                  "元"
+              item1.test14 &&
+              parseInt(
+              item1.test14[0] *
+              (parseFloat(item1.test9[7].toString().split(",")[0]) + 1)
+              ) +
+              "元 ~ " +
+              parseInt(
+              item1.test14[1] *
+              (parseFloat(item1.test9[7].toString().split(",")[1]) + 1)
+              ) +
+              "元"
               }}
             </v-col>
           </v-row>
@@ -473,8 +473,8 @@
             </v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test9 &&
-                  "【 " + item1.test15[4] + " -> " + item1.test15[5] + " 】 "
+              item1.test9 &&
+              "【 " + item1.test15[4] + " -> " + item1.test15[5] + " 】 "
               }}
             </v-col>
           </v-row>
@@ -483,7 +483,7 @@
             <v-col style="text-align: right; font-weight: 700; color: blue" cols="5">球数投注情况：</v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test17 && item1.test17[0] + "% ~ " + item1.test17[1] + "%"
+              item1.test17 && item1.test17[0] + "% ~ " + item1.test17[1] + "%"
               }}
             </v-col>
           </v-row>
@@ -491,17 +491,17 @@
             <v-col style="text-align: right; font-weight: 700; color: green" cols="5">球数投注额：</v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test17 &&
-                  parseInt(
-                    item1.test17[0] *
-                    (parseFloat(item1.test15[7].toString().split(",")[0]) + 1)
-                  ) +
-                  "元 ~ " +
-                  parseInt(
-                    item1.test17[1] *
-                    (parseFloat(item1.test15[7].toString().split(",")[1]) + 1)
-                  ) +
-                  "元"
+              item1.test17 &&
+              parseInt(
+              item1.test17[0] *
+              (parseFloat(item1.test15[7].toString().split(",")[0]) + 1)
+              ) +
+              "元 ~ " +
+              parseInt(
+              item1.test17[1] *
+              (parseFloat(item1.test15[7].toString().split(",")[1]) + 1)
+              ) +
+              "元"
               }}
             </v-col>
           </v-row>
@@ -510,12 +510,12 @@
             <v-col style="text-align: right; font-weight: 700" cols="5">两队历史球数：</v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test19 &&
-                  item1.test19[0] +
-                  " - " +
-                  item1.test19[1] +
-                  " ~ " +
-                  item1.test19[2]
+              item1.test19 &&
+              item1.test19[0] +
+              " - " +
+              item1.test19[1] +
+              " ~ " +
+              item1.test19[2]
               }}
             </v-col>
           </v-row>
@@ -579,15 +579,15 @@
             <v-col style="text-align: left; font-size: 14px" cols="12">
               ___AI让球概率 :
               {{
-                  item1.test10 &&
-                  item1.test10[0] +
-                  "%" +
-                  " ~ " +
-                  item1.test10[1] +
-                  "% " +
-                  " ( " +
-                  item1.test9[3] +
-                  " )"
+              item1.test10 &&
+              item1.test10[0] +
+              "%" +
+              " ~ " +
+              item1.test10[1] +
+              "% " +
+              " ( " +
+              item1.test9[3] +
+              " )"
               }}
             </v-col>
           </v-row>
@@ -595,7 +595,7 @@
             <v-col style="text-align: left; font-size: 14px" cols="12">
               让球投注压力 :
               {{
-                  item1.test14 && item1.test14[0] + "% ~ " + item1.test14[1] + "%"
+              item1.test14 && item1.test14[0] + "% ~ " + item1.test14[1] + "%"
               }}
             </v-col>
           </v-row>
@@ -603,7 +603,7 @@
             <v-col style="text-align: left; font-size: 14px" cols="12">
               ___AI球数概率 :
               {{
-                  item1.test16 && item1.test16[0] + "% ~ " + item1.test16[1] + "%"
+              item1.test16 && item1.test16[0] + "% ~ " + item1.test16[1] + "%"
               }}
             </v-col>
           </v-row>
@@ -611,14 +611,14 @@
             <v-col style="text-align: left; font-size: 14px" cols="12">
               球数投注压力:
               {{
-                  item1.test17 &&
-                  item1.test17[0] +
-                  "% ~ " +
-                  item1.test17[1] +
-                  "%" +
-                  " ( " +
-                  item1.test15[3] +
-                  " )"
+              item1.test17 &&
+              item1.test17[0] +
+              "% ~ " +
+              item1.test17[1] +
+              "%" +
+              " ( " +
+              item1.test15[3] +
+              " )"
               }}
             </v-col>
           </v-row>
@@ -687,12 +687,12 @@
             <v-col style="text-align: right; font-weight: 700" cols="5">人流分割(100人)：</v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test1 &&
-                  item1.test1[0].toString().replace("%", "选胜") +
-                  "--" +
-                  item1.test1[1].toString().replace("%", "选平") +
-                  "--" +
-                  item1.test1[2].toString().replace("%", "选负")
+              item1.test1 &&
+              item1.test1[0].toString().replace("%", "选胜") +
+              "--" +
+              item1.test1[1].toString().replace("%", "选平") +
+              "--" +
+              item1.test1[2].toString().replace("%", "选负")
               }}
             </v-col>
           </v-row>
@@ -712,12 +712,12 @@
             <v-col style="text-align: right; font-weight: 700" cols="5">历史交锋战果：</v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test5 &&
-                  item1.test5[0].toString().replace("%", "%胜") +
-                  "--" +
-                  item1.test5[1].toString().replace("%", "%平") +
-                  "--" +
-                  item1.test5[2].toString().replace("%", "%负")
+              item1.test5 &&
+              item1.test5[0].toString().replace("%", "%胜") +
+              "--" +
+              item1.test5[1].toString().replace("%", "%平") +
+              "--" +
+              item1.test5[2].toString().replace("%", "%负")
               }}
             </v-col>
           </v-row>
@@ -725,12 +725,12 @@
             <v-col style="text-align: right; font-weight: 700" cols="5">本场应有概率：</v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test6 &&
-                  item1.test6[0].toString().replace("%", "%胜") +
-                  "--" +
-                  item1.test6[1].toString().replace("%", "%平") +
-                  "--" +
-                  item1.test6[2].toString().replace("%", "%负")
+              item1.test6 &&
+              item1.test6[0].toString().replace("%", "%胜") +
+              "--" +
+              item1.test6[1].toString().replace("%", "%平") +
+              "--" +
+              item1.test6[2].toString().replace("%", "%负")
               }}
             </v-col>
           </v-row>
@@ -738,15 +738,15 @@
             <v-col style="text-align: right; font-weight: 700" cols="5">资金分散位置：</v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test7 &&
-                  item1.test7[0].toString() +
-                  "块胜" +
-                  "--" +
-                  item1.test7[1].toString() +
-                  "块平" +
-                  "--" +
-                  item1.test7[2].toString() +
-                  "块负"
+              item1.test7 &&
+              item1.test7[0].toString() +
+              "块胜" +
+              "--" +
+              item1.test7[1].toString() +
+              "块平" +
+              "--" +
+              item1.test7[2].toString() +
+              "块负"
               }}
             </v-col>
           </v-row>
@@ -755,12 +755,12 @@
             </v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test10 &&
-                  item1.test10[0] +
-                  "%能打出" +
-                  " ~ " +
-                  item1.test10[1] +
-                  "%打不出"
+              item1.test10 &&
+              item1.test10[0] +
+              "%能打出" +
+              " ~ " +
+              item1.test10[1] +
+              "%打不出"
               }}
             </v-col>
           </v-row>
@@ -769,8 +769,8 @@
             </v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test14 &&
-                  item1.test14[0] + "块打出 ~ " + item1.test14[1] + "块打不出"
+              item1.test14 &&
+              item1.test14[0] + "块打出 ~ " + item1.test14[1] + "块打不出"
               }}
             </v-col>
           </v-row>
@@ -779,8 +779,8 @@
             </v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test16 &&
-                  item1.test16[0] + "%出大 ~ " + item1.test16[1] + "%出小"
+              item1.test16 &&
+              item1.test16[0] + "%出大 ~ " + item1.test16[1] + "%出小"
               }}
             </v-col>
           </v-row>
@@ -789,8 +789,8 @@
             </v-col>
             <v-col style="text-align: left; font-size: 14px" cols="7">
               {{
-                  item1.test17 &&
-                  item1.test17[0] + "%压大 ~ " + item1.test17[1] + "%压小"
+              item1.test17 &&
+              item1.test17[0] + "%压大 ~ " + item1.test17[1] + "%压小"
               }}
             </v-col>
           </v-row>
@@ -872,7 +872,7 @@ export default {
             }
 
             if (item.yapantouzhu[8] - item.yapantouzhu[9] >= 0.5 || item.yapantouzhu[9] - item.yapantouzhu[8] >= 0.5) {
-              
+
               return true;
 
             }
@@ -1967,11 +1967,11 @@ export default {
               return false;
             }
 
-            if (item.qiushupankou1 - item.qiushupankou2 >= 0.5 || item.qiushupankou2 - item.qiushupankou1 >= 0.5 ) {
+            if (item.qiushupankou1 - item.qiushupankou2 >= 0.5 || item.qiushupankou2 - item.qiushupankou1 >= 0.5) {
 
-                  return true;
-                }
-            
+              return true;
+            }
+
 
             return false;
           }
@@ -2091,11 +2091,11 @@ export default {
 
                 // if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
 
-                  if (item.yapantouzhu[9] >= 0.75 || item.yapantouzhu[9] <= -0.75) {
+                if (item.yapantouzhu[9] >= 0.75 || item.yapantouzhu[9] <= -0.75) {
 
-                    return true;
-                    
-                  }
+                  return true;
+
+                }
 
                 // }
 
@@ -2112,42 +2112,113 @@ export default {
         this.count = this.datalist.length;
       } else if (val == 14) {
         this.datalist = this.list.filter((item) => {
-          if (item.qiushutouzhu && item.liangduibisai && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2) {
+          if (item.qiushutouzhu && item.liangduibisai && item.touzhue && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2 && item.liangduilishi) {
             if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
-                        return false;
-                      }
+              return false;
+            }
 
-                     if (item.yapantouzhu[0] >= 100 && item.yapantouzhu[8] < item.yapantouzhu[9]){
-                       return true
-                     }
-                     if (item.yapantouzhu[1] >= 100 && item.yapantouzhu[8] > item.yapantouzhu[9]){
-                       return true
-                     }
+
+            // if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] < -0.25 && item.yapantouzhu[9] < -0.25 && item.yapantouzhu[8] >= item.yapantouzhu[9] ) {
+
+
+            //   if (item.home.indexOf(item.homezuijinbisai[1].substr(0, 3)) > -1) {
+            //     if (item.homezuijinbisai[3] <= item.homezuijinbisai[4]) {
+            //       return true;
+            //     }
+            //   } else {
+            //     if (item.homezuijinbisai[4] <= item.homezuijinbisai[3]) {
+            //       return true;
+            //     }
+            //   }
+            // }
+
+
+            // if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0.25 && item.yapantouzhu[9] > 0.25 && item.yapantouzhu[8] <= item.yapantouzhu[9]) {
+
+            //   if (item.home.indexOf(item.homezuijinbisai[1].substr(0, 3)) > -1) {
+            //     if (item.homezuijinbisai[3] <= item.homezuijinbisai[4]) {
+            //       return true;
+            //     }
+            //   } else {
+            //     if (item.homezuijinbisai[4] <= item.homezuijinbisai[3]) {
+            //       return true;
+            //     }
+            //   }
+            // }
+
+
+            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] < -0.25 && item.yapantouzhu[9] < -0.25 && item.yapantouzhu[8] != -0.75 && item.yapantouzhu[8] != -1.25) {
+              // if(item.yapantouzhu[10] - item.yapantouzhu[11] > 0 && (item.sanhuxinli[0].replace("%", "") < 80 && item.sanhuxinli[1].replace("%", "") < 80 && item.sanhuxinli[2].replace("%", "") < 80)){
+              // return true;
+              // }
+              if (item.home.indexOf(item.liangduibisai[1].substr(0, 3)) > -1) {
+                if (item.liangduibisai[3] >= item.liangduibisai[4]) {
+                  return true;
+                }
+              } else {
+                if (item.liangduibisai[4] >= item.liangduibisai[3]) {
+                  return true;
+                }
+              }
+
+            }
+
+
+            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0.25 && item.yapantouzhu[9] > 0.25 && item.yapantouzhu[8] != 0.75 && item.yapantouzhu[8] != 1.25) {
+              if (item.home.indexOf(item.liangduibisai[1].substr(0, 3)) > -1) {
+                if (item.liangduibisai[3] <= item.liangduibisai[4]) {
+                  return true;
+                }
+              } else {
+                if (item.liangduibisai[4] <= item.liangduibisai[3]) {
+                  return true;
+                }
+              }
+              // if(item.yapantouzhu[10] - item.yapantouzhu[11] < 0 && (item.sanhuxinli[0].replace("%", "") < 80 && item.sanhuxinli[1].replace("%", "") < 80 && item.sanhuxinli[2].replace("%", "") < 80)){
+              // return true;
+              // }
+            }
 
           }
-       
+
 
           return false;
         });
         this.count = this.datalist.length;
-      }else if (val == 15) {
+      } else if (val == 15) {
         this.datalist = this.list.filter((item) => {
-          if (item.qiushutouzhu && item.liangduibisai && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2) {
+          // if (item.qiushutouzhu && item.liangduibisai && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2) {
+          //   if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
+          //     return false;
+          //   }
+
+          //   if (item.qiushutouzhu[0] >= 100 && item.qiushupankou1 < item.qiushupankou2) {
+          //     return true
+          //   }
+          //   if (item.qiushutouzhu[1] >= 100 && item.qiushupankou1 > item.qiushupankou2) {
+          //     return true
+          //   }
+
+
+          // }
+
+          if (item.qiushutouzhu && item.liangduibisai && item.touzhue && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2 && item.liangduilishi) {
             if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
-                        return false;
-                      }
-
-                     if (item.qiushutouzhu[0] >= 100 && item.qiushupankou1 < item.qiushupankou2){
-                       return true
-                     }
-                     if (item.qiushutouzhu[1] >= 100 && item.qiushupankou1 > item.qiushupankou2){
-                       return true
-                     }
+              return false;
+            }
 
 
+            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] < -0.25 && item.yapantouzhu[9] < -0.25) {
+
+              return true;
+            }
+
+
+            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0.25 && item.yapantouzhu[9] > 0.25) {
+
+              return true;
+            }
           }
-       
-
           return false;
         });
         this.count = this.datalist.length;
@@ -2213,7 +2284,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-09-07",
+        date: "2022-09-25",
         matchId: item.matchId,
       };
       api
@@ -2235,7 +2306,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-09-07",
+        date: "2022-09-25",
         matchId: item.matchId,
       };
       api
@@ -2256,7 +2327,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-09-07",
+        date: "2022-09-25",
         matchId: item.matchId,
       };
       api
@@ -2291,7 +2362,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-09-07",
+        date: "2022-09-25",
       };
       api
         .GetToday(data)

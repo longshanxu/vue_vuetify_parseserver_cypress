@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2022-09-07 20:16:53
+ * @LastEditTime: 2022-09-25 21:15:40
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2022-09-07"
+        datetemp = "2022-09-25"
 
 
         var tempMoney = Parse
@@ -110,7 +110,7 @@ Parse
             // 获取到赔率（odds），获取到概率(ratio),获取到返回率（returnRatio）,获取到凯利（kelly）
             // 以威廉的概率为基准线，进行第一轮的5%的浮动
             let finalitem = ['0%', '0%', '0%'];
-            let justitem = ['0%', '0%', '0%'];
+            let justitem = ['33%', '33%', '33%'];
             let ouzhuanya = finalitem;
 
             let weilianitem = results.get('weilian');
@@ -138,7 +138,7 @@ Parse
                 //带入bet365的概率
                 finalitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
                 ouzhuanya = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
-                justitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
+                // justitem = [bet365item.ratio[0], bet365item.ratio[1], bet365item.ratio[2]];
 
 
             } else {
@@ -150,7 +150,7 @@ Parse
                         //带入威廉的概率
                         finalitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
                         ouzhuanya = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
-                        justitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
+                        // justitem = [weilianitem.ratio[0], weilianitem.ratio[1], weilianitem.ratio[2]];
 
                     } else {
 
