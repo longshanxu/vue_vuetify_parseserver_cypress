@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-09-25 13:28:37
+ * @LastEditTime: 2022-09-26 22:40:34
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -2118,39 +2118,8 @@ export default {
             }
 
 
-            // if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] < -0.25 && item.yapantouzhu[9] < -0.25 && item.yapantouzhu[8] >= item.yapantouzhu[9] ) {
+            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0 && item.yapantouzhu[8] != -0.75 && item.yapantouzhu[8] != -1.25) {
 
-
-            //   if (item.home.indexOf(item.homezuijinbisai[1].substr(0, 3)) > -1) {
-            //     if (item.homezuijinbisai[3] <= item.homezuijinbisai[4]) {
-            //       return true;
-            //     }
-            //   } else {
-            //     if (item.homezuijinbisai[4] <= item.homezuijinbisai[3]) {
-            //       return true;
-            //     }
-            //   }
-            // }
-
-
-            // if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0.25 && item.yapantouzhu[9] > 0.25 && item.yapantouzhu[8] <= item.yapantouzhu[9]) {
-
-            //   if (item.home.indexOf(item.homezuijinbisai[1].substr(0, 3)) > -1) {
-            //     if (item.homezuijinbisai[3] <= item.homezuijinbisai[4]) {
-            //       return true;
-            //     }
-            //   } else {
-            //     if (item.homezuijinbisai[4] <= item.homezuijinbisai[3]) {
-            //       return true;
-            //     }
-            //   }
-            // }
-
-
-            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] < -0.25 && item.yapantouzhu[9] < -0.25 && item.yapantouzhu[8] != -0.75 && item.yapantouzhu[8] != -1.25) {
-              // if(item.yapantouzhu[10] - item.yapantouzhu[11] > 0 && (item.sanhuxinli[0].replace("%", "") < 80 && item.sanhuxinli[1].replace("%", "") < 80 && item.sanhuxinli[2].replace("%", "") < 80)){
-              // return true;
-              // }
               if (item.home.indexOf(item.liangduibisai[1].substr(0, 3)) > -1) {
                 if (item.liangduibisai[3] >= item.liangduibisai[4]) {
                   return true;
@@ -2164,7 +2133,7 @@ export default {
             }
 
 
-            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0.25 && item.yapantouzhu[9] > 0.25 && item.yapantouzhu[8] != 0.75 && item.yapantouzhu[8] != 1.25) {
+            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0 && item.yapantouzhu[9] > 0 && item.yapantouzhu[8] != 0.75 && item.yapantouzhu[8] != 1.25) {
               if (item.home.indexOf(item.liangduibisai[1].substr(0, 3)) > -1) {
                 if (item.liangduibisai[3] <= item.liangduibisai[4]) {
                   return true;
@@ -2174,9 +2143,7 @@ export default {
                   return true;
                 }
               }
-              // if(item.yapantouzhu[10] - item.yapantouzhu[11] < 0 && (item.sanhuxinli[0].replace("%", "") < 80 && item.sanhuxinli[1].replace("%", "") < 80 && item.sanhuxinli[2].replace("%", "") < 80)){
-              // return true;
-              // }
+
             }
 
           }
@@ -2187,20 +2154,7 @@ export default {
         this.count = this.datalist.length;
       } else if (val == 15) {
         this.datalist = this.list.filter((item) => {
-          // if (item.qiushutouzhu && item.liangduibisai && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2) {
-          //   if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
-          //     return false;
-          //   }
 
-          //   if (item.qiushutouzhu[0] >= 100 && item.qiushupankou1 < item.qiushupankou2) {
-          //     return true
-          //   }
-          //   if (item.qiushutouzhu[1] >= 100 && item.qiushupankou1 > item.qiushupankou2) {
-          //     return true
-          //   }
-
-
-          // }
 
           if (item.qiushutouzhu && item.liangduibisai && item.touzhue && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2 && item.liangduilishi) {
             if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
@@ -2284,7 +2238,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-09-25",
+        date: "2022-09-27",
         matchId: item.matchId,
       };
       api
@@ -2306,7 +2260,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-09-25",
+        date: "2022-09-27",
         matchId: item.matchId,
       };
       api
@@ -2327,7 +2281,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-09-25",
+        date: "2022-09-27",
         matchId: item.matchId,
       };
       api
@@ -2362,7 +2316,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-09-25",
+        date: "2022-09-27",
       };
       api
         .GetToday(data)
