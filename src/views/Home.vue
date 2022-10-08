@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-09-26 22:40:34
+ * @LastEditTime: 2022-10-08 01:17:51
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
@@ -28,7 +28,7 @@
           <v-tab i="9">某彩</v-tab>
           <v-tab i="10">北单</v-tab>
           <v-tab i="11">极端80-对</v-tab>
-          <v-tab i="12">极端80-错</v-tab>
+          <v-tab i="12">闹0区</v-tab>
           <v-tab i="13">极端场</v-tab>
           <v-tab i="14">态盘</v-tab>
           <v-tab i="15">裂球</v-tab>
@@ -69,6 +69,8 @@
             两队交战:
           </v-col>
           <v-col style="text-align: left; font-size: 14px" cols="9" class="px-0">
+            <span style="color:red">{{ item.sanhuxinli && item.sanhuxinli[4]}}</span>
+            <br />
             <span style="font-size: 14px">
               {{
               item.liangduibisai &&
@@ -320,7 +322,12 @@
             </div>
             <div style="font-size: 18px;color:red">
               {{ item.liangduiqiushu && item.liangduiqiushu[0] }}
+              {{ item.liangduiqiushu && item.liangduiqiushu[2] }}
             </div>
+            <div style="font-size: 18px;color:green">
+              {{ item.liangduiqiushu && item.liangduiqiushu[4] }}
+            </div>
+
 
           </v-col>
           <v-col style="text-align: center; font-size: 14px; font-weight: 500" cols="3">
@@ -346,6 +353,10 @@
             </div>
             <div style="font-size: 18px;color:red">
               {{ item.liangduiqiushu && item.liangduiqiushu[1] }}
+              {{ item.liangduiqiushu && item.liangduiqiushu[3] }}
+            </div>
+            <div style="font-size: 18px;color:green">
+              {{ item.liangduiqiushu && item.liangduiqiushu[5] }}
             </div>
           </v-col>
         </v-row>
@@ -2054,28 +2065,25 @@ export default {
         this.count = this.datalist.length;
       }
       else if (val == 12) {
-        console.log("12");
         this.datalist = this.list.filter((item) => {
 
-          if (item.yapantouzhu && item.qiushutouzhu && item.touzhue && item.sanhuxinli) {
 
-            if (item.qiushutouzhu[2].indexOf("no") > -1) {
+          if (item.qiushutouzhu && item.liangduibisai && item.touzhue && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2 && item.liangduilishi) {
+            if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
               return false;
             }
 
-            if ((item.sanhuxinli[0].replace("%", "") > 80 || item.sanhuxinli[1].replace("%", "") > 80 || item.sanhuxinli[2].replace("%", "") > 80)) {
-              // console.log(item.home+"__"+ item.touzhue +"- -"+item.sanhuxinli);
-              if (item.yapantouzhu[0] >= 100 && (item.homeScore - item.guestScore) < item.yapantouzhu[9]) {
+            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] == 0) {
+              if (item.yapantouzhu[8] >= item.yapantouzhu[9]) {
                 return true;
               }
-              if (item.yapantouzhu[1] >= 100 && (item.homeScore - item.guestScore) > item.yapantouzhu[9]) {
+
+              if (item.yapantouzhu[9] - item.yapantouzhu[8] >= 0.5) {
                 return true;
               }
+
             }
-
-
           }
-
           return false;
         });
         this.count = this.datalist.length;
@@ -2112,39 +2120,56 @@ export default {
         this.count = this.datalist.length;
       } else if (val == 14) {
         this.datalist = this.list.filter((item) => {
-          if (item.qiushutouzhu && item.liangduibisai && item.touzhue && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2 && item.liangduilishi) {
+          if (item.qiushutouzhu && item.liangduibisai && item.touzhue && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2 && item.liangduilishi && item.liangduiqiushu && item.sanhuxinli) {
             if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
               return false;
             }
+            if (item.liangduibisai[0].toString().split(" ")[0].indexOf("2020") > -1 || item.liangduibisai[0].toString().split(" ")[0].indexOf("2021") > -1 || item.liangduibisai[0].toString().split(" ")[0].indexOf("2022") > -1 || item.liangduibisai[0].toString().split(" ")[0].indexOf("2023") > -1) {
+              item.sanhuxinli[4] = "";
+              // let ss = (item.yapantouzhu[4] + item.yapantouzhu[5]) / 2;
+              if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0 && item.yapantouzhu[8] != -0.75 && item.yapantouzhu[8] != -1.25 && item.liangduiqiushu[2] < 2 && item.liangduiqiushu[3] < 2) {
 
 
-            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0 && item.yapantouzhu[8] != -0.75 && item.yapantouzhu[8] != -1.25) {
-
-              if (item.home.indexOf(item.liangduibisai[1].substr(0, 3)) > -1) {
-                if (item.liangduibisai[3] >= item.liangduibisai[4]) {
-                  return true;
+                let temp11 = item.sanhuxinli[3].split('~');
+                if (parseInt(temp11[0]) > parseInt(temp11[1])) {
+                  item.sanhuxinli[4] += '（不考虑）'
+                  // return true;
                 }
-              } else {
-                if (item.liangduibisai[4] >= item.liangduibisai[3]) {
-                  return true;
+                if (item.home.indexOf(item.liangduibisai[1].substr(0, 3)) > -1) {
+                  if (item.liangduibisai[3] >= item.liangduibisai[4]) {
+                    return true;
+                  }
+                } else {
+                  if (item.liangduibisai[4] >= item.liangduibisai[3]) {
+                    return true;
+                  }
                 }
+                // return true;
+
               }
 
+
+              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0.25 && item.yapantouzhu[9] > 0.25 && item.yapantouzhu[8] != 0.75 && item.yapantouzhu[8] != 1.25 && item.liangduiqiushu[2] < 2 && item.liangduiqiushu[4] < 2) {
+                let temp11 = item.sanhuxinli[3].split('~');
+                if (parseInt(temp11[0]) < parseInt(temp11[1])) {
+                  item.sanhuxinli[4] += '（不考虑）'
+                  // return true;
+                }
+                if (item.home.indexOf(item.liangduibisai[1].substr(0, 3)) > -1) {
+                  if (item.liangduibisai[3] <= item.liangduibisai[4]) {
+                    return true;
+                  }
+                } else {
+                  if (item.liangduibisai[4] <= item.liangduibisai[3]) {
+                    return true;
+                  }
+                }
+                // return true;
+
+              }
             }
 
 
-            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0 && item.yapantouzhu[9] > 0 && item.yapantouzhu[8] != 0.75 && item.yapantouzhu[8] != 1.25) {
-              if (item.home.indexOf(item.liangduibisai[1].substr(0, 3)) > -1) {
-                if (item.liangduibisai[3] <= item.liangduibisai[4]) {
-                  return true;
-                }
-              } else {
-                if (item.liangduibisai[4] <= item.liangduibisai[3]) {
-                  return true;
-                }
-              }
-
-            }
 
           }
 
@@ -2162,13 +2187,13 @@ export default {
             }
 
 
-            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] < -0.25 && item.yapantouzhu[9] < -0.25) {
+            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0) {
 
               return true;
             }
 
 
-            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0.25 && item.yapantouzhu[9] > 0.25) {
+            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0 && item.yapantouzhu[9] > 0) {
 
               return true;
             }
@@ -2238,7 +2263,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-09-27",
+        date: "2022-10-08",
         matchId: item.matchId,
       };
       api
@@ -2260,7 +2285,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-09-27",
+        date: "2022-10-08",
         matchId: item.matchId,
       };
       api
@@ -2281,7 +2306,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-09-27",
+        date: "2022-10-08",
         matchId: item.matchId,
       };
       api
@@ -2316,7 +2341,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-09-27",
+        date: "2022-10-08",
       };
       api
         .GetToday(data)

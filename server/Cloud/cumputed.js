@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2022-09-27 21:15:40
+ * @LastEditTime: 2022-10-08 00:23:16
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2022-09-27"
+        datetemp = "2022-10-08"
 
 
         var tempMoney = Parse
@@ -162,7 +162,7 @@ Parse
 
             console.log('开局====:'.red + finalitem);
 
-            element.set("kaijuresult",  Object.assign([], finalitem));
+            element.set("kaijuresult", Object.assign([], finalitem));
             oneresult.set("test1", Object.assign([], finalitem));
             //新的方案。欧盘转亚盘
 
@@ -205,7 +205,7 @@ Parse
             console.log('凯利:'.red + kailiresult);
 
             oneresult.set("test3", kailiresult);
-            
+
             element.set("kailiresult", kailiresult);
 
             let ticairesult = [];
@@ -235,7 +235,7 @@ Parse
             }
 
             element.set("ticairesult", ticairesult);
-            
+
 
             //进行第5轮的5%的浮动，主要是针对平局进行处理。
             const HistoryMoney = Parse
@@ -258,6 +258,9 @@ Parse
 
             finalitem = ["33%", "33%", "33%"];
             let liangduibisai = [];
+            let homevsguest = 0; //主队和客队各赢多少 
+            let guestvshome = 0; //主队和客队各赢多少 
+
             for (let index = 0; index < historylist.length; index++) {
                 const element = historylist[index];
                 if (index == 0) {
@@ -267,16 +270,20 @@ Parse
                     if (home == element.home && guest == element.guest) {
                         // historycount ++;
                         if (element.goal[0] > element.goal[1]) {
+                            homevsguest++;
                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 16) + '%';
                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
                         }
                         if (element.goal[0] == element.goal[1]) {
+                            homevsguest+=0.7;
+                            guestvshome+=0.7;
                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 16) + '%';
                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
                         }
                         if (element.goal[0] < element.goal[1]) {
+                            guestvshome++;
                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 16) + '%';
@@ -284,16 +291,20 @@ Parse
                     }
                     if (home == element.guest && guest == element.home) {
                         if (element.goal[0] < element.goal[1]) {
+                            homevsguest++;
                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) + 16) + '%';
                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
                         }
                         if (element.goal[0] == element.goal[1]) {
+                            homevsguest+=0.7;
+                            guestvshome+=0.7;
                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) + 16) + '%';
                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) - 8) + '%';
                         }
                         if (element.goal[0] > element.goal[1]) {
+                            guestvshome++;
                             finalitem[0] = math.evaluate(parseFloat(finalitem[0].replace('%', '')) - 8) + '%';
                             finalitem[1] = math.evaluate(parseFloat(finalitem[1].replace('%', '')) - 8) + '%';
                             finalitem[2] = math.evaluate(parseFloat(finalitem[2].replace('%', '')) + 16) + '%';
@@ -352,7 +363,7 @@ Parse
 
             element.set("liangduibisai", liangduibisai);
             oneresult.set("test24", liangduibisai);
-            console.log('两队历史:'.green +  Object.assign([], justitem));
+            console.log('两队历史:'.green + Object.assign([], justitem));
             element.set("liangduilishi", Object.assign([], justitem));
             oneresult.set("test5", Object.assign([], finalitem));
 
@@ -499,6 +510,8 @@ Parse
             let guestzuijinqiushu = 0; //客队最近进球数
             let homehistoryqiushu = 0; //主队历史主场作战能力
             let guesthistoryqiushu = 0; //客队历史客场作战能力
+            let homelianying = 0;  //主队连赢
+            let guestlianying = 0; //客队连赢
 
             if (pankoumoneyitem != undefined && pankoumoneyitem != null) {
                 const bet365pankou = pankoumoneyitem.get('bet365pankou');
@@ -556,10 +569,22 @@ Parse
                         if (home == element.home) {
                             homezuijinqiushu += element.goal[0];
                             homediuqiu += element.goal[1];
+                            if (element.goal[0] > element.goal[1]) {
+                                homelianying++;
+                            }
+                            if (element.goal[0] == element.goal[1]) {
+                                homelianying+=0.7;
+                            }
                         }
                         if (home == element.guest) {
                             homezuijinqiushu += element.goal[1];
                             homediuqiu += element.goal[0];
+                            if (element.goal[0] < element.goal[1]) {
+                                homelianying++;
+                            }
+                            if (element.goal[0] == element.goal[1]) {
+                                homelianying+=0.7;
+                            }
                         }
                     } else {
                         break;
@@ -574,10 +599,22 @@ Parse
                         if (guest == element.home) {
                             guestzuijinqiushu += element.goal[0];
                             guestdiuqiu += element.goal[1];
+                            if (element.goal[0] > element.goal[1]) {
+                                guestlianying++;
+                            }
+                            if (element.goal[0] == element.goal[1]) {
+                                guestlianying+=0.7;
+                            }
                         }
                         if (guest == element.guest) {
                             guestzuijinqiushu += element.goal[1];
                             guestdiuqiu += element.goal[0];
+                            if (element.goal[0] < element.goal[1]) {
+                                guestlianying++;
+                            }
+                            if (element.goal[0] == element.goal[1]) {
+                                guestlianying+=0.7;
+                            }
                         }
                     } else {
                         break;
@@ -839,7 +876,7 @@ Parse
 
                 if (bet365pankou != undefined && bet10pankou != undefined && bet365qiu != undefined && bet10qiu != undefined) {
                     //散户投注数据。
-                    
+
                     let bet10odds0 = parseFloat(changeqiu(bet10qiu.firstPankou));
                     let bet10odds1 = parseFloat(changeqiu(bet10qiu.pankou));
 
@@ -853,7 +890,7 @@ Parse
                     const pankou1 = parseFloat(changepankou(bet10pankou.firstPankou));
                     const pankou2 = parseFloat(changepankou(bet10pankou.pankou));
 
-                    
+
                     let qiushupankou = pankou1;
 
                     if ((pankou2 - pankou1 > 0.25) || (pankou2 - pankou1 < -0.25)) {
@@ -1241,7 +1278,7 @@ Parse
                 // console.log("两队最近亚盘球数：".white + (homezuijinqiushu + guestzuijinqiushu) / 2);
                 oneresult.set("test19", [homeqiushu, guestqiushu, (homeqiushu + guestqiushu) / 2]);
                 oneresult.set("test20", [homezuijinqiushu + '（' + homediuqiu + '）', guestzuijinqiushu + '（' + guestdiuqiu + '）', (homezuijinqiushu + guestzuijinqiushu) / 2]);
-                element.set("liangduiqiushu", [homezuijinqiushu + '（' + homediuqiu + '）', guestzuijinqiushu + '（' + guestdiuqiu + '）']);
+                element.set("liangduiqiushu", [homezuijinqiushu + '（' + homediuqiu + '）', guestzuijinqiushu + '（' + guestdiuqiu + '）', homelianying, guestlianying, homevsguest, guestvshome]);
 
 
                 console.log("用户期望让球：".yellow + (homeqiushu - guestqiushu) / 2 + " : " + (homezuijinqiushu - guestzuijinqiushu) / 2);
