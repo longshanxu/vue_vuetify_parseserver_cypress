@@ -1,10 +1,10 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-11-02 16:39:10
+ * @LastEditTime: 2022-12-02 18:13:24
  * @LastEditors: Json.Xu
  * @Description: 
- * @FilePath: \vue_vuetify_parseserver\src\views\Home.vue
+ * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
  -->
 <template>
   <v-container class="fill-height grey lighten-3 pa-0" fluid>
@@ -27,7 +27,7 @@
           <v-tab i="8">分析球</v-tab>
           <v-tab i="9">某彩</v-tab>
           <v-tab i="10">北单</v-tab>
-          <v-tab i="11">极端80-对</v-tab>
+          <v-tab i="11">碾压技</v-tab>
           <v-tab i="12">闹0区</v-tab>
           <v-tab i="13">极端场</v-tab>
           <v-tab i="14">态盘</v-tab>
@@ -2040,27 +2040,25 @@ export default {
       else if (val == 11) {
         this.datalist = this.list.filter((item) => {
 
-          if (item.yapantouzhu && item.qiushutouzhu && item.touzhue && item.sanhuxinli) {
 
-            if (item.qiushutouzhu[2].indexOf("no") > -1) {
+          if (item.qiushutouzhu && item.liangduibisai && item.touzhue && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2 && item.liangduilishi) {
+            if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
               return false;
             }
 
-            if ((item.sanhuxinli[0].replace("%", "") > 80 || item.sanhuxinli[1].replace("%", "") > 80 || item.sanhuxinli[2].replace("%", "") > 80)) {
-              // console.log(item.home+"__"+ item.touzhue +"- -"+item.sanhuxinli);
-              if (item.yapantouzhu[0] >= 100 && (item.homeScore - item.guestScore) > item.yapantouzhu[9]) {
-                return true;
-              }
-              if (item.yapantouzhu[1] >= 100 && (item.homeScore - item.guestScore) < item.yapantouzhu[9]) {
-                return true;
-              }
+
+            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] > 0 && item.yapantouzhu[9] > 0 && item.liangduiqiushu[4] > 1) {
+
+              return true;
             }
 
 
+            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0 && item.liangduiqiushu[5] > 1) {
+
+              return true;
+            }
           }
-
           return false;
-
         });
         this.count = this.datalist.length;
       }
@@ -2264,7 +2262,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-11-03",
+        date: "2022-12-02",
         matchId: item.matchId,
       };
       api
@@ -2286,7 +2284,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-11-03",
+        date: "2022-12-02",
         matchId: item.matchId,
       };
       api
@@ -2307,7 +2305,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-11-03",
+        date: "2022-12-02",
         matchId: item.matchId,
       };
       api
@@ -2342,7 +2340,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-11-03",
+        date: "2022-12-02",
       };
       api
         .GetToday(data)
