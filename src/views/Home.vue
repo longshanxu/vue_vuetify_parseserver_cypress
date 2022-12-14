@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2022-12-02 18:13:24
+ * @LastEditTime: 2022-12-14 14:04:19
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
@@ -2047,13 +2047,13 @@ export default {
             }
 
 
-            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] > 0 && item.yapantouzhu[9] > 0 && item.liangduiqiushu[4] > 1) {
+            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[8] > 0 && item.yapantouzhu[9] > 0 && item.liangduiqiushu[4] > 1) {
 
               return true;
             }
 
 
-            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0 && item.liangduiqiushu[5] > 1) {
+            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0 && item.liangduiqiushu[5] > 1) {
 
               return true;
             }
@@ -2262,7 +2262,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2022-12-02",
+        date: "2022-12-11",
         matchId: item.matchId,
       };
       api
@@ -2284,7 +2284,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2022-12-02",
+        date: "2022-12-11",
         matchId: item.matchId,
       };
       api
@@ -2305,7 +2305,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2022-12-02",
+        date: "2022-12-11",
         matchId: item.matchId,
       };
       api
@@ -2340,7 +2340,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2022-12-02",
+        date: "2022-12-11",
       };
       api
         .GetToday(data)
@@ -2361,7 +2361,7 @@ export default {
     // console.log(11111111111111111);
     this.loaddata();
   },
-};
+}
 </script>
 
 <style>
