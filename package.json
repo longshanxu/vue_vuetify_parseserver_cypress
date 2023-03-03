@@ -36,7 +36,7 @@
     "@cypress/code-coverage": "^1.14.0",
     "@mdi/font": "^4.9.95",
     "@vue/cli-plugin-babel": "^4.4.6",
-    "@vue/cli-plugin-e2e-cypress": "^4.4.6",
+    "@vue/cli-plugin-e2e-cypress": "^5.0.8",
     "@vue/cli-plugin-eslint": "^4.4.6",
     "@vue/cli-plugin-router": "^4.4.6",
     "@vue/cli-plugin-unit-mocha": "^4.4.6",
