@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2023-03-06 21:17:40
+ * @LastEditTime: 2023-03-08 16:13:26
  * @LastEditors: Json.Xu
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
@@ -254,14 +254,14 @@
           </v-col>
           <v-col style="text-align: center; font-size: 14px" cols="3">
             新球投注:
-              </v-col>
-              <v-col style="text-align: center; font-size: 14px" cols="3">
-                {{
-                    item.newqiushutouzhu &&
-                    item.newqiushutouzhu[0] + " ~ " + item.newqiushutouzhu[1]
-                }}
-              </v-col>
-            </v-row> -->
+                </v-col>
+                <v-col style="text-align: center; font-size: 14px" cols="3">
+                  {{
+                      item.newqiushutouzhu &&
+                      item.newqiushutouzhu[0] + " ~ " + item.newqiushutouzhu[1]
+                  }}
+                </v-col>
+              </v-row> -->
         <v-row dense class="ma-0" v-show="showtuijian">
           <v-col style="text-align: center; font-size: 14px; font-weight: 500" cols="3">
             让球投注:
@@ -894,16 +894,11 @@ export default {
             }
 
 
-            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[8] > 0 &&  item.yapantouzhu[9] > 0 && item.liangduiqiushu[4] > 1 && item.yapantouzhu[8] <= item.yapantouzhu[9] ) {
+            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[8] > 0 && item.yapantouzhu[9] > 0 && item.yapantouzhu[8] <= item.yapantouzhu[9] && item.liangduiqiushu[5] < 1 && item.liangduiqiushu[4] < 2) {
 
               return true;
             }
 
-
-            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[5] < 0 && item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0 && item.liangduiqiushu[5] > 1 && item.yapantouzhu[8] <= item.yapantouzhu[9]) {
-
-              return true;
-            }
           }
           return false;
         });
@@ -984,7 +979,7 @@ export default {
 
               if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0 && item.yapantouzhu[9] > 0 && item.liangduiqiushu[4] < 1 && item.liangduiqiushu[5] < 2 && item.yapantouzhu[8] <= item.yapantouzhu[9]) {
                 return true;
-   
+
 
               }
             }
@@ -1085,7 +1080,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2023-03-04",
+        date: "2023-03-08",
         matchId: item.matchId,
       };
       api
@@ -1106,7 +1101,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2023-03-04",
+        date: "2023-03-08",
         matchId: item.matchId,
       };
       api
@@ -1127,7 +1122,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2023-03-04",
+        date: "2023-03-08",
         matchId: item.matchId,
       };
       api
@@ -1162,7 +1157,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2023-03-04",
+        date: "2023-03-08",
       };
       api
         .GetToday(data)
