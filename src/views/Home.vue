@@ -1,8 +1,8 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2023-03-09 16:13:26
- * @LastEditors: Json.Xu
+ * @LastEditTime: 2023-03-19 22:20:28
+ * @LastEditors: longshanxu 623119632@qq.com
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
  -->
@@ -644,7 +644,7 @@
           <br />
           <v-row dense class="mx-0">
             <v-col style="text-align: left; font-size: 14px" cols="12">
-              每一场都是心血，不能一直红，也不能一直黑，均码做公益！我们都是一场场分析，一场场实弹，风雨同舟！
+              
             </v-col>
           </v-row>
         </v-card>
@@ -668,9 +668,7 @@
         <v-card class="ma-2 cardclass" rounded id="copyid1">
           <v-row dense class="mx-0">
             <v-col style="text-align: left; font-size: 14px" cols="12">
-              十万场的数据心得 拥有自己的模型，
-              致力于一级赛事。有长红，说明对口模型，有长黑，老庄也会瞎开，完全不尊重历史。
-              每一场推荐，都是用自己的RMB，用心尽力！友情提醒：勿梭！
+              
             </v-col>
           </v-row>
           <br />
@@ -933,31 +931,34 @@ export default {
       else if (val == 5) {
         this.datalist = this.list.filter((item) => {
 
-          if (item.yapantouzhu && item.sanhuxinli) {
+if (item.yapantouzhu && item.sanhuxinli) {
 
-            if ((item.sanhuxinli[0].replace("%", "") > 80 || item.sanhuxinli[1].replace("%", "") > 80 || item.sanhuxinli[2].replace("%", "") > 80)) {
+  if ((item.sanhuxinli[0].replace("%", "") > 80 || item.sanhuxinli[1].replace("%", "") > 80 || item.sanhuxinli[2].replace("%", "") > 80)) {
 
-              if (item.yapantouzhu[0] >= 100 || item.yapantouzhu[1] >= 100) {
+    if (item.yapantouzhu[0] >= 100 || item.yapantouzhu[1] >= 100) {
 
-                // if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
+      // if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
 
-                if (item.yapantouzhu[9] >= 0.75 || item.yapantouzhu[9] <= -0.75) {
+      if (item.yapantouzhu[9] >= 0.75 || item.yapantouzhu[9] <= -0.75) {
 
-                  return true;
+        if( item.liangduiqiushu[4] == 2 ||  item.liangduiqiushu[5] ==2){
+          return true;
 
-                }
+        }
 
-                // }
+      }
 
-
-              }
-
-            }
+      // }
 
 
-          }
+    }
 
-          return false;
+  }
+
+
+}
+
+return false;
         });
         this.count = this.datalist.length;
         console.log("极端场");
@@ -1080,7 +1081,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2023-03-09",
+        date: "2023-03-18",
         matchId: item.matchId,
       };
       api
@@ -1101,7 +1102,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2023-03-09",
+        date: "2023-03-18",
         matchId: item.matchId,
       };
       api
@@ -1122,7 +1123,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2023-03-09",
+        date: "2023-03-18",
         matchId: item.matchId,
       };
       api
@@ -1157,7 +1158,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2023-03-09",
+        date: "2023-03-18",
       };
       api
         .GetToday(data)
