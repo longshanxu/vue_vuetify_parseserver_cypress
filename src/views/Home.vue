@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2023-04-09 21:42:15
+ * @LastEditTime: 2023-04-11 10:34:51
  * @LastEditors: longshanxu 623119632@qq.com
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
@@ -11,7 +11,8 @@
     <v-app-bar dark app fixed color="primary" dense>
       <v-icon @dblclick="cpu" color="green">mdi-crane</v-icon>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="white--text">只此一眼，便是万年 {{ count == 0 ? "" : "( " + count + " )" }}</v-toolbar-title>
+      <v-toolbar-title class="white--text">只此一眼，便是万年
+        {{ count == 0 ? "" : "( " + count + " )" }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-icon @click="asyncData" color="red">mdi-hand-heart</v-icon>
       <template v-slot:extension>
@@ -24,14 +25,15 @@
           <v-tab i="13">极端场</v-tab>
           <v-tab i="14">态盘</v-tab>
           <v-tab i="15">裂球</v-tab>
+          <v-tab i="16">爆冷</v-tab>
         </v-tabs>
       </template>
     </v-app-bar>
     <v-main class="fill-height grey lighten-3 align-start justify-start">
       <v-card class="pa-0 ma-2 cardclass" rounded v-for="(item, index) in datalist" :key="index">
         <v-row dense class="ma-0">
-          <v-col style="text-align: center; font-weight: 700" cols="4">{{ item.home &&
-            item.home.substr(0, 6)
+          <v-col style="text-align: center; font-weight: 700" cols="4">{{
+            item.home && item.home.substr(0, 6)
           }}</v-col>
           <v-col style="text-align: center; font-size: 12px" cols="4">({{ item.league }})<br />
           </v-col>
@@ -61,7 +63,9 @@
             两队交战:
           </v-col>
           <v-col style="text-align: left; font-size: 14px" cols="9" class="px-0">
-            <span style="color:red">{{ item.sanhuxinli && item.sanhuxinli[4] }}</span>
+            <span style="color:red">{{
+              item.sanhuxinli && item.sanhuxinli[4]
+            }}</span>
             <br />
             <span style="font-size: 14px">
               {{
@@ -104,20 +108,33 @@
           <v-col style="text-align: right; font-size: 14px" cols="9">
             <span>
               {{ item.sanhuxinli && item.sanhuxinli[3] + "_________" }}
-              {{ item.touzhue && '[ "' + item.touzhue[0] + '", "' + item.touzhue[1] + '", "' +
-                item.touzhue[2] + '" ]'
+              {{
+                item.touzhue &&
+                '[ "' +
+                item.touzhue[0] +
+                '", "' +
+                item.touzhue[1] +
+                '", "' +
+                item.touzhue[2] +
+                '" ]'
               }}
             </span>
             <br />
             <span style=" color: #a60056">
-              散户心理: {{ item.sanhuxinli && '[ "' + item.sanhuxinli[0] + '", "' + item.sanhuxinli[1] + '", "' +
-                item.sanhuxinli[2] + '" ]'
+              散户心理:
+              {{
+                item.sanhuxinli &&
+                '[ "' +
+                item.sanhuxinli[0] +
+                '", "' +
+                item.sanhuxinli[1] +
+                '", "' +
+                item.sanhuxinli[2] +
+                '" ]'
               }}
             </span>
             <br />
-            <span>
-              开局心理: {{ item.kaijuresult }}
-            </span>
+            <span> 开局心理: {{ item.kaijuresult }} </span>
             <br />
             <span style=" color: green">
               两队历史: {{ item.liangduilishi }}
@@ -175,13 +192,26 @@
                 " ) " +
                 item.qiushuAll[5]
               }}
-
             </span>
             <br />
             <span style="font-size: 14px"><span style="color: blue">
-                {{ item.yapantouzhu && item.yapantouzhu[4] + "!" + item.yapantouzhu[5] + "!" + item.yapantouzhu[6] +
-                  "!" + item.yapantouzhu[7] + "!" + item.yapantouzhu[8] + "!" + item.yapantouzhu[9] + "~" +
-                  item.yapantouzhu[10] + "~" + item.yapantouzhu[11]
+                {{
+                  item.yapantouzhu &&
+                  item.yapantouzhu[4] +
+                  "!" +
+                  item.yapantouzhu[5] +
+                  "!" +
+                  item.yapantouzhu[6] +
+                  "!" +
+                  item.yapantouzhu[7] +
+                  "!" +
+                  item.yapantouzhu[8] +
+                  "!" +
+                  item.yapantouzhu[9] +
+                  "~" +
+                  item.yapantouzhu[10] +
+                  "~" +
+                  item.yapantouzhu[11]
                 }}
               </span></span>
           </v-col>
@@ -192,7 +222,6 @@
           </v-col>
           <v-col style="text-align: right; font-size: 14px; color: red" cols="9">
             <span style="font-size: 14px">
-
               <span style="color: green; padding: 0px 2px">
                 ({{ item.qiushutouzhu && item.qiushutouzhu[2] }})（5场平均进球）
               </span>
@@ -204,7 +233,8 @@
               <span style="color: green; padding: 0px 2px">
                 {{
                   item.qiushuAll && (item.qiushuAll[0] + item.qiushuAll[2]) / 4
-                }} （4场平均进球）</span>
+                }}
+                （4场平均进球）</span>
             </span>
           </v-col>
         </v-row>
@@ -254,14 +284,14 @@
           </v-col>
           <v-col style="text-align: center; font-size: 14px" cols="3">
             新球投注:
-                </v-col>
-                <v-col style="text-align: center; font-size: 14px" cols="3">
-                  {{
-                      item.newqiushutouzhu &&
-                      item.newqiushutouzhu[0] + " ~ " + item.newqiushutouzhu[1]
-                  }}
-                </v-col>
-              </v-row> -->
+                        </v-col>
+                        <v-col style="text-align: center; font-size: 14px" cols="3">
+                          {{
+                              item.newqiushutouzhu &&
+                              item.newqiushutouzhu[0] + " ~ " + item.newqiushutouzhu[1]
+                          }}
+                        </v-col>
+                      </v-row> -->
         <v-row dense class="ma-0" v-show="showtuijian">
           <v-col style="text-align: center; font-size: 14px; font-weight: 500" cols="3">
             让球投注:
@@ -319,8 +349,6 @@
             <div style="font-size: 18px;color:green">
               {{ item.liangduiqiushu && item.liangduiqiushu[4] }}
             </div>
-
-
           </v-col>
           <v-col style="text-align: center; font-size: 14px; font-weight: 500" cols="3">
             客队交战:
@@ -464,7 +492,8 @@
                 "元 ~ " +
                 parseInt(
                   item1.test14[1] *
-                  (parseFloat(item1.test9[7].toString().split(",")[1]) + 1)
+                  (parseFloat(item1.test9[7].toString().split(",")[1]) +
+                    1)
                 ) +
                 "元"
               }}
@@ -502,7 +531,8 @@
                 "元 ~ " +
                 parseInt(
                   item1.test17[1] *
-                  (parseFloat(item1.test15[7].toString().split(",")[1]) + 1)
+                  (parseFloat(item1.test15[7].toString().split(",")[1]) +
+                    1)
                 ) +
                 "元"
               }}
@@ -643,9 +673,7 @@
           <br />
           <br />
           <v-row dense class="mx-0">
-            <v-col style="text-align: left; font-size: 14px" cols="12">
-              
-            </v-col>
+            <v-col style="text-align: left; font-size: 14px" cols="12"> </v-col>
           </v-row>
         </v-card>
         <v-row dense class="mx-0">
@@ -667,9 +695,7 @@
         </v-toolbar>
         <v-card class="ma-2 cardclass" rounded id="copyid1">
           <v-row dense class="mx-0">
-            <v-col style="text-align: left; font-size: 14px" cols="12">
-              
-            </v-col>
+            <v-col style="text-align: left; font-size: 14px" cols="12"> </v-col>
           </v-row>
           <br />
           （南）一手：
@@ -853,7 +879,7 @@ export default {
       userdialog: false,
       userdialog1: false,
       isshowbifen: true,
-      currentItem: 0
+      currentItem: 0,
     };
   },
   computed: {},
@@ -881,34 +907,57 @@ export default {
         });
         this.count = this.datalist.length;
         console.log("北单");
-      }
-      else if (val == 3) {
+      } else if (val == 3) {
         this.datalist = this.list.filter((item) => {
-
-
-          if (item.qiushutouzhu && item.liangduibisai && item.touzhue && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2 && item.liangduilishi) {
-            if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
+          if (
+            item.qiushutouzhu &&
+            item.liangduibisai &&
+            item.touzhue &&
+            item.changguiqiushu &&
+            item.qiushuAll &&
+            item.qiushupankou1 &&
+            item.qiushupankou2 &&
+            item.liangduilishi
+          ) {
+            if (
+              item.qiushutouzhu[2].indexOf("no") > -1 ||
+              item.liangduibisai.length <= 0
+            ) {
               return false;
             }
 
-
-            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[5] > 0 && item.yapantouzhu[8] > 0 && item.yapantouzhu[9] > 0 && item.yapantouzhu[8] <= item.yapantouzhu[9] && item.liangduiqiushu[5] < 1 && item.liangduiqiushu[4] < 2) {
-
+            if (
+              item.yapantouzhu[4] > 0 &&
+              item.yapantouzhu[5] > 0 &&
+              item.yapantouzhu[8] > 0 &&
+              item.yapantouzhu[9] > 0 &&
+              item.yapantouzhu[8] <= item.yapantouzhu[9] &&
+              item.liangduiqiushu[5] < 1 &&
+              item.liangduiqiushu[4] < 2
+            ) {
               return true;
             }
-
           }
           return false;
         });
         this.count = this.datalist.length;
         console.log("碾压局");
-      }
-      else if (val == 4) {
+      } else if (val == 4) {
         this.datalist = this.list.filter((item) => {
-
-
-          if (item.qiushutouzhu && item.liangduibisai && item.touzhue && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2 && item.liangduilishi) {
-            if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
+          if (
+            item.qiushutouzhu &&
+            item.liangduibisai &&
+            item.touzhue &&
+            item.changguiqiushu &&
+            item.qiushuAll &&
+            item.qiushupankou1 &&
+            item.qiushupankou2 &&
+            item.liangduilishi
+          ) {
+            if (
+              item.qiushutouzhu[2].indexOf("no") > -1 ||
+              item.liangduibisai.length <= 0
+            ) {
               return false;
             }
 
@@ -920,75 +969,107 @@ export default {
               if (item.yapantouzhu[9] - item.yapantouzhu[8] >= 0.5) {
                 return true;
               }
-
             }
           }
           return false;
         });
         this.count = this.datalist.length;
         console.log("闹0区");
-      }
-      else if (val == 5) {
+      } else if (val == 5) {
         this.datalist = this.list.filter((item) => {
+          if (item.yapantouzhu && item.sanhuxinli) {
+            if (
+              item.sanhuxinli[0].replace("%", "") > 80 ||
+              item.sanhuxinli[1].replace("%", "") > 80 ||
+              item.sanhuxinli[2].replace("%", "") > 80
+            ) {
+              if (item.yapantouzhu[0] >= 100 || item.yapantouzhu[1] >= 100) {
+                // if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
 
-if (item.yapantouzhu && item.sanhuxinli) {
+                if (
+                  item.yapantouzhu[9] >= 0.75 ||
+                  item.yapantouzhu[9] <= -0.75
+                ) {
+                  if (
+                    item.liangduiqiushu[4] == 2 ||
+                    item.liangduiqiushu[5] == 2
+                  ) {
+                    return true;
+                  }
+                }
 
-  if ((item.sanhuxinli[0].replace("%", "") > 80 || item.sanhuxinli[1].replace("%", "") > 80 || item.sanhuxinli[2].replace("%", "") > 80)) {
+                // }
+              }
+            }
+          }
 
-    if (item.yapantouzhu[0] >= 100 || item.yapantouzhu[1] >= 100) {
-
-      // if (item.qiushutouzhu[0] >= 100 || item.qiushutouzhu[1] >= 100) {
-
-      if (item.yapantouzhu[9] >= 0.75 || item.yapantouzhu[9] <= -0.75) {
-
-        if( item.liangduiqiushu[4] == 2 ||  item.liangduiqiushu[5] ==2){
-          return true;
-
-        }
-
-      }
-
-      // }
-
-
-    }
-
-  }
-
-
-}
-
-return false;
+          return false;
         });
         this.count = this.datalist.length;
         console.log("极端场");
       } else if (val == 6) {
         this.datalist = this.list.filter((item) => {
-          if (item.qiushutouzhu && item.liangduibisai && item.touzhue && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2 && item.liangduilishi && item.liangduiqiushu && item.sanhuxinli) {
-            if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
+          if (
+            item.qiushutouzhu &&
+            item.liangduibisai &&
+            item.touzhue &&
+            item.changguiqiushu &&
+            item.qiushuAll &&
+            item.qiushupankou1 &&
+            item.qiushupankou2 &&
+            item.liangduilishi &&
+            item.liangduiqiushu &&
+            item.sanhuxinli
+          ) {
+            if (
+              item.qiushutouzhu[2].indexOf("no") > -1 ||
+              item.liangduibisai.length <= 0
+            ) {
               return false;
             }
-            if (item.liangduibisai[0].toString().split(" ")[0].indexOf("2020") > -1 || item.liangduibisai[0].toString().split(" ")[0].indexOf("2021") > -1 || item.liangduibisai[0].toString().split(" ")[0].indexOf("2022") > -1 || item.liangduibisai[0].toString().split(" ")[0].indexOf("2023") > -1) {
+            if (
+              item.liangduibisai[0]
+                .toString()
+                .split(" ")[0]
+                .indexOf("2020") > -1 ||
+              item.liangduibisai[0]
+                .toString()
+                .split(" ")[0]
+                .indexOf("2021") > -1 ||
+              item.liangduibisai[0]
+                .toString()
+                .split(" ")[0]
+                .indexOf("2022") > -1 ||
+              item.liangduibisai[0]
+                .toString()
+                .split(" ")[0]
+                .indexOf("2023") > -1
+            ) {
               // item.sanhuxinli[4] = "";
               // let ss = (item.yapantouzhu[4] + item.yapantouzhu[5]) / 2;
-              if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0 && item.liangduiqiushu[5] < 1 && item.liangduiqiushu[4] < 2 && item.yapantouzhu[8] <= item.yapantouzhu[9]) {
-
+              if (
+                item.yapantouzhu[4] > 0 &&
+                item.yapantouzhu[8] < 0 &&
+                item.yapantouzhu[9] < 0 &&
+                item.liangduiqiushu[5] < 1 &&
+                item.liangduiqiushu[4] < 2 &&
+                item.yapantouzhu[8] <= item.yapantouzhu[9]
+              ) {
                 return true;
-
-
               }
 
-              if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0 && item.yapantouzhu[9] > 0 && item.liangduiqiushu[4] < 1 && item.liangduiqiushu[5] < 2 && item.yapantouzhu[8] <= item.yapantouzhu[9]) {
+              if (
+                item.yapantouzhu[4] < 0 &&
+                item.yapantouzhu[8] > 0 &&
+                item.yapantouzhu[9] > 0 &&
+                item.liangduiqiushu[4] < 1 &&
+                item.liangduiqiushu[5] < 2 &&
+                item.yapantouzhu[8] <= item.yapantouzhu[9]
+              ) {
                 return true;
-
-
               }
             }
-
-
-
           }
-
 
           return false;
         });
@@ -997,22 +1078,94 @@ return false;
       } else if (val == 7) {
         console.log("裂球");
         this.datalist = this.list.filter((item) => {
-
-
-          if (item.qiushutouzhu && item.liangduibisai && item.touzhue && item.changguiqiushu && item.qiushuAll && item.qiushupankou1 && item.qiushupankou2 && item.liangduilishi) {
-            if (item.qiushutouzhu[2].indexOf("no") > -1 || item.liangduibisai.length <= 0) {
+          if (
+            item.qiushutouzhu &&
+            item.liangduibisai &&
+            item.touzhue &&
+            item.changguiqiushu &&
+            item.qiushuAll &&
+            item.qiushupankou1 &&
+            item.qiushupankou2 &&
+            item.liangduilishi &&
+            item.sanhuxinli
+          ) {
+            if (
+              item.qiushutouzhu[2].indexOf("no") > -1 ||
+              item.liangduibisai.length <= 0
+            ) {
               return false;
             }
+            // const numbers = item.sanhuxinli[3].match(/\d+/g); // 匹配所有数字
+            // console.log(numbers); // 输出 ["3", "27"]
+            // console.log(item.sanhuxinli[3]); // 输出 ["3", "27"]
+            // if(numbers[0] < numbers[1]){
+            //   return false;
+            // }
 
-
-            if (item.yapantouzhu[4] > 0 && item.yapantouzhu[8] < 0 && item.yapantouzhu[9] < 0 && item.liangduiqiushu[4] > 1) {
-
+            if (
+              item.yapantouzhu[4] > 0 &&
+              item.yapantouzhu[8] < 0 &&
+              item.yapantouzhu[9] < 0 &&
+              item.liangduiqiushu[4] > 1
+            ) {
               return true;
             }
 
+            if (
+              item.yapantouzhu[4] < 0 &&
+              item.yapantouzhu[8] > 0 &&
+              item.yapantouzhu[9] > 0 &&
+              item.liangduiqiushu[5] > 1
+            ) {
+              return true;
+            }
+          }
+          return false;
+        });
+        this.count = this.datalist.length;
+      } else if (val == 8) {
+        console.log("爆冷");
+        this.datalist = this.list.filter((item) => {
+          if (
+            item.qiushutouzhu &&
+            item.liangduibisai &&
+            item.touzhue &&
+            item.changguiqiushu &&
+            item.qiushuAll &&
+            item.qiushupankou1 &&
+            item.qiushupankou2 &&
+            item.liangduilishi &&
+            item.sanhuxinli
+          ) {
+            if (
+              item.qiushutouzhu[2].indexOf("no") > -1 ||
+              item.liangduibisai.length <= 0
+            ) {
+              return false;
+            }
+            const numbers = item.sanhuxinli[3].match(/\d+/g); // 匹配所有数字
+            // console.log(numbers); // 输出 ["3", "27"]
+            // console.log(item.sanhuxinli[3]); // 输出 ["3", "27"]
 
-            if (item.yapantouzhu[4] < 0 && item.yapantouzhu[8] > 0 && item.yapantouzhu[9] > 0 && item.liangduiqiushu[5] > 1) {
+            if (
+              item.yapantouzhu[4] > 0 &&
+              // item.yapantouzhu[5] < 0 &&
+          
+              item.yapantouzhu[9] < -0.25 &&
+              item.yapantouzhu[8] <= item.yapantouzhu[9] &&
+              parseInt( numbers[0]) < parseInt(numbers[1])
+              
+            ) {
+              return true;
+            }
 
+            if (
+              item.yapantouzhu[4] < 0 &&
+              // item.yapantouzhu[5] > 0 &&
+              item.yapantouzhu[9] > 0.25 &&
+              item.yapantouzhu[8] <= item.yapantouzhu[9] &&
+              parseInt( numbers[0]) > parseInt(numbers[1])
+            ) {
               return true;
             }
           }
@@ -1081,7 +1234,7 @@ return false;
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2023-04-09",
+        date: "2023-04-11",
         matchId: item.matchId,
       };
       api
@@ -1102,7 +1255,7 @@ return false;
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2023-04-09",
+        date: "2023-04-11",
         matchId: item.matchId,
       };
       api
@@ -1123,7 +1276,7 @@ return false;
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2023-04-09",
+        date: "2023-04-11",
         matchId: item.matchId,
       };
       api
@@ -1144,21 +1297,30 @@ return false;
     },
     asyncDataTrue() {
       this.sheet = false;
-      api.AsyncData().then().catch();
+      api
+        .AsyncData()
+        .then()
+        .catch();
     },
     cancelasyncDataTrue() {
       this.sheet = false;
     },
     asyncGameData() {
       this.sheet = false;
-      api.AsyncGameData().then().catch();
+      api
+        .AsyncGameData()
+        .then()
+        .catch();
     },
     cpu() {
-      api.cpu().then().catch();
+      api
+        .cpu()
+        .then()
+        .catch();
     },
     loaddata() {
       const data = {
-        date: "2023-04-09",
+        date: "2023-04-11",
       };
       api
         .GetToday(data)
@@ -1172,12 +1334,11 @@ return false;
         .catch();
     },
   },
-  watch: {
-  },
+  watch: {},
   mounted() {
     this.loaddata();
   },
-}
+};
 </script>
 
 <style>
