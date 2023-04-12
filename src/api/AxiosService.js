@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-14 20:27:02
- * @LastEditTime: 2023-04-11 09:49:59
+ * @LastEditTime: 2023-04-12 09:49:59
  * @LastEditors: longshanxu 623119632@qq.com
  * @Description: 所有的调用接口的方法存放在此
  * @FilePath: \vue_vuetify_parseserver_cypress\src\api\AxiosService.js

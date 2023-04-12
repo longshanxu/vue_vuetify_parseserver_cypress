@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2023-04-11 16:23:23
+ * @LastEditTime: 2023-04-12 16:23:23
  * @LastEditors: Json.Xu
  * @Description:
  * @FilePath: \vue_vuetify_parseserver_cypress\server\Cloud\cumputed.js
@@ -40,7 +40,7 @@ Parse
             datetemp = year + "-0" + month + "-0" + day;
         }
 
-        datetemp = "2023-04-11"
+        datetemp = "2023-04-12"
 
 
         var tempMoney = Parse
