@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2023-04-11 20:36:06
+ * @LastEditTime: 2023-04-14 16:29:40
  * @LastEditors: longshanxu 623119632@qq.com
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
@@ -932,8 +932,8 @@ export default {
               item.yapantouzhu[8] > 0 &&
               item.yapantouzhu[9] > 0 &&
               item.yapantouzhu[8] <= item.yapantouzhu[9] &&
-              item.liangduiqiushu[5] < 1 &&
-              item.liangduiqiushu[4] < 2
+              item.liangduiqiushu[5] != 1 &&
+              item.liangduiqiushu[4] != 1
             ) {
               return true;
             }
@@ -1234,7 +1234,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2023-04-12",
+        date: "2023-04-14",
         matchId: item.matchId,
       };
       api
@@ -1255,7 +1255,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2023-04-12",
+        date: "2023-04-14",
         matchId: item.matchId,
       };
       api
@@ -1276,7 +1276,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2023-04-12",
+        date: "2023-04-14",
         matchId: item.matchId,
       };
       api
@@ -1320,7 +1320,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2023-04-12",
+        date: "2023-04-14",
       };
       api
         .GetToday(data)
