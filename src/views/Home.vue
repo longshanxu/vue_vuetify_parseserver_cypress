@@ -1,21 +1,25 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2023-04-14 16:29:40
+ * @LastEditTime: 2023-04-17 07:54:58
  * @LastEditors: longshanxu 623119632@qq.com
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
  -->
 <template>
   <v-container class="fill-height grey lighten-3 pa-0" fluid>
-    <v-app-bar dark app fixed color="primary" dense>
+    <v-app-bar dark app fixed color="primary">
       <v-icon @dblclick="cpu" color="green">mdi-crane</v-icon>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="white--text">只此一眼，便是万年
-        {{ count == 0 ? "" : "( " + count + " )" }}</v-toolbar-title>
+      <v-toolbar-title class="white--text" style="text-align: center;"> 只此一眼，便是万年
+        {{ count == 0 ? "" : "( " + count + " )" }}<br>
+        <label style="color:orange;font-size: 12px;">守得住，打的出，守不住，打不出</label>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-icon @click="asyncData" color="red">mdi-hand-heart</v-icon>
+
       <template v-slot:extension>
+
         <v-tabs v-model="currentItem" center-active slider-color="white" show-arrows @change="changevalue">
           <v-tab i="0">初衷</v-tab>
           <v-tab i="9">某彩</v-tab>
@@ -31,6 +35,7 @@
     </v-app-bar>
     <v-main class="fill-height grey lighten-3 align-start justify-start">
       <v-card class="pa-0 ma-2 cardclass" rounded v-for="(item, index) in datalist" :key="index">
+
         <v-row dense class="ma-0">
           <v-col style="text-align: center; font-weight: 700" cols="4">{{
             item.home && item.home.substr(0, 6)
@@ -284,14 +289,14 @@
           </v-col>
           <v-col style="text-align: center; font-size: 14px" cols="3">
             新球投注:
-                        </v-col>
-                        <v-col style="text-align: center; font-size: 14px" cols="3">
-                          {{
-                              item.newqiushutouzhu &&
-                              item.newqiushutouzhu[0] + " ~ " + item.newqiushutouzhu[1]
-                          }}
-                        </v-col>
-                      </v-row> -->
+                            </v-col>
+                            <v-col style="text-align: center; font-size: 14px" cols="3">
+                              {{
+                                  item.newqiushutouzhu &&
+                                  item.newqiushutouzhu[0] + " ~ " + item.newqiushutouzhu[1]
+                              }}
+                            </v-col>
+                          </v-row> -->
         <v-row dense class="ma-0" v-show="showtuijian">
           <v-col style="text-align: center; font-size: 14px; font-weight: 500" cols="3">
             让球投注:
@@ -1150,11 +1155,11 @@ export default {
             if (
               item.yapantouzhu[4] > 0 &&
               // item.yapantouzhu[5] < 0 &&
-          
+
               item.yapantouzhu[9] < -0.25 &&
               item.yapantouzhu[8] <= item.yapantouzhu[9] &&
-              parseInt( numbers[0]) < parseInt(numbers[1])
-              
+              parseInt(numbers[0]) < parseInt(numbers[1])
+
             ) {
               return true;
             }
@@ -1164,7 +1169,7 @@ export default {
               // item.yapantouzhu[5] > 0 &&
               item.yapantouzhu[9] > 0.25 &&
               item.yapantouzhu[8] <= item.yapantouzhu[9] &&
-              parseInt( numbers[0]) > parseInt(numbers[1])
+              parseInt(numbers[0]) > parseInt(numbers[1])
             ) {
               return true;
             }
@@ -1234,7 +1239,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2023-04-14",
+        date: "2023-04-17",
         matchId: item.matchId,
       };
       api
@@ -1255,7 +1260,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2023-04-14",
+        date: "2023-04-17",
         matchId: item.matchId,
       };
       api
@@ -1276,7 +1281,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2023-04-14",
+        date: "2023-04-17",
         matchId: item.matchId,
       };
       api
@@ -1320,7 +1325,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2023-04-14",
+        date: "2023-04-17",
       };
       api
         .GetToday(data)
