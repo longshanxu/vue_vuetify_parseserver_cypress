@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2023-04-17 07:54:58
+ * @LastEditTime: 2023-04-18 18:56:07
  * @LastEditors: longshanxu 623119632@qq.com
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
@@ -12,8 +12,8 @@
       <v-icon @dblclick="cpu" color="green">mdi-crane</v-icon>
       <v-spacer></v-spacer>
       <v-toolbar-title class="white--text" style="text-align: center;"> 只此一眼，便是万年
-        {{ count == 0 ? "" : "( " + count + " )" }}<br>
-        <label style="color:orange;font-size: 12px;">守得住，打的出，守不住，打不出</label>
+        {{ count == 0 ? "" : "( " + count + " )" }}
+        <label style="color:orange;font-size: 12px;display: block;">守得住，打的出，守不住，打不出</label>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-icon @click="asyncData" color="red">mdi-hand-heart</v-icon>
@@ -30,6 +30,7 @@
           <v-tab i="14">态盘</v-tab>
           <v-tab i="15">裂球</v-tab>
           <v-tab i="16">爆冷</v-tab>
+          <v-tab i="17">胜平局</v-tab>
         </v-tabs>
       </template>
     </v-app-bar>
@@ -289,14 +290,14 @@
           </v-col>
           <v-col style="text-align: center; font-size: 14px" cols="3">
             新球投注:
-                            </v-col>
-                            <v-col style="text-align: center; font-size: 14px" cols="3">
-                              {{
-                                  item.newqiushutouzhu &&
-                                  item.newqiushutouzhu[0] + " ~ " + item.newqiushutouzhu[1]
-                              }}
-                            </v-col>
-                          </v-row> -->
+                                </v-col>
+                                <v-col style="text-align: center; font-size: 14px" cols="3">
+                                  {{
+                                      item.newqiushutouzhu &&
+                                      item.newqiushutouzhu[0] + " ~ " + item.newqiushutouzhu[1]
+                                  }}
+                                </v-col>
+                              </v-row> -->
         <v-row dense class="ma-0" v-show="showtuijian">
           <v-col style="text-align: center; font-size: 14px; font-weight: 500" cols="3">
             让球投注:
@@ -1177,7 +1178,34 @@ export default {
           return false;
         });
         this.count = this.datalist.length;
+      } else if (val == 9) {
+        this.datalist = this.list.filter((item) => {
+          if (
+            item.league &&
+            item.qiushutouzhu &&
+            item.liangduibisai &&
+            item.touzhue &&
+            item.changguiqiushu &&
+            item.qiushuAll &&
+            item.qiushupankou1 &&
+            item.qiushupankou2 &&
+            item.liangduilishi &&
+            item.sanhuxinli
+          ) {
+            if (item.league.indexOf("周") == -1) {
+              return false;
+            }
+            if (item.ticairesult.indexOf("胜") > -1 && item.kailiresult.indexOf("胜") > -1 && item.yapantouzhu[8] <= item.yapantouzhu[9] && item.yapantouzhu[8] > 0) {
+              return true;
+            }
+            // console.log(item.ticairesult);
+          }
+
+        });
+        this.count = this.datalist.length;
+        console.log("胜彩");
       }
+
     },
     copycopy() {
       const range = document.createRange();
@@ -1239,7 +1267,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2023-04-17",
+        date: "2023-04-19",
         matchId: item.matchId,
       };
       api
@@ -1260,7 +1288,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2023-04-17",
+        date: "2023-04-19",
         matchId: item.matchId,
       };
       api
@@ -1281,7 +1309,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2023-04-17",
+        date: "2023-04-19",
         matchId: item.matchId,
       };
       api
@@ -1325,7 +1353,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2023-04-17",
+        date: "2023-04-19",
       };
       api
         .GetToday(data)
