@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2023-04-18 18:56:07
+ * @LastEditTime: 2023-05-08 08:02:52
  * @LastEditors: longshanxu 623119632@qq.com
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
@@ -11,9 +11,9 @@
     <v-app-bar dark app fixed color="primary">
       <v-icon @dblclick="cpu" color="green">mdi-crane</v-icon>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="white--text" style="text-align: center;"> 只此一眼，便是万年
+      <v-toolbar-title class="white--text" style="text-align: center;"> 愚昧巅峰
         {{ count == 0 ? "" : "( " + count + " )" }}
-        <label style="color:orange;font-size: 12px;display: block;">守得住，打的出，守不住，打不出</label>
+        <label style="color:orange;font-size: 12px;display: block;">守得住，打的出，守不住，打不出，常识</label>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-icon @click="asyncData" color="red">mdi-hand-heart</v-icon>
@@ -1195,7 +1195,7 @@ export default {
             if (item.league.indexOf("周") == -1) {
               return false;
             }
-            if (item.ticairesult.indexOf("胜") > -1 && item.kailiresult.indexOf("胜") > -1 && item.yapantouzhu[8] <= item.yapantouzhu[9] && item.yapantouzhu[8] > 0) {
+            if (item.ticairesult.indexOf("胜") > -1 && item.yapantouzhu[8] <= item.yapantouzhu[9] && item.yapantouzhu[8] > 0) {
               return true;
             }
             // console.log(item.ticairesult);
@@ -1267,7 +1267,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2023-04-19",
+        date: "2023-05-08",
         matchId: item.matchId,
       };
       api
@@ -1288,7 +1288,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2023-04-19",
+        date: "2023-05-08",
         matchId: item.matchId,
       };
       api
@@ -1309,7 +1309,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2023-04-19",
+        date: "2023-05-08",
         matchId: item.matchId,
       };
       api
@@ -1353,7 +1353,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2023-04-19",
+        date: "2023-05-08",
       };
       api
         .GetToday(data)

@@ -17,7 +17,7 @@ Parse
             if (request.params.date != "" && request.params.date != undefined && request.params.date != null) {
                 var tempMoney = Parse.Object.extend("Money");
                 var query = new Parse.Query(tempMoney);
-                var datetemp = "2023-04-19";
+                var datetemp = "2023-05-08";
                 query.equalTo("date", datetemp);
                 query.equalTo("date", request.params.date);
                 query.notEqualTo("displayState", "完场")
