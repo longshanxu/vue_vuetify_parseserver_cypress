@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-14 20:27:02
- * @LastEditTime: 2023-05-08 14:39:50
+ * @LastEditTime: 2023-06-06 14:39:32
  * @LastEditors: longshanxu 623119632@qq.com
  * @Description: 所有的调用接口的方法存放在此
  * @FilePath: \vue_vuetify_parseserver_cypress\src\api\AxiosService.js
@@ -12,7 +12,7 @@ import store from "../store/index"
  
 const apiService = axios.create({
   // baseURL: 'http://qunji.shenzhuo.vip:12122/parse',
-  baseURL: 'http://192.168.0.108/parse',
+  baseURL: 'http://192.168.50.194/parse',
   headers: { 
     'X-Parse-Application-Id': "JsonApp",
     'X-Parse-REST-API-Key': "JsonRestKey"

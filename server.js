@@ -1,13 +1,13 @@
 /*
  * @Author: Json.Xu
  * @Date: 2019-11-29 15:50:37
- * @LastEditTime: 2023-05-08 22:01:26
- * @LastEditors: Json.Xu
+ * @LastEditTime: 2023-06-06 14:24:10
+ * @LastEditors: longshanxu 623119632@qq.com
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server.js
  */
 const express = require('express');
-const serveIndex = require('serve-index');
+// const serveIndex = require('serve-index');
 const ParseServer = require('parse-server').ParseServer;
 const bodyParser = require('body-parser');
 const compression = require('compression');

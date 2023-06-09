@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:54:03
- * @LastEditTime: 2023-05-08 13:52:41
+ * @LastEditTime: 2023-06-06 13:52:41
  * @LastEditors: longshanxu 623119632@qq.com
  * @Description:
  * @FilePath: \vue_vuetify_parseserver_cypress\server\Cloud\init.js
@@ -59,8 +59,8 @@ Parse.Cloud.define("hello", async (request) => {
 });
 
 //https://vipc.cn/i/live/football/date/today/next
-//https://vipc.cn/i/live/football/date/2023-05-08/prev
-//https://vipc.cn/i/live/football/date/2023-05-08/next
+//https://vipc.cn/i/live/football/date/2023-06-06/prev
+//https://vipc.cn/i/live/football/date/2023-06-06/next
 
 Parse.Cloud.define("GetTodayMoney", async (request) => {
   GetTodayMoney();
@@ -82,7 +82,7 @@ Parse.Cloud.define("GetPankouByID", async (request) => {});
 // https://vipc.cn/i/match/football/217731699
 async function GetTodayMoney() {
   try {
-    var datetemp = "2023-05-08";
+    var datetemp = "2023-06-06";
 
     var tempMoney = Parse.Object.extend("Money");
     var query4 = new Parse.Query(tempMoney);
@@ -99,7 +99,7 @@ async function GetTodayMoney() {
     setTimeout(() => {
       // https://vipc.cn/i/live/football/date/today/next
       const options = {
-        url: "https://vipc.cn/i/live/football/date/2023-05-08/prev",
+        url: "https://vipc.cn/i/live/football/date/2023-06-06/prev",
         headers: {
           "User-Agent": "request",
         },
@@ -367,7 +367,7 @@ Parse.Cloud.define("clearAllData", async (request) => {
 
 async function clearAllData() {
   //清空比赛信息
-  var datetemp = "2023-05-08";
+  var datetemp = "2023-06-06";
 
   var OneResult = Parse.Object.extend("OneResult");
   var queryOneResult = new Parse.Query(OneResult);
@@ -435,7 +435,7 @@ async function OneByOne() {
     datetemp = year + "-0" + month + "-0" + day;
   }
 
-  datetemp = "2023-05-08";
+  datetemp = "2023-06-06";
 
   var tempMoney = Parse.Object.extend("Money");
   var query = new Parse.Query(tempMoney);
@@ -623,7 +623,7 @@ Parse.Cloud.define("GetDataByTen", async (request) => {
 
 ///每10s获取一次数据
 async function GetDataByTen() {
-  var datetemp = "2023-05-08";
+  var datetemp = "2023-06-06";
 
   var tempMoney = Parse.Object.extend("Money");
   var query = new Parse.Query(tempMoney);
