@@ -1267,7 +1267,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2023-06-06",
+        date: "2023-06-13",
         matchId: item.matchId,
       };
       api
@@ -1288,7 +1288,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2023-06-06",
+        date: "2023-06-13",
         matchId: item.matchId,
       };
       api
@@ -1309,7 +1309,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2023-06-06",
+        date: "2023-06-13",
         matchId: item.matchId,
       };
       api
@@ -1353,7 +1353,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2023-06-06",
+        date: "2023-06-13",
       };
       api
         .GetToday(data)
