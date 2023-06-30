@@ -1952,8 +1952,6 @@ function changeqiu(temp) {
 Parse.Cloud.define("dodata", async () => {
   var Money = Parse.Object.extend("Money");
   var queryMoneyResult = new Parse.Query(Money);
-  // queryMoneyResult.equalTo("date", "2023-06-30");
-  // queryMoneyResult.equalTo("displayState", "完场");
   queryMoneyResult.ascending("matchTime");
   queryMoneyResult.limit(50000);
   const MoneyResult = await queryMoneyResult.find();
