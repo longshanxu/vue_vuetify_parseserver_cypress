@@ -1,8 +1,8 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-01-06 11:47:52
- * @LastEditTime: 2023-06-30 11:00:29
- * @LastEditors: Json.Xu
+ * @LastEditTime: 2023-06-30 10:34:48
+ * @LastEditors: longshanxu 623119632@qq.com
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver\server\main.js
  */
@@ -10,3 +10,5 @@
 require("./Cloud/init");
 require("./Cloud/web");
 require("./Cloud/cumputed");
+require("./Cloud/aiqiudata");
+require("./Cloud/aialldata");

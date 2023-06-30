@@ -440,8 +440,8 @@ async function OneByOne() {
   var tempMoney = Parse.Object.extend("Money");
   var query = new Parse.Query(tempMoney);
   query.equalTo("date", datetemp);
-  query.notEqualTo("displayState", "完场");
-  // query.equalTo("displayState", "完场")
+  // query.notEqualTo("displayState", "完场");
+  query.equalTo("displayState", "完场")
   // query.ascending("matchTime") //matchTime,league
   //  修改访问的数据数量。
   // query.greaterThan("matchTime",new Date());
@@ -628,8 +628,8 @@ async function GetDataByTen() {
   var tempMoney = Parse.Object.extend("Money");
   var query = new Parse.Query(tempMoney);
   query.equalTo("date", datetemp);
-  query.notEqualTo("displayState", "完场");
-  // query.equalTo("displayState", "完场")
+  // query.notEqualTo("displayState", "完场");
+  query.equalTo("displayState", "完场")
   // query.ascending("matchTime") //matchTime,league
   //  修改访问的数据数量。
   // query.greaterThan("matchTime",new Date());

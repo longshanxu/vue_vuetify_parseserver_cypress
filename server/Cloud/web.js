@@ -20,8 +20,8 @@ Parse
                 var datetemp = "2023-06-30";
                 query.equalTo("date", datetemp);
                 query.equalTo("date", request.params.date);
-                query.notEqualTo("displayState", "完场")
-                // query.equalTo("displayState", "完场")
+                // query.notEqualTo("displayState", "完场")
+                query.equalTo("displayState", "完场")
                 query.limit(500);
                 query.ascending("matchTime") //matchTime,league
                 const results = await query.find();
