@@ -1,7 +1,7 @@
 /*
  * @Author: Json.Xu
  * @Date: 2020-03-09 14:06:19
- * @LastEditTime: 2023-06-30 10:59:51
+ * @LastEditTime: 2023-08-11 10:59:51
  * @LastEditors: longshanxu 623119632@qq.com
  * @Description:
  * @FilePath: \vue_vuetify_parseserver_cypress\server\Cloud\cumputed.js
@@ -39,7 +39,7 @@ Parse.Cloud.define("cpu", async (request) => {
     datetemp = year + "-0" + month + "-0" + day;
   }
 
-  datetemp = "2023-06-30";
+  datetemp = "2023-08-11";
 
   var tempMoney = Parse.Object.extend("Money");
   var query = new Parse.Query(tempMoney);

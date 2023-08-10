@@ -2,7 +2,7 @@
 Parse.Cloud.define("cleandata", async () => {
     var Money = Parse.Object.extend("Money");
     var queryMoneyResult = new Parse.Query(Money);
-    queryMoneyResult.equalTo("date", "2023-06-30");
+    // queryMoneyResult.equalTo("date", "2023-08-11");
     queryMoneyResult.equalTo("displayState", "完场");
     queryMoneyResult.ascending("matchTime");
     queryMoneyResult.limit(50000);
@@ -17,32 +17,37 @@ Parse.Cloud.define("cleandata", async () => {
       {
         let AiDataObject = Parse.Object.extend("AiData");
         let AiData = new AiDataObject();
-  
-        // console.log("home", object.get("home")); //主队为1
-        // console.log("guest", object.get("guest")); //客队为2
-        // console.log("homeScore", parseFloat(object.get("homeScore"))); //当前比赛 主队进球数
-        // console.log("guestScore", parseFloat(object.get("guestScore"))); //当前比赛 客队进球数
+
+        //console.log( object.get("home")+" VS "+ object.get("guest")); 
   
         let homeScore = parseFloat(object.get("homeScore"));
         let guestScore = parseFloat(object.get("guestScore"));
+
+        //这个result是针对盘口进行的判定，输赢是指让球方
+      
+          if(homeScore == guestScore){
+            AiData.set("result", 1);
+            //console.log("比赛结果："+homeScore+":"+guestScore +"-1" ); 
+          }
+          else if(homeScore > guestScore){
+            AiData.set("result", 3);
+            //console.log("比赛结果："+homeScore+":"+guestScore+"-3"); 
+          }
+          else if(homeScore < guestScore){
+            AiData.set("result", 0);
+            //console.log("比赛结果："+homeScore+":"+guestScore+"-0"); 
+          }
+        
+       
   
-        if(homeScore== guestScore){
-          AiData.set("result", 0);
-        }
-        else if(homeScore > guestScore){
-          AiData.set("result", 1);
-        }
-        else if(homeScore < guestScore){
-          AiData.set("result", 2);
-        }
-  
-        // AiData.set("league", object.get("league").indexOf(" ") > -1 ? object.get("league").split(" ")[1] : object.get("league")); 
-        let league = object.get("league");
-        if(league.indexOf("杯") > -1){
-          AiData.set("league", 1);
-        }else{
-          AiData.set("league", 0);
-        }
+        // let league = object.get("league");
+        // if(league.indexOf("杯") > -1){
+        //   AiData.set("league", 1);
+        //   //console.log("比赛类型："+ object.get("league")+"-1"); 
+        // }else{
+        //   AiData.set("league", 0);
+        //   //console.log("比赛类型："+ object.get("league")+"-0"); 
+        // }
 
         let matchId = object.get("matchId");
         AiData.set("matchId", matchId);
@@ -52,19 +57,45 @@ Parse.Cloud.define("cleandata", async () => {
         
         let date = object.get("date");
         AiData.set("date", date);
+
+
+        let kailiresult = object.get("kailiresult"); 
+        if(kailiresult && kailiresult.length>0){
+          let temp = 0;
+          for (let index = 0; index < kailiresult.length; index++) {
+            const element = kailiresult[index];
+            if(element == "胜"){
+              temp+=3;
+            }else if(element == "平"){
+              temp+=1;
+            }else if(element == "负"){
+              temp+=0;
+            }
+          }
+          AiData.set("kailiresult",temp);
+          //console.log("拿到凯利的值",temp);
+        }else{
+          AiData.set("kailiresult",-1);
+          //console.log("没有拿到凯利的值",-1);
+        }
   
         // AiData.set("prevHomeNameScore", parseFloat(object.get("liangduibisai")[3])); //上一次比赛 主队进球数
         // AiData.set("prevGuestNameScore", parseFloat(object.get("liangduibisai")[4])); //上一次比赛 客队进球数
         let prevHomeNameScore = object.get("liangduibisai")[1] == object.get("home") ? object.get("liangduibisai")[3] :object.get("liangduibisai")[4];
         let prevGuestNameScore = object.get("liangduibisai")[2] == object.get("guest") ? object.get("liangduibisai")[4] :object.get("liangduibisai")[3];
+       
+     
         if(prevHomeNameScore == prevGuestNameScore){
-          AiData.set("prevresult", 0);
+          AiData.set("prevresult", 1);
+          //console.log("上一场比赛结果："+ prevHomeNameScore+":"+prevGuestNameScore+"-1"); 
         }
         else if(prevHomeNameScore > prevGuestNameScore){
-          AiData.set("prevresult", 1);
+          AiData.set("prevresult", 3);
+          //console.log("上一场比赛结果："+ prevHomeNameScore+":"+prevGuestNameScore+"-3"); 
         }
         else if(prevHomeNameScore < prevGuestNameScore){
-          AiData.set("prevresult", 2);
+          AiData.set("prevresult", 0);
+          //console.log("上一场比赛结果："+ prevHomeNameScore+":"+prevGuestNameScore+"-0"); 
         }
         // AiData.set("homeRank",object.get("sanhuxinli")[3].toString().split("~")[0]); //主队排名
         // AiData.set("guestRank", object.get("sanhuxinli")[3].toString().split("~")[1]); //客队排名
@@ -72,67 +103,50 @@ Parse.Cloud.define("cleandata", async () => {
         if(object.get("sanhuxinli")[3].toString().split("~")[0] == "" || object.get("sanhuxinli")[3].toString().split("~")[1] == ""){
           continue;
         }
-        // if(parseFloat(object.get("sanhuxinli")[3].toString().split("~")[0].toString().replace(/[\u4e00-\u9fa5-]/g, "")) && parseFloat(object.get("sanhuxinli")[3].toString().split("~")[1].toString())
-  
-        if(parseFloat(object.get("sanhuxinli")[3].toString().split("~")[0].toString().replace(/[\u4e00-\u9fa5-]/g, "")) > parseFloat(object.get("sanhuxinli")[3].toString().split("~")[1].toString().replace(/[\u4e00-\u9fa5-]/g, ""))){
-          AiData.set("Rank",1);
-        }else{
-          AiData.set("Rank",0);
-        }
+
+        // let homeRank = parseFloat(object.get("sanhuxinli")[3].toString().split("~")[0].toString().replace(/[\u4e00-\u9fa5-]/g, "").replace(/[a-zA-Z]/g, ""));
+        // let guestRank = parseFloat(object.get("sanhuxinli")[3].toString().split("~")[1].toString().replace(/[\u4e00-\u9fa5-]/g, "").replace(/[a-zA-Z]/g, ""));
+
+        // AiData.set("Rank", homeRank-guestRank); //主客队的排名差
+
+      
+        // if(isNaN(homeRank-guestRank)){
+        //   //console.log("主客队的排名差："+ object.get("sanhuxinli")[3].toString().split("~")[0].toString().replace(/[\u4e00-\u9fa5-]/g, "").replace(/[a-zA-Z]/g, ""));
+        // }
+        // //console.log("主客队的排名差："+ (homeRank-guestRank));
   
         // AiData.set("winTouzhuE", parseFloat(object.get("touzhue")[0]) > 130 ? 180 : 33); //散户押注主胜的金额
         // AiData.set("drawTouzhuE", parseFloat(object.get("touzhue")[1]) > 130 ? 180 : 33); //散户押注平局的金额
         // AiData.set("loseTouzhuE", parseFloat(object.get("touzhue")[2]) > 130 ? 180 : 33); //散户押注客胜的金额
-        let winTouzhuE = parseFloat(object.get("touzhue")[0]);
-        let drawTouzhuE = parseFloat(object.get("touzhue")[1]);
-        let loseTouzhuE = parseFloat(object.get("touzhue")[2]);
-        if(winTouzhuE >= drawTouzhuE && winTouzhuE >= loseTouzhuE){
-          AiData.set("maxtouzhu",0);
-        } else if(drawTouzhuE >= winTouzhuE && drawTouzhuE >= loseTouzhuE){ 
-          AiData.set("maxtouzhu",1);
-        } else if(loseTouzhuE >= winTouzhuE && loseTouzhuE >= drawTouzhuE){
-          AiData.set("maxtouzhu",2);
-        }
-  
-        if(winTouzhuE <= drawTouzhuE && winTouzhuE <= loseTouzhuE){
-          AiData.set("mintouzhu",0);
-        } else if(drawTouzhuE <= winTouzhuE && drawTouzhuE <= loseTouzhuE){ 
-          AiData.set("mintouzhu",1);
-        } else if(loseTouzhuE <= winTouzhuE && loseTouzhuE <= drawTouzhuE){
-          AiData.set("mintouzhu",2);
-        }
+        let winTouzhuE = parseInt(object.get("touzhue")[0]);
+        let drawTouzhuE = parseInt(object.get("touzhue")[1]);
+        let loseTouzhuE = parseInt(object.get("touzhue")[2]);
+     
+        AiData.set("winTouzhuE",winTouzhuE);
+        //console.log("散户押注主胜的金额"+winTouzhuE);
+    
+        AiData.set("drawTouzhuE", drawTouzhuE);
+        //console.log("散户押注平局的金额"+drawTouzhuE);
+      
+        AiData.set("loseTouzhuE", loseTouzhuE);
+        //console.log("散户押注客胜的金额"+loseTouzhuE);
+
   
         // AiData.set("sanhuWinXinli", parseFloat(object.get("sanhuxinli")[0].toString().replace("%",""))); //散户感觉主胜心理
         // AiData.set("sanhuDrawXinli", parseFloat(object.get("sanhuxinli")[1].toString().replace("%",""))); //散户感觉平局心理
         // AiData.set("sanhuLoseXinli", parseFloat(object.get("sanhuxinli")[2].toString().replace("%",""))); //散户感觉客胜心理
   
-        let sanhuWinXinli = parseFloat(object.get("sanhuxinli")[0].toString().replace("%",""));
-        let sanhuDrawXinli = parseFloat(object.get("sanhuxinli")[1].toString().replace("%",""));
-        let sanhuLoseXinli = parseFloat(object.get("sanhuxinli")[2].toString().replace("%",""));
+        // let sanhuWinXinli = parseFloat(object.get("sanhuxinli")[0].toString().replace("%",""));
+        // let sanhuDrawXinli = parseFloat(object.get("sanhuxinli")[1].toString().replace("%",""));
+        // let sanhuLoseXinli = parseFloat(object.get("sanhuxinli")[2].toString().replace("%",""));
   
-        if(sanhuWinXinli >= sanhuDrawXinli && sanhuWinXinli >= sanhuLoseXinli){
-          if(sanhuDrawXinli == 33){
-            AiData.set("maxxinli",1);
-          }else{
-            AiData.set("maxxinli",0);
-          }
-        }else if(sanhuDrawXinli >= sanhuWinXinli && sanhuDrawXinli >= sanhuLoseXinli){
-          AiData.set("maxxinli",1);
-        }else if(sanhuLoseXinli >= sanhuWinXinli && sanhuLoseXinli >= sanhuDrawXinli){
-          AiData.set("maxxinli",2);
-        }
-  
-        if(sanhuWinXinli <= sanhuDrawXinli && sanhuWinXinli <= sanhuLoseXinli){
-          if(sanhuDrawXinli == 33){
-            AiData.set("minxinli",1);
-          }else{
-            AiData.set("minxinli",0);
-          }
-        }else if(sanhuDrawXinli <= sanhuWinXinli && sanhuDrawXinli <= sanhuLoseXinli){
-          AiData.set("minxinli",1);
-        }else if(sanhuLoseXinli <= sanhuWinXinli && sanhuLoseXinli <= sanhuDrawXinli){
-          AiData.set("minxinli",2);
-        }
+        // AiData.set("sanhuWinXinli", sanhuWinXinli);
+        // //console.log("散户感觉主胜心理"+sanhuWinXinli);
+        // AiData.set("sanhuDrawXinli", sanhuDrawXinli);
+        // //console.log("散户感觉平局心理"+sanhuDrawXinli);
+        // AiData.set("sanhuLoseXinli", sanhuLoseXinli);
+        // //console.log("散户感觉客胜心理"+sanhuLoseXinli);
+
   
         // AiData.set("zhuangjiaWinXinli", parseFloat(object.get("kaijuresult")[0].toString().replace("%",""))); //庄家开盘主胜概率
         // AiData.set("zhuangjiaDrawXinli", parseFloat(object.get("kaijuresult")[1].toString().replace("%",""))); //庄家开盘平局概率
@@ -141,14 +155,13 @@ Parse.Cloud.define("cleandata", async () => {
         let zhuangjiaWinXinli = parseFloat(object.get("kaijuresult")[0].toString().replace("%",""));
         let zhuangjiaDrawXinli = parseFloat(object.get("kaijuresult")[1].toString().replace("%",""));
         let zhuangjiaLoseXinli = parseFloat(object.get("kaijuresult")[2].toString().replace("%",""));
-  
-        if(zhuangjiaWinXinli >= zhuangjiaDrawXinli && zhuangjiaWinXinli >= zhuangjiaLoseXinli){
-          AiData.set("maxkaiju",0);
-        }else if(zhuangjiaDrawXinli >= zhuangjiaWinXinli && zhuangjiaDrawXinli >= zhuangjiaLoseXinli){
-          AiData.set("maxkaiju",1);
-        }else if(zhuangjiaLoseXinli >= zhuangjiaWinXinli && zhuangjiaLoseXinli >= zhuangjiaDrawXinli){
-          AiData.set("maxkaiju",2);
-        }
+        
+        AiData.set("zhuangjiaWinXinli", zhuangjiaWinXinli);
+        //console.log("庄家开盘主胜概率"+zhuangjiaWinXinli);
+        AiData.set("zhuangjiaDrawXinli", zhuangjiaDrawXinli);
+        //console.log("庄家开盘平局概率"+zhuangjiaDrawXinli);
+        AiData.set("zhuangjiaLoseXinli", zhuangjiaLoseXinli);
+        //console.log("庄家开盘客胜概率"+zhuangjiaLoseXinli);
   
   
         // AiData.set("liangduiWinLishi", parseFloat(object.get("liangduilishi")[0].toString().replace("%",""))); //两队历史主队概率
@@ -158,169 +171,241 @@ Parse.Cloud.define("cleandata", async () => {
         let liangduiWinLishi = parseFloat(object.get("liangduilishi")[0].toString().replace("%",""));
         let liangduiDrawLishi = parseFloat(object.get("liangduilishi")[1].toString().replace("%",""));
         let liangduiLoseLishi = parseFloat(object.get("liangduilishi")[2].toString().replace("%",""));
-  
-        if(liangduiWinLishi >= liangduiDrawLishi && liangduiWinLishi >= liangduiLoseLishi){
-          if(liangduiWinLishi == 33){
-            AiData.set("maxlishi",1);
-          }
-          else{
-            AiData.set("maxlishi",0);
-          }
-        }else if(liangduiDrawLishi >= liangduiWinLishi && liangduiDrawLishi >= liangduiLoseLishi){
-          AiData.set("maxlishi",1);
-        }else if(liangduiLoseLishi >= liangduiWinLishi && liangduiLoseLishi >= liangduiDrawLishi){
-          AiData.set("maxlishi",2);
-        }
-  
-        // AiData.set("lishirangqiu", parseFloat(object.get("changguiyapan").split(":")[0])); //两队历史让球
-        // if(parseFloat(object.get("changguiyapan").split(":")[0]) > 0){
-        //   AiData.set("lishirangqiu", 1);
-        // }else{
-        //   AiData.set("lishirangqiu", 0);
-        // }
-        // AiData.set("zuijinrangqiu", parseFloat(object.get("changguiyapan").split(":")[1])); //两队最近让球
-        // if(parseFloat(object.get("changguiyapan").split(":")[1]) > 0){
-        //   AiData.set("zuijinrangqiu", 1);
-        // }else{
-        //   AiData.set("zuijinrangqiu", 0);
-        // }
         
-        // AiData.set("lishiqiushu", parseFloat(object.get("changguiqiushu").split(":")[0])); //两队历史平均球数
+        AiData.set("liangduiWinLishi", liangduiWinLishi);
+        //console.log("两队历史主队概率"+liangduiWinLishi);
+        AiData.set("liangduiDrawLishi", liangduiDrawLishi);
+        //console.log("两队历史平局概率"+liangduiDrawLishi);
+        AiData.set("liangduiLoseLishi", liangduiLoseLishi);
+        //console.log("两队历史客队概率"+liangduiLoseLishi);
+
+        // let hebingWin = sanhuWinXinli - zhuangjiaWinXinli 
+        // let hebingDraw = sanhuDrawXinli - zhuangjiaDrawXinli 
+        // let hebingLose = sanhuLoseXinli - zhuangjiaLoseXinli 
+
+        // AiData.set("hebingWin", hebingWin);
+        // //console.log("合并主胜概率"+hebingWin);
+        // AiData.set("hebingDraw", hebingDraw);
+        // //console.log("合并平局概率"+hebingDraw);
+        // AiData.set("hebingLose", hebingLose);
+        // //console.log("合并客胜概率"+hebingLose);
+
+  
+        AiData.set("lishirangqiuchai", parseFloat(object.get("changguiyapan").split(":")[0])); //两队历史球数差
+        //console.log("历史让球数差",parseFloat(object.get("changguiyapan").split(":")[0]));
+        // AiData.set("home_zuijinrangqiu", parseFloat(object.get("changguiyapan").split(":")[1])); //两队最近让球
+
+        
+        AiData.set("lishiqiushu", parseFloat(object.get("changguiqiushu").split(":")[0])); //两队历史平均球数
+        //console.log("历史平均球数",parseFloat(object.get("changguiqiushu").split(":")[0]));
         // AiData.set("zuijinqiushu", parseFloat(object.get("changguiqiushu").split(":")[1])); //两队最近平均球数
         
-        let lishiqiushu = parseFloat(object.get("changguiqiushu").split(":")[0]);
-        let zuijinqiushu = parseFloat(object.get("changguiqiushu").split(":")[1]);
   
-        if(lishiqiushu <= zuijinqiushu){
-          AiData.set("jiaqiu",1);
-        }else{
-          AiData.set("jiaqiu",0);
-        }
+        // AiData.set("home_zuijinqiushu",parseFloat(object.get("qiushuAll")[0])); //主队最近4场总进球数
+        // AiData.set("away_zuijinqiushu",parseFloat(object.get("qiushuAll")[2])); //客队最近4场总进球数
+        
+        // let fourjinqiucha = parseFloat(object.get("qiushuAll")[0]) - parseFloat(object.get("qiushuAll")[2]);
+        // AiData.set("fourjinqiucha",fourjinqiucha); //主客队最近4场总进球数差
+
   
-        // AiData.set("zuijinhomeqiushu",parseFloat(object.get("qiushuAll")[0])); //主队最近4场总进球数
-        // AiData.set("zuijinguestqiushu",parseFloat(object.get("qiushuAll")[2])); //客队最近4场总进球数
-        // if(parseFloat(object.get("qiushuAll")[0]) > parseFloat(object.get("qiushuAll")[2])){
-        //   AiData.set("zuijinqiushu",1);
-        // }else{ 
-        //   AiData.set("zuijinqiushu",0);
-        // }
+        // AiData.set("home_zuijinmaxqiushu",parseFloat(object.get("qiushuAll")[1])); //主队最近4场最大进球数
+        // AiData.set("away_zuijinmaxqiushu",parseFloat(object.get("qiushuAll")[3])); //客队最近4场最大进球数
+
+        // let fourmaxqiucha = parseFloat(object.get("qiushuAll")[1]) - parseFloat(object.get("qiushuAll")[3]);
+        // AiData.set("fourmaxqiucha",fourmaxqiucha); //主客队最近4场最大进球数差
+
+
   
-        // AiData.set("zuijinhomemaxqiushu",parseFloat(object.get("qiushuAll")[1])); //主队最近4场最大进球数
-        // AiData.set("zuijinguestmaxqiushu",parseFloat(object.get("qiushuAll")[3])); //客队最近4场最大进球数
-        // if(parseFloat(object.get("qiushuAll")[1]) > parseFloat(object.get("qiushuAll")[3])){
-        //   AiData.set("zuijinmaxqiushu",1);
-        // }else{
-        //   AiData.set("zuijinmaxqiushu",0);
-        // }
-  
-        // AiData.set("zuijinhomediuqiushu",parseFloat(object.get("qiushuAll")[4])); //主队最近4场丢球数
-        // AiData.set("zuijinguestdiuqiushu",parseFloat(object.get("qiushuAll")[5])); //客队最近4场丢球数
-  
-        // if(parseFloat(object.get("qiushuAll")[4])> parseFloat(object.get("qiushuAll")[5])){
-        //   AiData.set("zuijindiuqiushu",1);
-        // }else{
-        //   AiData.set("zuijindiuqiushu",0);
-        // }
+        // AiData.set("home_zuijindiuqiushu",parseFloat(object.get("qiushuAll")[4])); //主队最近4场丢球数
+        // AiData.set("away_zuijindiuqiushu",parseFloat(object.get("qiushuAll")[5])); //客队最近4场丢球数
+
+        // let fourdiuqiucha = parseFloat(object.get("qiushuAll")[4]) - parseFloat(object.get("qiushuAll")[5]);
+        // AiData.set("fourdiuqiucha",fourdiuqiucha); //主客队最近4场丢球数差
   
   
         // AiData.set("homehistoryscore",parseFloat(object.get("yapantouzhu")[10])); //主客历史主队主场进球数
         // AiData.set("guesthistoryscore",parseFloat(object.get("yapantouzhu")[11])); //主客历史客队客场进球数
+        // let homehistoryscore = parseFloat(object.get("yapantouzhu")[10]);
+        // let guesthistoryscore = parseFloat(object.get("yapantouzhu")[11]);
+
+        // if(homehistoryscore == guesthistoryscore){
+        //   AiData.set("historyscore",1);
+        //   //console.log("主客历史平局1");
+        // }else if(homehistoryscore > guesthistoryscore){
+        //   AiData.set("historyscore",3);
+        //   //console.log("主客历史主胜3");
+        // }else{
+        //   AiData.set("historyscore",0);
+        //   //console.log("主客历史客胜0");
+        // }
+        
+        
   
         // AiData.set("fiveavgjinqiushu",parseFloat(object.get("qiushutouzhu")[2])); //主客最近5场平均进球数
+        // //console.log("主客最近5场平均进球数",parseFloat(object.get("qiushutouzhu")[2]));
+       
         // AiData.set("fouravgdiuqiushu",parseFloat(object.get("qiushutouzhu")[3])); //主客最近4场平均丢球数
+        // //console.log("主客最近4场平均丢球数",parseFloat(object.get("qiushutouzhu")[3]));
   
         // AiData.set("fouravgjinqiushu",(object.get("qiushuAll")[0] + object.get("qiushuAll")[2])/4); //主客最近4场平均进球数
+        // //console.log("主客最近4场平均进球数",(object.get("qiushuAll")[0] + object.get("qiushuAll")[2])/4);
+        
+
         AiData.set("rangqiuqian",parseFloat(object.get("yapanpankou1"))); //让球前
-        AiData.set("rangqiuhou",parseFloat(object.get("yapanpankou2")) >= parseFloat(object.get("yapanpankou1")) ? 1: 0); //让球后 升盘1 降盘0
-  
-        // AiData.set("qiushuqian",parseFloat(object.get("qiushupankou1"))); //球数盘口前
-        // AiData.set("qiushuhou",parseFloat(object.get("qiushupankou2")) >= parseFloat(object.get("qiushupankou1")) ? 1: 0); //球数盘口后 升盘1 降盘0
+        //console.log("让球前",parseFloat(object.get("yapanpankou1")));
+        // AiData.set("rangqiuhou",parseFloat(object.get("yapanpankou2"))); //让球前
+
+        let rangqiuqian = parseFloat(object.get("yapanpankou1"));
+        let rangqiuhou = parseFloat(object.get("yapanpankou2"));
+
+        AiData.set("rangqiufangxiang",rangqiuqian > 0 ? 1 : 2); //让球方向
+        //console.log("让球方向",rangqiuqian > 0 ? 1 : 2);
+     
+        AiData.set("rangqiuchai",Math.abs(rangqiuqian - rangqiuhou));
+        //console.log("让球差",Math.abs(rangqiuqian - rangqiuhou));
+
+        if(rangqiuqian > rangqiuhou){
+          AiData.set("panstate", 0); //让球
+          //console.log("降盘",1);
+        }else if (rangqiuqian == rangqiuhou){
+          AiData.set("panstate", 1); //让球
+          //console.log("没变",2);
+        }else{
+          AiData.set("panstate", 2); //让球
+          //console.log("升盘",2);
+        }
+
+
+        AiData.set("qiushuqian",parseFloat(object.get("qiushupankou1"))); //球数盘口前
+        //console.log("球数盘口前",parseFloat(object.get("qiushupankou1")));
+        // AiData.set("qiushuhou",parseFloat(object.get("qiushupankou2"))); //球数盘口前
+
+        let qiushuqian = parseFloat(object.get("yapanpankou1"));
+        let qiushuhou = parseFloat(object.get("yapanpankou2"));
+
+
+        
+        if(qiushuqian > qiushuhou){
+          AiData.set("qiustate", 0); //让球
+          //console.log("球数降盘",1);
+        }else if (qiushuqian == qiushuhou){
+          AiData.set("qiustate", 1); //让球
+          //console.log("球数没变",2);
+        }else{
+          AiData.set("qiustate", 2); //让球
+          //console.log("球数升盘",2);
+        }
+       
+
         
         // AiData.set("touzhuhomebili",parseFloat(object.get("yapantouzhu")[0]) >= 80 ? 1 : 0); //投注主队比例
         // AiData.set("touzhuguestbili",parseFloat(object.get("yapantouzhu")[1]) >= 80 ? 1 : 0); //投注客队比例
   
-        let touzhuhomebili = parseFloat(object.get("yapantouzhu")[0]);
-        let touzhuguestbili = parseFloat(object.get("yapantouzhu")[1]);
-  
-        if(touzhuhomebili > touzhuguestbili){
-          AiData.set("touzhuhome",1);
-        }else{
-          AiData.set("touzhuhome",0);
-        }
-  
+        // let touzhuhomebili = parseFloat(object.get("yapantouzhu")[0]);
+        // let touzhuguestbili = parseFloat(object.get("yapantouzhu")[1]);
+
+        // AiData.set("home_touzhu",touzhuhomebili);
+        // AiData.set("guest_touzhu",touzhuguestbili);
+
         // AiData.set("touzhudaqiubili",parseFloat(object.get("qiushutouzhu")[0])>= 100 ? 1 : 0); //投注大球比例
         // AiData.set("touzhuxiaoqiubili",parseFloat(object.get("qiushutouzhu")[1])>= 100 ? 1 : 0); //投注小球比例
   
         // let touzhudaqiubili = parseFloat(object.get("qiushutouzhu")[0]);
         // let touzhuxiaoqiubili = parseFloat(object.get("qiushutouzhu")[1]);
-  
-        // if(touzhudaqiubili > touzhuxiaoqiubili){
-        //   AiData.set("touzhudaqiu",1)
-        // }else{ 
-        //   AiData.set("touzhudaqiu",0)
-        // }
+        
+        // AiData.set("daqiubili",touzhudaqiubili);
+        // AiData.set("xiaoqiubili",touzhuxiaoqiubili);
+
   
         // AiData.set("homeprevbisaiscore", parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[3] :object.get("homezuijinbisai")[4])); //主队上一场比赛进球
         // AiData.set("guestprevbisaiscore",parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[3] :object.get("guestzuijinbisai")[4])); //客队上一场比赛进球
-        let homeprevbisaiscore =  parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[3] :object.get("homezuijinbisai")[4]);
-        let guestprevbisaiscore = parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[3] :object.get("guestzuijinbisai")[4]);
-        if(homeprevbisaiscore == guestprevbisaiscore){
-          AiData.set("prevbisaiscore",0);
-        }else if (homeprevbisaiscore > guestprevbisaiscore){
-          AiData.set("prevbisaiscore",1);
-        }else if (homeprevbisaiscore < guestprevbisaiscore){
-          AiData.set("prevbisaiscore",2);
+        let homeprevbisaiscore1 =  parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[3] :object.get("homezuijinbisai")[4]);
+        let homeprevbisaiscore2 = parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[4] :object.get("homezuijinbisai")[3]);
+        let homescoreprev = 0;
+        if(homeprevbisaiscore1 == homeprevbisaiscore2){
+          // AiData.set("home_prevbisaiscore",1);
+          homescoreprev = 1;
+           //console.log("主队上一场比赛"+homeprevbisaiscore1+":"+homeprevbisaiscore2+"-1");
+        }else if (homeprevbisaiscore1 > homeprevbisaiscore2){
+          // AiData.set("home_prevbisaiscore",3);
+          homescoreprev = 3;
+          //console.log("主队上一场比赛"+homeprevbisaiscore1+":"+homeprevbisaiscore2+"-3");
+        }else if (homeprevbisaiscore1 < homeprevbisaiscore2){
+          // AiData.set("home_prevbisaiscore",0);
+          homescoreprev = 0;
+          //console.log("主队上一场比赛"+homeprevbisaiscore1+":"+homeprevbisaiscore2+"-0");
         }
+
+
         
-        // AiData.set("homeprevbisaijiqiu",parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[4] :object.get("homezuijinbisai")[3])); //主队上一场比赛丢球
-        // AiData.set("guestprevbisaijiqiu",parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[4] :object.get("guestzuijinbisai")[3])); //客队上一场比赛丢球
+        let guestzuijinbisai1 =  parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[3] :object.get("guestzuijinbisai")[4]);
+        let guestzuijinbisai2 = parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[4] :object.get("guestzuijinbisai")[3]);
+        
+        let guestscoreprev = 0;
+        if(guestzuijinbisai1 == guestzuijinbisai2){
+          // AiData.set("away_prevbisaiscore",1);
+          guestscoreprev = 1;
+          //console.log("客队上一场比赛"+guestzuijinbisai1+":"+guestzuijinbisai2+"-1");
+        }else if (guestzuijinbisai1 > guestzuijinbisai2){
+          // AiData.set("away_prevbisaiscore",3);
+          guestscoreprev = 3;
+          //console.log("客队上一场比赛"+guestzuijinbisai1+":"+guestzuijinbisai2+"-3");
+        }else if (guestzuijinbisai1 < guestzuijinbisai2){
+          // AiData.set("away_prevbisaiscore",0);
+          guestscoreprev = 0;
+          //console.log("客队上一场比赛"+guestzuijinbisai1+":"+guestzuijinbisai2+"-0");
+        }
+
+        AiData.set("scoreprev",homescoreprev - guestscoreprev); //上一场比赛主客队胜负差
+        //console.log("上一场比赛主客队胜负差",homescoreprev - guestscoreprev);
+
+
+        // // AiData.set("homeprevbisaijiqiu",parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[4] :object.get("homezuijinbisai")[3])); //主队上一场比赛丢球
+        // // AiData.set("guestprevbisaijiqiu",parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[4] :object.get("guestzuijinbisai")[3])); //客队上一场比赛丢球
         // let homeprevbisaijiqiu = parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[4] :object.get("homezuijinbisai")[3]);
         // let guestprevbisaijiqiu = parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[4] :object.get("guestzuijinbisai")[3]);
-        // if(homeprevbisaijiqiu >= guestprevbisaijiqiu){
-        //   AiData.set("prevbisaijiqiu",1);
-        // }else{
-        //   AiData.set("prevbisaijiqiu",0);
-        // }
+        
+        // AiData.set("bisaidiuqiustate",homeprevbisaijiqiu - guestprevbisaijiqiu); //主客队上一场比赛丢球差
+        // //console.log("主客队上一场比赛丢球差",homeprevbisaijiqiu - guestprevbisaijiqiu);
+
   
+        // AiData.set("home_Twojinqiushu",parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[0])); //主队最近2场进球数
+        // AiData.set("away_Twojinqiushu",parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[0])); //客队最近2场进球数
+               
+        // let home_Twojinqiushu = parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[0]);
+        // let away_Twojinqiushu = parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[0]);
+        // AiData.set("Twojinqiushustate",home_Twojinqiushu - away_Twojinqiushu); //主客队最近2场进球差
+      
   
-        // AiData.set("homeTwojinqiushu",parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[0])); //主队最近2场进球数
-        // AiData.set("guestTwojinqiushu",parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[0])); //客队最近2场进球数
-        // if(parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[0]) >= parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[0])){
-        //   AiData.set("Twojinqiushu",1);
-        // }else{
-        //   AiData.set("Twojinqiushu",0);
-        // }
-  
-  
-  
-        // AiData.set("homeTwodiuqiushu",parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[1])); //主队最近2场丢球数
-        // AiData.set("guestTwodiuqiushu",parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[1])); //客队最近2场丢球数
-        // if(parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[1]) >= parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[1])){
-        //   AiData.set("Twodiuqiushu",1);
-        // }else{
-        //   AiData.set("Twodiuqiushu",0);
-        // }
-  
-        // AiData.set("homeTwoshuying",parseFloat(object.get("liangduiqiushu")[2])); //主队最近2场战绩
-        // AiData.set("guestTwoshuying",parseFloat(object.get("liangduiqiushu")[3])); //客队最近2场战绩
-  
-        if(parseFloat(object.get("liangduiqiushu")[2]) >= parseFloat(object.get("liangduiqiushu")[3])){
-          AiData.set("Twoshuying",1);
-        }else{
-          AiData.set("Twoshuying",0);
-        }
-  
-        // AiData.set("homevsguestshuying",parseFloat(object.get("liangduiqiushu")[4])); //主客最近两场战绩
-        // AiData.set("guestvshomeshuying",parseFloat(object.get("liangduiqiushu")[5])); //客主最近两场战绩
-  
-        if(parseFloat(object.get("liangduiqiushu")[4]) >= parseFloat(object.get("liangduiqiushu")[5])){
-          AiData.set("vsguestshuying",1);
-        }else{
-          AiData.set("vsguestshuying",0);
-        }
-        // console.log("-----------------------\r\r\r");
+        // AiData.set("home_Twodiuqiushu",parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[1])); //主队最近2场丢球数
+        // AiData.set("away_Twodiuqiushu",parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[1])); //客队最近2场丢球数
+       
+        // let home_Twodiuqiushu = parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[1]);
+        // let away_Twodiuqiushu = parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[1]);
+        // AiData.set("Twodiuqiushustate",home_Twodiuqiushu - away_Twodiuqiushu); //主客队最近2场丢球差
+       
+        // AiData.set("home_Twoshuying",parseFloat(object.get("liangduiqiushu")[2])); //主队最近2场战绩
+        // AiData.set("away_Twoshuying",parseFloat(object.get("liangduiqiushu")[3])); //客队最近2场战绩
+
+        let home_Twoshuying = object.get("liangduiqiushu")[2];
+        let away_Twoshuying = object.get("liangduiqiushu")[3];
+        AiData.set("Twoshuyingstate", parseFloat((home_Twoshuying - away_Twoshuying).toFixed(1))); //主客最近两场战绩差
+        //console.log("主客最近两场战绩差",(home_Twoshuying - away_Twoshuying).toFixed(1));
+
+        
+        // AiData.set("home_zuijinvs",parseFloat(object.get("liangduiqiushu")[4])); //主客最近两场情况主场差
+       // AiData.set("away_zuijinvs",parseFloat(object.get("liangduiqiushu")[5])); //主客最近两场情况客场差
+     
+        let home_zuijinvs = object.get("liangduiqiushu")[4];
+        let away_zuijinvs = object.get("liangduiqiushu")[5];
+        AiData.set("zuijinvsstate",home_zuijinvs - away_zuijinvs); //主客最近两场主客场战绩差
+        //console.log("主客最近两场主客场战绩差",home_zuijinvs - away_zuijinvs);
+ 
+        //console.log("-----------------------\r\n\r\n");
+
         await  AiData.save();
-      count++;
+
+        count++;
         console.log("成功第", count, "条数据");
       }
     }
@@ -329,7 +414,7 @@ Parse.Cloud.define("cleandata", async () => {
   });
 
 
-  ///加载需要决策的数据
+  //加载需要决策的数据
 Parse.Cloud.define("loaddata", async () => {
 
     var CastDataResult = Parse.Object.extend("ForeCastData");
@@ -345,7 +430,7 @@ Parse.Cloud.define("loaddata", async () => {
   
     var Money = Parse.Object.extend("Money");
     var queryMoneyResult = new Parse.Query(Money);
-    queryMoneyResult.equalTo("date", "2023-06-30");
+    queryMoneyResult.equalTo("date", "2023-08-11");
     queryMoneyResult.ascending("matchTime");
     queryMoneyResult.limit(50000);
     const MoneyResult = await queryMoneyResult.find();
@@ -362,29 +447,17 @@ Parse.Cloud.define("loaddata", async () => {
   
         AiData.set("home1", object.get("home")); //主队
         AiData.set("guest2", object.get("guest")); //客队
-        AiData.set("prediction",undefined);
-        // console.log("home", object.get("home")); //主队为1
-        // console.log("guest", object.get("guest")); //客队为2
-        // console.log("homeScore", parseFloat(object.get("homeScore"))); //当前比赛 主队进球数
-        // console.log("guestScore", parseFloat(object.get("guestScore"))); //当前比赛 客队进球数
-        // if(object.get("homeScore") ==object.get("guestScore")){
-        //   AiData.set("result", 0);
-        // }
-        // else if(object.get("homeScore") > object.get("guestScore")){
-        //   AiData.set("result", 1);
-        // }
-        // else if(object.get("homeScore") < object.get("guestScore")){
-        //   AiData.set("result", 2);
-        // }
-        // AiData.set("prevHomeNameScore", parseFloat(object.get("liangduibisai")[3])); //上一次比赛 主队进球数
-        // AiData.set("prevGuestNameScore", parseFloat(object.get("liangduibisai")[4])); //上一次比赛 客队进球数
+        //console.log( object.get("home") + " VS " + object.get("guest"));
+
         
-        let league = object.get("league");
-        if(league.indexOf("杯") > -1){
-          AiData.set("league", 1);
-        }else{
-          AiData.set("league", 0);
-        }
+        // let league = object.get("league");
+        // if(league.indexOf("杯") > -1){
+        //   AiData.set("league", 1);
+        //   //console.log("比赛类型："+ object.get("league")+"-1"); 
+        // }else{
+        //   AiData.set("league", 0);
+        //   //console.log("比赛类型："+ object.get("league")+"-0"); 
+        // }
 
         let matchId = object.get("matchId");
         AiData.set("matchId", matchId);
@@ -394,18 +467,45 @@ Parse.Cloud.define("loaddata", async () => {
         
         let date = object.get("date");
         AiData.set("date", date);
+
+
+        let kailiresult = object.get("kailiresult"); 
+        if(kailiresult && kailiresult.length>0){
+          let temp = 0;
+          for (let index = 0; index < kailiresult.length; index++) {
+            const element = kailiresult[index];
+            if(element == "胜"){
+              temp+=3;
+            }else if(element == "平"){
+              temp+=1;
+            }else if(element == "负"){
+              temp+=0;
+            }
+          }
+          AiData.set("kailiresult",temp);
+          //console.log("拿到凯利的值",temp);
+        }else{
+          AiData.set("kailiresult",-1);
+          //console.log("没有拿到凯利的值",-1);
+        }
   
-        
+        // AiData.set("prevHomeNameScore", parseFloat(object.get("liangduibisai")[3])); //上一次比赛 主队进球数
+        // AiData.set("prevGuestNameScore", parseFloat(object.get("liangduibisai")[4])); //上一次比赛 客队进球数
         let prevHomeNameScore = object.get("liangduibisai")[1] == object.get("home") ? object.get("liangduibisai")[3] :object.get("liangduibisai")[4];
         let prevGuestNameScore = object.get("liangduibisai")[2] == object.get("guest") ? object.get("liangduibisai")[4] :object.get("liangduibisai")[3];
+       
+     
         if(prevHomeNameScore == prevGuestNameScore){
-          AiData.set("prevresult", 0);
+          AiData.set("prevresult", 1);
+          //console.log("上一场比赛结果："+ prevHomeNameScore+":"+prevGuestNameScore+"-1"); 
         }
         else if(prevHomeNameScore > prevGuestNameScore){
-          AiData.set("prevresult", 1);
+          AiData.set("prevresult", 3);
+          //console.log("上一场比赛结果："+ prevHomeNameScore+":"+prevGuestNameScore+"-3"); 
         }
         else if(prevHomeNameScore < prevGuestNameScore){
-          AiData.set("prevresult", 2);
+          AiData.set("prevresult", 0);
+          //console.log("上一场比赛结果："+ prevHomeNameScore+":"+prevGuestNameScore+"-0"); 
         }
         // AiData.set("homeRank",object.get("sanhuxinli")[3].toString().split("~")[0]); //主队排名
         // AiData.set("guestRank", object.get("sanhuxinli")[3].toString().split("~")[1]); //客队排名
@@ -413,69 +513,50 @@ Parse.Cloud.define("loaddata", async () => {
         if(object.get("sanhuxinli")[3].toString().split("~")[0] == "" || object.get("sanhuxinli")[3].toString().split("~")[1] == ""){
           continue;
         }
-  
+
+        // let homeRank = parseFloat(object.get("sanhuxinli")[3].toString().split("~")[0].toString().replace(/[\u4e00-\u9fa5-]/g, "").replace(/[a-zA-Z]/g, ""));
+        // let guestRank = parseFloat(object.get("sanhuxinli")[3].toString().split("~")[1].toString().replace(/[\u4e00-\u9fa5-]/g, "").replace(/[a-zA-Z]/g, ""));
+
+        // AiData.set("Rank", homeRank-guestRank); //主客队的排名差
+
       
-        // if(parseFloat(object.get("sanhuxinli")[3].toString().split("~")[0].toString().replace(/[\u4e00-\u9fa5-]/g, "")) && parseFloat(object.get("sanhuxinli")[3].toString().split("~")[1].toString())
-  
-        if(parseFloat(object.get("sanhuxinli")[3].toString().split("~")[0].toString().replace(/[\u4e00-\u9fa5-]/g, "")) > parseFloat(object.get("sanhuxinli")[3].toString().split("~")[1].toString().replace(/[\u4e00-\u9fa5-]/g, ""))){
-          AiData.set("Rank",1);
-        }else{
-          AiData.set("Rank",0);
-        }
+        // if(isNaN(homeRank-guestRank)){
+        //   //console.log("主客队的排名差："+ object.get("sanhuxinli")[3].toString().split("~")[0].toString().replace(/[\u4e00-\u9fa5-]/g, "").replace(/[a-zA-Z]/g, ""));
+        // }
+        // //console.log("主客队的排名差："+ (homeRank-guestRank));
   
         // AiData.set("winTouzhuE", parseFloat(object.get("touzhue")[0]) > 130 ? 180 : 33); //散户押注主胜的金额
         // AiData.set("drawTouzhuE", parseFloat(object.get("touzhue")[1]) > 130 ? 180 : 33); //散户押注平局的金额
         // AiData.set("loseTouzhuE", parseFloat(object.get("touzhue")[2]) > 130 ? 180 : 33); //散户押注客胜的金额
-        let winTouzhuE = parseFloat(object.get("touzhue")[0]);
-        let drawTouzhuE = parseFloat(object.get("touzhue")[1]);
-        let loseTouzhuE = parseFloat(object.get("touzhue")[2]);
-        if(winTouzhuE >= drawTouzhuE && winTouzhuE >= loseTouzhuE){
-          AiData.set("maxtouzhu",0);
-        } else if(drawTouzhuE >= winTouzhuE && drawTouzhuE >= loseTouzhuE){ 
-          AiData.set("maxtouzhu",1);
-        } else if(loseTouzhuE >= winTouzhuE && loseTouzhuE >= drawTouzhuE){
-          AiData.set("maxtouzhu",2);
-        }
-  
-        if(winTouzhuE <= drawTouzhuE && winTouzhuE <= loseTouzhuE){
-          AiData.set("mintouzhu",0);
-        } else if(drawTouzhuE <= winTouzhuE && drawTouzhuE <= loseTouzhuE){ 
-          AiData.set("mintouzhu",1);
-        } else if(loseTouzhuE <= winTouzhuE && loseTouzhuE <= drawTouzhuE){
-          AiData.set("mintouzhu",2);
-        }
+        let winTouzhuE = parseInt(object.get("touzhue")[0]);
+        let drawTouzhuE = parseInt(object.get("touzhue")[1]);
+        let loseTouzhuE = parseInt(object.get("touzhue")[2]);
+     
+        AiData.set("winTouzhuE",winTouzhuE);
+        //console.log("散户押注主胜的金额"+winTouzhuE);
+    
+        AiData.set("drawTouzhuE", drawTouzhuE);
+        //console.log("散户押注平局的金额"+drawTouzhuE);
+      
+        AiData.set("loseTouzhuE", loseTouzhuE);
+        //console.log("散户押注客胜的金额"+loseTouzhuE);
+
   
         // AiData.set("sanhuWinXinli", parseFloat(object.get("sanhuxinli")[0].toString().replace("%",""))); //散户感觉主胜心理
         // AiData.set("sanhuDrawXinli", parseFloat(object.get("sanhuxinli")[1].toString().replace("%",""))); //散户感觉平局心理
         // AiData.set("sanhuLoseXinli", parseFloat(object.get("sanhuxinli")[2].toString().replace("%",""))); //散户感觉客胜心理
   
-        let sanhuWinXinli = parseFloat(object.get("sanhuxinli")[0].toString().replace("%",""));
-        let sanhuDrawXinli = parseFloat(object.get("sanhuxinli")[1].toString().replace("%",""));
-        let sanhuLoseXinli = parseFloat(object.get("sanhuxinli")[2].toString().replace("%",""));
+        // let sanhuWinXinli = parseFloat(object.get("sanhuxinli")[0].toString().replace("%",""));
+        // let sanhuDrawXinli = parseFloat(object.get("sanhuxinli")[1].toString().replace("%",""));
+        // let sanhuLoseXinli = parseFloat(object.get("sanhuxinli")[2].toString().replace("%",""));
   
-        if(sanhuWinXinli >= sanhuDrawXinli && sanhuWinXinli >= sanhuLoseXinli){
-          if(sanhuDrawXinli == 33){
-            AiData.set("maxxinli",1);
-          }else{
-            AiData.set("maxxinli",0);
-          }
-        }else if(sanhuDrawXinli >= sanhuWinXinli && sanhuDrawXinli >= sanhuLoseXinli){
-          AiData.set("maxxinli",1);
-        }else if(sanhuLoseXinli >= sanhuWinXinli && sanhuLoseXinli >= sanhuDrawXinli){
-          AiData.set("maxxinli",2);
-        }
-  
-        if(sanhuWinXinli <= sanhuDrawXinli && sanhuWinXinli <= sanhuLoseXinli){
-          if(sanhuDrawXinli == 33){
-            AiData.set("minxinli",1);
-          }else{
-            AiData.set("minxinli",0);
-          }
-        }else if(sanhuDrawXinli <= sanhuWinXinli && sanhuDrawXinli <= sanhuLoseXinli){
-          AiData.set("minxinli",1);
-        }else if(sanhuLoseXinli <= sanhuWinXinli && sanhuLoseXinli <= sanhuDrawXinli){
-          AiData.set("minxinli",2);
-        }
+        // AiData.set("sanhuWinXinli", sanhuWinXinli);
+        // //console.log("散户感觉主胜心理"+sanhuWinXinli);
+        // AiData.set("sanhuDrawXinli", sanhuDrawXinli);
+        // //console.log("散户感觉平局心理"+sanhuDrawXinli);
+        // AiData.set("sanhuLoseXinli", sanhuLoseXinli);
+        // //console.log("散户感觉客胜心理"+sanhuLoseXinli);
+
   
         // AiData.set("zhuangjiaWinXinli", parseFloat(object.get("kaijuresult")[0].toString().replace("%",""))); //庄家开盘主胜概率
         // AiData.set("zhuangjiaDrawXinli", parseFloat(object.get("kaijuresult")[1].toString().replace("%",""))); //庄家开盘平局概率
@@ -484,14 +565,13 @@ Parse.Cloud.define("loaddata", async () => {
         let zhuangjiaWinXinli = parseFloat(object.get("kaijuresult")[0].toString().replace("%",""));
         let zhuangjiaDrawXinli = parseFloat(object.get("kaijuresult")[1].toString().replace("%",""));
         let zhuangjiaLoseXinli = parseFloat(object.get("kaijuresult")[2].toString().replace("%",""));
-  
-        if(zhuangjiaWinXinli >= zhuangjiaDrawXinli && zhuangjiaWinXinli >= zhuangjiaLoseXinli){
-          AiData.set("maxkaiju",0);
-        }else if(zhuangjiaDrawXinli >= zhuangjiaWinXinli && zhuangjiaDrawXinli >= zhuangjiaLoseXinli){
-          AiData.set("maxkaiju",1);
-        }else if(zhuangjiaLoseXinli >= zhuangjiaWinXinli && zhuangjiaLoseXinli >= zhuangjiaDrawXinli){
-          AiData.set("maxkaiju",2);
-        }
+        
+        AiData.set("zhuangjiaWinXinli", zhuangjiaWinXinli);
+        //console.log("庄家开盘主胜概率"+zhuangjiaWinXinli);
+        AiData.set("zhuangjiaDrawXinli", zhuangjiaDrawXinli);
+        //console.log("庄家开盘平局概率"+zhuangjiaDrawXinli);
+        AiData.set("zhuangjiaLoseXinli", zhuangjiaLoseXinli);
+        //console.log("庄家开盘客胜概率"+zhuangjiaLoseXinli);
   
   
         // AiData.set("liangduiWinLishi", parseFloat(object.get("liangduilishi")[0].toString().replace("%",""))); //两队历史主队概率
@@ -501,166 +581,239 @@ Parse.Cloud.define("loaddata", async () => {
         let liangduiWinLishi = parseFloat(object.get("liangduilishi")[0].toString().replace("%",""));
         let liangduiDrawLishi = parseFloat(object.get("liangduilishi")[1].toString().replace("%",""));
         let liangduiLoseLishi = parseFloat(object.get("liangduilishi")[2].toString().replace("%",""));
-  
-        if(liangduiWinLishi >= liangduiDrawLishi && liangduiWinLishi >= liangduiLoseLishi){
-          if(liangduiWinLishi == 33){
-            AiData.set("maxlishi",1);
-          }
-          else{
-            AiData.set("maxlishi",0);
-          }
-        }else if(liangduiDrawLishi >= liangduiWinLishi && liangduiDrawLishi >= liangduiLoseLishi){
-          AiData.set("maxlishi",1);
-        }else if(liangduiLoseLishi >= liangduiWinLishi && liangduiLoseLishi >= liangduiDrawLishi){
-          AiData.set("maxlishi",2);
-        }
-  
-        // AiData.set("lishirangqiu", parseFloat(object.get("changguiyapan").split(":")[0])); //两队历史让球
-        // if(parseFloat(object.get("changguiyapan").split(":")[0]) > 0){
-        //   AiData.set("lishirangqiu", 1);
-        // }else{
-        //   AiData.set("lishirangqiu", 0);
-        // }
-        // AiData.set("zuijinrangqiu", parseFloat(object.get("changguiyapan").split(":")[1])); //两队最近让球
-        // if(parseFloat(object.get("changguiyapan").split(":")[1]) > 0){
-        //   AiData.set("zuijinrangqiu", 1);
-        // }else{
-        //   AiData.set("zuijinrangqiu", 0);
-        // }
         
-        // AiData.set("lishiqiushu", parseFloat(object.get("changguiqiushu").split(":")[0])); //两队历史平均球数
+        AiData.set("liangduiWinLishi", liangduiWinLishi);
+        //console.log("两队历史主队概率"+liangduiWinLishi);
+        AiData.set("liangduiDrawLishi", liangduiDrawLishi);
+        //console.log("两队历史平局概率"+liangduiDrawLishi);
+        AiData.set("liangduiLoseLishi", liangduiLoseLishi);
+        //console.log("两队历史客队概率"+liangduiLoseLishi);
+
+        // let hebingWin = sanhuWinXinli - zhuangjiaWinXinli 
+        // let hebingDraw = sanhuDrawXinli - zhuangjiaDrawXinli 
+        // let hebingLose = sanhuLoseXinli - zhuangjiaLoseXinli 
+
+        // AiData.set("hebingWin", hebingWin);
+        // //console.log("合并主胜概率"+hebingWin);
+        // AiData.set("hebingDraw", hebingDraw);
+        // //console.log("合并平局概率"+hebingDraw);
+        // AiData.set("hebingLose", hebingLose);
+        // //console.log("合并客胜概率"+hebingLose);
+
+  
+        AiData.set("lishirangqiuchai", parseFloat(object.get("changguiyapan").split(":")[0])); //两队历史球数差
+        //console.log("历史让球数差",parseFloat(object.get("changguiyapan").split(":")[0]));
+        // AiData.set("home_zuijinrangqiu", parseFloat(object.get("changguiyapan").split(":")[1])); //两队最近让球
+
+        
+        AiData.set("lishiqiushu", parseFloat(object.get("changguiqiushu").split(":")[0])); //两队历史平均球数
+        //console.log("历史平均球数",parseFloat(object.get("changguiqiushu").split(":")[0]));
         // AiData.set("zuijinqiushu", parseFloat(object.get("changguiqiushu").split(":")[1])); //两队最近平均球数
         
-        let lishiqiushu = parseFloat(object.get("changguiqiushu").split(":")[0]);
-        let zuijinqiushu = parseFloat(object.get("changguiqiushu").split(":")[1]);
   
-        if(lishiqiushu <= zuijinqiushu){
-          AiData.set("jiaqiu",1);
-        }else{
-          AiData.set("jiaqiu",0);
-        }
+        // AiData.set("home_zuijinqiushu",parseFloat(object.get("qiushuAll")[0])); //主队最近4场总进球数
+        // AiData.set("away_zuijinqiushu",parseFloat(object.get("qiushuAll")[2])); //客队最近4场总进球数
+        
+        // let fourjinqiucha = parseFloat(object.get("qiushuAll")[0]) - parseFloat(object.get("qiushuAll")[2]);
+        // AiData.set("fourjinqiucha",fourjinqiucha); //主客队最近4场总进球数差
+
   
-        // AiData.set("zuijinhomeqiushu",parseFloat(object.get("qiushuAll")[0])); //主队最近4场总进球数
-        // AiData.set("zuijinguestqiushu",parseFloat(object.get("qiushuAll")[2])); //客队最近4场总进球数
-        // if(parseFloat(object.get("qiushuAll")[0]) > parseFloat(object.get("qiushuAll")[2])){
-        //   AiData.set("zuijinqiushu",1);
-        // }else{ 
-        //   AiData.set("zuijinqiushu",0);
-        // }
+        // AiData.set("home_zuijinmaxqiushu",parseFloat(object.get("qiushuAll")[1])); //主队最近4场最大进球数
+        // AiData.set("away_zuijinmaxqiushu",parseFloat(object.get("qiushuAll")[3])); //客队最近4场最大进球数
+
+        // let fourmaxqiucha = parseFloat(object.get("qiushuAll")[1]) - parseFloat(object.get("qiushuAll")[3]);
+        // AiData.set("fourmaxqiucha",fourmaxqiucha); //主客队最近4场最大进球数差
+
+
   
-        // AiData.set("zuijinhomemaxqiushu",parseFloat(object.get("qiushuAll")[1])); //主队最近4场最大进球数
-        // AiData.set("zuijinguestmaxqiushu",parseFloat(object.get("qiushuAll")[3])); //客队最近4场最大进球数
-        // if(parseFloat(object.get("qiushuAll")[1]) > parseFloat(object.get("qiushuAll")[3])){
-        //   AiData.set("zuijinmaxqiushu",1);
-        // }else{
-        //   AiData.set("zuijinmaxqiushu",0);
-        // }
-  
-        // AiData.set("zuijinhomediuqiushu",parseFloat(object.get("qiushuAll")[4])); //主队最近4场丢球数
-        // AiData.set("zuijinguestdiuqiushu",parseFloat(object.get("qiushuAll")[5])); //客队最近4场丢球数
-  
-        // if(parseFloat(object.get("qiushuAll")[4])> parseFloat(object.get("qiushuAll")[5])){
-        //   AiData.set("zuijindiuqiushu",1);
-        // }else{
-        //   AiData.set("zuijindiuqiushu",0);
-        // }
+        // AiData.set("home_zuijindiuqiushu",parseFloat(object.get("qiushuAll")[4])); //主队最近4场丢球数
+        // AiData.set("away_zuijindiuqiushu",parseFloat(object.get("qiushuAll")[5])); //客队最近4场丢球数
+
+        // let fourdiuqiucha = parseFloat(object.get("qiushuAll")[4]) - parseFloat(object.get("qiushuAll")[5]);
+        // AiData.set("fourdiuqiucha",fourdiuqiucha); //主客队最近4场丢球数差
   
   
         // AiData.set("homehistoryscore",parseFloat(object.get("yapantouzhu")[10])); //主客历史主队主场进球数
         // AiData.set("guesthistoryscore",parseFloat(object.get("yapantouzhu")[11])); //主客历史客队客场进球数
+        // let homehistoryscore = parseFloat(object.get("yapantouzhu")[10]);
+        // let guesthistoryscore = parseFloat(object.get("yapantouzhu")[11]);
+
+        // if(homehistoryscore == guesthistoryscore){
+        //   AiData.set("historyscore",1);
+        //   //console.log("主客历史平局1");
+        // }else if(homehistoryscore > guesthistoryscore){
+        //   AiData.set("historyscore",3);
+        //   //console.log("主客历史主胜3");
+        // }else{
+        //   AiData.set("historyscore",0);
+        //   //console.log("主客历史客胜0");
+        // }
+        
+        
   
         // AiData.set("fiveavgjinqiushu",parseFloat(object.get("qiushutouzhu")[2])); //主客最近5场平均进球数
+        // //console.log("主客最近5场平均进球数",parseFloat(object.get("qiushutouzhu")[2]));
+       
         // AiData.set("fouravgdiuqiushu",parseFloat(object.get("qiushutouzhu")[3])); //主客最近4场平均丢球数
+        // //console.log("主客最近4场平均丢球数",parseFloat(object.get("qiushutouzhu")[3]));
   
         // AiData.set("fouravgjinqiushu",(object.get("qiushuAll")[0] + object.get("qiushuAll")[2])/4); //主客最近4场平均进球数
+        // //console.log("主客最近4场平均进球数",(object.get("qiushuAll")[0] + object.get("qiushuAll")[2])/4);
+        
+
         AiData.set("rangqiuqian",parseFloat(object.get("yapanpankou1"))); //让球前
-        AiData.set("rangqiuhou",parseFloat(object.get("yapanpankou2")) >= parseFloat(object.get("yapanpankou1")) ? 1: 0); //让球后 升盘1 降盘0
-  
-        // AiData.set("qiushuqian",parseFloat(object.get("qiushupankou1"))); //球数盘口前
-        // AiData.set("qiushuhou",parseFloat(object.get("qiushupankou2")) >= parseFloat(object.get("qiushupankou1")) ? 1: 0); //球数盘口后 升盘1 降盘0
+        //console.log("让球前",parseFloat(object.get("yapanpankou1")));
+        // AiData.set("rangqiuhou",parseFloat(object.get("yapanpankou2"))); //让球前
+
+        let rangqiuqian = parseFloat(object.get("yapanpankou1"));
+        let rangqiuhou = parseFloat(object.get("yapanpankou2"));
+
+        AiData.set("rangqiufangxiang",rangqiuqian > 0 ? 1 : 2); //让球方向
+        //console.log("让球方向",rangqiuqian > 0 ? 1 : 2);
+     
+        AiData.set("rangqiuchai",Math.abs(rangqiuqian - rangqiuhou));
+        //console.log("让球差",Math.abs(rangqiuqian - rangqiuhou));
+
+        if(rangqiuqian > rangqiuhou){
+          AiData.set("panstate", 0); //让球
+          //console.log("降盘",1);
+        }else if (rangqiuqian == rangqiuhou){
+          AiData.set("panstate", 1); //让球
+          //console.log("没变",2);
+        }else{
+          AiData.set("panstate", 2); //让球
+          //console.log("升盘",2);
+        }
+
+
+        AiData.set("qiushuqian",parseFloat(object.get("qiushupankou1"))); //球数盘口前
+        //console.log("球数盘口前",parseFloat(object.get("qiushupankou1")));
+        // AiData.set("qiushuhou",parseFloat(object.get("qiushupankou2"))); //球数盘口前
+
+        let qiushuqian = parseFloat(object.get("yapanpankou1"));
+        let qiushuhou = parseFloat(object.get("yapanpankou2"));
+
+
+        
+        if(qiushuqian > qiushuhou){
+          AiData.set("qiustate", 0); //让球
+          //console.log("球数降盘",1);
+        }else if (qiushuqian == qiushuhou){
+          AiData.set("qiustate", 1); //让球
+          //console.log("球数没变",2);
+        }else{
+          AiData.set("qiustate", 2); //让球
+          //console.log("球数升盘",2);
+        }
+       
+
         
         // AiData.set("touzhuhomebili",parseFloat(object.get("yapantouzhu")[0]) >= 80 ? 1 : 0); //投注主队比例
         // AiData.set("touzhuguestbili",parseFloat(object.get("yapantouzhu")[1]) >= 80 ? 1 : 0); //投注客队比例
   
-        let touzhuhomebili = parseFloat(object.get("yapantouzhu")[0]);
-        let touzhuguestbili = parseFloat(object.get("yapantouzhu")[1]);
-  
-        if(touzhuhomebili > touzhuguestbili){
-          AiData.set("touzhuhome",1);
-        }else{
-          AiData.set("touzhuhome",0);
-        }
-  
+        // let touzhuhomebili = parseFloat(object.get("yapantouzhu")[0]);
+        // let touzhuguestbili = parseFloat(object.get("yapantouzhu")[1]);
+
+        // AiData.set("home_touzhu",touzhuhomebili);
+        // AiData.set("guest_touzhu",touzhuguestbili);
+
         // AiData.set("touzhudaqiubili",parseFloat(object.get("qiushutouzhu")[0])>= 100 ? 1 : 0); //投注大球比例
         // AiData.set("touzhuxiaoqiubili",parseFloat(object.get("qiushutouzhu")[1])>= 100 ? 1 : 0); //投注小球比例
   
         // let touzhudaqiubili = parseFloat(object.get("qiushutouzhu")[0]);
         // let touzhuxiaoqiubili = parseFloat(object.get("qiushutouzhu")[1]);
-  
-        // if(touzhudaqiubili > touzhuxiaoqiubili){
-        //   AiData.set("touzhudaqiu",1)
-        // }else{ 
-        //   AiData.set("touzhudaqiu",0)
-        // }
+        
+        // AiData.set("daqiubili",touzhudaqiubili);
+        // AiData.set("xiaoqiubili",touzhuxiaoqiubili);
+
   
         // AiData.set("homeprevbisaiscore", parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[3] :object.get("homezuijinbisai")[4])); //主队上一场比赛进球
         // AiData.set("guestprevbisaiscore",parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[3] :object.get("guestzuijinbisai")[4])); //客队上一场比赛进球
-        let homeprevbisaiscore =  parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[3] :object.get("homezuijinbisai")[4]);
-        let guestprevbisaiscore = parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[3] :object.get("guestzuijinbisai")[4]);
-        if(homeprevbisaiscore == guestprevbisaiscore){
-            AiData.set("prevbisaiscore",0);
-          }else if (homeprevbisaiscore > guestprevbisaiscore){
-            AiData.set("prevbisaiscore",1);
-          }else if (homeprevbisaiscore < guestprevbisaiscore){
-            AiData.set("prevbisaiscore",2);
-          }
+        let homeprevbisaiscore1 =  parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[3] :object.get("homezuijinbisai")[4]);
+        let homeprevbisaiscore2 = parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[4] :object.get("homezuijinbisai")[3]);
+        let homescoreprev = 0;
+        if(homeprevbisaiscore1 == homeprevbisaiscore2){
+          // AiData.set("home_prevbisaiscore",1);
+          homescoreprev = 1;
+           //console.log("主队上一场比赛"+homeprevbisaiscore1+":"+homeprevbisaiscore2+"-1");
+        }else if (homeprevbisaiscore1 > homeprevbisaiscore2){
+          // AiData.set("home_prevbisaiscore",3);
+          homescoreprev = 3;
+          //console.log("主队上一场比赛"+homeprevbisaiscore1+":"+homeprevbisaiscore2+"-3");
+        }else if (homeprevbisaiscore1 < homeprevbisaiscore2){
+          // AiData.set("home_prevbisaiscore",0);
+          homescoreprev = 0;
+          //console.log("主队上一场比赛"+homeprevbisaiscore1+":"+homeprevbisaiscore2+"-0");
+        }
+
+
         
-        // AiData.set("homeprevbisaijiqiu",parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[4] :object.get("homezuijinbisai")[3])); //主队上一场比赛丢球
-        // AiData.set("guestprevbisaijiqiu",parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[4] :object.get("guestzuijinbisai")[3])); //客队上一场比赛丢球
+        let guestzuijinbisai1 =  parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[3] :object.get("guestzuijinbisai")[4]);
+        let guestzuijinbisai2 = parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[4] :object.get("guestzuijinbisai")[3]);
+        
+        let guestscoreprev = 0;
+        if(guestzuijinbisai1 == guestzuijinbisai2){
+          // AiData.set("away_prevbisaiscore",1);
+          guestscoreprev = 1;
+          //console.log("客队上一场比赛"+guestzuijinbisai1+":"+guestzuijinbisai2+"-1");
+        }else if (guestzuijinbisai1 > guestzuijinbisai2){
+          // AiData.set("away_prevbisaiscore",3);
+          guestscoreprev = 3;
+          //console.log("客队上一场比赛"+guestzuijinbisai1+":"+guestzuijinbisai2+"-3");
+        }else if (guestzuijinbisai1 < guestzuijinbisai2){
+          // AiData.set("away_prevbisaiscore",0);
+          guestscoreprev = 0;
+          //console.log("客队上一场比赛"+guestzuijinbisai1+":"+guestzuijinbisai2+"-0");
+        }
+
+        AiData.set("scoreprev",homescoreprev - guestscoreprev); //上一场比赛主客队胜负差
+        //console.log("上一场比赛主客队胜负差",homescoreprev - guestscoreprev);
+
+
+        // // AiData.set("homeprevbisaijiqiu",parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[4] :object.get("homezuijinbisai")[3])); //主队上一场比赛丢球
+        // // AiData.set("guestprevbisaijiqiu",parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[4] :object.get("guestzuijinbisai")[3])); //客队上一场比赛丢球
         // let homeprevbisaijiqiu = parseFloat(object.get("homezuijinbisai")[1] == object.get("home") ? object.get("homezuijinbisai")[4] :object.get("homezuijinbisai")[3]);
         // let guestprevbisaijiqiu = parseFloat(object.get("guestzuijinbisai")[1] == object.get("guest") ? object.get("guestzuijinbisai")[4] :object.get("guestzuijinbisai")[3]);
-        // if(homeprevbisaijiqiu >= guestprevbisaijiqiu){
-        //   AiData.set("prevbisaijiqiu",1);
-        // }else{
-        //   AiData.set("prevbisaijiqiu",0);
-        // }
+        
+        // AiData.set("bisaidiuqiustate",homeprevbisaijiqiu - guestprevbisaijiqiu); //主客队上一场比赛丢球差
+        // //console.log("主客队上一场比赛丢球差",homeprevbisaijiqiu - guestprevbisaijiqiu);
+
   
+        // AiData.set("home_Twojinqiushu",parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[0])); //主队最近2场进球数
+        // AiData.set("away_Twojinqiushu",parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[0])); //客队最近2场进球数
+               
+        // let home_Twojinqiushu = parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[0]);
+        // let away_Twojinqiushu = parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[0]);
+        // AiData.set("Twojinqiushustate",home_Twojinqiushu - away_Twojinqiushu); //主客队最近2场进球差
+      
   
-        // AiData.set("homeTwojinqiushu",parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[0])); //主队最近2场进球数
-        // AiData.set("guestTwojinqiushu",parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[0])); //客队最近2场进球数
-        // if(parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[0]) >= parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[0])){
-        //   AiData.set("Twojinqiushu",1);
-        // }else{
-        //   AiData.set("Twojinqiushu",0);
-        // }
-  
-  
-  
-        // AiData.set("homeTwodiuqiushu",parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[1])); //主队最近2场丢球数
-        // AiData.set("guestTwodiuqiushu",parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[1])); //客队最近2场丢球数
-        // if(parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[1]) >= parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[1])){
-        //   AiData.set("Twodiuqiushu",1);
-        // }else{
-        //   AiData.set("Twodiuqiushu",0);
-        // }
-  
-        // AiData.set("homeTwoshuying",parseFloat(object.get("liangduiqiushu")[2])); //主队最近2场战绩
-        // AiData.set("guestTwoshuying",parseFloat(object.get("liangduiqiushu")[3])); //客队最近2场战绩
-  
-        if(parseFloat(object.get("liangduiqiushu")[2]) >= parseFloat(object.get("liangduiqiushu")[3])){
-          AiData.set("Twoshuying",1);
-        }else{
-          AiData.set("Twoshuying",0);
-        }
-  
-        // AiData.set("homevsguestshuying",parseFloat(object.get("liangduiqiushu")[4])); //主客最近两场战绩
-        // AiData.set("guestvshomeshuying",parseFloat(object.get("liangduiqiushu")[5])); //客主最近两场战绩
-  
-        if(parseFloat(object.get("liangduiqiushu")[4]) >= parseFloat(object.get("liangduiqiushu")[5])){
-          AiData.set("vsguestshuying",1);
-        }else{
-          AiData.set("vsguestshuying",0);
-        }
+        // AiData.set("home_Twodiuqiushu",parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[1])); //主队最近2场丢球数
+        // AiData.set("away_Twodiuqiushu",parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[1])); //客队最近2场丢球数
+       
+        // let home_Twodiuqiushu = parseFloat(object.get("liangduiqiushu")[0].toString().split("-")[1]);
+        // let away_Twodiuqiushu = parseFloat(object.get("liangduiqiushu")[1].toString().split("-")[1]);
+        // AiData.set("Twodiuqiushustate",home_Twodiuqiushu - away_Twodiuqiushu); //主客队最近2场丢球差
+       
+        // AiData.set("home_Twoshuying",parseFloat(object.get("liangduiqiushu")[2])); //主队最近2场战绩
+        // AiData.set("away_Twoshuying",parseFloat(object.get("liangduiqiushu")[3])); //客队最近2场战绩
+
+        let home_Twoshuying = object.get("liangduiqiushu")[2];
+        let away_Twoshuying = object.get("liangduiqiushu")[3];
+        AiData.set("Twoshuyingstate", parseFloat((home_Twoshuying - away_Twoshuying).toFixed(1))); //主客最近两场战绩差
+        //console.log("主客最近两场战绩差",(home_Twoshuying - away_Twoshuying).toFixed(1));
+
+        
+        // AiData.set("home_zuijinvs",parseFloat(object.get("liangduiqiushu")[4])); //主客最近两场情况主场差
+       // AiData.set("away_zuijinvs",parseFloat(object.get("liangduiqiushu")[5])); //主客最近两场情况客场差
+     
+        let home_zuijinvs = object.get("liangduiqiushu")[4];
+        let away_zuijinvs = object.get("liangduiqiushu")[5];
+        AiData.set("zuijinvsstate",home_zuijinvs - away_zuijinvs); //主客最近两场主客场战绩差
+        //console.log("主客最近两场主客场战绩差",home_zuijinvs - away_zuijinvs);
+ 
+        //console.log("-----------------------\r\n\r\n");
+
+
         await  AiData.save();
       count++;
         console.log("成功加载第", count, "条数据");

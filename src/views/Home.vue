@@ -1,7 +1,7 @@
 <!--
  * @Author: Json.Xu
  * @Date: 2020-02-28 10:17:06
- * @LastEditTime: 2023-06-09 11:03:32
+ * @LastEditTime: 2023-08-11 12:31:47
  * @LastEditors: longshanxu 623119632@qq.com
  * @Description: 
  * @FilePath: \vue_vuetify_parseserver_cypress\src\views\Home.vue
@@ -13,6 +13,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-title class="white--text" style="text-align: center;"> 愚昧巅峰
         {{ count == 0 ? "" : "( " + count + " )" }}
+        - {{parseInt(zhengquelv*100)  }}
         <label style="color:orange;font-size: 12px;display: block;">守得住，打的出，守不住，打不出，常识</label>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -31,6 +32,7 @@
           <v-tab i="15">裂球</v-tab>
           <v-tab i="16">爆冷</v-tab>
           <v-tab i="17">胜平局</v-tab>
+          <v-tab i="18">客胜</v-tab>
         </v-tabs>
       </template>
     </v-app-bar>
@@ -45,6 +47,11 @@
           </v-col>
           <v-col style="text-align: center; font-weight: 700" cols="4">{{ item.guest.substr(0, 6) }}
           </v-col>
+        </v-row>
+        <v-row v-if="item.prediction" class="ma-0" style="background-color: #4C4A4B;;">
+          <v-col style="text-align: center; font-weight: 700;color:white">{{
+            item.prediction
+          }}--{{ item.qiuprediction }}</v-col>
         </v-row>
         <v-row dense class="ma-0" v-show="showtuijian">
           <v-col style="text-align: center; font-size: 14px" cols="4">
@@ -886,6 +893,7 @@ export default {
       userdialog1: false,
       isshowbifen: true,
       currentItem: 0,
+      zhengquelv:0
     };
   },
   computed: {},
@@ -1170,7 +1178,7 @@ export default {
               // item.yapantouzhu[5] > 0 &&
               item.yapantouzhu[9] > 0.25 &&
               item.yapantouzhu[8] <= item.yapantouzhu[9] &&
-              parseInt(numbers[0]) > parseInt(numbers[1])
+              numbers != null && parseInt(numbers[0]) > parseInt(numbers[1])
             ) {
               return true;
             }
@@ -1204,6 +1212,16 @@ export default {
         });
         this.count = this.datalist.length;
         console.log("胜彩");
+      }
+      else if (val == 10) {
+        this.datalist = this.list.filter((item) => {
+         if(item.prediction == "客胜"){
+          return true;
+         }
+
+        });
+        this.count = this.datalist.length;
+        console.log("客胜");
       }
 
     },
@@ -1267,7 +1285,7 @@ export default {
       this.dialog = true;
       this.linear = true;
       let data = {
-        date: "2023-06-30",
+        date: "2023-08-11",
         matchId: item.matchId,
       };
       api
@@ -1288,7 +1306,7 @@ export default {
       this.userdialog = true;
       this.linear = true;
       let data = {
-        date: "2023-06-30",
+        date: "2023-08-11",
         matchId: item.matchId,
       };
       api
@@ -1309,7 +1327,7 @@ export default {
       this.userdialog1 = true;
       this.linear = true;
       let data = {
-        date: "2023-06-30",
+        date: "2023-08-11",
         matchId: item.matchId,
       };
       api
@@ -1353,7 +1371,7 @@ export default {
     },
     loaddata() {
       const data = {
-        date: "2023-06-30",
+        date: "2023-08-11",
       };
       api
         .GetToday(data)
@@ -1363,6 +1381,47 @@ export default {
             this.datalist = res.data.result.data;
             this.list = res.data.result.data;
           }
+          
+          let temp = 0;
+          let temp1 = 0;
+          let qiutemp = 0;
+          let qiutemp2 = 0;
+          //算一下正确率
+          for (let index = 0; index < this.list.length; index++) {
+            const element =  this.list[index];
+            if(element.prediction){
+              if(element.prediction == "客胜"){
+                temp++;
+              }
+              // temp++;
+              if(element.homeScore > element.guestScore  && element.prediction == "主胜"){
+                // temp1++;
+              }else if(element.homeScore == element.guestScore && element.prediction == "平局"){
+                // temp1++;
+              }else if(element.homeScore < element.guestScore && element.prediction == "客胜"){
+                temp1++;
+              }
+            }
+
+            if(element.qiuprediction){
+              qiutemp++;
+              if((element.homeScore + element.guestScore) > element.qiushupankou1 && element.qiuprediction == "大球"){
+                qiutemp2++;
+              }
+              else if((element.homeScore + element.guestScore) < element.qiushupankou1 && element.qiuprediction == "小球"){
+                qiutemp2++;
+              }
+              else if((element.homeScore + element.guestScore) == element.qiushupankou1 && element.qiuprediction == "盘口球"){
+                qiutemp2++;
+              }
+            }
+            
+          }
+
+          this.zhengquelv = temp1/temp;
+
+          console.log("共有"+temp+"场比赛，猜对"+temp1+"场，正确率为"+this.zhengquelv);
+          console.log("共有"+qiutemp+"场比赛，猜对"+qiutemp2+"场，球数正确率为"+qiutemp2/qiutemp);
         })
         .catch();
     },
